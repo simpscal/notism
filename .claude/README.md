@@ -1,6 +1,6 @@
-# Notism AI Development Workflow
+# AI Development Workflow
 
-An AI-powered development workflow using Claude Code slash commands and GitHub Issues as the task board.
+An AI-powered development workflow using Claude Code slash commands. The issue tracker and all project-specific values are defined in `project.md` — making the workflow reusable across projects.
 
 ---
 
@@ -9,13 +9,13 @@ An AI-powered development workflow using Claude Code slash commands and GitHub I
 ```
 PO writes requirement issue
         ↓
-  /ba <issue>      →  BA creates user stories + sprint milestone
+  /ba <issue>   →  BA brainstorms with PO, creates user stories + sprint milestone
         ↓  ← HUMAN GATE: review stories
-  /architect <ms>  →  Architect designs solution, annotates stories
-        ↓  ← HUMAN GATE: review architecture
-  /dev <skill>     →  Dev implements story, opens PR
+  /tl <ms>      →  TL reads architecture, writes TDD, annotates stories
+        ↓  ← HUMAN GATE: review TDD and annotations
+  /dev <skill>  →  Dev implements one story, opens PR to sprint branch
         ↓  ← HUMAN GATE: review PR
-  /qa <pr>         →  QA tests, reviews, approves/rejects
+  /qa <pr>      →  QA tests, reviews, approves or rejects
         ↓  ← HUMAN GATE: merge PR
        Done
 ```
@@ -29,9 +29,9 @@ Each phase ends with a **human gate** — you review the output before running t
 | Command | Agent | Input | Output |
 |---------|-------|-------|--------|
 | `/ba <issue-number>` | Maya (BA) | requirement issue # | user story issues + sprint milestone |
-| `/architect <milestone-id>` | Alex (Architect) | milestone # | design doc + annotated issues |
-| `/dev <skill> [issue-number]` | Linh/Minh/Sam/Hao (Dev) | skill + optional issue # | implementation + PR |
-| `/qa <pr-number>` | Quinn (QA) | PR # | review + approval/rejection |
+| `/tl <milestone-id>` | Alex (Technical Lead) | milestone # | TDD issue + annotated stories |
+| `/dev [issue-number]` | Dev persona (auto-selected from ticket labels) | optional issue # | implementation + PR to sprint branch |
+| `/qa <pr-number>` | Quinn (QA) | PR # | formal review + approval/rejection |
 
 Skills: `frontend` · `backend` · `fullstack` · `devops`
 
@@ -41,58 +41,74 @@ Skills: `frontend` · `backend` · `fullstack` · `devops`
 
 ```
 .claude/
-  commands/   ← slash commands (workflow orchestration + persona)
+  project.md        ← project config: repo, tech stack, labels, branch patterns
+  commands/         ← slash commands (workflow orchestration + persona)
     ba.md
-    architect.md
+    tl.md
     dev.md
     qa.md
-  skills/     ← generic role methodology (invoked by commands)
+  skills/           ← role methodology (tech-stack-agnostic, invoked by commands)
     ba.md
-    architect.md
+    technical-lead.md
     dev.md
     qa.md
+  README.md
 ```
 
-**Commands** handle: GitHub operations, labels, sprint management, human gates.
-**Skills** handle: the core intellectual work (analysis, design, implementation, review).
+**`project.md`** is the only file that changes between projects. It defines the repo, codebases, tech stack, labels, branch patterns, architecture doc paths, and test/lint commands.
+
+**Commands** handle: issue tracker operations, labels, sprint management, PR creation, human gates.
+
+**Skills** handle: the core intellectual work — analysis, design, implementation, review. No project-specific references.
+
+---
+
+## Setup for a New Project
+
+1. Copy the `.claude/` directory to your project
+2. Edit `.claude/project.md` with your project's values:
+   - Issue tracker type and repo
+   - Codebase paths and tech stack
+   - Architecture doc locations
+   - Label names
+   - Git branch patterns and test/lint commands
+3. Start with `/ba <issue-number>`
 
 ---
 
 ## Full Workflow
 
 ### 1. Create a requirement
-Open a GitHub issue on `simpscal/notism`, add label `requirement`, describe what you want built. Note the issue number.
+Open an issue on your project repo, add the `requirement` label, describe what you want built. Note the issue number.
 
 ### 2. Run BA
 ```
 /ba 42
 ```
-Maya analyzes the requirement and creates 3–8 user stories in a new sprint milestone.
+Maya brainstorms with you to eliminate ambiguity, then creates 3–8 user stories in a new sprint milestone.
 
-**Human gate**: Review the stories. Edit or close any that don't fit. Get the milestone ID from the GitHub URL (`.../milestone/3`).
+**Human gate**: Review the stories. Edit or close any that don't fit. Get the milestone ID from the URL (`.../milestone/3`).
 
-### 3. Run Architect
+### 3. Run Technical Lead
 ```
-/architect 3
+/tl 3
 ```
-Alex reads all stories, explores the codebase, writes the design doc, and annotates every story with implementation guidance.
+Alex reads the architecture docs, designs the solution, writes a TDD issue, and annotates every story with implementation guidance.
 
-**Human gate**: Review `notism-api/docs/architecture/sprint-3-design.md` and the issue annotations.
+**Human gate**: Review the TDD issue and story annotations on the issue tracker.
 
 ### 4. Run Dev(s)
 Auto-pick an unassigned ticket:
 ```
-/dev frontend
-/dev backend
+/dev
 ```
 
 Or target a specific issue:
 ```
-/dev frontend 45
-/dev backend 46
+/dev 45
 ```
 
-Run multiple in parallel for independent stories. Each dev opens a PR when done.
+The persona (frontend/backend/fullstack/devops) is determined automatically from the ticket's `skill:` labels. A ticket with multiple skill labels activates multiple personas. Run multiple in parallel for independent stories.
 
 **Human gate**: Review the PR diff.
 
@@ -100,11 +116,11 @@ Run multiple in parallel for independent stories. Each dev opens a PR when done.
 ```
 /qa 15
 ```
-Quinn reads the PR, audits the code, runs the test suite, and submits a formal GitHub review.
+Quinn reads the PR, audits the code, runs the test suite, and submits a formal review.
 
-**If rejected**: fix issues and re-run `/qa 15`.
+**If rejected**: fix the issues and re-run `/qa 15`.
 
-**Human gate**: Once QA approves, you merge the PR.
+**Human gate**: Once QA approves, merge the PR into the sprint feature branch.
 
 ---
 
@@ -114,13 +130,15 @@ Quinn reads the PR, audits the code, runs the test suite, and submits a formal G
 |-------|---------|
 | `requirement` | PO-created requirement |
 | `user-story` | BA-created story |
-| `sprint-ready` | Awaiting architect |
-| `architect-reviewed` | Awaiting dev |
+| `sprint-ready` | Awaiting TL |
+| `tl-reviewed` | TL complete — awaiting dev |
+| `technical-design` | TDD issue |
 | `in-progress` | Dev is implementing |
-| `pr-ready` | Awaiting QA |
 | `qa-approved` | Ready to merge |
 | `qa-rejected` | Needs rework |
-| `skill:frontend` | React/TypeScript |
-| `skill:backend` | .NET/C# |
-| `skill:fullstack` | Both |
-| `skill:devops` | Docker/Terraform/infra |
+| `skill:frontend` | Frontend story |
+| `skill:backend` | Backend story |
+| `skill:fullstack` | Full-stack story |
+| `skill:devops` | Infrastructure story |
+
+> Label names are configurable in `project.md`.
