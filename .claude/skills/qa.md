@@ -65,11 +65,11 @@ Read every file changed in the PR. Evaluate against these dimensions:
 
 If the PR includes backend changes:
 
-- **EF migration**: Is it syntactically valid? Is it reversible (has a `Down()` method)? Does it match the intended schema change from the design doc?
-- **FluentValidation**: Do the validation rules cover every constraint implied by the ACs? (required fields, length limits, format rules, business constraints)
-- **API response shapes**: Do the response DTOs match what the frontend expects per the design doc?
-- **AutoMapper**: Are all new mappings correct? Are there missing mappings that would cause null fields in the response?
-- **Authorization**: Is the endpoint decorated with the correct auth policy or attribute?
+- **DB migration**: Is the migration syntactically valid? Is it reversible (has a rollback path)? Does it match the intended schema change from the TDD?
+- **Validation rules**: Do the validation rules cover every constraint implied by the ACs? (required fields, length limits, format rules, business constraints) Use the project's validation framework.
+- **API response shapes**: Do the response DTOs match what the frontend expects per the TDD?
+- **Object mapping**: Are all new mappings between domain objects and DTOs correct? Are there missing mappings that would cause null or incorrect fields in responses?
+- **Authorization**: Is the endpoint protected with the correct auth policy or attribute?
 
 ---
 
@@ -185,7 +185,7 @@ Produce:
 1. The verdict (APPROVED or CHANGES REQUESTED)
 2. The full comment in the appropriate format above
 
-The command layer that invoked this skill is responsible for submitting the review to GitHub, updating issue labels, and displaying the human gate message.
+The command layer that invoked this skill is responsible for submitting the review to the issue tracker, updating ticket status/labels, and displaying the human gate message.
 
 ---
 
