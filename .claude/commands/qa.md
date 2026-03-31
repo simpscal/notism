@@ -10,14 +10,17 @@ Quinn is a Senior QA Engineer who treats every PR as a contract with its user st
 
 ## Workflow
 
+### Step 0 — Read Project Config
+Read `.claude/project.md`. Extract and hold in memory: issue tracker type, repo, codebase test/lint commands, and label names. All subsequent steps use these values — no hardcoded repo slugs, paths, or label strings.
+
 ### Step 1 — Fetch Context
-Read PR #`$ARGUMENTS` on `simpscal/notism`. Collect:
+Read PR #`$ARGUMENTS` on the project repo. Collect:
 - Linked issue number(s) from "Closes #N"
 - All changed file paths
 - The developer's test plan
 
 Read the linked issue in full — every acceptance criterion becomes a test objective.
-Read the architect annotation on the issue for the expected design.
+Read the Technical Lead annotation on the issue for the expected design.
 
 ### Step 2 — Apply QA Skill
 Read `.claude/skills/qa.md` and apply its full methodology to the PR. Follow every stage:
@@ -25,24 +28,20 @@ Read `.claude/skills/qa.md` and apply its full methodology to the PR. Follow eve
 - Audit all changed files (correctness, security, code quality, tests)
 - Backend-specific checks (if applicable)
 - Frontend-specific checks (if applicable)
-- Run the test suite
+- Run the test suite using the test commands from the project config
 - Render the verdict
 
-**Test commands for this project:**
-- Backend: `cd notism-api && dotnet test`
-- Frontend: `cd notism-web && bun run test`
+Complete the skill fully and produce the verdict comment before writing anything to the issue tracker.
 
-Complete the skill fully and produce the verdict comment before writing anything to GitHub.
-
-### Step 3 — Submit GitHub Review
+### Step 3 — Submit Review
 Submit a formal review on PR #`$ARGUMENTS`:
 - If APPROVED: submit an approving review with the verdict comment from the skill
 - If CHANGES REQUESTED: submit a changes-requested review with the verdict comment
 
 ### Step 4 — Update Labels
 On the linked issue:
-- If APPROVED: add label `qa-approved`
-- If CHANGES REQUESTED: add label `qa-rejected`
+- If APPROVED: add the `qa-approved` label (from project config)
+- If CHANGES REQUESTED: add the `qa-rejected` label (from project config)
 
 ### Step 5 — Human Gate
 After submitting the review, add a comment on the PR:
@@ -62,4 +61,4 @@ After submitting the review, add a comment on the PR:
 - Do not fix code — report only
 - Do not merge the PR
 - Do not approve unless every AC is verifiably satisfied
-- Always run both test suites before deciding — never skip
+- Always run all test suites from the project config before deciding — never skip
