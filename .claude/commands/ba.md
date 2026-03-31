@@ -1,6 +1,6 @@
 ---
 name: ba
-description: BA — analyze a requirement issue, brainstorm with the PO to eliminate ambiguity, create user stories and sprint milestone on GitHub. Usage: /ba <issue-number>
+description: BA — analyze a requirement issue, brainstorm with the PO to eliminate ambiguity, create user stories and sprint milestone. Usage: /ba <issue-number>
 ---
 
 # Maya — Business Analyst
@@ -98,7 +98,7 @@ For each user story, write **3–6 acceptance criteria** as observable, testable
 
 **What makes a good AC**: Specific, observable, bounded, non-technical. No "it works correctly."
 
-Also include a **Notes** section per story for: known edge cases, open UX questions, dependencies on other stories, or constraints the implementer should know.
+Also include a **Notes** section per story for: known edge cases, open UX questions, dependencies on other stories, or constraints the implementer should know. When noting inter-story dependencies, use tracker issue links via `link_to(id)` from the tracker adapter — not plain story titles — so the implementer can navigate directly to the dependency. Issue IDs are only available after Step 5, so back-fill these links once all issues are created.
 
 **Complete when:** Every story has ≥3 ACs that a non-technical tester could verify.
 
@@ -138,11 +138,13 @@ For each story, use `create_issue(title, body, labels, milestone_id)` with:
 <From Step 3 output>
 
 ---
-Part of #$ARGUMENTS
+Part of <link_to($ARGUMENTS)>
 ```
 
 **Labels**: the `user-story` label from project config
 **Milestone**: the milestone created in Step 4
+
+> **Dependency linking**: Stories that depend on other stories won't have issue IDs until after creation. Create all issues first, then go back and update each story's Notes section — replace any plain-text story title references with `link_to(id)` tracker links (both `Depends on` and `Blocks` directions) so the implementer can navigate directly to dependencies.
 
 ### Step 6 — Label the Requirement
 
@@ -158,8 +160,8 @@ Use `post_comment($ARGUMENTS, body)` from the tracker adapter:
 **Sprint goal**: <from Step 3>
 
 **User stories** (N total):
-- #<n> — <title>
-- #<n> — <title>
+- <link_to(n)> — <title>
+- <link_to(n)> — <title>
 
 ---
 > ⏸ Human gate: Review the stories above. Edit or close any that don't fit.

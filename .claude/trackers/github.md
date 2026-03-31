@@ -13,6 +13,11 @@ The **repo** value for all operations comes from `.claude/project.md` (Issue Tra
 
 ## Operations
 
+### `link_to(id)`
+Return an inline issue reference that renders as a clickable link in this tracker.
+- **Format**: `#id` (e.g. `#17`)
+- Use this format anywhere a story or issue needs to be referenced in issue bodies or comments
+
 ### `fetch_issue(id)`
 Read a single issue in full (title, body, labels, milestone, comments).
 - **Tool**: `mcp__github__issue_read` with `{ owner, repo, issue_number: id }`
