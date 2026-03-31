@@ -8,6 +8,7 @@ This file is the single source of truth for all project-specific values. Command
 
 - **Type**: github
 - **Repo**: simpscal/notism
+- **Tracker adapter**: `.claude/trackers/github.md`
 
 ---
 
@@ -65,6 +66,7 @@ Read in this order when studying the codebase:
 | Awaiting TL | `sprint-ready` |
 | TL complete | `tl-reviewed` |
 | TDD issue | `technical-design` |
+| Design complete | `design-reviewed` |
 | Dev in progress | `in-progress` |
 | QA approved | `qa-approved` |
 | QA rejected | `qa-rejected` |
