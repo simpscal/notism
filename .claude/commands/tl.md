@@ -29,7 +29,15 @@ The exact file paths are defined in the project config's **Architecture Docs** s
 
 Then read targeted reference implementations — one vertical slice per area affected by the sprint — as directed by Stage 2b of the methodology below.
 
-### Step 3 — Apply Technical Lead Methodology
+### Step 3 — Resolve Open Questions Before Proceeding
+
+Before writing any output to the tracker, identify every decision that cannot be made from the code and stories alone — architectural choices, product scope questions, missing information. These are **blocking questions** that must be answered before the TDD can be written.
+
+Use `AskUserQuestion` to present all blocking questions in a single message and wait for answers. Do not create any issues, annotations, or branches until every question is resolved.
+
+**Do not produce output until this step is complete.**
+
+### Step 4 — Apply Technical Lead Methodology
 
 Apply all five stages of TL methodology fully before writing any output to the tracker.
 
@@ -147,9 +155,6 @@ Produce a TDD using this template. Fill every section:
 ## Risks & Mitigations
 | Risk | Likelihood | Impact | Mitigation |
 |------|-----------|--------|------------|
-
-## Open Questions
-<Anything requiring a product or architecture decision before implementation can proceed>
 ```
 
 **Complete when:** Every story has an implementation path traceable through the TDD.
@@ -181,33 +186,35 @@ For each user story, produce a self-contained annotation:
 
 **Complete when:** Every story has an annotation a developer can act on without asking questions.
 
-### Step 4 — Create TDD Issue
+### Step 5 — Create TDD Issue
 
 Use `create_issue(title, body, labels)` from the tracker adapter:
 - **Title**: `Sprint $ARGUMENTS — Technical Design Document`
 - **Body**: full TDD from Stage 4, with `Part of #N` (parent requirement issue) at the very top
 - **Labels**: `technical-design` and `tl-reviewed` labels from project config
 
-Capture the new issue number — referenced in Steps 5 and 6.
+Capture the new issue number — referenced in Steps 6 and 7.
 
-### Step 5 — Create Feature Branch
+### Step 6 — Create Feature Branches
 
-Use the `create_branch` git operation from the tracker adapter (sprint branch pattern and main branch name from project config):
+For each codebase listed in the project config, create the sprint branch in that codebase's local repo path using the `create_branch` git operation from the tracker adapter (sprint branch pattern and main branch name from project config):
 
 ```
+# Repeat for each codebase path from project config
+cd <codebase-path>
 git checkout <main-branch>
 git pull
-git checkout -b <sprint-branch-pattern>   # e.g. feature/sprint-3
+git checkout -b <sprint-branch-pattern>   # e.g. feature/sprint-2
 git push -u origin <sprint-branch-pattern>
 ```
 
-### Step 6 — Annotate Each Story
+### Step 7 — Annotate Each Story
 
 For each story:
 - Use `post_comment(issue_id, body)` with the annotation from Stage 5, plus a reference to the TDD: `Full design: #<tdd-issue-number>`
 - Use `update_labels(issue_id, add: [tl-reviewed, skill:<label>], remove: [])` from the tracker adapter
 
-### Step 7 — Update the Requirement Issue
+### Step 8 — Update the Requirement Issue
 
 Find the parent requirement issue (linked via "Part of #N" in the stories):
 - Use `update_labels(requirement_id, add: [tl-reviewed], remove: [sprint-ready])` from the tracker adapter
@@ -232,7 +239,7 @@ Find the parent requirement issue (linked via "Part of #N" in the stories):
 ## Constraints
 
 - Read the actual architecture docs on every run — never rely on memory or assumptions about the codebase
+- Resolve all blocking questions with the user (Step 3) before writing any output
 - Do not write implementation code
 - Do not merge or close any issues
 - Do not trigger the dev phase — stop after the summary comment
-- If a design decision requires a PO or architecture choice, flag it in the TDD's Open Questions
