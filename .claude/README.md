@@ -15,7 +15,7 @@ PO writes requirement issue
         ↓  ← HUMAN GATE: review TDD and annotations
   /design <ms>  →  Designer analyzes design system, creates design instructions (for frontend stories)
         ↓  ← HUMAN GATE: review design instructions
-  /dev <skill>  →  Dev implements one story, opens PR to sprint branch
+  /dev [issue-number]  →  Dev implements one story, opens PR to sprint branch
         ↓  ← HUMAN GATE: review PR
   /qa <pr>      →  QA tests, reviews, approves or rejects
         ↓  ← HUMAN GATE: merge PR
