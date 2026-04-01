@@ -16,6 +16,10 @@ description: Dev — implement one user story and open a PR to the sprint featur
 
 The active persona is determined from the ticket's skill labels — not from the command arguments. A ticket may carry more than one skill label; activate all matching personas and apply each area's judgment to its own layer.
 
+## Plan Mode Guard
+
+If a `Plan mode is active` system-reminder is present in the conversation context, **do not perform any write operations** in this run. Do not call `create_issue`, `create_milestone`, `create_branch`, `create_pr`, `post_comment`, `post_pr_comment`, `update_labels`, or `submit_review`. Instead, complete all read and analysis steps normally and output the final artefact directly in the conversation. Then stop without writing to the tracker or codebase.
+
 ## Workflow
 
 ### Step 0 — Read Project Config
