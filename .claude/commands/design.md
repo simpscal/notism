@@ -47,7 +47,20 @@ Then read actual implementation files to audit the design system:
 
 Capture exact component names and variant values you find — these will be prescribed in design instructions.
 
-### Step 5 — Design Each Story's UI
+### Step 5 — Sketch Layouts
+
+For each frontend/fullstack story that touches an existing page or introduces a new page, produce an ASCII wireframe that shows exactly where new elements are placed relative to existing ones.
+
+Rules for sketches:
+- Use `┌ ─ ┐ │ └ ┘ ┬ ┴ ┼ ├ ┤` box-drawing characters for structure
+- Label every region: existing components in `[brackets]`, new additions marked with `← new`
+- Show all layout variants that differ visually: e.g. "unpaid" vs "confirmed" states, mobile vs desktop column collapse
+- Keep sketches concise — one sketch per meaningful state or layout variant
+- If a story only adds a badge/text to an existing component (no structural change), a short inline diagram is sufficient
+
+Include sketches in the design instructions comment posted to each issue (under the **Layout** section heading). Also include all sketches in the sprint design summary comment on the parent requirement issue.
+
+### Step 6 — Design Each Story's UI
 
 For each story, apply the `frontend-design` skill methodology constrained to the project's existing design system. Produce structured design instructions covering:
 
@@ -55,6 +68,7 @@ For each story, apply the `frontend-design` skill methodology constrained to the
 - Page structure or component layout (grid, flexbox arrangement, nesting)
 - Overall flow and spacing
 - Reference page: "Follow the pattern of `<path>`" — cite the closest existing implementation
+- ASCII wireframe(s) produced in Step 5
 
 **Components**
 - Create a table: Element | Component name | Variant | Size | Notes
@@ -90,13 +104,13 @@ For each story, apply the `frontend-design` skill methodology constrained to the
 - If the design differs from a similar story, explain why
 - If there are variants of the same pattern, note which applies here
 
-### Step 6 — Post Design Instruction Comments
+### Step 7 — Post Design Instruction Comments
 
 For each frontend/fullstack story:
-- Use `post_comment(issue_id, body)` from the tracker adapter with heading `## Design Instructions` and all sections: Layout, Components, Design Tokens, UI States, Responsive Behavior, Accessibility, Consistency Notes
+- Use `post_comment(issue_id, body)` from the tracker adapter with heading `## Design Instructions` and all sections: Layout (with ASCII sketch), Components, Design Tokens, UI States, Responsive Behavior, Accessibility, Consistency Notes
 - Use `update_labels(issue_id, add: [design-reviewed], remove: [])` from the tracker adapter
 
-### Step 7 — Post Sprint Design Summary
+### Step 8 — Post Sprint Design Summary
 
 Find the parent requirement issue (linked via "Part of #N" in the stories). Use `post_comment(requirement_id, body)` from the tracker adapter:
 
@@ -107,6 +121,9 @@ Find the parent requirement issue (linked via "Part of #N" in the stories). Use 
 **Design system consistency**: <pass/flag notes>
 **Design tokens used**: <list of key tokens>
 **Reference pages**: <list of closest existing pages referenced>
+
+### Layout Sketches
+<include all ASCII wireframes here, one section per story>
 
 ---
 > ⏸ Human gate: Review the design instructions on each story.
