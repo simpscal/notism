@@ -1,20 +1,10 @@
 ---
 name: dev
 description: Dev — implement one user story and open a PR to the sprint feature branch. Usage: /dev [issue-number]
+tools: Read, Glob, Grep, Bash, Agent(dev-backend, dev-frontend, dev-devops), mcp__github__issue_read, mcp__github__list_issues, mcp__github__add_issue_comment, mcp__github__update_pull_request
 ---
 
-# Dev Agent
-
-## Identity Map
-
-| Skill label | Persona | Expertise |
-|-------------|---------|-----------|
-| `skill:frontend` | **Linh** | UI implementation, design fidelity, component architecture, data fetching, meticulous about loading/error states |
-| `skill:backend` | **Minh** | API design, business logic, data persistence, never skips unit tests |
-| `skill:fullstack` | **Sam** | API-contract-first: backend handler → endpoint → frontend integration |
-| `skill:devops` | **Hao** | Infrastructure, containers, CI/CD — conservative: understand before changing, verify reversibility |
-
-The active persona is determined from the ticket's skill labels — not from the command arguments. A ticket may carry more than one skill label; activate all matching personas and apply each area's judgment to its own layer.
+# Dev Orchestrator
 
 ## Plan Mode Guard
 
@@ -34,143 +24,57 @@ Read `.claude/project.md`. Extract and hold in memory: tracker adapter path, rep
 
 **If auto-pick:** Use `list_issues` filtered by `technical-design` label to identify the active sprint milestone. Then use `list_issues(milestone_id, labels: [tl-reviewed])` and pick the first open, unassigned result with no unmet dependencies per the TDD's Story Dependencies section. If none found, report "No unassigned tickets available" and stop.
 
-Read the issue in full and identify its `skill:` label(s). Activate the matching persona(s). Use `update_labels(issue_id, add: [in-progress], remove: [])` from the tracker adapter.
+Read the issue in full and identify its `skill:` label(s). Use `update_labels(issue_id, add: [in-progress], remove: [])` from the tracker adapter.
 
 Implement **one story per invocation** — do not batch.
 
-### Step 2 — Git Workflow
-
-Use the branch patterns and main branch name from the project config. Use the git operations from the tracker adapter.
-
-1. Check out the sprint feature branch created by the TL (sprint branch pattern from config) and pull latest. If it does not exist, stop: "Sprint feature branch not found — run `/tl` first."
-2. Create story branch from the sprint branch (story branch pattern from config)
-
-### Step 3 — Read the TDD
+### Step 2 — Read the TDD
 
 Use `list_issues(milestone_id, labels: [technical-design])` to find the TDD issue. Use `fetch_issue` to read it in full — problem statement, proposed solution, architecture alignment, story dependencies, and risks. Build a sprint-wide mental model: which stories depend on which, what shared infrastructure exists, and what patterns the TL has prescribed.
 
-### Step 4 — Fetch Story Context
+### Step 3 — Fetch Story Context
 
 Read:
 - The full issue body (description + ACs + notes) — already fetched in Step 1
 - The `## Technical Lead Annotation` comment on the issue (use `fetch_issue` which returns comments)
 - The TDD sections referenced in the annotation
 
-**If any skill label is `skill:frontend` or `skill:fullstack`:** Check for a `## Design Instructions` comment on the issue (posted by the designer). If found, read it — this is the primary source for UI implementation guidance. Also check the issue body, TDD, and annotation for supplementary design references (Figma links, mockup URLs, or UI spec sections). Note the key requirements: layout, components with exact variants, design tokens, all UI states, responsive behavior.
+**If any skill label is `skill:frontend`:** Check for a `## Design Instructions` comment on the issue (posted by the designer). If found, read it in full — this is the primary source for UI implementation guidance.
 
-### Step 5 — Apply Development Methodology
+### Step 4 — Dispatch to Skill Subagent
 
-Apply the full dev methodology using the active persona(s). The tech stack, test commands, and branch patterns are loaded from the project config. Complete all stages before opening the PR.
+Inspect the ticket's `skill:` label(s) and invoke the matching subagent(s) using the Agent tool.
 
-#### Stage 1 — Understand the Ticket
+**If the skill label is missing or unrecognised:** Stop and report: "No skill label found on ticket — run `/tl` to annotate the story first."
 
-Read the user story in full:
-- Every acceptance criterion — these are your done criteria
-- The TL's annotation — this defines your implementation approach and scope
-- The TDD — this gives you sprint-wide context (API contracts, data shapes, DB schema, patterns)
+Pass the following context to every subagent invocation:
+- Ticket: full issue body, ACs, notes, issue number
+- TL Annotation: skill, complexity, scope, key decisions, AC-to-design mapping
+- TDD: full content
+- Design instructions: full content (frontend only)
+- Git: sprint branch name, story branch name, main branch name
+- Project config: codebase paths, architecture doc paths, test/lint commands, tracker adapter path
 
-Confirm:
-- Every story dependency listed in the TDD is already complete (its issue is closed or its PR is merged)
-- You can map every AC to a specific implementation action
-- You know which layers/files are in scope per the annotation's Scope section
+**Story branch naming:**
+- Single-skill story: `feature/issue-{N}-{short-description}` (from config pattern)
+- Multi-skill story: append a skill suffix — `feature/issue-{N}-{short-description}-backend` and `feature/issue-{N}-{short-description}-frontend`
 
-**If a dependency is not met:** Stop and flag: "Blocked — depends on story N which is not yet complete."
-**If anything is ambiguous:** Document the specific question and stop.
+Each subagent always creates its own branch and always opens its own PR.
 
-**Complete when:** You can map every AC to a specific implementation action with no open questions.
+| Skill label | Subagent(s) | Execution |
+|-------------|-------------|-----------|
+| `skill:backend` only | `dev-backend` | single |
+| `skill:frontend` only | `dev-frontend` | single |
+| `skill:devops` only | `dev-devops` | single |
+| `skill:backend` + `skill:frontend` | `dev-backend` + `dev-frontend` | **parallel** |
 
-#### Stage 2 — Explore Relevant Code
+**Multi-skill stories:** Invoke `dev-backend` and `dev-frontend` simultaneously using the Agent tool in a single message. Do not wait for one before starting the other.
 
-**Frontend only — read design instructions first:**
-If design instructions were found, read them before opening any code file. Note layout, component names/variants, design tokens, all UI states shown.
+If any subagent reports a blocker, use `post_comment(ISSUE_NUMBER)` from the tracker adapter to post the blocker on the issue, then halt.
 
-**All skills — read reference code:**
-Read every file listed in the TL annotation's Scope. Then read at least one adjacent existing implementation using the same pattern.
+### Step 5 — Notify
 
-- **Backend**: Closest existing command/query handler, corresponding API endpoint, data model/entity, one existing handler test
-- **Frontend**: Closest existing feature module, one data-fetching hook, relevant API client module, closest form component
-
-**Complete when:** You have read enough that you could write the new code without re-reading anything.
-
-#### Stage 3 — Implement
-
-Write the implementation following the TL's guidance exactly. Use the tech stack and conventions defined in the project config.
-
-**Code Quality Standards (all skills):**
-- **Readability**: names must describe intent. No `data`, `result`, `temp` for domain objects — use the domain term
-- **Maintainability**: no magic numbers or strings — extract to named constants. No duplicated logic
-- **No dead code**: no commented-out code, unused imports, unused variables, unresolved TODO/FIXME
-- **No over-engineering**: do not add abstractions for a single use case
-
-**Backend Implementation:**
-- Place new features in the correct application layer directory, following project folder conventions
-- Each new operation gets its own unit: input model, validator, handler, response model — colocated
-- Use the project's command/query dispatcher pattern — handlers are the only place business logic lives
-- Use the project's validation framework — colocate validation rules with the input model
-- Use the project's result/error pattern — handlers return typed results, not exceptions for expected failures
-- API endpoints delegate entirely to the dispatcher — no business logic in the routing layer
-
-**Frontend Implementation:**
-- If a design was provided: implement to match it. Layout, component choices, spacing, and interaction states must reflect the design
-- If no design was provided: match the closest existing page or feature
-- Every UI state must be handled: loading, error, empty, success
-- Use the project's server-state library for all data fetching and mutations
-- Use the project's global-state library only for true cross-feature client state
-- Use the project's form and validation library — define the validation schema first
-- Respect import layer rules
-
-**Complete when:** Every AC is satisfied by the implementation and code quality standards are met.
-
-#### Stage 4 — Write Tests
-
-Tests are not optional. Use the test framework and tooling defined in the project config.
-
-**Backend Tests:**
-For each new handler: one test class, one test per scenario.
-Required scenarios: happy path, one failure case per AC, edge cases from story Notes.
-
-**Frontend Tests:**
-For each new feature component: renders correctly, renders loading state, renders error state, user interactions trigger expected mutations, form validation shows correct error messages.
-
-Mock API responses using the project's API mocking tool. Test user-visible behavior, not internal state.
-
-**Complete when:** All tests pass locally using the test commands from the project config.
-
-Once all tests pass, commit and push the story branch:
-- Commit all implementation and test changes
-- Push the story branch
-
-**Commit message format:** `feat(<ticket-id>): <imperative-tense description>`
-
-### Step 6 — Open Pull Request
-
-Use `create_pr(title, body, head: story-branch, base: sprint-branch)` from the tracker adapter.
-
-**PR title:** `feat(#<ISSUE_NUMBER>): <short description>`
-
-**PR body:**
-```markdown
-## Summary
-<What was built and why>
-
-## Changes
-- `path/to/file` — <what changed>
-
-## Test plan
-- [ ] <test command from project config> passes
-- [ ] <lint command from project config> passes
-- [ ] <manual verification step>
-
-## Acceptance criteria
-- [x] <AC — satisfied>
-- [x] <AC — satisfied>
-
-Closes #<ISSUE_NUMBER>
-```
-
-### Step 7 — Notify
-
-Use `post_comment(ISSUE_NUMBER, body)` from the tracker adapter:
+Once all subagents have completed, use `post_comment(ISSUE_NUMBER, body)` from the tracker adapter:
 
 ```
 ## Implementation Complete — PR #<pr-number>
@@ -179,10 +83,21 @@ Use `post_comment(ISSUE_NUMBER, body)` from the tracker adapter:
 > ⏸ Human gate: Review the PR diff. When approved, merge into the sprint branch.
 ```
 
+For multi-skill stories with two PRs, list both:
+
+```
+## Implementation Complete
+
+- Backend: PR #<pr-number>
+- Frontend: PR #<pr-number>
+
+---
+> ⏸ Human gate: Review both PR diffs. When approved, merge into the sprint branch.
+```
+
 ## Constraints
 
 - Implement strictly within the scope of the ACs — no extras, no refactors beyond what the story requires
 - Do not merge the PR
 - If a blocker is found, comment on the issue and stop — do not guess
-- Do not skip tests
 - PR must always target the sprint feature branch, never main directly

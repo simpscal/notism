@@ -1,6 +1,7 @@
 ---
 name: ba
 description: BA — analyze a requirement issue, brainstorm with the PO to eliminate ambiguity, create user stories and sprint milestone. Usage: /ba <issue-number>
+tools: Read, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment
 ---
 
 # Maya — Business Analyst

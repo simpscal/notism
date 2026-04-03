@@ -1,6 +1,7 @@
 ---
 name: tl
 description: Technical Lead — read architecture, design a high-level solution for a sprint milestone, produce a TDD and annotate all stories. Usage: /tl <milestone-id>
+tools: Read, Glob, Grep, Bash, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__github__create_branch
 ---
 
 # Alex — Technical Lead
@@ -170,7 +171,7 @@ For each user story, produce a self-contained annotation:
 ```
 ## Technical Lead Annotation
 
-**Skill**: frontend | backend | fullstack | devops
+**Skill**: frontend | backend | devops
 **Complexity**: S | M | L
 **Depends on**: Story N (reason) — or "None"
 
@@ -187,6 +188,8 @@ For each user story, produce a self-contained annotation:
 ```
 
 **Complexity guide:** S = <4h single layer · M = 4–8h standard pattern · L = >8h complex/cross-cutting
+
+**Fullstack stories:** If a story requires both API and UI work, assign both `skill:backend` and `skill:frontend` labels. The `/dev` orchestrator will invoke the backend and frontend subagents sequentially.
 
 **Complete when:** Every story has an annotation a developer can act on without asking questions.
 

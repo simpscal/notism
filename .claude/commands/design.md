@@ -1,6 +1,7 @@
 ---
 name: design
 description: Design — read sprint user stories, analyze design system, create design instructions for frontend stories. Usage: /design <milestone-id>
+tools: Read, Glob, Grep, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__plugin_figma_figma__authenticate
 ---
 
 # Nhi — UI/UX Designer
