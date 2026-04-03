@@ -68,8 +68,6 @@ Read in this order when studying the codebase:
 | TDD issue | `technical-design` |
 | Design complete | `design-reviewed` |
 | Dev in progress | `in-progress` |
-| QA approved | `qa-approved` |
-| QA rejected | `qa-rejected` |
 | Skill prefix | `skill:` (e.g. `skill:frontend`) |
 
 ---

@@ -16,9 +16,7 @@ PO writes requirement issue
   /design <ms>  →  Designer analyzes design system, creates design instructions (for frontend stories)
         ↓  ← HUMAN GATE: review design instructions
   /dev [issue-number]  →  Dev implements one story, opens PR to sprint branch
-        ↓  ← HUMAN GATE: review PR
-  /qa <pr>      →  QA tests, reviews, approves or rejects
-        ↓  ← HUMAN GATE: merge PR
+        ↓  ← HUMAN GATE: review PR and merge
        Done
 ```
 
@@ -34,7 +32,6 @@ Each phase ends with a **human gate** — you review the output before running t
 | `/tl <milestone-id>` | Alex (Technical Lead) | milestone # | TDD issue + annotated stories |
 | `/design <milestone-id>` | Nhi (Designer) | milestone # | design instruction comments on frontend stories |
 | `/dev [issue-number]` | Dev persona (auto-selected from ticket labels) | optional issue # | implementation + PR to sprint branch |
-| `/qa <pr-number>` | Quinn (QA) | PR # | formal review + approval/rejection |
 
 Skills: `frontend` · `backend` · `fullstack` · `devops`
 
@@ -50,7 +47,6 @@ Skills: `frontend` · `backend` · `fullstack` · `devops`
     tl.md
     design.md
     dev.md
-    qa.md
   trackers/         ← tracker adapters (swap to change issue tracker)
     github.md
   README.md
@@ -120,17 +116,7 @@ Or target a specific issue:
 
 The persona (frontend/backend/fullstack/devops) is determined automatically from the ticket's `skill:` labels. A ticket with multiple skill labels activates multiple personas. Run multiple in parallel for independent stories.
 
-**Human gate**: Review the PR diff.
-
-### 5. Run QA
-```
-/qa 15
-```
-Quinn reads the PR, audits the code, runs the test suite, and submits a formal review.
-
-**If rejected**: fix the issues and re-run `/qa 15`.
-
-**Human gate**: Once QA approves, merge the PR into the sprint feature branch.
+**Human gate**: Review the PR diff. When approved, merge into the sprint feature branch.
 
 ---
 
@@ -145,8 +131,6 @@ Quinn reads the PR, audits the code, runs the test suite, and submits a formal r
 | `technical-design` | TDD issue |
 | `design-reviewed` | Design instructions complete — awaiting dev |
 | `in-progress` | Dev is implementing |
-| `qa-approved` | Ready to merge |
-| `qa-rejected` | Needs rework |
 | `skill:frontend` | Frontend story |
 | `skill:backend` | Backend story |
 | `skill:fullstack` | Full-stack story |

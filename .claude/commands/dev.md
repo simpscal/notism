@@ -174,8 +174,7 @@ Use `post_comment(ISSUE_NUMBER, body)` from the tracker adapter:
 ## Implementation Complete — PR #<pr-number>
 
 ---
-> ⏸ Human gate: Review the PR diff.
-> When ready: `/qa <pr-number>`
+> ⏸ Human gate: Review the PR diff. When approved, merge into the sprint branch.
 ```
 
 ## Constraints
