@@ -38,11 +38,18 @@ Read the issue in full and identify its `skill:` label(s). Activate the matching
 
 Implement **one story per invocation** — do not batch.
 
-### Step 2 — Read the TDD
+### Step 2 — Git Workflow
+
+Use the branch patterns and main branch name from the project config. Use the git operations from the tracker adapter.
+
+1. Check out the sprint feature branch created by the TL (sprint branch pattern from config) and pull latest. If it does not exist, stop: "Sprint feature branch not found — run `/tl` first."
+2. Create story branch from the sprint branch (story branch pattern from config)
+
+### Step 3 — Read the TDD
 
 Use `list_issues(milestone_id, labels: [technical-design])` to find the TDD issue. Use `fetch_issue` to read it in full — problem statement, proposed solution, architecture alignment, story dependencies, and risks. Build a sprint-wide mental model: which stories depend on which, what shared infrastructure exists, and what patterns the TL has prescribed.
 
-### Step 3 — Fetch Story Context
+### Step 4 — Fetch Story Context
 
 Read:
 - The full issue body (description + ACs + notes) — already fetched in Step 1
@@ -51,7 +58,7 @@ Read:
 
 **If any skill label is `skill:frontend` or `skill:fullstack`:** Check for a `## Design Instructions` comment on the issue (posted by the designer). If found, read it — this is the primary source for UI implementation guidance. Also check the issue body, TDD, and annotation for supplementary design references (Figma links, mockup URLs, or UI spec sections). Note the key requirements: layout, components with exact variants, design tokens, all UI states, responsive behavior.
 
-### Step 4 — Apply Development Methodology
+### Step 5 — Apply Development Methodology
 
 Apply the full dev methodology using the active persona(s). The tech stack, test commands, and branch patterns are loaded from the project config. Complete all stages before opening the PR.
 
@@ -129,18 +136,13 @@ Mock API responses using the project's API mocking tool. Test user-visible behav
 
 **Complete when:** All tests pass locally using the test commands from the project config.
 
-#### Stage 5 — Git Workflow
-
-Use the branch patterns and main branch name from the project config. Use the git operations from the tracker adapter.
-
-1. Check out the sprint feature branch created by the TL (sprint branch pattern from config) and pull latest. If it does not exist, stop: "Sprint feature branch not found — run `/tl` first."
-2. Create story branch from the sprint branch (story branch pattern from config)
-3. Commit all implementation and test changes on the story branch
-4. Push the story branch
+Once all tests pass, commit and push the story branch:
+- Commit all implementation and test changes
+- Push the story branch
 
 **Commit message format:** `feat(<ticket-id>): <imperative-tense description>`
 
-### Step 5 — Open Pull Request
+### Step 6 — Open Pull Request
 
 Use `create_pr(title, body, head: story-branch, base: sprint-branch)` from the tracker adapter.
 
@@ -166,7 +168,7 @@ Use `create_pr(title, body, head: story-branch, base: sprint-branch)` from the t
 Closes #<ISSUE_NUMBER>
 ```
 
-### Step 6 — Notify
+### Step 7 — Notify
 
 Use `post_comment(ISSUE_NUMBER, body)` from the tracker adapter:
 
