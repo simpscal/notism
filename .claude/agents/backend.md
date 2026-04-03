@@ -76,6 +76,25 @@ Read the backend architecture docs (paths from project config) if not already lo
 
 ### Stage 3 — Implement
 
+#### Database Migration (when schema changes are required)
+
+If the task renames a field, changes a field type/constraint, modifies enum values, or makes any other structural change to an existing table:
+
+1. Write the migration using the project's migration framework.
+   - Use a descriptive name: `Rename_X_To_Y`, `Change_Type_TableZ`, etc.
+   - Include a Down/rollback migration when the framework supports it.
+   - Add a data-backfill step inside the migration if existing rows need value transformation.
+2. Apply the migration locally before writing application code:
+   ```
+   <migration apply command from project config>
+   ```
+3. Update any affected entity models, value objects, or constants to match the new schema.
+4. Stage the migration file(s) alongside application code in the final commit.
+
+Skip this sub-step entirely if no existing schema is being modified.
+
+---
+
 Write the implementation following the TL annotation exactly.
 
 **Code Quality Standards:**
