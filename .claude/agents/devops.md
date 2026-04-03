@@ -1,5 +1,5 @@
 ---
-name: dev-devops
+name: devops
 description: Internal DevOps implementation subagent (Hao). Only to be invoked by the /dev orchestrator — not for direct use. Handles git branching, Stages 1–4 (understand, explore, implement, verify), commit, push, and opens a PR.
 tools: Read, Write, Edit, Glob, Grep, Bash, mcp__github__issue_read, mcp__github__create_pull_request
 ---

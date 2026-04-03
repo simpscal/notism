@@ -1,5 +1,5 @@
 ---
-name: dev-backend
+name: backend
 description: Internal backend implementation subagent (Minh). Only to be invoked by the /dev orchestrator — not for direct use. Handles git branching, Stages 1–4 (understand, explore, implement, test), commit, push, and optionally opens a PR.
 tools: Read, Write, Edit, Glob, Grep, Bash, mcp__github__issue_read, mcp__github__create_pull_request
 ---

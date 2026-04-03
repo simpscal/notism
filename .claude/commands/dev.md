@@ -1,7 +1,7 @@
 ---
 name: dev
 description: Dev — implement one user story and open a PR to the sprint feature branch. Usage: /dev [issue-number]
-tools: Read, Glob, Grep, Bash, Agent(dev-backend, dev-frontend, dev-devops), mcp__github__issue_read, mcp__github__list_issues, mcp__github__add_issue_comment, mcp__github__update_pull_request
+tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops), mcp__github__issue_read, mcp__github__list_issues, mcp__github__add_issue_comment, mcp__github__update_pull_request
 ---
 
 # Dev Orchestrator
@@ -63,12 +63,12 @@ Each subagent always creates its own branch and always opens its own PR.
 
 | Skill label | Subagent(s) | Execution |
 |-------------|-------------|-----------|
-| `skill:backend` only | `dev-backend` | single |
-| `skill:frontend` only | `dev-frontend` | single |
-| `skill:devops` only | `dev-devops` | single |
-| `skill:backend` + `skill:frontend` | `dev-backend` + `dev-frontend` | **parallel** |
+| `skill:backend` only | `backend` | single |
+| `skill:frontend` only | `frontend` | single |
+| `skill:devops` only | `devops` | single |
+| `skill:backend` + `skill:frontend` | `backend` + `frontend` | **parallel** |
 
-**Multi-skill stories:** Invoke `dev-backend` and `dev-frontend` simultaneously using the Agent tool in a single message. Do not wait for one before starting the other.
+**Multi-skill stories:** Invoke `backend` and `frontend` simultaneously using the Agent tool in a single message. Do not wait for one before starting the other.
 
 If any subagent reports a blocker, use `post_comment(ISSUE_NUMBER)` from the tracker adapter to post the blocker on the issue, then halt.
 
