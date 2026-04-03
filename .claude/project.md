@@ -16,22 +16,22 @@ This file is the single source of truth for all project-specific values. Command
 
 | Name | Path | Summary |
 |------|------|---------|
-| backend | notism-api/ | .NET (C#), Clean Architecture (Onion), CQRS via MediatR, EF Core, PostgreSQL |
-| frontend | notism-web/ | React 19, TypeScript, Tailwind v4, shadcn/ui (Radix UI), TanStack Query, Redux Toolkit |
+| backend | `../notism-api` | .NET (C#), Clean Architecture (Onion), CQRS via MediatR, EF Core, PostgreSQL |
+| frontend | `../notism-web` | React 19, TypeScript, Tailwind v4, shadcn/ui (Radix UI), TanStack Query, Redux Toolkit |
 
 ---
 
 ## Architecture Docs
 
 Read in this order when studying the codebase:
-- `notism-api/CLAUDE.md`
-- `notism-api/docs/rules/architecture.md` (if it exists)
-- `notism-api/docs/rules/best-practices.md` (if it exists)
-- `notism-api/docs/rules/naming.md` (if it exists)
-- `notism-web/CLAUDE.md`
-- `notism-web/docs/rules/architecture.md` (if it exists)
-- `notism-web/docs/rules/best-practices.md` (if it exists)
-- `notism-web/docs/rules/naming.md` (if it exists)
+- `../notism-api/CLAUDE.md`
+- `../notism-api/docs/rules/architecture.md` (if it exists)
+- `../notism-api/docs/rules/best-practices.md` (if it exists)
+- `../notism-api/docs/rules/naming.md` (if it exists)
+- `../notism-web/CLAUDE.md`
+- `../notism-web/docs/rules/architecture.md` (if it exists)
+- `../notism-web/docs/rules/best-practices.md` (if it exists)
+- `../notism-web/docs/rules/naming.md` (if it exists)
 
 ---
 
@@ -84,5 +84,5 @@ Read in this order when studying the codebase:
 
 | Codebase | Test | Lint / Build |
 |----------|------|-------------|
-| backend | `cd notism-api && dotnet test` | `cd notism-api && dotnet build` |
-| frontend | `cd notism-web && bun run test` | `cd notism-web && bun run lint` |
+| backend | `cd ../notism-api && dotnet test` | `cd ../notism-api && dotnet build` |
+| frontend | `cd ../notism-web && bun run test` | `cd ../notism-web && bun run lint` |
