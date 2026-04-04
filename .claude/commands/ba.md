@@ -75,15 +75,9 @@ Use `update_issue_body(<issue-number>, body)` from the tracker adapter. How to a
 ## Story Amendment
 
 **Reason**: <one sentence summarising why scope is changing>
-**PR**: #<pr-number>
-
 ### Updated Acceptance Criteria
-- Added: <AC text>
-- Removed: <original AC text>
-- Modified: <original AC text> → <new AC text>
-
-### Updated Notes
-<any changes to edge cases, dependencies, or constraints — omit section if none>
+- [ ] <AC text>
+- [ ] <AC text>
 ```
 
 ### Step 1e — Amendment Mode: Label the Story
