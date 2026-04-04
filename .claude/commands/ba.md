@@ -1,6 +1,6 @@
 ---
 name: ba
-description: BA — analyze a requirement issue, brainstorm with the PO to eliminate ambiguity, create user stories and sprint milestone. Usage: /ba <issue-number>
+description: BA — analyze a requirement issue, brainstorm with the PO to eliminate ambiguity, create user stories and sprint milestone. To amend an existing story: /ba <story-issue-number> <change description>. Usage: /ba <issue-number> [change description]
 tools: Read, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment
 ---
 
@@ -20,9 +20,79 @@ If a `Plan mode is active` system-reminder is present in the conversation contex
 
 Read `.claude/project.md`. Extract and hold in memory: tracker adapter path, repo, and all label names. Then read the tracker adapter file — all issue tracker operations in subsequent steps use the operations it defines. No hardcoded repo slugs or label strings.
 
-### Step 1 — Fetch the Requirement
+### Step 1 — Parse Arguments and Determine Mode
 
-Use `fetch_issue($ARGUMENTS)` from the tracker adapter to read the requirement issue in full. Extract the full requirement text, any stated constraints, and any open questions already noted.
+Parse `$ARGUMENTS`:
+- **Issue number only** (e.g. `42`) → **Standard Mode**: continue to Step 2. Use `fetch_issue(42)` to read the requirement in full before proceeding.
+- **Issue number + change description** (e.g. `42 users should also be able to reset their password via email`) → **Amendment Mode**: the number is the story issue, the remaining text is the raw requirement change. Enter Steps 1a–1d; skip Steps 2–7.
+
+---
+
+### Step 1a — Amendment Mode: Check Implementation Status
+
+Use `fetch_issue(<issue-number>)` from the tracker adapter to read the story in full (body + comments).
+
+Scan comments for any comment beginning with `## Implementation Complete`. Hold the result:
+- **Implemented** — comment found; extract the PR number(s). The story has already been shipped.
+- **Not yet implemented** — no such comment.
+
+### Step 1b — Amendment Mode: Clarify the Change with PO
+
+Take the raw change description from the arguments. Identify any gaps that would prevent writing unambiguous ACs — missing scope boundaries, undefined behaviour, unknown user types, unclear "done" criteria.
+
+If gaps exist, use `AskUserQuestion` to present your understanding and ask all blocking questions in one message:
+- *"Here is what I understand is changing — please correct anything wrong."*
+- *"Before I write the amendment, I need to clarify:"* — list specific questions only.
+
+Iterate until the change set is fully unambiguous. If no gaps exist, proceed immediately without asking.
+
+### Step 1c — Amendment Mode: Translate to Acceptance Criteria
+
+Convert the clarified change description into ACs using the same format as the original story:
+
+```
+- [ ] When <condition>, the user sees/can/cannot <observable outcome>
+- [ ] The system <measurable behavior> when <condition>
+```
+
+Classify each AC as:
+- **Added** — a new behaviour not covered by any existing AC
+- **Removed** — an existing behaviour that no longer applies (state the original AC text)
+- **Modified** — an existing behaviour that is changing (state old → new)
+
+### Step 1d — Amendment Mode: Update the Issue Body
+
+Use `update_issue_body(<issue-number>, body)` from the tracker adapter. How to apply the changes depends on implementation status:
+
+**Not yet implemented** — edit the `## Acceptance Criteria` section in place:
+- Add new ACs to the list (marked `- [ ]`).
+- Remove or rewrite modified ACs directly.
+- Do not add any `## Story Amendment` section — the story body stays clean.
+
+**Implemented** — do not touch the existing `## Acceptance Criteria`. Append the following section to the **end** of the current issue body:
+
+```
+## Story Amendment
+
+**Reason**: <one sentence summarising why scope is changing>
+**PR**: #<pr-number>
+
+### Updated Acceptance Criteria
+- Added: <AC text>
+- Removed: <original AC text>
+- Modified: <original AC text> → <new AC text>
+
+### Updated Notes
+<any changes to edge cases, dependencies, or constraints — omit section if none>
+```
+
+### Step 1e — Amendment Mode: Label the Story
+
+Use `update_labels(<issue-number>, add: [story-updated], remove: [])` from the tracker adapter.
+
+Stop here — do not continue to Step 2.
+
+---
 
 ### Step 2 — Discovery Session with PO
 

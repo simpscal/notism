@@ -34,6 +34,11 @@ Create a new issue.
 - **Tool**: `mcp__github__issue_write` with `{ owner, repo, title, body, labels, milestone: milestone_id }`
 - Returns: new issue number
 
+### `update_issue_body(issue_id, body)`
+Replace the body of an existing issue with updated content.
+- **Tool**: `mcp__github__issue_write` with `{ owner, repo, issue_number: issue_id, body }`
+- Always `fetch_issue` first to obtain the current body, then append or modify before calling this
+
 ### `update_labels(issue_id, add, remove)`
 Add and/or remove labels on an issue.
 - **Tool**: `mcp__github__issue_write` with `{ owner, repo, issue_number: issue_id, labels: <current labels + add - remove> }`

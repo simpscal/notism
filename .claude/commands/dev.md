@@ -41,6 +41,16 @@ Read:
 
 **If any skill label is `skill:frontend`:** Check for a `## Design Instructions` comment on the issue (posted by the designer). If found, read it in full — this is the primary source for UI implementation guidance.
 
+**Check for story amendment:** If the issue body contains a `## Story Amendment` section, read it in full. Every AC listed under `### Updated Acceptance Criteria` supersedes the matching AC in the original issue body. ACs not mentioned remain in force from the original.
+
+**Check for existing PR:** If the issue has label `story-updated`, scan comments for any `## Implementation Complete` comment. If found, extract the PR number(s). Use `fetch_pr(<pr-number>)` from the tracker adapter to read each PR and obtain its branch name. These are the **continuation branches** — pass them to the subagent instead of generating new branch names.
+
+**Determine remaining work:** Scan the `## Acceptance Criteria` checklist in the issue body and, if present, the `### Updated Acceptance Criteria` list in `## Story Amendment`. Build two lists:
+- **Done** — items marked `- [x]`
+- **Remaining** — items marked `- [ ]`
+
+If the Remaining list is empty and no `## Story Amendment` adds new unchecked items, stop and report: "All acceptance criteria for story #N are already complete. Nothing left to implement."
+
 ### Step 4 — Dispatch to Skill Subagent
 
 Inspect the ticket's `skill:` label(s) and invoke the matching subagent(s) using the Agent tool.
@@ -48,18 +58,20 @@ Inspect the ticket's `skill:` label(s) and invoke the matching subagent(s) using
 **If the skill label is missing or unrecognised:** Stop and report: "No skill label found on ticket — run `/tl` to annotate the story first."
 
 Pass the following context to every subagent invocation:
-- Ticket: full issue body, ACs, notes, issue number
+- Ticket: full issue body, notes, issue number; remaining ACs (unchecked `- [ ]` items only — do not re-implement already-checked `- [x]` items)
 - TL Annotation: skill, complexity, scope, key decisions, AC-to-design mapping
 - TDD: full content
 - Design instructions: full content (frontend only)
+- Story Amendment: the `## Story Amendment` section from the issue body, or "None". If present, prepend: "IMPORTANT: This story has been amended. The Story Amendment supersedes the original ACs for any items listed — implement the amended versions only."
+- Existing PR: PR number and branch name if found in Step 3, or "None". If present, prepend: "IMPORTANT: This story was previously implemented. Do NOT create a new branch or PR. Check out the existing branch, apply the amendment changes as additional commits, and push to the existing PR."
 - Git: sprint branch name, story branch name, main branch name
 - Project config: codebase paths, architecture doc paths, test/lint commands, tracker adapter path
 
-**Story branch naming:**
+**Story branch naming** (only when no existing PR):
 - Single-skill story: `feature/issue-{N}-{short-description}` (from config pattern)
 - Multi-skill story: append a skill suffix — `feature/issue-{N}-{short-description}-backend` and `feature/issue-{N}-{short-description}-frontend`
 
-Each subagent always creates its own branch and always opens its own PR.
+Each subagent always creates its own branch and opens its own PR — **unless** an existing PR was found, in which case it pushes to the existing branch instead.
 
 | Skill label | Subagent(s) | Execution |
 |-------------|-------------|-----------|
@@ -74,7 +86,9 @@ If any subagent reports a blocker, use `post_comment(ISSUE_NUMBER)` from the tra
 
 ### Step 5 — Notify
 
-Once all subagents have completed, use `post_comment(ISSUE_NUMBER, body)` from the tracker adapter:
+**If an existing PR was found in Step 3** — the `## Implementation Complete` comment already exists on the issue. Skip this step entirely.
+
+**Otherwise**, once all subagents have completed, use `post_comment(ISSUE_NUMBER, body)` from the tracker adapter:
 
 ```
 ## Implementation Complete — PR #<pr-number>

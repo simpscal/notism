@@ -68,6 +68,7 @@ Read in this order when studying the codebase:
 | TDD issue | `technical-design` |
 | Design complete | `design-reviewed` |
 | Dev in progress | `in-progress` |
+| Story amended after creation | `story-updated` |
 | Skill prefix | `skill:` (e.g. `skill:frontend`) |
 
 ---
