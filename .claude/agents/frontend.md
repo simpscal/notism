@@ -74,7 +74,7 @@ Then read every file listed in the TL annotation's Scope. Then read one adjacent
 - The relevant API client module
 - Closest existing form component (if the story involves a form)
 
-Read the frontend architecture docs (paths from project config) if not already loaded.
+Read the frontend architecture docs (paths from project config) only if you need to deep-dive on a specific decision not already summarized in the TDD's "## Architecture Key Decisions" section. Start with the TDD summary first.
 
 **Complete when:** You have read enough to write the new code without re-reading anything.
 

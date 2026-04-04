@@ -154,6 +154,16 @@ Produce a TDD using this template. Fill every section:
 ## Architecture Alignment
 <The checklist from Stage 2c — mark each item Pass / Fail / N-A with a note on any Fail>
 
+## Architecture Key Decisions
+<Key decisions extracted from architecture docs — this is the canonical summary for downstream phases. Design and dev subagents read THIS section instead of re-reading the full architecture docs. Include:>
+- **Layer responsibilities**: which layers own what (e.g., domain vs application vs infrastructure)
+- **Naming conventions**: key naming patterns enforced in this codebase
+- **Adding a new feature checklist**: the steps tl recommends for extending this codebase
+- **Cross-cutting patterns**: error handling, result pattern, validation approach, how layers communicate
+- **Component/file organisation**: folder structure conventions, where new files of each type belong
+
+> Full architecture docs are available at the paths in project config — read them for deep-dives on any decision listed here.
+
 ## Story Dependencies
 <Ordered list of which stories depend on which, with rationale>
 

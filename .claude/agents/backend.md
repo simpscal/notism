@@ -70,7 +70,7 @@ Read every file listed in the TL annotation's Scope. Then read one adjacent exis
 - Relevant data model or entity
 - One existing handler unit test
 
-Read the backend architecture docs (paths from project config) if not already loaded.
+Read the backend architecture docs (paths from project config) only if you need to deep-dive on a specific decision not already summarized in the TDD's "## Architecture Key Decisions" section. Start with the TDD summary first.
 
 **Complete when:** You have read enough to write the new code without re-reading anything.
 

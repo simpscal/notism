@@ -22,7 +22,7 @@ Read `.claude/project.md`. Extract and hold in memory: tracker adapter path, rep
 
 **If ISSUE_NUMBER provided:** Use `fetch_issue($ARGUMENTS)` from the tracker adapter.
 
-**If auto-pick:** Use `list_issues` filtered by `technical-design` label to identify the active sprint milestone. Then use `list_issues(milestone_id, labels: [tl-reviewed])` and pick the first open, unassigned result with no unmet dependencies per the TDD's Story Dependencies section. If none found, report "No unassigned tickets available" and stop.
+**If auto-pick:** Use `list_issues` filtered by `technical-design` label to identify the active sprint milestone. Then use `list_issues(milestone_id)` (all open issues in the sprint, no label filter) and filter client-side for `tl-reviewed` + no `in-progress` label + no unmet dependencies per the TDD's Story Dependencies section. If none found, report "No unassigned tickets available" and stop.
 
 Read the issue in full and identify its `skill:` label(s). Use `update_labels(issue_id, add: [in-progress], remove: [])` from the tracker adapter.
 
@@ -32,18 +32,17 @@ Implement **one story per invocation** — do not batch.
 
 Use `list_issues(milestone_id, labels: [technical-design])` to find the TDD issue. Use `fetch_issue` to read it in full — problem statement, proposed solution, architecture alignment, story dependencies, and risks. Build a sprint-wide mental model: which stories depend on which, what shared infrastructure exists, and what patterns the TL has prescribed.
 
-### Step 3 — Fetch Story Context
+### Step 3 — Gather All Story Context in Parallel
 
-Read:
-- The full issue body (description + ACs + notes) — already fetched in Step 1
-- The `## Technical Lead Annotation` comment on the issue (use `fetch_issue` which returns comments)
-- The TDD sections referenced in the annotation
+In a single batch, fetch all context needed for dispatch. Fire these simultaneously (they are all independent once the ticket is selected):
 
-**If any skill label is `skill:frontend`:** Check for a `## Design Instructions` comment on the issue (posted by the designer). If found, read it in full — this is the primary source for UI implementation guidance.
+1. **Issue body + comments** — the ticket already fetched in Step 1 (hold it)
+2. **TDD** — `list_issues(milestone_id, labels: [technical-design])` to find it, then `fetch_issue(tdd_number)` to read full content. Extract: problem statement, proposed solution, architecture alignment, story dependencies, risks.
+3. **Design Instructions** (frontend only) — from the `## Design Instructions` comment already in the issue's comment list from Step 1. Extract the full body if present.
+4. **Story Amendment** — scan issue body (from Step 1) for `## Story Amendment` section. If present, extract the `### Updated Acceptance Criteria` list.
+5. **Existing PR** — if issue has label `story-updated`, scan comments for `## Implementation Complete`, extract PR number(s), then `fetch_pr(pr_number)` to get branch name.
 
-**Check for story amendment:** If the issue body contains a `## Story Amendment` section, read it in full. Every AC listed under `### Updated Acceptance Criteria` supersedes the matching AC in the original issue body. ACs not mentioned remain in force from the original.
-
-**Check for existing PR:** If the issue has label `story-updated`, scan comments for any `## Implementation Complete` comment. If found, extract the PR number(s). Use `fetch_pr(<pr-number>)` from the tracker adapter to read each PR and obtain its branch name. These are the **continuation branches** — pass them to the subagent instead of generating new branch names.
+After all fetches complete:
 
 **Determine remaining work:** Scan the `## Acceptance Criteria` checklist in the issue body and, if present, the `### Updated Acceptance Criteria` list in `## Story Amendment`. Build two lists:
 - **Done** — items marked `- [x]`
@@ -57,15 +56,16 @@ Inspect the ticket's `skill:` label(s) and invoke the matching subagent(s) using
 
 **If the skill label is missing or unrecognised:** Stop and report: "No skill label found on ticket — run `/tl` to annotate the story first."
 
-Pass the following context to every subagent invocation:
-- Ticket: full issue body, notes, issue number; remaining ACs (unchecked `- [ ]` items only — do not re-implement already-checked `- [x]` items)
-- TL Annotation: skill, complexity, scope, key decisions, AC-to-design mapping
-- TDD: full content
-- Design instructions: full content (frontend only)
-- Story Amendment: the `## Story Amendment` section from the issue body, or "None". If present, prepend: "IMPORTANT: This story has been amended. The Story Amendment supersedes the original ACs for any items listed — implement the amended versions only."
-- Existing PR: PR number and branch name if found in Step 3, or "None". If present, prepend: "IMPORTANT: This story was previously implemented. Do NOT create a new branch or PR. Check out the existing branch, apply the amendment changes as additional commits, and push to the existing PR."
-- Git: sprint branch name, story branch name, main branch name
-- Project config: codebase paths, architecture doc paths, test/lint commands, tracker adapter path
+Pass the following context to every subagent invocation. **All context is passed directly — do NOT instruct subagents to fetch issues, read project.md, or re-read the TDD:**
+
+- **Ticket**: full issue body, notes, issue number; remaining ACs (unchecked `- [ ]` items only — do not re-implement already-checked `- [x]` items)
+- **TL Annotation**: skill, complexity, scope, key decisions, AC-to-design mapping (from issue comments gathered in Step 3)
+- **TDD**: full content gathered in Step 3 — verbatim
+- **Design instructions**: full content from `## Design Instructions` comment (frontend only, gathered in Step 3)
+- **Story Amendment**: the `## Story Amendment` section from the issue body, or "None". If present, prepend: "IMPORTANT: This story has been amended. The Story Amendment supersedes the original ACs for any items listed — implement the amended versions only."
+- **Existing PR**: PR number and branch name if found in Step 3, or "None". If present, prepend: "IMPORTANT: This story was previously implemented. Do NOT create a new branch or PR. Check out the existing branch, apply the amendment changes as additional commits, and push to the existing PR."
+- **Git**: sprint branch name, story branch name, main branch name
+- **Project config**: use the values loaded in Step 0 from project.md — do NOT read project.md or the tracker adapter inside the subagent
 
 **Story branch naming** (only when no existing PR):
 - Single-skill story: `feature/issue-{N}-{short-description}` (from config pattern)

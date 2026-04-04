@@ -41,11 +41,9 @@ Build a sprint-wide UI mental model: which stories touch the same pages, what da
 
 ### Step 4 — Read the Design System
 
-Read architecture documentation:
-- For the frontend codebase: read its main CLAUDE.md file (from project config)
-- For each codebase: read convention/rules docs if they exist (architecture.md, best-practices.md, naming.md)
+**Architecture context:** Start with the TDD's "## Architecture Key Decisions" section — it summarizes layer responsibilities, naming conventions, and "adding a new feature" checklist from the architecture docs. Only read the raw frontend CLAUDE.md and convention/rules docs (architecture.md, best-practices.md, naming.md) if you need to deep-dive on a specific architectural question not covered in the TDD summary.
 
-Then read actual implementation files to audit the design system:
+**Design system files** (always required — these are design-specific, not architecture):
 - **Design tokens**: Read the CSS file referenced in project config — look for the `@theme` block and custom property definitions. Extract: color system, spacing scale, typography, border-radius, shadows
 - **Component inventory**: Read component source files from the frontend codebase path specified in project config — extract component names, CVA variants, sizes, and key props
 - **Page patterns**: For each frontend story, find the closest existing page in the codebase. Read its full layout structure, component usage, and how it handles loading/error/empty states

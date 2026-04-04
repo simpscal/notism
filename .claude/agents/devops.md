@@ -71,7 +71,7 @@ Read every file listed in the TL annotation's Scope. Then read adjacent existing
 - Existing IaC files (Terraform, CDK, CloudFormation) for the affected resources
 - Any existing scripts that the new change extends or replaces
 
-Read the architecture docs (paths from project config) if not already loaded.
+Read the architecture docs (paths from project config) only if you need to deep-dive on a specific decision not already summarized in the TDD's "## Architecture Key Decisions" section. Start with the TDD summary first.
 
 **Complete when:** You understand the current state well enough to make the change safely.
 
