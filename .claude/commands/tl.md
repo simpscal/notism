@@ -81,23 +81,29 @@ Draft an explicit checklist derived from the architecture docs. For each item: *
 
 #### Stage 3 — Design the Solution
 
-Produce a coherent technical design covering the full sprint:
+Produce a coherent system-level design covering the full sprint. Work at the architecture and contract level — not the code level.
 
-**Domain:** New entities, value objects, aggregates; changes to existing domain objects; key invariants.
+**Services & integrations:** Which services, databases, caches, and third-party tools are involved? What is new vs. already in place?
 
-**Application:** New commands (write) and queries (read) with their purpose and logical inputs/outputs.
+**Integration flows:** Trace the happy path and at least one unhappy path as sequence diagrams (Mermaid). Every system boundary must be visible.
 
-**Database:** New tables or relationships, key indexes, migration strategy (additive changes only).
+**API contracts:** How many new endpoints? How many existing endpoints change? Define method, route, auth, request/response shape, and status codes for each.
 
-**API:** New endpoints — HTTP method, route, request/response shape, auth requirement; which command/query each dispatches.
+**Data models:** What new or modified entities are needed? Produce an ERD or JSON schema. Include key indexes.
 
-**Frontend:** New pages or routes; feature module split; state approach (server state vs. global client state).
+**Frontend scope:** How many new pages/routes? How many existing pages change? What does each do at the user level?
 
-**Cross-cutting:** Authentication/authorisation requirements; error handling strategy at the user-facing level.
+**Security:** Authentication, authorisation, and encryption requirements.
 
-For each major decision: document at least one alternative considered and why it was rejected. Flag any deviation from existing patterns with explicit justification. Identify risks and mitigations.
+**Failure modes:** What happens when each external dependency fails? Document the mitigation for each.
 
-**Complete when:** You can trace the full data flow from user action to database and back for every acceptance criterion.
+**Scalability:** Expected load (TPS), latency targets, and how the design scales.
+
+**Migration & rollout:** How is existing data migrated? Flag-day cutover or canary? Rollback plan?
+
+For each major decision: document at least one alternative and why it was rejected.
+
+**Complete when:** A senior engineer who was not in any planning meeting could start building from this design alone.
 
 #### Stage 4 — Write the Technical Design Document (TDD)
 
@@ -106,73 +112,111 @@ Produce a TDD using this template. Fill every section:
 ```markdown
 # Sprint N — Technical Design Document
 
-## Problem Statement
-<What gap or need does this sprint address? One short paragraph.>
+## 1. Executive Summary
 
-## Goals
-- <Goal 1 — what the user will be able to do>
-- <Goal 2>
+**Status**: Draft | Approved | Deprecated
+**Author**: | **Reviewer**:
 
-## Non-Goals
-- <What this sprint explicitly does NOT address>
+### Problem Statement
+<2–3 sentences: what gap or pain does this sprint address and why now?>
 
-## Proposed Solution
+### Goals
+- <What the user gains>
 
-### Backend
+### Non-Goals
+- <What this sprint explicitly does not address>
 
-#### Domain Changes
-<New or modified entities, aggregates, value objects, business rules, invariants to enforce>
+---
 
-#### Application Layer
-<For each new command/query: name, purpose, key inputs/outputs at a logical level>
+## 2. Architectural Design
 
-#### Database
-<New tables and relationships, why they are needed, key indexes, migration notes>
+### High-Level Diagram
+<Mermaid diagram showing all services, databases, caches, and third-party tools involved>
 
-#### API Endpoints
-| Method | Route | Auth | Request | Response |
-|--------|-------|------|---------|----------|
+### Integration Flows
 
-### Frontend
+#### Happy Path
+<Mermaid sequence diagram: user action → service(s) → storage → response>
 
-#### Pages & Routes
-<New route paths and their page components>
+#### Unhappy Path
+<Mermaid sequence diagram: key failure scenario(s) and how the system responds>
 
-#### Feature Modules
-<What lives in features/ vs pages/ vs components/ — and why>
+### Technology Stack
+<Any new languages, frameworks, libraries, or infrastructure this sprint introduces>
 
-#### State & Data Fetching
-<Server state vs. global client state — which is used where and why>
+---
 
-## Data Flow
-<Step-by-step narrative of the primary user scenario end-to-end>
+## 3. Data & Interface Contracts
 
-## Alternatives Considered
-| Decision | Option Chosen | Alternative | Why Alternative Was Rejected |
-|----------|--------------|-------------|------------------------------|
+### Data Models
+<ERD or JSON schema for each new or modified entity. Include key indexes.>
+
+### API Specification
+| Method | Route | Auth | Request Body | Response | Status Codes |
+|--------|-------|------|-------------|----------|--------------|
+
+### Event Schemas
+<If a message bus is used: topic name, event structure, producer, consumer. Otherwise: N/A>
+
+---
+
+## 4. Risk & Trade-offs
+
+### Alternatives Considered
+| Decision | Chosen | Alternative | Why Alternative Was Rejected |
+|----------|--------|-------------|------------------------------|
+
+### Security
+<Authentication, authorisation, data encryption at rest and in transit>
+
+### Scalability & Performance
+<Expected throughput (TPS), latency targets, horizontal vs. vertical scaling strategy>
+
+### Failure Modes
+| Scenario | Impact | Mitigation |
+|----------|--------|------------|
+
+---
+
+## 5. Implementation & Observability
+
+### Milestones
+| Phase | Scope | Deliverable |
+|-------|-------|-------------|
+
+### Monitoring & Alerting
+<Key metrics to track (error rate, latency, queue depth); threshold that pages on-call>
+
+### Migration Plan
+<How existing data is migrated; cutover strategy (flag-day vs. canary); rollback plan>
+
+---
 
 ## Architecture Alignment
-<The checklist from Stage 2c — mark each item Pass / Fail / N-A with a note on any Fail>
+<Checklist derived from architecture docs — Pass / Fail / N-A with note on any Fail>
 
 ## Architecture Key Decisions
-<Key decisions extracted from architecture docs — this is the canonical summary for downstream phases. Design and dev subagents read THIS section instead of re-reading the full architecture docs. Include:>
-- **Layer responsibilities**: which layers own what (e.g., domain vs application vs infrastructure)
+<Canonical summary for downstream dev subagents — read THIS instead of re-reading full architecture docs. Include:>
+- **Layer responsibilities**: which layers own what
 - **Naming conventions**: key naming patterns enforced in this codebase
-- **Adding a new feature checklist**: the steps tl recommends for extending this codebase
-- **Cross-cutting patterns**: error handling, result pattern, validation approach, how layers communicate
+- **Adding a new feature checklist**: steps Alex recommends for extending this codebase
+- **Cross-cutting patterns**: error handling, result pattern, validation approach, layer communication
 - **Component/file organisation**: folder structure conventions, where new files of each type belong
 
-> Full architecture docs are available at the paths in project config — read them for deep-dives on any decision listed here.
+> Full architecture docs are available at the paths in project config — read them for deep-dives.
 
 ## Story Dependencies
 <Ordered list of which stories depend on which, with rationale>
 
-## Risks & Mitigations
-| Risk | Likelihood | Impact | Mitigation |
-|------|-----------|--------|------------|
+---
+
+## Lead's Review Checklist
+- [ ] Is there a single point of failure? (If yes, it is documented with a mitigation in §4)
+- [ ] Does this design introduce technical debt we'll regret in 6 months? (If yes, it is justified)
+- [ ] Could a developer who wasn't in the meetings build this from this document alone?
 ```
 
-**Complete when:** Every story has an implementation path traceable through the TDD.
+**Complete when:** Every story has an implementation path traceable through the TDD, and the Lead's Review Checklist passes.
 
 #### Stage 5 — Annotate Each Story
 
@@ -192,9 +236,9 @@ For each user story, produce a self-contained annotation:
 - <Decision: what was chosen and why — reference TDD section if relevant>
 
 ### Acceptance Criteria
-| AC | Design Approach | TDD Reference |
-|----|----------------|---------------|
-| <AC text> | <what to build at the design level> | <TDD section header> |
+| AC | TDD Reference |
+|----|---------------|
+| <AC text> | <TDD section header> |
 ```
 
 **Complexity guide:** S = <4h single layer · M = 4–8h standard pattern · L = >8h complex/cross-cutting
