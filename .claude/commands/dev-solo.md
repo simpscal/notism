@@ -1,6 +1,6 @@
 ---
-name: implement
-description: Implement — implement a task from the conversation directly on the current branch (no tracker, no PR). Usage: /implement <task description>
+name: dev-solo
+description: Dev Solo — implement a task from the conversation directly on the current branch (no tracker, no PR). Usage: /dev-solo <task description>
 tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops)
 ---
 
