@@ -1,6 +1,6 @@
 ---
 name: design
-description: Design — read sprint user stories, analyze design system, create design instructions for frontend stories. Usage: /design <milestone-id>
+description: Design — read sprint user stories, analyze design system, create design instructions for frontend stories. Usage: /design <sprint-number>
 tools: Read, Glob, Grep, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__plugin_figma_figma__authenticate
 ---
 
@@ -20,19 +20,27 @@ If a `Plan mode is active` system-reminder is present in the conversation contex
 
 Read `.claude/project.md`. Extract and hold in memory: tracker adapter path, repo, codebase paths, labels, architecture doc locations. Then read the tracker adapter file — all issue tracker operations use the operations it defines. No hardcoded repo slugs, paths, or label strings.
 
+Resolve the sprint argument to a GitHub milestone ID:
+- Treat `$ARGUMENTS` as the sprint number N (e.g. `2`)
+- Use `list_milestones()` from the tracker adapter to fetch all milestones
+- Find the milestone whose title is `Sprint N`
+- Hold its GitHub ID as `$MILESTONE_ID` for all subsequent steps
+
+If no matching milestone is found, list the available milestones and stop.
+
 ### Step 1 — Load the Design Skill
 
 Use the `frontend-design` Claude Code skill (the system-level skill) to guide your design methodology. This skill provides expert UI/UX principles that you will apply to the project's existing design system.
 
 ### Step 2 — Fetch Sprint Context
 
-Use `list_issues($ARGUMENTS, labels: [skill:frontend, skill:fullstack])` from the tracker adapter. Use `fetch_issue(id)` on each matching issue to read it in full — body, acceptance criteria, and notes.
+Use `list_issues($MILESTONE_ID, labels: [skill:frontend, skill:fullstack])` from the tracker adapter. Use `fetch_issue(id)` on each matching issue to read it in full — body, acceptance criteria, and notes.
 
 **If no frontend/fullstack stories found:** Report "No frontend stories in this milestone — skipping design phase" and stop.
 
 ### Step 3 — Read the TDD
 
-Use `list_issues($ARGUMENTS, labels: [technical-design])` from the tracker adapter to find the TDD issue. Use `fetch_issue` to read its full content, focusing on:
+Use `list_issues($MILESTONE_ID, labels: [technical-design])` from the tracker adapter to find the TDD issue. Use `fetch_issue` to read its full content, focusing on:
 - Frontend section: Pages & Routes, Feature Modules, State & Data Fetching
 - Data Flow (for UI context)
 - Story Dependencies (to understand story ordering)

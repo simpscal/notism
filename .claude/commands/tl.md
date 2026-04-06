@@ -1,6 +1,6 @@
 ---
 name: tl
-description: Technical Lead — read architecture, design a high-level solution for a sprint milestone, produce a TDD and annotate all stories. Usage: /tl <milestone-id>
+description: Technical Lead — read architecture, design a high-level solution for a sprint milestone, produce a TDD and annotate all stories. Usage: /tl <sprint-number>
 tools: Read, Glob, Grep, Bash, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__github__create_branch
 ---
 
@@ -20,9 +20,17 @@ If a `Plan mode is active` system-reminder is present in the conversation contex
 
 Read `.claude/project.md`. Extract and hold in memory: tracker adapter path, repo, codebase paths, architecture doc locations, and all label names. Then read the tracker adapter file — all issue tracker operations in subsequent steps use the operations it defines. No hardcoded repo slugs, paths, or label strings.
 
+Resolve the sprint argument to a GitHub milestone ID:
+- Treat `$ARGUMENTS` as the sprint number N (e.g. `2`)
+- Use `list_milestones()` from the tracker adapter to fetch all milestones
+- Find the milestone whose title is `Sprint N`
+- Hold its GitHub ID as `$MILESTONE_ID` for all subsequent steps
+
+If no matching milestone is found, list the available milestones and stop.
+
 ### Step 1 — Fetch All Stories
 
-Use `list_issues($ARGUMENTS)` from the tracker adapter to list all open issues in the milestone. Use `fetch_issue(id)` on each one to read the full body — description, acceptance criteria, and notes.
+Use `list_issues($MILESTONE_ID)` from the tracker adapter to list all open issues in the milestone. Use `fetch_issue(id)` on each one to read the full body — description, acceptance criteria, and notes.
 
 ### Step 2 — Read the Architecture
 
@@ -250,7 +258,7 @@ For each user story, produce a self-contained annotation:
 ### Step 5 — Create TDD Issue
 
 Use `create_issue(title, body, labels)` from the tracker adapter:
-- **Title**: `Sprint $ARGUMENTS — Technical Design Document`
+- **Title**: `Sprint N — Technical Design Document` (where N is the sprint number resolved in Step 0)
 - **Body**: full TDD from Stage 4, with `Part of #N` (parent requirement issue) at the very top
 - **Labels**: `technical-design` and `tl-reviewed` labels from project config
 
@@ -294,7 +302,7 @@ Find the parent requirement issue (linked via "Part of #N" in the stories):
 
 ---
 > ⏸ Human gate: Review the TDD and story annotations.
-> When ready: `/design <milestone-id>` (if sprint has frontend stories) or `/dev [issue-number]`
+> When ready: `/design <sprint-number>` (if sprint has frontend stories) or `/dev [issue-number]`
 ```
 
 ## Constraints

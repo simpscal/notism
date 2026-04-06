@@ -69,6 +69,7 @@ Read in this order when studying the codebase:
 | Design complete | `design-reviewed` |
 | Dev in progress | `in-progress` |
 | Story amended after creation | `story-updated` |
+| Sprint closed | `sprint-completed` |
 | Skill prefix | `skill:` (e.g. `skill:frontend`) |
 
 ---
