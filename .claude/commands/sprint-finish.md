@@ -96,10 +96,10 @@ The TDD is committed to **this repository**
 ```bash
 git checkout main
 git pull origin main
-mkdir -p docs/tdds
+mkdir -p docs/designs
 ```
 
-Write the TDD content to `docs/tdds/sprint-N.md`. The file format:
+Write the TDD content to `docs/designs/sprint-N.md`. The file format:
 
 ```markdown
 # Sprint N — Technical Design Document
@@ -116,7 +116,7 @@ Write the TDD content to `docs/tdds/sprint-N.md`. The file format:
 Then commit and push directly to `main`:
 
 ```bash
-git add docs/tdds/sprint-N.md
+git add docs/designs/sprint-N.md
 git commit -m "docs(sprint-N): archive Technical Design Document"
 git push origin main
 ```
@@ -125,7 +125,7 @@ If the file already exists (re-run scenario), overwrite it — the commit will b
 
 Output:
 ```
-✓ TDD archived to docs/tdds/sprint-N.md
+✓ TDD archived to docs/designs/sprint-N.md
 ```
 
 ### Step 6 — Check for EF Core Migrations (Backend Only)
