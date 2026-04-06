@@ -144,14 +144,7 @@ If no migration files are found, note: "No database migrations in this sprint."
 
 ### Step 7 — Create Release PRs (Sprint Branch → Main)
 
-For each codebase, check whether the sprint branch has commits not yet in `main`:
-
-```bash
-cd {codebase_path}
-git log origin/main..origin/{sprint_branch} --oneline
-```
-
-If there are commits, create a PR via `create_pr(title, body, head, base)`:
+For each codebase, create a PR via `create_pr(title, body, head, base)`:
 
 - **Title**: `feat(sprint-N): {milestone description}`
 - **Base**: `main`
@@ -168,7 +161,7 @@ Merges all Sprint N stories into main.
 (one line per story)
 
 ## Migration notes
-<If migrations found in Step 5:>
+<If migrations found in Step 6:>
 ⚠️ EF Core migrations detected — apply before or after deploy:
   dotnet ef database update
 
@@ -185,8 +178,6 @@ No database migrations in this sprint.
 - [ ] Lint and tests pass on sprint branch
 - [ ] QA sign-off
 ```
-
-If the sprint branch has no commits ahead of `main` for a given codebase, skip that codebase's PR and note it.
 
 ### Step 8 — Post Sprint Summary
 
@@ -222,4 +213,3 @@ Post a comment on the requirement issue using `post_comment(requirement_issue_id
 - Never merge any PR — only create them. Merging is a human action.
 - Do not proceed past Step 2 if any story has unmerged work.
 - All label names and branch patterns come from `project.md`. Do not hardcode them.
-- If a codebase's sprint branch has no commits ahead of `main`, skip its PR silently (no error).
