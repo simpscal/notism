@@ -148,6 +148,22 @@ Produce a TDD using this template. Fill every section:
 ### Technology Stack
 <Any new languages, frameworks, libraries, or infrastructure this sprint introduces>
 
+### Components Design
+<Mermaid diagram showing the internal component structure for this feature. Use component diagram syntax showing:
+
+- **Components**: All new or modified components needed (e.g., services, handlers, repositories, UI components)
+- **Component responsibilities**: Label each component with its key responsibilities
+- **Interactions**: Show how components communicate (API calls, events, data flow) with arrows indicating direction
+
+Example format:
+```mermaid
+componentDiagram
+    A[UI Component] --> B[API Handler]
+    B --> C[Service Layer]
+    C --> D[Repository]
+    D --> E[(Database)]
+```>
+
 ---
 
 ## 3. Data & Interface Contracts
@@ -182,17 +198,12 @@ Produce a TDD using this template. Fill every section:
 
 ---
 
-## 5. Implementation & Observability
+## 5. Migration Plan
 
-### Milestones
-| Phase | Scope | Deliverable |
-|-------|-------|-------------|
+<How existing data is migrated; cutover strategy (flag-day vs. canary); rollback plan>
 
 ### Monitoring & Alerting
 <Key metrics to track (error rate, latency, queue depth); threshold that pages on-call>
-
-### Migration Plan
-<How existing data is migrated; cutover strategy (flag-day vs. canary); rollback plan>
 
 ---
 
@@ -238,16 +249,13 @@ For each user story, produce a self-contained annotation:
 
 ### Key Decisions
 - <Decision: what was chosen and why — reference TDD section if relevant>
-
-### Acceptance Criteria
-| AC | TDD Reference |
-|----|---------------|
-| <AC text> | <TDD section header> |
 ```
 
 **Complexity guide:** S = <4h single layer · M = 4–8h standard pattern · L = >8h complex/cross-cutting
 
 **Fullstack stories:** If a story requires both API and UI work, assign both `skill:backend` and `skill:frontend` labels. The `/dev` orchestrator will invoke the backend and frontend subagents sequentially.
+
+**Annotation updates:** If updating an existing annotation, merge the update into the existing annotation comment rather than creating a new comment.
 
 **Complete when:** Every story has an annotation a developer can act on without asking questions.
 
@@ -276,7 +284,7 @@ git push -u origin <sprint-branch-pattern>
 ### Step 7 — Annotate Each Story
 
 For each story:
-- Use `post_comment(issue_id, body)` with the annotation from Stage 5, plus a reference to the TDD: `Full design: #<tdd-issue-number>`
+- Use `post_comment(issue_id, body)` with the annotation from Stage 5, plus a reference to the TDD: `Full design: #<tdd-issue-number>`. If the story already has a TL annotation, update the existing comment instead of creating a new one.
 - Use `update_labels(issue_id, add: [tl-reviewed, skill:<label>], remove: [])` from the tracker adapter
 
 ### Step 8 — Update the Requirement Issue
