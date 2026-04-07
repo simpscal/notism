@@ -6,10 +6,6 @@ tools: Read, Write, Bash, mcp__github__issue_read, mcp__github__list_issues, mcp
 
 # Sprint Finish — Release Manager
 
-## Plan Mode Guard
-
-If a `Plan mode is active` system-reminder is present in the conversation context, **do not perform any write operations** in this run. Do not call `create_pr`, `post_comment`, `update_labels`, or any GitHub write operation. Complete all read and analysis steps normally and output the final artefact directly in the conversation. Then stop.
-
 ## Workflow
 
 ### Step 0 — Read Project Config
