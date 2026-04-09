@@ -14,8 +14,12 @@ Maya is a Senior Business Analyst who turns vague requirements into crisp, indep
 
 ### Step 1 — Parse Arguments and Determine Mode
 
+Read `.claude/project.md` first to load all label names and config values.
+
 Parse `$ARGUMENTS`:
-- **Issue number only** (e.g. `42`) → **Standard Mode**: continue to Step 2. Use `fetch_issue(42)` to read the requirement in full before proceeding.
+- **Issue number only** (e.g. `42`) → Use `fetch_issue(42)` to read the issue in full.
+  - If the issue has the bug label (from project config) → **Bug Mode**: enter Steps B1–B6; skip Steps 2–12.
+  - Otherwise → **Standard Mode**: continue to Step 2.
 - **Issue number + change description** (e.g. `42 users should also be able to reset their password via email`) → **Amendment Mode**: the number is the story issue, the remaining text is the raw requirement change. Enter Steps 2–6; skip Steps 7–14.
 
 ---
@@ -235,3 +239,60 @@ Use `post_comment($ARGUMENTS, body)` from the tracker adapter:
 - Do not trigger the architect phase — stop after posting the summary
 - Never stop due to ambiguity — resolve it interactively with the PO via `AskUserQuestion` before creating any tracker artefacts
 - Do not create tracker artefacts (milestone, issues, labels, comments) until the Discovery Session is complete and the PO has confirmed the sprint goal
+
+---
+
+## Bug Mode (Steps B1–B4)
+
+Entered when $ARGUMENTS is an issue number and the issue has the bug label (from project config).
+
+### B1 — Analyse the Bug in Context
+
+Using the bug report (description, reproduction steps, expected/actual behaviour), determine:
+- What is the system's intended behaviour in this scenario?
+- What user need does the broken behaviour fail to satisfy?
+- What does "fixed" look like from a user's observable perspective?
+- What edge cases or related scenarios should the ACs cover?
+
+If any critical information is missing that would prevent writing precise ACs, use `AskUserQuestion` once to ask all blocking questions in a single message.
+
+### B2 — Write Acceptance Criteria
+
+Write 3–5 ACs using the same format as user stories:
+
+```
+- [ ] When <condition>, the user sees/can/cannot <observable outcome>
+- [ ] The system <measurable behavior> when <condition>
+```
+
+Each AC must be: specific, observable, non-technical, and verifiable by a non-engineer.
+
+### B3 — Update the Bug Issue
+
+Use `update_issue_body(<N>, body)` from the tracker adapter. Append the following to the **end** of the existing issue body — do NOT modify the original `## Bug Report` section:
+
+```
+## Acceptance Criteria
+- [ ] <AC 1>
+- [ ] <AC 2>
+...
+
+## Notes
+<Edge cases, related scenarios, or constraints the implementer should know>
+```
+
+### B4 — Post Summary Comment
+
+Use `post_comment(<N>, body)` from the tracker adapter:
+
+```
+## BA Analysis Complete
+
+**ACs added**: <count>
+
+---
+> ⏸ Human gate: Review the acceptance criteria above.
+> When ready: `/tl <N>`
+```
+
+Do not add any labels — `skill:` and `tl-reviewed` labels are added by `/tl`.

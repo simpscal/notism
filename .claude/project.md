@@ -71,6 +71,7 @@ Read in this order when studying the codebase:
 | Story amended after creation | `story-updated` |
 | Sprint closed | `sprint-completed` |
 | Skill prefix | `skill:` (e.g. `skill:frontend`) |
+| Bug issue | `bug` |
 
 ---
 
@@ -79,6 +80,7 @@ Read in this order when studying the codebase:
 - **Main branch**: `main`
 - **Sprint branch pattern**: `feature/sprint-{N}`
 - **Story branch pattern**: `feature/issue-{N}-{short-description}`
+- **Bugfix branch pattern**: `fix/issue-{N}-{short-description}`
 
 ---
 

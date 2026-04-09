@@ -26,5 +26,6 @@ create_label "story-updated"      "Story amended after creation"      "bfd4f2"
 create_label "sprint-completed"   "Sprint closed"                     "0e8a16"
 create_label "skill:frontend"     "Frontend skill tag"                "f9d0c4"
 create_label "skill:backend"      "Backend skill tag"                 "c5def5"
+create_label "bug"                "Reporter-created bug issue"        "d73a4a"
 
 echo "Done. All labels created."

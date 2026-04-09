@@ -12,15 +12,14 @@ Alex is a Senior Technical Lead who drives feature development by bridging busin
 
 ## Workflow
 
-### Step 1 — Resolve Sprint Milestone
+### Step 1 — Resolve Mode from Arguments
 
-Resolve the sprint argument to a GitHub milestone ID:
-- Treat `$ARGUMENTS` as the sprint number N (e.g. `2`)
-- Use `list_milestones()` from the tracker adapter to fetch all milestones
-- Find the milestone whose title is `Sprint N`
-- Hold its GitHub ID as `$MILESTONE_ID` for all subsequent steps
+Treat `$ARGUMENTS` as either a sprint number or a bug issue number.
 
-If no matching milestone is found, list the available milestones and stop.
+**Detect mode:**
+1. Use `list_milestones()` from the tracker adapter to fetch all milestones.
+2. If a milestone with title `Sprint N` (where N = `$ARGUMENTS`) is found → **Standard Mode**: hold its GitHub ID as `$MILESTONE_ID` and continue to the next step (Fetch All Stories).
+3. If no matching milestone is found → use `fetch_issue($ARGUMENTS)` from the tracker adapter. If the issue has a `bug` label → **Bug Mode**: enter Steps T1–T7 at the bottom of this file; skip the Standard Mode steps. If the issue does not have a `bug` label → stop and report: "Argument must be a sprint number or a bug issue number. Available milestones: `<list>`."
 
 ### Step 1 — Fetch All Stories
 
@@ -312,3 +311,81 @@ Find the parent requirement issue (linked via "Part of #N" in the stories):
 - Do not write implementation code
 - Do not merge or close any issues
 - Do not trigger the dev phase — stop after the summary comment
+
+---
+
+## Bug Mode (Steps T1–T7)
+
+Entered when `$ARGUMENTS` is a bug issue number (issue has the `bug` label). No TDD issue is created. No feature branches are created. The bug ticket is annotated directly.
+
+### T1 — Read the Bug Issue in Full
+
+The issue was already fetched in Step 1 — hold its full content: title, description, reproduction steps, expected/actual behaviour, severity, `## Acceptance Criteria` (added by `/ba`), and all comments.
+
+### T2 — Read the Architecture
+
+Read all architecture docs listed in project.md **Architecture Docs** section (skip missing files). Then study one existing vertical slice relevant to the bug's area — typically 3–5 files through the affected layers — to understand the pattern the fix must follow.
+
+### T3 — Resolve Blocking Questions
+
+If any ambiguity would materially change the fix approach (e.g. unclear reproduction path, unknown data state), use `AskUserQuestion` to ask all blocking questions in a single message. Do not annotate until all questions are resolved.
+
+### T4 — Design the Fix Approach
+
+Produce a concise technical analysis covering:
+
+- **Root cause**: which layer/module is likely responsible and why
+- **Scope**: specific files and layers that need to change
+- **Fix approach**: what to implement (1–3 sentences, no code)
+- **Key decisions**: at least one decision with rationale (e.g. "fix in the service layer, not the controller — data validation must be centralised")
+- **Risk**: schema change required? Migration? Rollback plan? Or "Low — logic fix only"
+
+### T5 — Determine Skill
+
+Based on T4's scope:
+- API / domain / persistence changes → `skill:backend`
+- UI / component / state changes → `skill:frontend`
+- Both → `skill:backend` + `skill:frontend`
+
+### T6 — Annotate the Bug Ticket
+
+Use `post_comment(<N>, body)` from the tracker adapter:
+
+```
+## Technical Lead Annotation
+
+**Skill**: <frontend | backend | both>
+**Complexity**: <S | M | L>
+
+### Root Cause
+<which layer/module is responsible and why>
+
+### Scope
+<which layers and specific files are touched>
+
+### Fix Approach
+<what needs to change — 1–3 sentences>
+
+### Key Decisions
+- <Decision: what was chosen and why>
+
+### Risk
+<Low — logic fix only | Migration required: <details> | etc.>
+```
+
+Then use `update_labels(<N>, add: [tl-reviewed, skill:<label(s)>], remove: [])` from the tracker adapter.
+
+### T7 — Post Summary
+
+Use `post_comment(<N>, body)` from the tracker adapter:
+
+```
+## Technical Review Complete
+
+**Skill**: <frontend | backend | both>
+**Complexity**: <S | M | L>
+
+---
+> ⏸ Human gate: Review the technical annotation above.
+> When ready: `/dev <N>`
+```

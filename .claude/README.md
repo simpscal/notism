@@ -28,10 +28,11 @@ Each phase ends with a **human gate** — you review the output before running t
 
 | Command | Agent | Input | Output |
 |---------|-------|-------|--------|
-| `/ba <issue-number>` | Maya (BA) | requirement issue # | user story issues + sprint milestone |
+| `/bug-report <description>` | Bug Reporter | bug description | bug issue with `bug` label |
+| `/ba <issue-number>` | Maya (BA) | requirement issue # or bug issue # | user story issues + sprint milestone (for requirements) — or ACs added to bug ticket |
 | `/design <milestone-id>` | Nhi (Designer) | milestone # | design instruction comments on frontend stories |
-| `/tl <milestone-id>` | Alex (Technical Lead) | milestone # | TDD issue + annotated stories |
-| `/dev [issue-number]` | Dev persona (auto-selected from ticket labels) | optional issue # | implementation + PR to sprint branch |
+| `/tl <milestone-id or bug-issue-number>` | Alex (Technical Lead) | milestone # or bug issue # | TDD issue + annotated stories (for sprints) — or technical annotation on bug ticket |
+| `/dev [issue-number]` | Dev persona (auto-selected from ticket labels) | optional issue # | implementation + PR to sprint branch (stories) or main (bugs) |
 
 Skills: `frontend` · `backend` · `fullstack` · `devops`
 
@@ -126,14 +127,35 @@ The persona (frontend/backend/fullstack/devops) is determined automatically from
 |-------|---------|
 | `requirement` | PO-created requirement |
 | `user-story` | BA-created story |
+| `bug` | Reporter-created bug issue |
 | `sprint-ready` | Awaiting design |
 | `tl-reviewed` | TL complete — awaiting dev |
 | `technical-design` | TDD issue |
 | `design-reviewed` | Design instructions complete — awaiting dev |
 | `in-progress` | Dev is implementing |
-| `skill:frontend` | Frontend story |
-| `skill:backend` | Backend story |
+| `skill:frontend` | Frontend story or bug |
+| `skill:backend` | Backend story or bug |
 | `skill:fullstack` | Full-stack story |
 | `skill:devops` | Infrastructure story |
 
 > Label names are configurable in `project.md`.
+
+---
+
+## Bug Workflow
+
+A separate pipeline for fixing production bugs — runs independently of the sprint cycle. Bug PRs always target `main`.
+
+```
+/bug-report <description>
+        ↓ ← HUMAN GATE: review bug summary
+  /ba <N>   →  BA reads architecture, adds ACs to the bug ticket
+        ↓ ← HUMAN GATE: review acceptance criteria
+  /tl <N>   →  TL reads architecture + ACs, annotates bug ticket with skill/scope/decisions
+        ↓ ← HUMAN GATE: review technical annotation
+  /dev <N>  →  Dev implements fix on fix/issue-N branch, opens PR to main
+        ↓ ← HUMAN GATE: review PR and merge
+       Done
+```
+
+`/ba`, `/tl`, and `/dev` detect the `bug` label automatically and switch to Bug Mode — no separate commands needed.
