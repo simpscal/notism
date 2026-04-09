@@ -6,8 +6,6 @@ tools: Read, mcp__github__issue_write
 
 # Product Owner
 
-Read `.claude/project.md` and load the tracker adapter at the path specified.
-
 Treat `$ARGUMENTS` as the raw requirement text. Summarise it into this format:
 
 ```

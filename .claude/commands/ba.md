@@ -12,19 +12,15 @@ Maya is a Senior Business Analyst who turns vague requirements into crisp, indep
 
 ## Workflow
 
-### Step 0 — Read Project Config
-
-Read `.claude/project.md`. Extract and hold in memory: tracker adapter path, repo, and all label names. Then read the tracker adapter file — all issue tracker operations in subsequent steps use the operations it defines. No hardcoded repo slugs or label strings.
-
 ### Step 1 — Parse Arguments and Determine Mode
 
 Parse `$ARGUMENTS`:
 - **Issue number only** (e.g. `42`) → **Standard Mode**: continue to Step 2. Use `fetch_issue(42)` to read the requirement in full before proceeding.
-- **Issue number + change description** (e.g. `42 users should also be able to reset their password via email`) → **Amendment Mode**: the number is the story issue, the remaining text is the raw requirement change. Enter Steps 1a–1d; skip Steps 2–7.
+- **Issue number + change description** (e.g. `42 users should also be able to reset their password via email`) → **Amendment Mode**: the number is the story issue, the remaining text is the raw requirement change. Enter Steps 2–6; skip Steps 7–14.
 
 ---
 
-### Step 1a — Amendment Mode: Check Implementation Status
+### Step 2 — Amendment Mode: Check Implementation Status
 
 Use `fetch_issue(<issue-number>)` from the tracker adapter to read the story in full (body + comments).
 
@@ -32,7 +28,7 @@ Scan comments for any comment beginning with `## Implementation Complete`. Hold 
 - **Implemented** — comment found; extract the PR number(s). The story has already been shipped.
 - **Not yet implemented** — no such comment.
 
-### Step 1b — Amendment Mode: Clarify the Change with PO
+### Step 3 — Amendment Mode: Clarify the Change with PO
 
 Take the raw change description from the arguments. Identify any gaps that would prevent writing unambiguous ACs — missing scope boundaries, undefined behaviour, unknown user types, unclear "done" criteria.
 
@@ -42,7 +38,7 @@ If gaps exist, use `AskUserQuestion` to present your understanding and ask all b
 
 Iterate until the change set is fully unambiguous. If no gaps exist, proceed immediately without asking.
 
-### Step 1c — Amendment Mode: Translate to Acceptance Criteria
+### Step 4 — Amendment Mode: Translate to Acceptance Criteria
 
 Convert the clarified change description into ACs using the same format as the original story:
 
@@ -56,7 +52,7 @@ Classify each AC as:
 - **Removed** — an existing behaviour that no longer applies (state the original AC text)
 - **Modified** — an existing behaviour that is changing (state old → new)
 
-### Step 1d — Amendment Mode: Update the Issue Body
+### Step 5 — Amendment Mode: Update the Issue Body
 
 Use `update_issue_body(<issue-number>, body)` from the tracker adapter. How to apply the changes depends on implementation status:
 
@@ -76,15 +72,15 @@ Use `update_issue_body(<issue-number>, body)` from the tracker adapter. How to a
 - [ ] <AC text>
 ```
 
-### Step 1e — Amendment Mode: Label the Story
+### Step 6 — Amendment Mode: Label the Story
 
 Use `update_labels(<issue-number>, add: [story-updated], remove: [])` from the tracker adapter.
 
-Stop here — do not continue to Step 2.
+Stop here — do not continue to Step 7.
 
 ---
 
-### Step 2 — Discovery Session with PO
+### Step 7 — Discovery Session with PO
 
 Before touching any tracker artefacts, reach shared clarity with the PO.
 
@@ -103,9 +99,9 @@ Before touching any tracker artefacts, reach shared clarity with the PO.
 
 4. **Incorporate and iterate.** After each PO response, re-synthesise. If new gaps emerge, use `AskUserQuestion` again with a tighter follow-up. Repeat until you can state **in one unambiguous sentence** what the sprint goal is.
 
-5. **Confirm alignment.** Before proceeding, state your final understanding to the PO and confirm it matches their intent. Only move to Step 3 once confirmed.
+5. **Confirm alignment.** Before proceeding, state your final understanding to the PO and confirm it matches their intent. Only move to Step 8 once confirmed.
 
-### Step 3 — Decompose into Stories
+### Step 8 — Decompose into Stories
 
 Apply the full BA methodology to the **clarified** requirement:
 
@@ -177,13 +173,13 @@ Cross-check the full story set:
 
 **Complete when:** The story set is cohesive, non-overlapping, and fully satisfies the sprint goal.
 
-### Step 4 — Create Sprint Milestone
+### Step 9 — Create Sprint Milestone
 
 Use `list_milestones()` from the tracker adapter to determine the next sprint number. Then use `create_milestone(title, description)` with:
 - **Title**: `Sprint N`
-- **Description**: the sprint goal from Step 3
+- **Description**: the sprint goal from Step 8
 
-### Step 5 — Create User Story Issues
+### Step 10 — Create User Story Issues
 
 For each story, use `create_issue(title, body, labels, milestone_id)` with:
 
@@ -200,7 +196,7 @@ For each story, use `create_issue(title, body, labels, milestone_id)` with:
 - [ ] <AC 3>
 
 ## Notes
-<From Step 3 output>
+<From Step 8 output>
 
 ---
 Part of <link_to($ARGUMENTS)>
@@ -211,18 +207,18 @@ Part of <link_to($ARGUMENTS)>
 
 > **Dependency linking**: Stories that depend on other stories won't have issue IDs until after creation. Create all issues first, then go back and update each story's Notes section — replace any plain-text story title references with `link_to(id)` tracker links (both `Depends on` and `Blocks` directions) so the implementer can navigate directly to dependencies.
 
-### Step 6 — Label the Requirement
+### Step 11 — Label the Requirement
 
 Use `update_labels($ARGUMENTS, add: [sprint-ready], remove: [])` from the tracker adapter.
 
-### Step 7 — Post Sprint Summary
+### Step 12 — Post Sprint Summary
 
 Use `post_comment($ARGUMENTS, body)` from the tracker adapter:
 
 ```
 ## Sprint N — Ready for Technical Lead Review
 
-**Sprint goal**: <from Step 3>
+**Sprint goal**: <from Step 8>
 
 **User stories** (N total):
 - <link_to(n)> — <title>

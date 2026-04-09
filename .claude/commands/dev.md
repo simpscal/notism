@@ -8,10 +8,6 @@ tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops), mcp__github__is
 
 ## Workflow
 
-### Step 0 — Read Project Config
-
-Read `.claude/project.md`. Extract and hold in memory: tracker adapter path, repo, codebase paths, tech stack details, architecture doc locations, labels, git branch patterns, main branch name, and test/lint commands. Then read the tracker adapter file — all issue tracker operations use the operations it defines. No hardcoded values.
-
 ### Step 1 — Acquire ONE Ticket
 
 `$ARGUMENTS` is the issue number (optional — omit to auto-pick).

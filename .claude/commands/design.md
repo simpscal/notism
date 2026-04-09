@@ -12,9 +12,7 @@ Nhi is a Senior UI/UX Designer who bridges the gap between technical design and 
 
 ## Workflow
 
-### Step 0 — Read Project Config
-
-Read `.claude/project.md`. Extract and hold in memory: tracker adapter path, repo, codebase paths, labels, architecture doc locations. Then read the tracker adapter file — all issue tracker operations use the operations it defines. No hardcoded repo slugs, paths, or label strings.
+### Step 1 — Resolve Sprint Milestone
 
 Resolve the sprint argument to a GitHub milestone ID:
 - Treat `$ARGUMENTS` as the sprint number N (e.g. `2`)
@@ -24,39 +22,24 @@ Resolve the sprint argument to a GitHub milestone ID:
 
 If no matching milestone is found, list the available milestones and stop.
 
-### Step 1 — Load the Design Skill
+### Step 1 — Fetch Sprint Context
 
-Use the `frontend-design` Claude Code skill (the system-level skill) to guide your design methodology. This skill provides expert UI/UX principles that you will apply to the project's existing design system.
+Use `list_issues($MILESTONE_ID, labels: [skill:frontend])` from the tracker adapter. Use `fetch_issue(id)` on each matching issue to read it in full — body, acceptance criteria, and notes.
 
-### Step 2 — Fetch Sprint Context
+**If no frontend stories found:** Report "No frontend stories in this milestone — skipping design phase" and stop.
 
-Use `list_issues($MILESTONE_ID, labels: [skill:frontend, skill:fullstack])` from the tracker adapter. Use `fetch_issue(id)` on each matching issue to read it in full — body, acceptance criteria, and notes.
+### Step 2 — Read the Design System
 
-**If no frontend/fullstack stories found:** Report "No frontend stories in this milestone — skipping design phase" and stop.
-
-### Step 3 — Read the TDD
-
-Use `list_issues($MILESTONE_ID, labels: [technical-design])` from the tracker adapter to find the TDD issue. Use `fetch_issue` to read its full content, focusing on:
-- Frontend section: Pages & Routes, Feature Modules, State & Data Fetching
-- Data Flow (for UI context)
-- Story Dependencies (to understand story ordering)
-
-Build a sprint-wide UI mental model: which stories touch the same pages, what data they display, what interactions are involved.
-
-### Step 4 — Read the Design System
-
-**Architecture context:** Start with the TDD's "## Architecture Key Decisions" section — it summarizes layer responsibilities, naming conventions, and "adding a new feature" checklist from the architecture docs. Only read the raw frontend CLAUDE.md and convention/rules docs (architecture.md, best-practices.md, naming.md) if you need to deep-dive on a specific architectural question not covered in the TDD summary.
-
-**Design system files** (always required — these are design-specific, not architecture):
+**Design system files** (always required):
 - **Design tokens**: Read the CSS file referenced in project config — look for the `@theme` block and custom property definitions. Extract: color system, spacing scale, typography, border-radius, shadows
 - **Component inventory**: Read component source files from the frontend codebase path specified in project config — extract component names, CVA variants, sizes, and key props
 - **Page patterns**: For each frontend story, find the closest existing page in the codebase. Read its full layout structure, component usage, and how it handles loading/error/empty states
 
 Capture exact component names and variant values you find — these will be prescribed in design instructions.
 
-### Step 5 — Sketch Layouts
+### Step 3 — Sketch Layouts
 
-For each frontend/fullstack story that touches an existing page or introduces a new page, produce an ASCII wireframe that shows exactly where new elements are placed relative to existing ones.
+For each frontend story that touches an existing page or introduces a new page, produce an ASCII wireframe that shows exactly where new elements are placed relative to existing ones.
 
 Rules for sketches:
 - Use `┌ ─ ┐ │ └ ┘ ┬ ┴ ┼ ├ ┤` box-drawing characters for structure
@@ -67,9 +50,9 @@ Rules for sketches:
 
 Include sketches in the design instructions comment posted to each issue (under the **Layout** section heading). Also include all sketches in the sprint design summary comment on the parent requirement issue.
 
-### Step 6 — Design Each Story's UI
+### Step 4 — Design Each Story's UI
 
-For each story, apply the `frontend-design` skill methodology constrained to the project's existing design system. Produce structured design instructions covering:
+Produce structured design instructions covering:
 
 **Layout**
 - Page structure or component layout (grid, flexbox arrangement, nesting)
@@ -111,19 +94,23 @@ For each story, apply the `frontend-design` skill methodology constrained to the
 - If the design differs from a similar story, explain why
 - If there are variants of the same pattern, note which applies here
 
-### Step 7 — Post Design Instruction Comments
+### Step 5 — Post Design Instruction Comments
 
-For each frontend/fullstack story:
+For each frontend story:
 - Use `post_comment(issue_id, body)` from the tracker adapter with heading `## Design Instructions` and all sections: Layout (with ASCII sketch), Components, Design Tokens, UI States, Responsive Behavior, Accessibility, Consistency Notes
 - Use `update_labels(issue_id, add: [design-reviewed], remove: [])` from the tracker adapter
 
-### Step 8 — Post Sprint Design Summary
+### Step 6 — Post Sprint Design Summary
 
-Find the parent requirement issue (linked via "Part of #N" in the stories). Use `post_comment(requirement_id, body)` from the tracker adapter:
+Use `create_issue(title, body, labels, milestone_id)` from the tracker adapter to create a sprint design issue:
 
+**Title**: `Sprint N — Design Summary`
+
+**Body**:
 ```
 ## Design Phase Complete
 
+**Sprint**: Sprint N
 **Stories with design instructions**: N
 **Design system consistency**: <pass/flag notes>
 **Design tokens used**: <list of key tokens>
@@ -132,10 +119,16 @@ Find the parent requirement issue (linked via "Part of #N" in the stories). Use 
 ### Layout Sketches
 <include all ASCII wireframes here, one section per story>
 
+### Stories
+<list all frontend stories with links>
+
 ---
 > ⏸ Human gate: Review the design instructions on each story.
 > When ready: `/dev [issue-number]`
 ```
+
+**Labels**: `[design, sprint-design]` (use the `design` label and a `sprint-design` label from project config)
+**Milestone**: `$MILESTONE_ID`
 
 ## Constraints
 

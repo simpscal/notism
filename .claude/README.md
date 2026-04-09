@@ -11,10 +11,10 @@ PO writes requirement issue
         ↓
   /ba <issue>   →  BA brainstorms with PO, creates user stories + sprint milestone
         ↓  ← HUMAN GATE: review stories
-  /tl <ms>      →  TL reads architecture, writes TDD, annotates stories
-        ↓  ← HUMAN GATE: review TDD and annotations
   /design <ms>  →  Designer analyzes design system, creates design instructions (for frontend stories)
         ↓  ← HUMAN GATE: review design instructions
+  /tl <ms>      →  TL reads architecture + design instructions, writes TDD, annotates stories
+        ↓  ← HUMAN GATE: review TDD and annotations
   /dev [issue-number]  →  Dev implements one story, opens PR to sprint branch
         ↓  ← HUMAN GATE: review PR and merge
        Done
@@ -29,8 +29,8 @@ Each phase ends with a **human gate** — you review the output before running t
 | Command | Agent | Input | Output |
 |---------|-------|-------|--------|
 | `/ba <issue-number>` | Maya (BA) | requirement issue # | user story issues + sprint milestone |
-| `/tl <milestone-id>` | Alex (Technical Lead) | milestone # | TDD issue + annotated stories |
 | `/design <milestone-id>` | Nhi (Designer) | milestone # | design instruction comments on frontend stories |
+| `/tl <milestone-id>` | Alex (Technical Lead) | milestone # | TDD issue + annotated stories |
 | `/dev [issue-number]` | Dev persona (auto-selected from ticket labels) | optional issue # | implementation + PR to sprint branch |
 
 Skills: `frontend` · `backend` · `fullstack` · `devops`
@@ -87,15 +87,7 @@ Maya brainstorms with you to eliminate ambiguity, then creates 3–8 user storie
 
 **Human gate**: Review the stories. Edit or close any that don't fit. Get the milestone ID from the URL (`.../milestone/3`).
 
-### 3. Run Technical Lead
-```
-/tl 3
-```
-Alex reads the architecture docs, designs the solution, writes a TDD issue, and annotates every story with implementation guidance.
-
-**Human gate**: Review the TDD issue and story annotations on the issue tracker.
-
-### 3.5. Run Designer (if frontend stories exist)
+### 3. Run Designer (if frontend stories exist)
 ```
 /design 3
 ```
@@ -103,7 +95,15 @@ Nhi analyzes the design system (components, tokens, layouts) and posts structure
 
 **Human gate**: Review the design instructions on each story. (If no frontend stories, skip to Step 4.)
 
-### 4. Run Dev(s)
+### 4. Run Technical Lead
+```
+/tl 3
+```
+Alex reads the architecture docs and any design instructions posted in Step 3, designs the solution, writes a TDD issue, and annotates every story with implementation guidance.
+
+**Human gate**: Review the TDD issue and story annotations on the issue tracker.
+
+### 5. Run Dev(s)
 Auto-pick an unassigned ticket:
 ```
 /dev
@@ -126,8 +126,8 @@ The persona (frontend/backend/fullstack/devops) is determined automatically from
 |-------|---------|
 | `requirement` | PO-created requirement |
 | `user-story` | BA-created story |
-| `sprint-ready` | Awaiting TL |
-| `tl-reviewed` | TL complete — awaiting design |
+| `sprint-ready` | Awaiting design |
+| `tl-reviewed` | TL complete — awaiting dev |
 | `technical-design` | TDD issue |
 | `design-reviewed` | Design instructions complete — awaiting dev |
 | `in-progress` | Dev is implementing |

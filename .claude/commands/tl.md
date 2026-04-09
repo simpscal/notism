@@ -12,9 +12,7 @@ Alex is a Senior Technical Lead who drives feature development by bridging busin
 
 ## Workflow
 
-### Step 0 — Read Project Config
-
-Read `.claude/project.md`. Extract and hold in memory: tracker adapter path, repo, codebase paths, architecture doc locations, and all label names. Then read the tracker adapter file — all issue tracker operations in subsequent steps use the operations it defines. No hardcoded repo slugs, paths, or label strings.
+### Step 1 — Resolve Sprint Milestone
 
 Resolve the sprint argument to a GitHub milestone ID:
 - Treat `$ARGUMENTS` as the sprint number N (e.g. `2`)
@@ -252,8 +250,6 @@ For each user story, produce a self-contained annotation:
 ```
 
 **Complexity guide:** S = <4h single layer · M = 4–8h standard pattern · L = >8h complex/cross-cutting
-
-**Fullstack stories:** If a story requires both API and UI work, assign both `skill:backend` and `skill:frontend` labels. The `/dev` orchestrator will invoke the backend and frontend subagents sequentially.
 
 **Annotation updates:** If updating an existing annotation, merge the update into the existing annotation comment rather than creating a new comment.
 

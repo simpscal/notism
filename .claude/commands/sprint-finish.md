@@ -8,9 +8,7 @@ tools: Read, Write, Bash, mcp__github__issue_read, mcp__github__list_issues, mcp
 
 ## Workflow
 
-### Step 0 — Read Project Config
-
-Read `.claude/project.md`. Extract and hold in memory: tracker adapter path, repo, codebase paths (names + local paths), sprint branch pattern, story branch pattern, main branch name, and all label names. Then read the tracker adapter file — all issue tracker operations in subsequent steps use the operations it defines. No hardcoded repo slugs, paths, or label strings.
+### Step 1 — Parse Arguments
 
 Parse `$ARGUMENTS` as the milestone ID or sprint number (e.g. `3` or `Sprint 3`).
 
