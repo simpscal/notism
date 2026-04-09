@@ -1,5 +1,5 @@
 ---
-name: github
+name: github-tracker
 description: GitHub tracker adapter — maps abstract workflow operations to GitHub MCP tools and CLI. Swap this file (and update project.md) to use a different tracker.
 ---
 
@@ -83,37 +83,11 @@ Post a comment on a pull request (not a review — just a regular comment).
 
 ---
 
-## Git Operations
-
-Used by the dev and TL commands for branch management. These are local git operations, not GitHub API calls.
-
-### `create_branch(branch_name, from_branch)`
-```bash
-git checkout {from_branch}
-git pull
-git checkout -b {branch_name}
-git push -u origin {branch_name}
-```
-
-### `create_story_branch(branch_name, from_branch)`
-```bash
-git checkout {from_branch}
-git pull
-git checkout -b {branch_name}
-```
-
-### `push_branch(branch_name)`
-```bash
-git push -u origin {branch_name}
-```
-
----
-
 ## Switching to a Different Tracker
 
 To replace GitHub with Jira or another tracker:
 
-1. Create `.claude/trackers/jira.md` with the same operation names mapped to Jira's API/CLI
+1. Create `.claude/trackers/jira-tracker.md` with the same operation names mapped to Jira's API/CLI
 2. In `.claude/project.md`, update `Tracker adapter` to point to the new file
 3. No changes to any command file are needed
 

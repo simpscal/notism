@@ -265,16 +265,7 @@ Capture the new issue number — referenced in Steps 6 and 7.
 
 ### Step 6 — Create Feature Branches
 
-For each codebase listed in the project config, create the sprint branch in that codebase's local repo path using the `create_branch` git operation from the tracker adapter (sprint branch pattern and main branch name from project config):
-
-```
-# Repeat for each codebase path from project config
-cd <codebase-path>
-git checkout <main-branch>
-git pull
-git checkout -b <sprint-branch-pattern>   # e.g. feature/sprint-2
-git push -u origin <sprint-branch-pattern>
-```
+Create sprint feature branches for each codebase listed in project config.
 
 ### Step 7 — Annotate Each Story
 

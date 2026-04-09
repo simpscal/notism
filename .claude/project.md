@@ -8,7 +8,7 @@ This file is the single source of truth for all project-specific values. Command
 
 - **Type**: github
 - **Repo**: simpscal/notism
-- **Tracker adapter**: `.claude/trackers/github.md`
+- **Tracker adapter**: `.claude/trackers/github-tracker.md`
 
 ---
 
@@ -74,13 +74,6 @@ Read in this order when studying the codebase:
 | Bug issue | `bug` |
 
 ---
-
-## Git
-
-- **Main branch**: `main`
-- **Sprint branch pattern**: `feature/sprint-{N}`
-- **Story branch pattern**: `feature/issue-{N}-{short-description}`
-- **Bugfix branch pattern**: `fix/issue-{N}-{short-description}`
 
 ---
 

@@ -46,26 +46,7 @@ If the Remaining list is empty and no `## Story Amendment` adds new unchecked it
 
 ### S2 — Git Setup
 
-Use the story branch pattern from project config: `feature/issue-{N}-{short-description}` (multi-skill: append `-backend` / `-frontend`).
-
-All git operations run inside the codebase path for the relevant skill (from project config).
-
-**If no existing PR** — create the story branch(es):
-```
-cd <codebase-path>
-git checkout <sprint-branch>
-git pull
-git checkout -b <story-branch>
-git push -u origin <story-branch>
-```
-If the sprint branch does not exist, stop and report: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
-
-**If an existing PR was found** — check out the existing branch instead:
-```
-cd <codebase-path>
-git checkout <existing-branch>
-git pull
-```
+Create the story branch inside the codebase path for the relevant skill.
 
 ### S3 — Dispatch to Skill Subagent
 
@@ -185,26 +166,7 @@ Determine remaining ACs — items marked `- [ ]`. If none remain, stop and repor
 
 ### B2 — Git Setup
 
-Use the bugfix branch pattern from project config: `fix/issue-{N}-{short-description}` (multi-skill: append `-backend` / `-frontend`).
-
-All git operations run inside the codebase path for the relevant skill (from project config).
-
-**If no existing PR** — create the bugfix branch(es) from the main branch (from project config):
-```
-cd <codebase-path>
-git checkout <main-branch>
-git pull
-git checkout -b <bugfix-branch>
-git push -u origin <bugfix-branch>
-```
-If the main branch does not exist in the codebase path, stop and report: "Main branch not found in `<codebase-path>`."
-
-**If an existing PR was found** — check out the existing branch instead:
-```
-cd <codebase-path>
-git checkout <existing-branch>
-git pull
-```
+Create the bugfix branch inside the codebase path for the relevant skill.
 
 ### B3 — Dispatch to Skill Subagent
 
