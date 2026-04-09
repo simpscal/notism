@@ -1,5 +1,5 @@
 ---
-name: git
+name: git-workflow
 description: Git workflow — the single source of truth for branch naming patterns, git operations, and setup strategy.
 tools: Bash
 ---
