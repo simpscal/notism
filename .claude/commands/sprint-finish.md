@@ -1,6 +1,6 @@
 ---
 name: sprint-finish
-description: Sprint Finish — close all sprint issues, prune story branches, open release PRs to main, and flag EF Core migrations. Usage: /sprint-finish <milestone-id>
+description: Close sprint issues, prune story branches, open release PRs to main, and flag database migrations.
 tools: Read, Write, Bash, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__github__create_pull_request
 ---
 

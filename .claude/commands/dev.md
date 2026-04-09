@@ -1,6 +1,6 @@
 ---
 name: dev
-description: Dev — implement one user story and open a PR to the sprint feature branch. Usage: /dev [issue-number]
+description: Implement one user story and open a PR to the sprint feature branch.
 tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops), mcp__github__issue_read, mcp__github__list_issues, mcp__github__add_issue_comment, mcp__github__update_pull_request, mcp__github__create_pull_request
 ---
 

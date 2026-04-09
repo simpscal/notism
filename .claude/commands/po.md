@@ -1,6 +1,6 @@
 ---
 name: po
-description: PO — summarise a raw requirement and create a labelled GitHub issue. Usage: /po <requirement text>
+description: Summarise raw requirements and create GitHub issues.
 tools: Read, mcp__github__issue_write
 ---
 
