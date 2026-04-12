@@ -33,7 +33,7 @@ The **first word** of `$ARGUMENTS` determines the mode:
 |-------|------|-------|--------|-------------|
 | 1 — Requirement | PO | Raw requirement text | `[Requirement] <title>` issue | `requirement` label on issue |
 | 2 — Stories | BA | Requirement issue # | User story issues + Sprint milestone | `sprint-ready` label on requirement issue |
-| 3a — Design | Designer | Sprint number | `Sprint N — Design Instructions` issue | `design-reviewed` on frontend stories |
+| 3a — Design | Designer | Sprint number (all stories) | `Sprint N — Design Instructions` issue | `design-reviewed` on the instructions issue |
 | 3b — TDD | TL | Sprint number | TDD issue + story annotations + feature branches | `tl-reviewed` on all stories |
 | 4 — Dev | Dev | Story issue # (one at a time) | PR per story | PR merged into sprint branch |
 | 5 — Release | Sprint Finish | Sprint number | Release PRs (sprint → main) | Human merges release PRs |
@@ -134,18 +134,17 @@ Options:
 - **C**: Invoke [RC — Requirement Change Cascade](#rc--requirement-change-cascade). Re-present Gate 2.
 - **D**: Output `Workflow cancelled at Gate 2.` and stop.
 
-### N5 — Stage 3: Design + TL (Parallel)
+### N5 — Stage 3: Design → TL (Sequential)
 
-Check for any issue in the sprint milestone labelled `skill:frontend`. Hold the result as `$HAS_FRONTEND` (true/false).
+Run in sequence:
 
-Run in parallel:
+1. **Designer**: `/design standard $SPRINT_NUMBER` — reads all sprint stories, determines UI scope from story content, and creates the sprint-level design instructions issue. Hold `$DESIGN_ISSUE` as the created issue number (null if the designer finds no UI work and exits early).
 
-- **TL** (always): `/tl standard $SPRINT_NUMBER`
-- **Designer** (only if `$HAS_FRONTEND`): `/design standard $SPRINT_NUMBER`
+2. **TL**: `/tl standard $SPRINT_NUMBER` — reads the design instructions (if created) as part of TDD authoring.
 
-Wait for both to complete. Capture:
+Capture:
 - `$TDD_ISSUE` — the TDD issue number created by TL
-- `$DESIGN_ISSUE` — the Design Instructions issue number (null if no frontend stories)
+- `$DESIGN_ISSUE` — the Design Instructions issue number (null if no UI work in sprint)
 
 Print:
 ```
@@ -434,7 +433,7 @@ Extract `$SPRINT_NUMBER`. Fetch all issues in the sprint milestone. Inspect labe
 
 ### R2 — Load Context and Jump
 
-Before jumping, load: `$REQ_ISSUE`, `$TDD_ISSUE`, `$DESIGN_ISSUE`, `$HAS_FRONTEND` from existing issues. Print:
+Before jumping, load: `$REQ_ISSUE`, `$TDD_ISSUE`, `$DESIGN_ISSUE` from existing issues. Print:
 
 ```
 Resuming Sprint $SPRINT_NUMBER from Stage <N> — <stage name>.
@@ -483,7 +482,7 @@ If a TDD issue already exists:
 
 Run in parallel:
 - `/tl requirement-change $SPRINT_NUMBER` (always)
-- `/design requirement-change $SPRINT_NUMBER` (only if `$HAS_FRONTEND`)
+- `/design requirement-change $SPRINT_NUMBER` (only if `$DESIGN_ISSUE` exists — a design instructions issue was previously created for this sprint)
 
 Wait for both to complete.
 
@@ -509,7 +508,7 @@ Return control to the calling gate handler to re-present the gate.
 - Never merge any PR — only create them. Merging is a human action.
 - Never skip a human gate — every stage boundary requires explicit human approval before proceeding.
 - Never hardcode repo slugs, label names, or branch patterns — all values come from `project.md` and its tracker adapter.
-- If `$HAS_FRONTEND` is false, skip all Design sub-agent calls silently with no error output.
+- If `$DESIGN_ISSUE` is null (no design instructions exist for the sprint), skip all Design sub-agent calls silently with no error output.
 - The dev loop in Stage 4 is strictly sequential — one `/dev` call at a time, one gate per story.
 - If a sub-agent returns a blocker or error, surface it immediately via `AskUserQuestion` and wait for human guidance before continuing.
 - All label names must match the values in `project.md`. Read them from there — never assume.

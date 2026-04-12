@@ -14,11 +14,10 @@ flowchart TD
     C --> D["User Stories + Sprint Milestone<br/>`sprint-ready`"]
     D --> G2{Gate 2<br/>Review stories}
     G2 -->|Approve| E1(["/design &lt;ms&gt;"])
-    G2 -->|Approve| E2(["/tl &lt;ms&gt;"])
     E1 --> F1["Design Instructions<br/>`design-reviewed`"]
+    F1 --> E2(["/tl &lt;ms&gt;"])
     E2 --> F2["TDD Issue + Annotated Stories<br/>`tl-reviewed`"]
-    F1 --> G3{Gate 3<br/>Review TDD + Design}
-    F2 --> G3
+    F2 --> G3{Gate 3<br/>Review TDD + Design}
     G3 -->|Approve| H(["/dev &lt;issue&gt;"])
     H --> I["PR → sprint branch<br/>`implemented`"]
     I --> G4{Gate 4<br/>Review PR}
@@ -76,7 +75,7 @@ flowchart TD
 | `/po <description>` | Product Owner | raw requirement text | requirement issue with `requirement` label |
 | `/bug-report <description>` | Bug Reporter | bug description | bug issue with `bug` label |
 | `/ba <issue-number>` | BA | requirement or bug issue # | user story issues + sprint milestone (requirements) — or ACs added to bug ticket |
-| `/design <milestone-id>` | Designer | milestone # | design instruction issue + frontend stories labelled `design-reviewed` |
+| `/design <milestone-id>` | Designer | milestone # | sprint-level design instructions issue labelled `design-reviewed` |
 | `/tl <milestone-id or bug-issue>` | Technical Lead | milestone # or bug issue # | TDD issue + annotated stories (sprints) — or technical annotation on bug ticket |
 | `/dev [issue-number]` | Developer (auto) | optional issue # | implementation + PR to sprint branch (stories) or main (bugs) |
 | `/sprint-finish <sprint-number>` | Release Manager | sprint # | sprint closed, TDD archived, release PRs opened |
@@ -155,19 +154,19 @@ BA brainstorms with you to eliminate ambiguity, then creates 3–8 user stories 
 
 **Human gate**: Review the stories. Edit or close any that don't fit. Get the milestone ID from the URL (`.../milestone/3`).
 
-### 2. Run Designer (if frontend stories exist)
+### 2. Run Designer
 ```
 /design 3
 ```
-Designer analyzes the design system (components, tokens, layouts) and creates a design instructions issue with structured guidance per frontend/fullstack story. Labels each frontend story `design-reviewed`.
+Designer reads all sprint stories, identifies UI-affecting work from their descriptions and ACs, analyzes the design system (components, tokens, layouts), and creates a sprint-level design instructions issue covering layout, components, tokens, states, responsive behavior, and accessibility for the feature as a whole. Runs before the TL so design intent informs the technical design.
 
-**Human gate**: Review the design instructions issue. (If no frontend stories, skip to Step 3.)
+**Human gate**: Review the design instructions issue. (If no UI work found, the designer exits early — skip to Step 3.)
 
 ### 3. Run Technical Lead
 ```
 /tl 3
 ```
-TL reads architecture docs and design instructions, designs the solution, writes a TDD issue, and annotates every story with implementation guidance (skill, complexity, scope, key decisions).
+TL reads the design instructions and architecture docs, designs the solution, writes a TDD issue, and annotates every story with implementation guidance (skill, complexity, scope, key decisions).
 
 **Human gate**: Review the TDD issue and story annotations on the issue tracker.
 
@@ -206,7 +205,7 @@ Release manager checks all stories are merged, labels and closes all sprint issu
 | `sprint-ready` | Awaiting design/TL |
 | `tl-reviewed` | TL complete — awaiting dev |
 | `technical-design` | TDD issue |
-| `design-reviewed` | Design instructions complete — awaiting dev |
+| `design-reviewed` | Sprint-level design instructions created — awaiting dev |
 | `in-progress` | Dev is implementing |
 | `implemented` | Dev complete — awaiting review |
 | `sprint-completed` | Sprint closed |

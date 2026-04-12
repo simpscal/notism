@@ -31,7 +31,7 @@ In a single batch, fetch all context needed for dispatch:
 
 1. **Issue body + comments** — the ticket already fetched in Step 1 (hold it)
 2. **TDD** — `list_issues(milestone_id, labels: [technical-design label from project config])` to find it, then `fetch_issue(tdd_number)` to read full content. Extract: problem statement, proposed solution, architecture alignment, story dependencies, risks.
-3. **Design Instructions** (frontend only) — `list_issues(milestone_id, labels: [design-reviewed])` to find the design instructions issue. `fetch_issue` it and locate the section referencing this story's issue number.
+3. **Design Instructions** (frontend only) — `list_issues(milestone_id, labels: [design-reviewed])` to find the design instructions issue. `fetch_issue` it in full — the document covers the entire sprint's UI design and gives the subagent necessary feature-wide context.
 
 ### S2 — Git Setup
 
@@ -49,7 +49,7 @@ Pass the following context to every subagent. **All context is passed directly �
 - **Scope**: from the TL annotation's Scope section
 - **Key decisions**: from the TL annotation's Key Decisions section
 - **Architecture context**: relevant TDD sections verbatim — application layer design, API endpoints, data flow, story dependencies, risks
-- **Design instructions**: story section from the design instructions issue (frontend only)
+- **Design instructions**: full design instructions issue (frontend only) — sprint-level document covering all affected surfaces
 - **Codebase config**: root path, test command, lint/build command (from project config)
 
 | Skill label | Subagent(s) | Execution |
@@ -150,8 +150,8 @@ In a single batch:
 
 1. **Issue body + comments** — the ticket already fetched in Step 1 (hold it)
 2. **TDD** — fetch as in S1 step 2; re-read in full regardless of which label is present
-3. **Original Design Instructions** (frontend only) — fetch as in S1 step 3
-4. **Updated Design Instructions** (frontend only, if `design-updated` label is present) — `list_issues(milestone_id, labels: [design-updated])` to find the updated design instructions issue. `fetch_issue` it. Extract the `## Change Description` block and every story section referencing this story's issue number.
+3. **Original Design Instructions** (frontend only) — fetch as in S1 step 3 (full issue)
+4. **Updated Design Instructions** (frontend only, if `design-updated` label is present) — `list_issues(milestone_id, labels: [design-updated])` to find the updated design instructions issue. `fetch_issue` it in full. The full document contains the `## Change Description` block and the complete revised sprint-level design.
 5. **Latest TL Annotation** (if `technical-updated` label is present) — scan issue comments for the most recent `## Technical Lead Annotation`. Extract updated Skill, Complexity, Scope, and Key Decisions. Earlier annotation comments are superseded.
 6. **Existing branch + PR** — scan issue comments for `## Implementation Complete`. Extract PR number(s). `fetch_pr(pr_number)` to get the branch name. If no `## Implementation Complete` comment is found, report "No previous implementation found for story #N — run `/dev standard <N>` instead." and stop.
 
@@ -198,7 +198,7 @@ Pass the following context to every subagent. **All context is passed directly �
 - **Scope**: from the latest `## Technical Lead Annotation` comment (step 5 if `technical-updated`, otherwise the existing annotation)
 - **Key decisions**: from the latest `## Technical Lead Annotation` comment
 - **Architecture context**: relevant TDD sections verbatim from the re-read TDD in C1 step 2
-- **Design instructions**: if `design-updated`, use the updated design instructions from C1 step 4 — include the `## Change Description` block and all updated story sections verbatim; otherwise use the original from C1 step 3
+- **Design instructions**: if `design-updated`, use the updated design instructions from C1 step 4 (full issue including `## Change Description` block); otherwise use the original from C1 step 3 — always pass the full sprint-level document, not a story slice
 - **Existing implementation**: the implementation map from C2 — what is already on the branch, keyed to ACs and TDD contracts, with explicit add/modify/remove guidance per delta item
 - **Existing branch**: branch name from C1 step 6 — all changes must be committed to this branch
 - **Codebase config**: root path, test command, lint/build command (from project config)
