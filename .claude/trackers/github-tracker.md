@@ -58,15 +58,3 @@ Create a new sprint milestone.
 List all existing milestones to determine the next sprint number.
 - **CLI**: `gh api repos/{owner}/{repo}/milestones --jq '.[].title'`
 - Returns: list of milestone titles
-
----
-
-## Switching to a Different Tracker
-
-To replace GitHub with Jira or another tracker:
-
-1. Create `.claude/trackers/jira-tracker.md` with the same operation names mapped to Jira's API/CLI
-2. In `.claude/project.md`, update `Tracker adapter` to point to the new file
-3. No changes to any command file are needed
-
-The operation interface (names and semantics) is the contract — adapters implement it.
