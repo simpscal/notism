@@ -59,28 +59,6 @@ List all existing milestones to determine the next sprint number.
 - **CLI**: `gh api repos/{owner}/{repo}/milestones --jq '.[].title'`
 - Returns: list of milestone titles
 
-### `fetch_pr(id)`
-Read a pull request in full (title, body, changed files, linked issues, diff).
-- **Tool**: `mcp__github__pull_request_read` with `{ owner, repo, pullNumber: id }`
-- Also read file list and diff via `mcp__github__get_commit` or `gh pr diff {id}`
-- Returns: PR metadata, changed files, body (extract "Closes #N" to get linked issue)
-
-### `create_pr(title, body, head, base)`
-Open a pull request.
-- **Tool**: `mcp__github__create_pull_request` with `{ owner, repo, title, body, head, base }`
-- Returns: PR number
-
-### `submit_review(pr_id, verdict, body)`
-Submit a formal code review on a PR.
-- Verdict is `"APPROVE"` or `"REQUEST_CHANGES"`
-- **Tool**: `mcp__github__pull_request_review_write` with method `"submit_pending"` and the verdict and body
-- Or: `gh pr review {pr_id} --approve --body "{body}"` / `gh pr review {pr_id} --request-changes --body "{body}"`
-
-### `post_pr_comment(pr_id, body)`
-Post a comment on a pull request (not a review — just a regular comment).
-- **Tool**: `mcp__github__add_issue_comment` with `{ owner, repo, issue_number: pr_id, body }`
-- Note: GitHub treats PR comments and issue comments identically via this tool
-
 ---
 
 ## Switching to a Different Tracker

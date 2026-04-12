@@ -53,4 +53,4 @@ Use `create_issue(title, body, labels, milestone_id: null)` from the tracker ada
 
 ## Step 3 — Output
 
-Output the issue number and title, then: `When ready: /ba <N>`
+Output the issue number and title

@@ -1,12 +1,12 @@
 ---
-name: git-workflow
-description: Git workflow — the single source of truth for branch naming patterns, git operations, and setup strategy.
+name: git-strategy
+description: Git branching strategy — branch naming patterns and setup strategy per context (sprint, story, bugfix).
 tools: Bash
 ---
 
-# Git Workflow
+# Git Strategy
 
-Apply the strategy below whenever a branch operation is needed. No explicit invocation required.
+Apply the strategy below whenever a branch needs to be created or selected. No explicit invocation required.
 
 ---
 
@@ -25,28 +25,6 @@ Apply the strategy below whenever a branch operation is needed. No explicit invo
 
 ---
 
-## Operations
-
-All operations run inside the relevant codebase path. The caller `cd`s to the correct path before invoking.
-
-### `create_branch(branch_name, from_branch)`
-Create a new branch from a base branch and push it to origin.
-```bash
-git checkout {from_branch}
-git pull
-git checkout -b {branch_name}
-git push -u origin {branch_name}
-```
-
-### `checkout_branch(branch_name)`
-Switch to an existing branch and pull the latest.
-```bash
-git checkout {branch_name}
-git pull
-```
-
----
-
 ## Setup Strategy per Context
 
 ### Sprint branch setup
@@ -59,7 +37,8 @@ If the branch already exists, skip silently.
 
 `cd` into the codebase path for the relevant skill. Then:
 - **No existing PR** — `create_branch(<story-branch-pattern>, <sprint-branch>)`. If the sprint branch does not exist, halt and report: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
-- **Existing PR found** — `checkout_branch(<existing-branch>)`.
+- **Existing PR found (not merged)** — `checkout_branch(<existing-branch>)`.
+- **Existing PR found and merged** — `create_branch(<story-branch-pattern>, <sprint-branch>)`. If the sprint branch does not exist, halt and report: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
 
 For multi-skill stories, run setup independently in each codebase path.
 

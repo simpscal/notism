@@ -1,12 +1,22 @@
 ---
 name: po
-description: Summarise raw requirements and create GitHub issues.
-tools: Read, mcp__github__issue_write
+description: Summarise raw requirements and create/update GitHub issues. Supports two modes: standard (create) and change (update).
+tools: Read, mcp__github__issue_read, mcp__github__issue_write
 ---
 
 # Product Owner
 
-Treat `$ARGUMENTS` as the raw requirement text. Summarise it into this format:
+Read `.claude/project.md` and the tracker adapter it specifies before doing anything.
+
+The **first word** of `$ARGUMENTS` determines the mode.
+
+---
+
+## Mode: standard
+
+**Usage**: `/po standard <raw requirement text>`
+
+Treat everything after `standard` as the raw requirement text. Summarise it into:
 
 ```
 ## Summary
@@ -20,12 +30,19 @@ Treat `$ARGUMENTS` as the raw requirement text. Summarise it into this format:
 <Anything explicitly excluded, or "Not specified">
 ```
 
+Then `create_issue("[Requirement] <concise title>", body, ["requirement"], null)`.
+
 ---
 
-Use `create_issue(title, body, labels, milestone_id: null)` with:
-- **Title**: `[Requirement] <concise title>`
-- **Body**: the formatted summary above
-- **Labels**: `["requirement"]`
-- **Milestone**: `null`
+## Mode: change
 
-Output the issue number and title, then: `When ready: /ba <N>`
+**Usage**: `/po change <issue_number> <new requirement text>`
+
+1. Extract `issue_number` (first token after `change`) and `new_requirement` (the remainder).
+2. `fetch_issue(issue_number)` — read the current body in full.
+3. Compare the current body against `new_requirement` — identify what was **added**, **removed**, or **modified**.
+4. Rewrite the body using the same structure (Summary / Goals / Out of Scope), incorporating the changes.
+5. `update_issue_body(issue_number, updated_body)`
+6. `update_labels(issue_number, add: ["requirement-updated"], remove: [])`
+
+Output: `Issue #N updated — <one-line summary of what changed>`
