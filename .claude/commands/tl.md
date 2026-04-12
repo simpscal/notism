@@ -233,8 +233,8 @@ componentDiagram
 
 > Full architecture docs are available at the paths in project config — read them for deep-dives.
 
-## Story Dependencies
-<Ordered list of which stories depend on which, with rationale>
+## Story Breakdown
+<One subsection per story — produced in Stage 5. Each entry: Skill, Complexity, Depends On, Scope, Key Decisions.>
 
 ---
 
@@ -246,29 +246,27 @@ componentDiagram
 
 **Complete when:** Every story has an implementation path traceable through the TDD, and the Lead's Review Checklist passes.
 
-#### Stage 5 — Annotate Each Story
+#### Stage 5 — Produce Story Breakdown
 
-For each user story, produce a self-contained annotation:
+For each user story, produce a breakdown entry to be included in the TDD under `## Story Breakdown`:
 
 ```
-## Technical Lead Annotation
+### #N — <Story Title>
 
 **Skill**: frontend | backend | devops
 **Complexity**: S | M | L
 **Depends on**: Story N (reason) — or "None"
 
-### Scope
+#### Scope
 <1–2 sentences: which layers/modules are touched, what is new vs. extended>
 
-### Key Decisions
+#### Key Decisions
 - <Decision: what was chosen and why — reference TDD section if relevant>
 ```
 
 **Complexity guide:** S = <4h single layer · M = 4–8h standard pattern · L = >8h complex/cross-cutting
 
-**Annotation updates:** If updating an existing annotation, merge the update into the existing annotation comment rather than creating a new comment.
-
-**Complete when:** Every story has an annotation a developer can act on without asking questions.
+**Complete when:** Every story has an entry a developer can act on without asking questions.
 
 ### S5 — Create TDD Issue
 
@@ -283,11 +281,12 @@ Capture the new issue number — referenced in S6 and S7.
 
 Create sprint feature branches for each codebase listed in project config.
 
-### S7 — Annotate Each Story
+### S7 — Label Each Story
 
-For each story:
-- Use `post_comment(issue_id, body)` with the annotation from Stage 5, plus a reference to the TDD: `Full design: #<tdd-issue-number>`. If the story already has a TL annotation, update the existing comment instead of creating a new one.
+For each story, apply labels only — no comment posted to the story:
 - Use `update_labels(issue_id, add: [tl-reviewed, skill:<label>], remove: [])` from the tracker adapter
+
+All implementation guidance (scope, key decisions, dependencies) is in the TDD's `## Story Breakdown` section — developers read the TDD, not story comments.
 
 ### S8 — Update the Requirement Issue
 
@@ -372,29 +371,15 @@ TDD sections to evaluate:
 | Migration Plan | Data model or cutover strategy changed |
 | Architecture Alignment | Re-run the checklist against the revised design |
 | Architecture Key Decisions | Naming, layering, or cross-cutting patterns changed |
-| Story Dependencies | Ordering affected by added or removed stories |
+| Story Breakdown | Any story's skill, complexity, scope, key decisions, or dependencies changed |
 
 After evaluating all sections: `update_issue_body(tdd_id, updated_body)` then `update_labels(tdd_id, add: ["technical-updated"], remove: [])`.
 
-### C7 — Update Affected Story Annotations
+### C7 — Update Story Breakdown in TDD
 
-For each affected user story, rewrite its `## Technical Lead Annotation` comment using the exact template from Stage 5 of S4:
+For each affected user story, rewrite its entry in the TDD's `## Story Breakdown` section using the template from Stage 5 of S4. Use `update_issue_body(tdd_id, updated_body)` — the Story Breakdown section was already updated as part of C6; confirm it reflects all affected stories.
 
-```
-## Technical Lead Annotation
-
-**Skill**: frontend | backend | devops
-**Complexity**: S | M | L
-**Depends on**: Story N (reason) — or "None"
-
-### Scope
-<1–2 sentences: which layers/modules are touched, what is new vs. extended>
-
-### Key Decisions
-- <Decision: what was chosen and why — reference TDD section if relevant>
-```
-
-Merge the update into the existing annotation comment — do not post a new comment. After updating, scan the story's comments for `## Implementation Complete`. If found: `update_labels(story_id, add: ["technical-updated"], remove: [])`. If not found, skip the label update — the story is already implemented.
+For each affected story: scan its comments for `## Implementation Complete`. If found: `update_labels(story_id, add: ["technical-updated"], remove: [])` — label only, no comment posted. If not found, skip the label update — the story has not yet been implemented.
 
 ---
 
@@ -436,9 +421,9 @@ Extract `sprint_number` (the token after `requirement-change`). Follows the same
 
 → Follow C6 (Update the TDD Issue).
 
-### RC8 — Update Affected Story Annotations
+### RC8 — Update Story Breakdown in TDD
 
-→ Follow C7 (Update Affected Story Annotations). For removed stories, also note the removal reason in the annotation.
+→ Follow C7 (Update Story Breakdown in TDD). For removed stories, also remove their entry from the `## Story Breakdown` section and note the removal in the TDD's Executive Summary Non-Goals.
 
 ---
 

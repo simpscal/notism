@@ -166,7 +166,7 @@ Designer reads all sprint stories, identifies UI-affecting work from their descr
 ```
 /tl 3
 ```
-TL reads the design instructions and architecture docs, designs the solution, writes a TDD issue, and annotates every story with implementation guidance (skill, complexity, scope, key decisions).
+TL reads the design instructions and architecture docs, designs the solution, writes a TDD issue (including a `## Story Breakdown` section with per-story skill, complexity, scope, and key decisions), and labels each story with `tl-reviewed` and its `skill:` label.
 
 **Human gate**: Review the TDD issue and story annotations on the issue tracker.
 

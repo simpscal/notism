@@ -154,7 +154,7 @@ TDD issue    : #$TDD_ISSUE
 Design issue : #$DESIGN_ISSUE  (or "N/A — no frontend stories")
               https://github.com/{repo}/issues/$DESIGN_ISSUE
 Branches     : created for all codebases
-Stories      : annotated with TL scope, complexity, skill, and key decisions
+Stories      : labelled with skill and tl-reviewed (breakdown in TDD § Story Breakdown)
 ```
 
 ### N6 — Gate 3: TDD + Design Review
@@ -168,7 +168,7 @@ The Technical Lead and Designer have produced the sprint artefacts.
 
   TDD artifact     : Issue #$TDD_ISSUE
                      https://github.com/{repo}/issues/$TDD_ISSUE
-                     Check: label `technical-design`, all stories have `tl-reviewed`
+                     Check: label `technical-design`, all stories have `tl-reviewed`, TDD contains `## Story Breakdown`
   Design artifact  : Issue #$DESIGN_ISSUE  (or N/A)
                      https://github.com/{repo}/issues/$DESIGN_ISSUE
                      Check: frontend stories have label `design-reviewed`

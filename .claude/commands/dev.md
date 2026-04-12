@@ -30,7 +30,7 @@ Implement **one ticket per invocation** — do not batch.
 In a single batch, fetch all context needed for dispatch:
 
 1. **Issue body + comments** — the ticket already fetched in Step 1 (hold it)
-2. **TDD** — `list_issues(milestone_id, labels: [technical-design label from project config])` to find it, then `fetch_issue(tdd_number)` to read full content. Extract: problem statement, proposed solution, architecture alignment, story dependencies, risks.
+2. **TDD** — `list_issues(milestone_id, labels: [technical-design label from project config])` to find it, then `fetch_issue(tdd_number)` to read full content. Extract: problem statement, proposed solution, architecture alignment, risks, and the story's entry from the `## Story Breakdown` section (Skill, Complexity, Scope, Key Decisions, Dependencies).
 3. **Design Instructions** (frontend only) — `list_issues(milestone_id, labels: [design-reviewed])` to find the design instructions issue. `fetch_issue` it in full — the document covers the entire sprint's UI design and gives the subagent necessary feature-wide context.
 
 ### S2 — Git Setup
@@ -41,14 +41,14 @@ Apply the **Story branch setup → No existing PR** strategy inside the codebase
 
 Inspect the ticket's `skill:` label(s) and invoke the matching subagent(s) using the Agent tool.
 
-**If the skill label is missing or unrecognised:** Stop and report: "No skill label found on ticket — run `/tl` to annotate the story first."
+**If the skill label is missing or unrecognised:** Stop and report: "No skill label found on ticket — run `/tl` to process the sprint first."
 
 Pass the following context to every subagent. **All context is passed directly — do NOT instruct subagents to fetch issues, read project files, or re-derive context:**
 
 - **Requirements**: story description + full `## Acceptance Criteria` section
-- **Scope**: from the TL annotation's Scope section
-- **Key decisions**: from the TL annotation's Key Decisions section
-- **Architecture context**: relevant TDD sections verbatim — application layer design, API endpoints, data flow, story dependencies, risks
+- **Scope**: from this story's entry in the TDD `## Story Breakdown` section
+- **Key decisions**: from this story's entry in the TDD `## Story Breakdown` section
+- **Architecture context**: relevant TDD sections verbatim — application layer design, API endpoints, data flow, story breakdown, risks
 - **Design instructions**: full design instructions issue (frontend only) — sprint-level document covering all affected surfaces
 - **Codebase config**: root path, test command, lint/build command (from project config)
 
@@ -152,7 +152,7 @@ In a single batch:
 2. **TDD** — fetch as in S1 step 2; re-read in full regardless of which label is present
 3. **Original Design Instructions** (frontend only) — fetch as in S1 step 3 (full issue)
 4. **Updated Design Instructions** (frontend only, if `design-updated` label is present) — `list_issues(milestone_id, labels: [design-updated])` to find the updated design instructions issue. `fetch_issue` it in full. The full document contains the `## Change Description` block and the complete revised sprint-level design.
-5. **Latest TL Annotation** (if `technical-updated` label is present) — scan issue comments for the most recent `## Technical Lead Annotation`. Extract updated Skill, Complexity, Scope, and Key Decisions. Earlier annotation comments are superseded.
+5. **Latest Story Breakdown** (if `technical-updated` label is present) — re-fetch the TDD (already fetched in step 2) and locate this story's entry in the `## Story Breakdown` section. Extract updated Skill, Complexity, Scope, and Key Decisions. The TDD is the single source of truth for this data.
 6. **Existing branch + PR** — scan issue comments for `## Implementation Complete`. Extract PR number(s). `fetch_pr(pr_number)` to get the branch name. If no `## Implementation Complete` comment is found, report "No previous implementation found for story #N — run `/dev standard <N>` instead." and stop.
 
 Determine the change delta — what needs to be implemented or revised:
@@ -185,9 +185,9 @@ This map is passed verbatim to subagents in C3 so they can target the delta prec
 
 ### C3 — Dispatch to Skill Subagent
 
-Inspect the latest TL annotation for the current `skill:` label(s). Invoke matching subagent(s).
+Inspect the ticket's `skill:` label(s) (applied by `/tl`). Invoke matching subagent(s).
 
-**If the skill label is missing or unrecognised:** Stop and report: "No skill label found on ticket — run `/tl` to annotate the story first."
+**If the skill label is missing or unrecognised:** Stop and report: "No skill label found on ticket — run `/tl` to process the sprint first."
 
 Pass the following context to every subagent. **All context is passed directly — do NOT instruct subagents to fetch issues, read project files, or re-derive context:**
 
@@ -195,8 +195,8 @@ Pass the following context to every subagent. **All context is passed directly �
   - If `story-updated`: "IMPORTANT: The story's acceptance criteria have been updated by the BA. Review the current ACs against the existing implementation map and decide what needs to be added, modified, or removed."
   - If `technical-updated`: "IMPORTANT: The technical solution has been updated. Review the updated Scope and Key Decisions below and revise the existing implementation to match — implement the delta only."
   - If `design-updated`: "IMPORTANT: The UI design has been updated. Review the Design Change section below and revise the existing UI implementation to match — implement the delta only."
-- **Scope**: from the latest `## Technical Lead Annotation` comment (step 5 if `technical-updated`, otherwise the existing annotation)
-- **Key decisions**: from the latest `## Technical Lead Annotation` comment
+- **Scope**: from this story's entry in the TDD `## Story Breakdown` section (updated entry if `technical-updated`, otherwise original)
+- **Key decisions**: from this story's entry in the TDD `## Story Breakdown` section
 - **Architecture context**: relevant TDD sections verbatim from the re-read TDD in C1 step 2
 - **Design instructions**: if `design-updated`, use the updated design instructions from C1 step 4 (full issue including `## Change Description` block); otherwise use the original from C1 step 3 — always pass the full sprint-level document, not a story slice
 - **Existing implementation**: the implementation map from C2 — what is already on the branch, keyed to ACs and TDD contracts, with explicit add/modify/remove guidance per delta item
