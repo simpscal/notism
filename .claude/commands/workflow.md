@@ -12,13 +12,7 @@ The top-level sprint conductor. Delegates every role-specific task to the correc
 
 ---
 
-## Step 1 — Bootstrap
-
-Read `.claude/project.md` and the tracker adapter it specifies before doing anything else. Hold in memory: repo slug, all label names, codebase list.
-
----
-
-## Step 2 — Parse Arguments and Determine Mode
+## Step 1 — Parse Arguments and Determine Mode
 
 The **first word** of `$ARGUMENTS` determines the mode:
 
@@ -27,10 +21,13 @@ The **first word** of `$ARGUMENTS` determines the mode:
 | `new` | New Sprint | `<raw requirement text>` |
 | `resume` | Resume Sprint | `<sprint_number>` |
 | `change` | Change Management | `<change_type> <args...>` |
+| `bug` | Bug Pipeline | `<bug description>` |
 
 ---
 
 ## Artifacts Table
+
+### Sprint Pipeline
 
 | Stage | Role | Input | Output | Gate Signal |
 |-------|------|-------|--------|-------------|
@@ -40,6 +37,15 @@ The **first word** of `$ARGUMENTS` determines the mode:
 | 3b — TDD | TL | Sprint number | TDD issue + story annotations + feature branches | `tl-reviewed` on all stories |
 | 4 — Dev | Dev | Story issue # (one at a time) | PR per story | PR merged into sprint branch |
 | 5 — Release | Sprint Finish | Sprint number | Release PRs (sprint → main) | Human merges release PRs |
+
+### Bug Pipeline
+
+| Stage | Role | Input | Output | Gate Signal |
+|-------|------|-------|--------|-------------|
+| 1 — Bug Report | Bug Reporter | Raw bug description | `[Bug] <title>` issue | `bug` label on issue |
+| 2 — ACs | BA | Bug issue # | Acceptance criteria appended to bug issue | Human reviews ACs |
+| 3 — Annotation | TL | Bug issue # | Technical annotation on bug issue (skill, scope, fix approach) | Human reviews annotation |
+| 4 — Fix | Dev | Bug issue # | Fix branch + PR to `main` | PR merged into main |
 
 ---
 
@@ -256,6 +262,155 @@ Options:
 
 - **A**: Output `Sprint $SPRINT_NUMBER shipped. Workflow complete.` and stop.
 - **B**: Output the rollback description and stop. Rollback is a human-executed operation outside this workflow.
+
+---
+
+## Mode: bug
+
+**Usage**: `/workflow bug <raw bug description>`
+
+Everything after `bug` is the raw bug description. Run the full bug pipeline from Stage 1.
+
+### B1 — Stage 1: Bug Report
+
+Delegate to the `bug-report` sub-agent:
+
+> `/bug-report <raw bug description>`
+
+Wait for completion. Capture the new bug issue number as `$BUG_ISSUE`.
+
+Print:
+```
+Stage 1 complete.
+Bug issue: #$BUG_ISSUE
+```
+
+### B2 — Gate 1: Bug Report Review
+
+Use `AskUserQuestion`:
+
+```
+Gate 1 — Bug Report Review
+
+The Bug Reporter has created the bug issue.
+
+  Artifact : Issue #$BUG_ISSUE
+             https://github.com/{repo}/issues/$BUG_ISSUE
+  Check    : Issue has label `bug`
+  Contents : Description, Steps to Reproduce, Expected/Actual Behaviour, Severity
+
+Options:
+  A) Approve — proceed to Acceptance Criteria (BA)
+  B) Cancel  — stop the workflow
+```
+
+- **A**: Proceed to B3.
+- **B**: Output `Workflow cancelled at Gate 1.` and stop.
+
+### B3 — Stage 2: Business Analyst
+
+Delegate to the `ba` sub-agent in bug mode:
+
+> `/ba bug $BUG_ISSUE`
+
+Wait for completion. BA appends acceptance criteria to the bug issue.
+
+Print:
+```
+Stage 2 complete.
+Bug issue updated with ACs: https://github.com/{repo}/issues/$BUG_ISSUE
+```
+
+### B4 — Gate 2: Acceptance Criteria Review
+
+Use `AskUserQuestion`:
+
+```
+Gate 2 — Acceptance Criteria Review
+
+The Business Analyst has added acceptance criteria to the bug issue.
+
+  Artifact : Issue #$BUG_ISSUE
+             https://github.com/{repo}/issues/$BUG_ISSUE
+  Check    : Issue body now contains an Acceptance Criteria section
+
+Options:
+  A) Approve — proceed to Technical Annotation (TL)
+  B) Cancel  — stop the workflow
+```
+
+- **A**: Proceed to B5.
+- **B**: Output `Workflow cancelled at Gate 2.` and stop.
+
+### B5 — Stage 3: Technical Lead
+
+Delegate to the `tl` sub-agent in bug mode:
+
+> `/tl bug $BUG_ISSUE`
+
+Wait for completion. TL annotates the bug issue with root cause, skill, scope, fix approach, key decisions, and risk.
+
+Print:
+```
+Stage 3 complete.
+Bug issue annotated: https://github.com/{repo}/issues/$BUG_ISSUE
+```
+
+### B6 — Gate 3: Technical Annotation Review
+
+Use `AskUserQuestion`:
+
+```
+Gate 3 — Technical Annotation Review
+
+The Technical Lead has annotated the bug issue.
+
+  Artifact : Issue #$BUG_ISSUE
+             https://github.com/{repo}/issues/$BUG_ISSUE
+  Check    : Issue has label `tl-reviewed`, annotation covers root cause + fix approach
+
+Options:
+  A) Approve — proceed to Fix (Dev)
+  B) Cancel  — stop the workflow
+```
+
+- **A**: Proceed to B7.
+- **B**: Output `Workflow cancelled at Gate 3.` and stop.
+
+### B7 — Stage 4: Dev Fix
+
+Delegate to the `dev` sub-agent:
+
+> `/dev standard $BUG_ISSUE`
+
+Wait for completion. Dev opens a PR from `fix/issue-$BUG_ISSUE-*` to `main`.
+
+Print:
+```
+Stage 4 complete.
+Fix PR is open — review at:
+https://github.com/{repo}/pulls
+```
+
+### B8 — Gate 4: Fix PR Review
+
+Use `AskUserQuestion`:
+
+```
+Gate 4 — Fix PR Review
+
+The developer has implemented the fix for bug #$BUG_ISSUE.
+
+  Action : Review the PR diff, run CI, and merge into main.
+           PR targets main — no sprint branch involved.
+
+Options:
+  A) Merged — bug fix shipped
+  B) Changes needed — describe what needs to change
+```
+
+- **A**: Output `Bug #$BUG_ISSUE fixed and shipped. Workflow complete.` and stop.
+- **B**: Invoke `/dev change $BUG_ISSUE <description>`. Re-present Gate 4.
 
 ---
 

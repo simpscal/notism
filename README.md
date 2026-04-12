@@ -1,40 +1,90 @@
 # AI Development Workflow
 
-An AI-powered development workflow using Claude Code slash commands. The issue tracker and all project-specific values are defined in `project.md` — making the workflow reusable across projects.
+An AI-powered development workflow using Claude Code slash commands. Issue tracker and all project-specific values defined in `project.md` — making the workflow reusable across projects.
 
 ---
 
 ## How It Works
 
-```
-PO writes requirement issue
-        ↓
-  /ba <issue>   →  BA brainstorms with PO, creates user stories + sprint milestone
-        ↓  ← HUMAN GATE: review stories
-  /design <ms>  →  Designer analyzes design system, creates design instructions (for frontend stories)
-        ↓  ← HUMAN GATE: review design instructions
-  /tl <ms>      →  TL reads architecture + design instructions, writes TDD, annotates stories
-        ↓  ← HUMAN GATE: review TDD and annotations
-  /dev [issue-number]  →  Dev implements one story, opens PR to sprint branch
-        ↓  ← HUMAN GATE: review PR and merge
-       Done
+```mermaid
+flowchart TD
+    A(["/po &lt;description&gt;"]) --> B["Requirement Issue<br/>`requirement`"]
+    B --> G1{Gate 1<br/>Review requirement}
+    G1 -->|Approve| C(["/ba &lt;issue&gt;"])
+    C --> D["User Stories + Sprint Milestone<br/>`sprint-ready`"]
+    D --> G2{Gate 2<br/>Review stories}
+    G2 -->|Approve| E1(["/design &lt;ms&gt;"])
+    G2 -->|Approve| E2(["/tl &lt;ms&gt;"])
+    E1 --> F1["Design Instructions<br/>`design-reviewed`"]
+    E2 --> F2["TDD Issue + Annotated Stories<br/>`tl-reviewed`"]
+    F1 --> G3{Gate 3<br/>Review TDD + Design}
+    F2 --> G3
+    G3 -->|Approve| H(["/dev &lt;issue&gt;"])
+    H --> I["PR → sprint branch<br/>`implemented`"]
+    I --> G4{Gate 4<br/>Review PR}
+    G4 -->|More stories| H
+    G4 -->|All merged| J(["/sprint-finish &lt;N&gt;"])
+    J --> K["Release PRs → main"]
+    K --> G5{Gate 5<br/>Merge release PRs}
+    G5 -->|Done| L([Sprint Shipped])
 ```
 
-Each phase ends with a **human gate** — you review the output before running the next command.
+Each phase ends with a **human gate** — review the output before running the next command.
+
+> `/workflow` orchestrates this entire pipeline. Run `/workflow new` to start a sprint, `/workflow resume` to continue, `/workflow change` to trigger change management.
+
+### Resume
+
+`/workflow resume <sprint_number>` — detects the furthest completed stage from issue labels and jumps back in.
+
+```mermaid
+flowchart TD
+    A(["/workflow resume &lt;N&gt;"]) --> B{Inspect labels<br/>in sprint milestone}
+    B -->|No milestone found| ERR([Sprint not found])
+    B -->|requirement exists,<br/>no sprint-ready| G1[Gate 1 — Requirement Review]
+    B -->|sprint-ready,<br/>no technical-design issue| S3[Stage 3 — Design + TL]
+    B -->|TDD exists,<br/>stories lack tl-reviewed| S3
+    B -->|Stories have tl-reviewed,<br/>PRs pending| S4[Stage 4 — Dev Loop]
+    B -->|All stories closed<br/>or deferred| S5[Stage 5 — Release]
+    B -->|sprint-completed| DONE([Already complete])
+    G1 & S3 & S4 & S5 --> P[Continue pipeline<br/>from detected stage]
+```
+
+### Change Management
+
+`/workflow change <type> <args>` — routes directly to the affected role without replaying the full pipeline.
+
+```mermaid
+flowchart TD
+    A(["/workflow change &lt;type&gt; &lt;args&gt;"]) --> B{change_type}
+    B -->|requirement| C(["/po change"])
+    C --> RC["Requirement Change Cascade<br/>→ BA re-evaluates stories<br/>→ TL + Designer re-evaluate<br/>   if artifacts exist"]
+    B -->|story| D(["/ba change"])
+    D --> TL(["/tl change"])
+    D --> FE{Has frontend<br/>label?}
+    FE -->|Yes| DES(["/design change"])
+    B -->|tdd| TL2(["/tl change"])
+    B -->|design| DES2(["/design change"])
+```
 
 ---
 
 ## Commands
 
-| Command | Agent | Input | Output |
-|---------|-------|-------|--------|
+| Command | Role | Input | Output |
+|---------|------|-------|--------|
+| `/po <description>` | Product Owner | raw requirement text | requirement issue with `requirement` label |
 | `/bug-report <description>` | Bug Reporter | bug description | bug issue with `bug` label |
-| `/ba <issue-number>` | Maya (BA) | requirement issue # or bug issue # | user story issues + sprint milestone (for requirements) — or ACs added to bug ticket |
-| `/design <milestone-id>` | Nhi (Designer) | milestone # | design instruction comments on frontend stories |
-| `/tl <milestone-id or bug-issue-number>` | Alex (Technical Lead) | milestone # or bug issue # | TDD issue + annotated stories (for sprints) — or technical annotation on bug ticket |
-| `/dev [issue-number]` | Dev persona (auto-selected from ticket labels) | optional issue # | implementation + PR to sprint branch (stories) or main (bugs) |
+| `/ba <issue-number>` | BA | requirement or bug issue # | user story issues + sprint milestone (requirements) — or ACs added to bug ticket |
+| `/design <milestone-id>` | Designer | milestone # | design instruction issue + frontend stories labelled `design-reviewed` |
+| `/tl <milestone-id or bug-issue>` | Technical Lead | milestone # or bug issue # | TDD issue + annotated stories (sprints) — or technical annotation on bug ticket |
+| `/dev [issue-number]` | Developer (auto) | optional issue # | implementation + PR to sprint branch (stories) or main (bugs) |
+| `/sprint-finish <sprint-number>` | Release Manager | sprint # | sprint closed, TDD archived, release PRs opened |
+| `/workflow <mode>` | Orchestrator | `new` / `resume` / `change` | full pipeline orchestration with human gates |
 
 Skills: `frontend` · `backend` · `fullstack` · `devops`
+
+`/dev` auto-selects the agent (`agents/backend.md`, `agents/frontend.md`, or `agents/devops.md`) based on `skill:` labels on the ticket. Multi-skill tickets activate multiple agents in parallel.
 
 ---
 
@@ -42,22 +92,35 @@ Skills: `frontend` · `backend` · `fullstack` · `devops`
 
 ```
 .claude/
-  project.md        ← project config: repo, tech stack, labels, branch patterns, tracker adapter
-  commands/         ← self-contained slash commands (orchestration + methodology)
+  project.md            ← primary config: repo, tech stack, labels, branch patterns, tracker adapter
+  commands/             ← slash commands (orchestration + methodology)
+    po.md
     ba.md
-    tl.md
+    workflow.md         ← pipeline orchestrator (new/resume/change modes)
     design.md
-    dev.md
-  trackers/         ← tracker adapters (swap to change issue tracker)
-    github.md
-  README.md
+    tl.md
+    bug-report.md
+    sprint-finish.md
+  agents/               ← developer role agents (invoked by /dev)
+    backend.md
+    frontend.md
+    devops.md
+  trackers/             ← tracker adapters (swap to change issue tracker)
+    github-tracker.md
+  skills/               ← git utilities used by commands
+    git-strategy/
+    git-operations/
+  scripts/              ← setup scripts
+    create-github-labels.sh
 ```
 
-**`project.md`** is the primary config: repo, codebases, tech stack, labels, branch patterns, architecture doc paths, test/lint commands, and the active tracker adapter path.
+**`project.md`** is the primary config: repo, codebases, tech stack, labels, branch patterns, architecture doc paths, test/lint commands, and active tracker adapter path.
 
-**Commands** are self-contained: each file includes both the role methodology and calls to tracker operations by name. No separate skill files.
+**Commands** are self-contained: each file includes the role methodology and calls tracker operations by name.
 
-**Trackers** define how abstract workflow operations (`fetch_issue`, `create_pr`, etc.) map to a specific issue tracker. Swap `trackers/github.md` for `trackers/jira.md` and update `project.md` — zero changes to command files.
+**Agents** are developer personas invoked by `/dev`. Each has a 4-stage workflow: understand requirements → explore code → implement → write tests.
+
+**Trackers** define how abstract workflow operations (`fetch_issue`, `create_pr`, etc.) map to a specific issue tracker. Swap `trackers/github-tracker.md` for `trackers/jira.md` and update `project.md` — zero changes to command files.
 
 ---
 
@@ -70,41 +133,45 @@ Skills: `frontend` · `backend` · `fullstack` · `devops`
    - Architecture doc locations
    - Label names
    - Git branch patterns and test/lint commands
-3. To use a different issue tracker (e.g., Jira): create `.claude/trackers/jira.md` using the same operation interface as `github.md`, then update the tracker adapter path in `project.md`
-4. Start with `/ba <issue-number>`
+3. Run `scripts/create-github-labels.sh` to create labels on the repo
+4. To use a different issue tracker: create `.claude/trackers/jira.md` using the same operation interface as `github-tracker.md`, then update the tracker adapter path in `project.md`
+5. Start with `/po <requirement description>` or open a requirement issue manually and run `/ba <issue-number>`
 
 ---
 
 ## Full Workflow
 
-### 1. Create a requirement
-Open an issue on your project repo, add the `requirement` label, describe what you want built. Note the issue number.
+### 0. Create a requirement
+```
+/po Build a user authentication system with OAuth
+```
+Creates a requirement issue with `requirement` label. Or open an issue manually on your repo.
 
-### 2. Run BA
+### 1. Run BA
 ```
 /ba 42
 ```
-Maya brainstorms with you to eliminate ambiguity, then creates 3–8 user stories in a new sprint milestone.
+BA brainstorms with you to eliminate ambiguity, then creates 3–8 user stories in a new sprint milestone.
 
 **Human gate**: Review the stories. Edit or close any that don't fit. Get the milestone ID from the URL (`.../milestone/3`).
 
-### 3. Run Designer (if frontend stories exist)
+### 2. Run Designer (if frontend stories exist)
 ```
 /design 3
 ```
-Nhi analyzes the design system (components, tokens, layouts) and posts structured design instructions on each frontend/fullstack story. These instructions guide developers to use consistent components, design tokens, and patterns.
+Designer analyzes the design system (components, tokens, layouts) and creates a design instructions issue with structured guidance per frontend/fullstack story. Labels each frontend story `design-reviewed`.
 
-**Human gate**: Review the design instructions on each story. (If no frontend stories, skip to Step 4.)
+**Human gate**: Review the design instructions issue. (If no frontend stories, skip to Step 3.)
 
-### 4. Run Technical Lead
+### 3. Run Technical Lead
 ```
 /tl 3
 ```
-Alex reads the architecture docs and any design instructions posted in Step 3, designs the solution, writes a TDD issue, and annotates every story with implementation guidance.
+TL reads architecture docs and design instructions, designs the solution, writes a TDD issue, and annotates every story with implementation guidance (skill, complexity, scope, key decisions).
 
 **Human gate**: Review the TDD issue and story annotations on the issue tracker.
 
-### 5. Run Dev(s)
+### 4. Run Dev(s)
 Auto-pick an unassigned ticket:
 ```
 /dev
@@ -115,9 +182,17 @@ Or target a specific issue:
 /dev 45
 ```
 
-The persona (frontend/backend/fullstack/devops) is determined automatically from the ticket's `skill:` labels. A ticket with multiple skill labels activates multiple personas. Run multiple in parallel for independent stories.
+Agent is auto-selected from `skill:` labels on the ticket (backend → `agents/backend.md`, frontend → `agents/frontend.md`, etc.). Multi-skill tickets run multiple agents in parallel.
 
 **Human gate**: Review the PR diff. When approved, merge into the sprint feature branch.
+
+### 5. Finish the sprint
+```
+/sprint-finish 3
+```
+Release manager checks all stories are merged, labels and closes all sprint issues, archives the TDD to `docs/designs/sprint-N.md`, and opens release PRs (sprint branch → main) per codebase.
+
+**Human gate**: Review and merge the release PRs.
 
 ---
 
@@ -128,11 +203,13 @@ The persona (frontend/backend/fullstack/devops) is determined automatically from
 | `requirement` | PO-created requirement |
 | `user-story` | BA-created story |
 | `bug` | Reporter-created bug issue |
-| `sprint-ready` | Awaiting design |
+| `sprint-ready` | Awaiting design/TL |
 | `tl-reviewed` | TL complete — awaiting dev |
 | `technical-design` | TDD issue |
 | `design-reviewed` | Design instructions complete — awaiting dev |
 | `in-progress` | Dev is implementing |
+| `implemented` | Dev complete — awaiting review |
+| `sprint-completed` | Sprint closed |
 | `skill:frontend` | Frontend story or bug |
 | `skill:backend` | Backend story or bug |
 | `skill:fullstack` | Full-stack story |
@@ -144,18 +221,22 @@ The persona (frontend/backend/fullstack/devops) is determined automatically from
 
 ## Bug Workflow
 
-A separate pipeline for fixing production bugs — runs independently of the sprint cycle. Bug PRs always target `main`.
+Separate pipeline for production bugs — runs independently of the sprint cycle. Bug PRs always target `main`.
 
-```
-/bug-report <description>
-        ↓ ← HUMAN GATE: review bug summary
-  /ba <N>   →  BA reads architecture, adds ACs to the bug ticket
-        ↓ ← HUMAN GATE: review acceptance criteria
-  /tl <N>   →  TL reads architecture + ACs, annotates bug ticket with skill/scope/decisions
-        ↓ ← HUMAN GATE: review technical annotation
-  /dev <N>  →  Dev implements fix on fix/issue-N branch, opens PR to main
-        ↓ ← HUMAN GATE: review PR and merge
-       Done
+```mermaid
+flowchart TD
+    A(["/bug-report &lt;description&gt;"]) --> B["Bug Issue<br/>`bug`"]
+    B --> G1{Gate 1<br/>Review bug report}
+    G1 -->|Approve| C(["/ba &lt;issue&gt;"])
+    C --> D["Acceptance Criteria<br/>appended to issue"]
+    D --> G2{Gate 2<br/>Review ACs}
+    G2 -->|Approve| E(["/tl &lt;issue&gt;"])
+    E --> F["Technical Annotation<br/>`tl-reviewed`"]
+    F --> G3{Gate 3<br/>Review annotation}
+    G3 -->|Approve| H(["/dev &lt;issue&gt;"])
+    H --> I["Fix PR → main<br/>`implemented`"]
+    I --> G4{Gate 4<br/>Review PR}
+    G4 -->|Merged| J([Bug Fixed])
 ```
 
 `/ba`, `/tl`, and `/dev` detect the `bug` label automatically and switch to Bug Mode — no separate commands needed.
