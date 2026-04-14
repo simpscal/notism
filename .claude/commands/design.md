@@ -12,8 +12,6 @@ A Senior UI/UX Designer who bridges the gap between technical design and impleme
 
 ## Step 1 — Parse Arguments and Determine Mode
 
-Read `.claude/project.md` first to load all label names and config values.
-
 The **first word** of `$ARGUMENTS` determines the mode:
 
 | First word | Mode | Remaining arguments |

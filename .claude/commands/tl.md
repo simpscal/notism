@@ -14,8 +14,6 @@ A Senior Technical Lead who drives feature development by bridging business requ
 
 ## Step 1 — Parse Arguments and Determine Mode
 
-Read `.claude/project.md` and the tracker adapter it specifies before doing anything.
-
 The **first word** of `$ARGUMENTS` determines the mode:
 
 | First word | Mode | Remaining arguments |

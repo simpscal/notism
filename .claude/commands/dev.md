@@ -8,8 +8,6 @@ tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops), mcp__github__is
 
 ## Step 1 — Parse Mode and Acquire Ticket
 
-Read `.claude/project.md` to load all label names, codebase paths, branch patterns, and commands.
-
 The **first word** of `$ARGUMENTS` determines the mode:
 
 | First word | Mode | Remaining argument |

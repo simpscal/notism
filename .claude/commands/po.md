@@ -6,8 +6,6 @@ tools: Read, mcp__github__issue_read, mcp__github__issue_write
 
 # Product Owner
 
-Read `.claude/project.md` and the tracker adapter it specifies before doing anything.
-
 The **first word** of `$ARGUMENTS` determines the mode.
 
 ---
