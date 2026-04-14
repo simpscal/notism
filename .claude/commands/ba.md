@@ -1,6 +1,7 @@
 ---
 name: ba
-description: Analyze requirements, create/amend user stories and sprint milestones. Modes: standard, bug, change, requirement-change.
+description: Analyze requirements, create/amend user stories and sprint milestones.
+argument-hint: "<standard|bug|change|requirement-change> [args]"
 tools: Read, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment
 ---
 

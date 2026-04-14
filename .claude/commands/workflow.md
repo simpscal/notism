@@ -1,6 +1,7 @@
 ---
 name: workflow
-description: Top-level sprint orchestrator. Sequences PO→BA→Design+TL→Dev→Release with human gates and change-management routing. Modes: new (start from scratch), resume (continue a sprint), change (trigger change management).
+description: Top-level sprint orchestrator. Sequences PO→BA→Design+TL→Dev→Release with human gates and change-management routing.
+argument-hint: "<new|resume|change> [args]"
 tools: Read, AskUserQuestion
 ---
 

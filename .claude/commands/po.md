@@ -1,6 +1,7 @@
 ---
 name: po
-description: Summarise raw requirements and create/update GitHub issues. Supports two modes: standard (create) and change (update).
+description: Summarise raw requirements and create/update GitHub issues.
+argument-hint: "standard <requirement text> | change <issue_number> <new requirement text>"
 tools: Read, mcp__github__issue_read, mcp__github__issue_write
 ---
 

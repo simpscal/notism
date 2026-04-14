@@ -1,6 +1,7 @@
 ---
 name: bug-report
-description: Bug — clarify a bug report interactively, summarize it, and create a GitHub issue. Usage: /bug-report <description>
+description: Bug — clarify a bug report interactively, summarize it, and create a GitHub issue.
+argument-hint: "[description]"
 tools: Read, AskUserQuestion, mcp__github__issue_write
 ---
 

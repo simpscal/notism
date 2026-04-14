@@ -1,6 +1,7 @@
 ---
 name: design
-description: Analyze design system and create design instructions for frontend stories. Modes: standard, change, requirement-change.
+description: Analyze design system and create design instructions for frontend stories.
+argument-hint: "<standard|change|requirement-change> [args]"
 tools: Read, Glob, Grep, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__plugin_figma_figma__authenticate
 ---
 

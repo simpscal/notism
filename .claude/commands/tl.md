@@ -1,6 +1,7 @@
 ---
 name: tl
-description: Design high-level solution for a sprint. Modes: standard, change, requirement-change, bug.
+description: Design high-level solution for a sprint.
+argument-hint: "<standard|bug|change|requirement-change> [args]"
 tools: Read, Glob, Grep, Bash, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__github__create_branch
 ---
 
