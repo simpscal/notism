@@ -49,6 +49,8 @@ Extract `sprint_number` (the token after `requirement-change`). Use `list_milest
 
 ## Standard Mode (S1–S6)
 
+Read `.claude/templates/issue-design-instructions.md`.
+
 ### S1 — Resolve Sprint Milestone
 
 Resolve the sprint argument to a GitHub milestone ID:
@@ -142,41 +144,7 @@ Use `create_issue(title, body, labels, milestone_id)` from the tracker adapter:
 
 **Title**: `Sprint N — Design Instructions`
 
-**Body**:
-```
-Part of #<requirement_issue_number>
-
----
-
-## Design Instructions
-
-### Overview
-<sprint UI goal, list of affected pages/surfaces, reference pages>
-
-### Layout
-<full-feature page structure, flow, spacing, ASCII wireframe(s)>
-
-### Components
-| Element | Component | Variant | Size | Notes |
-|---------|-----------|---------|------|-------|
-
-### Design Tokens
-| Usage | Token | Notes |
-|-------|-------|-------|
-
-### UI States
-| Surface | State | Implementation |
-|---------|-------|---------------|
-
-### Responsive Behavior
-<layout changes at each breakpoint across all affected surfaces>
-
-### Accessibility
-<ARIA labels, keyboard navigation, focus management, contrast>
-
-### Consistency Notes
-<cross-surface references or deviations from existing patterns>
-```
+**Body**: Use `issue-design-instructions.md`, then pass to `create_issue`.
 
 **Labels**: `design-reviewed` (and any design labels from project config)
 **Milestone**: `$MILESTONE_ID`
@@ -184,6 +152,8 @@ Part of #<requirement_issue_number>
 ---
 
 ## Change Mode (C1–C5)
+
+Read `.claude/templates/issue-design-instructions.md`.
 
 ### C1 — Read the Design System
 
@@ -269,6 +239,8 @@ Identify open issues whose scope overlaps the described change (by title, labels
 
 ## Requirement Change Mode (RC1–RC7)
 
+Read `.claude/templates/issue-design-instructions.md`.
+
 ### RC1 — Resolve Sprint Milestone
 
 → Follow S1 (Resolve Sprint Milestone).
@@ -299,7 +271,7 @@ Use `list_issues($MILESTONE_ID, labels: ["design-reviewed"])` from the tracker a
 
 The `Sprint N — Design Instructions` issue was already fetched in RC4 — use its ID.
 
-Use `update_issue_body(id, new_body)` from the tracker adapter to fully rewrite the issue body with the complete updated design instructions. Use the same flat sprint-level format as S6 (Overview, Layout, Components, Design Tokens, UI States, Responsive Behavior, Accessibility, Consistency Notes).
+Use `update_issue_body(id, new_body)` from the tracker adapter to fully rewrite the issue body with the complete updated design instructions using `issue-design-instructions.md`.
 
 Use `update_labels(id, add: [design-updated], remove: [design-reviewed])` on the design instructions issue to reflect its updated state.
 

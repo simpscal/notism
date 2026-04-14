@@ -9,6 +9,8 @@ tools: Read, Write, Bash, mcp__github__issue_read, mcp__github__list_issues, mcp
 
 ## Workflow
 
+Read `.claude/templates/pr-release.md` and `.claude/templates/comment-sprint-summary.md`.
+
 ### Step 1 — Parse Arguments
 
 Parse `$ARGUMENTS` as the milestone ID or sprint number (e.g. `3` or `Sprint 3`).
@@ -144,63 +146,11 @@ For each codebase, create a PR via `create_pr(title, body, head, base)`:
 - **Title**: `feat(sprint-N): {milestone description}`
 - **Base**: `main`
 - **Head**: `feature/sprint-N`
-- **Body**:
-
-```markdown
-## Sprint N — Release PR
-
-Merges all Sprint N stories into main.
-
-## Stories
-- Closes #<N> — <title>
-(one line per story)
-
-## Migration notes
-<If migrations found in Step 6:>
-⚠️ EF Core migrations detected — apply before or after deploy:
-  dotnet ef database update
-
-  Files:
-  - <migration file path>
-  (one line per file)
-
-<If no migrations:>
-No database migrations in this sprint.
-
-## Checklist
-- [ ] All story PRs merged into sprint branch
-- [ ] Migration scripts reviewed (if any)
-- [ ] Lint and tests pass on sprint branch
-- [ ] QA sign-off
-```
+- **Body**: Use `pr-release.md`, then pass to `create_pr`.
 
 ### Step 8 — Post Sprint Summary
 
-Post a comment on the requirement issue using `post_comment(requirement_issue_id, body)`:
-
-```markdown
-## Sprint Closed ✓
-
-**Sprint**: Sprint N
-**Closed**: {today's date}
-
-### Stories shipped
-| Issue | Title | Skill |
-|-------|-------|-------|
-| #N | <title> | <skill:* label value> |
-
-### Release PRs
-| Codebase | PR |
-|----------|----|
-| backend | #<N> |
-| frontend | #<N> |
-
-### Migrations
-<"⚠️ EF Core migrations detected — see backend PR for details." or "None">
-
----
-> ⏸ Human gate: Review and merge the release PRs into main. If migrations are present, run them on production after deploy.
-```
+Use `comment-sprint-summary.md`, then `post_comment(requirement_issue_id, body)`.
 
 ## Constraints
 

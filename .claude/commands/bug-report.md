@@ -9,6 +9,8 @@ tools: Read, AskUserQuestion, mcp__github__issue_write
 
 Treat `$ARGUMENTS` as the raw bug description (may be empty or partial).
 
+Read `.claude/templates/issue-bug-report.md`.
+
 ## Step 1 — Gather Bug Details
 
 Parse `$ARGUMENTS`. Identify which of the following fields are already answered:
@@ -29,28 +31,7 @@ Use `create_issue(title, body, labels, milestone_id: null)` from the tracker ada
 - **Labels**: `["bug"]`
 - **Milestone**: `null`
 
-**Body**:
-
-```
-## Bug Report
-
-### Description
-<concise summary of the defective behaviour>
-
-### Steps to Reproduce
-1. <step>
-2. <step>
-...
-
-### Expected Behaviour
-<what should happen>
-
-### Actual Behaviour
-<what actually happens>
-
-### Severity
-<critical | high | medium | low>
-```
+**Body**: Use `issue-bug-report.md`.
 
 ## Step 3 — Output
 

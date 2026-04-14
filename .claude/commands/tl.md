@@ -36,6 +36,8 @@ Use `list_milestones()` to find the milestone with title `Sprint N`. Hold its Gi
 
 ## Standard Mode (S1–S8)
 
+Read `.claude/templates/issue-tdd.md`.
+
 ### S1 — Fetch All Stories
 
 Use `list_issues($MILESTONE_ID)` to list all open issues in the milestone. Use `fetch_issue(id)` on each one to read the full body — description, acceptance criteria, and notes.
@@ -123,125 +125,7 @@ For each major decision: document at least one alternative and why it was reject
 
 #### Stage 4 — Write the Technical Design Document (TDD)
 
-Produce a TDD using this template. Fill every section:
-
-```markdown
-# Sprint N — Technical Design Document
-
-## 1. Executive Summary
-
-**Status**: Draft | Approved | Deprecated
-**Author**: | **Reviewer**:
-
-### Problem Statement
-<2–3 sentences: what gap or pain does this sprint address and why now?>
-
-### Goals
-- <What the user gains>
-
-### Non-Goals
-- <What this sprint explicitly does not address>
-
----
-
-## 2. Architectural Design
-
-### High-Level Diagram
-<Mermaid diagram showing all services, databases, caches, and third-party tools involved>
-
-### Integration Flows
-
-#### Happy Path
-<Mermaid sequence diagram: user action → service(s) → storage → response>
-
-#### Unhappy Path
-<Mermaid sequence diagram: key failure scenario(s) and how the system responds>
-
-### Technology Stack
-<Any new languages, frameworks, libraries, or infrastructure this sprint introduces>
-
-### Components Design
-<Mermaid diagram showing the internal component structure for this feature. Use component diagram syntax showing:
-
-- **Components**: All new or modified components needed (e.g., services, handlers, repositories, UI components)
-- **Component responsibilities**: Label each component with its key responsibilities
-- **Interactions**: Show how components communicate (API calls, events, data flow) with arrows indicating direction
-
-Example format:
-```mermaid
-componentDiagram
-    A[UI Component] --> B[API Handler]
-    B --> C[Service Layer]
-    C --> D[Repository]
-    D --> E[(Database)]
-```>
-
----
-
-## 3. Data & Interface Contracts
-
-### Data Models
-<ERD or JSON schema for each new or modified entity. Include key indexes.>
-
-### API Specification
-| Method | Route | Auth | Request Body | Response | Status Codes |
-|--------|-------|------|-------------|----------|--------------|
-
-### Event Schemas
-<If a message bus is used: topic name, event structure, producer, consumer. Otherwise: N/A>
-
----
-
-## 4. Risk & Trade-offs
-
-### Alternatives Considered
-| Decision | Chosen | Alternative | Why Alternative Was Rejected |
-|----------|--------|-------------|------------------------------|
-
-### Security
-<Authentication, authorisation, data encryption at rest and in transit>
-
-### Scalability & Performance
-<Expected throughput (TPS), latency targets, horizontal vs. vertical scaling strategy>
-
-### Failure Modes
-| Scenario | Impact | Mitigation |
-|----------|--------|------------|
-
----
-
-## 5. Migration Plan
-
-<How existing data is migrated; cutover strategy (flag-day vs. canary); rollback plan>
-
-### Monitoring & Alerting
-<Key metrics to track (error rate, latency, queue depth); threshold that pages on-call>
-
----
-
-## Architecture Alignment
-<Checklist derived from architecture docs — Pass / Fail / N-A with note on any Fail>
-
-## Architecture Key Decisions
-<Canonical summary for downstream dev subagents — read THIS instead of re-reading full architecture docs. Include:>
-- **Layer responsibilities**: which layers own what
-- **Naming conventions**: key naming patterns enforced in this codebase
-- **Adding a new feature checklist**: steps recommended for extending this codebase
-- **Cross-cutting patterns**: error handling, result pattern, validation approach, layer communication
-- **Component/file organisation**: folder structure conventions, where new files of each type belong
-
-> Full architecture docs are available at the paths in project config — read them for deep-dives.
-
-## Story Breakdown
-<One subsection per story — produced in Stage 5. Each entry: Skill, Complexity, Depends On, Scope, Key Decisions.>
-
----
-
-## Lead's Review Checklist
-- [ ] Is there a single point of failure? (If yes, it is documented with a mitigation in §4)
-- [ ] Does this design introduce technical debt we'll regret in 6 months? (If yes, it is justified)
-- [ ] Could a developer who wasn't in the meetings build this from this document alone?
-```
+Use `issue-tdd.md`, then pass as the body to `create_issue` in S5.
 
 **Complete when:** Every story has an implementation path traceable through the TDD, and the Lead's Review Checklist passes.
 
@@ -298,6 +182,8 @@ Find the parent requirement issue (linked via "Part of #N" in the stories):
 
 **Usage**: `/tl bug <bug_issue_number>`
 
+Read `.claude/templates/comment-tl-annotation.md`.
+
 `fetch_issue(bug_issue_number)` to read the bug report in full, then continue through T1–T7 below.
 
 ---
@@ -305,6 +191,8 @@ Find the parent requirement issue (linked via "Part of #N" in the stories):
 ## Mode: change
 
 **Usage**: `/tl change <sprint_number> <change description>`
+
+Read `.claude/templates/issue-tdd.md`.
 
 Extract `sprint_number` (first token after `change`) and `change_description` (the remainder).
 
@@ -385,6 +273,8 @@ For each affected story: scan its comments for `## Implementation Complete`. If 
 ## Mode: requirement-change
 
 **Usage**: `/tl requirement-change <sprint_number>`
+
+Read `.claude/templates/issue-tdd.md`.
 
 Extract `sprint_number` (the token after `requirement-change`). Follows the same pattern as change mode, but fetches all user stories first to gain full context on the updated requirement.
 
@@ -471,29 +361,7 @@ Based on T4's scope:
 
 ### T6 — Annotate the Bug Ticket
 
-`post_comment(<N>, body)`:
-
-```
-## Technical Lead Annotation
-
-**Skill**: <frontend | backend | both>
-**Complexity**: <S | M | L>
-
-### Root Cause
-<which layer/module is responsible and why>
-
-### Scope
-<which layers and specific files are touched>
-
-### Fix Approach
-<what needs to change — 1–3 sentences>
-
-### Key Decisions
-- <Decision: what was chosen and why>
-
-### Risk
-<Low — logic fix only | Migration required: <details> | etc.>
-```
+Use `comment-tl-annotation.md`, then `post_comment(<N>, body)`.
 
 Then `update_labels(<N>, add: [tl-reviewed, skill:<label(s)>], remove: [])`.
 

@@ -54,6 +54,8 @@ The story issue number is the first token after `change`; everything after is th
 
 **Usage**: `/ba requirement-change <requirement_issue_number>`
 
+Read `.claude/templates/issue-user-story.md`.
+
 Extract `req_issue_number` (the token after `requirement-change`).
 
 ### RC1 — Read Current Requirement and Linked Stories
@@ -96,6 +98,8 @@ Do not modify the issue body — the label signals removal.
 ---
 
 ## Standard Mode
+
+Load `.claude/templates/issue-user-story.md`, `.claude/templates/acceptance-criteria.md` → both cached.
 
 ### S1 — Discovery Session with PO
 
@@ -144,7 +148,7 @@ Produce a clear scope statement:
 
 #### Stage 3 — Decompose into User Stories
 
-Break the requirement into **3–8 user stories**. Apply the INVEST framework to each:
+Break the requirement into **3–20 user stories**. Apply the INVEST framework to each:
 
 | Criterion | Test |
 |-----------|------|
@@ -159,14 +163,7 @@ Break the requirement into **3–8 user stories**. Apply the INVEST framework to
 
 #### Stage 4 — Write Acceptance Criteria
 
-For each user story, write **3–6 acceptance criteria** as observable, testable statements.
-
-**Format**:
-```
-- [ ] When <condition>, the user sees/can/cannot <observable outcome>
-- [ ] The system <measurable behavior> when <condition>
-- [ ] <Feature> is only accessible to <user type>
-```
+Fill in `acceptance-criteria.md` for each story.
 
 Also include a **Notes** section per story for: known edge cases, open UX questions, dependencies on other stories, or constraints. Use `link_to(id)` from the tracker adapter for inter-story references — back-fill these links once all issues are created.
 
@@ -183,23 +180,7 @@ Use `list_milestones()` to determine the next sprint number. Then `create_milest
 
 ### S4 — Create User Story Issues
 
-For each story, `create_issue("[Story] <title>", body, ["user-story"], milestone_id)`:
-
-```
-## User Story
-<As a ... I want ... so that ...>
-
-## Acceptance Criteria
-- [ ] <AC 1>
-- [ ] <AC 2>
-- [ ] <AC 3>
-
-## Notes
-<From S2 output>
-
----
-Part of <link_to($ARGUMENTS)>
-```
+For each story, `create_issue("[Story] <title>", body, ["user-story"], milestone_id)` using `issue-user-story.md`.
 
 > **Dependency linking**: Create all issues first, then back-fill `link_to(id)` references in Notes for both `Depends on` and `Blocks` directions.
 
@@ -210,6 +191,8 @@ Use `update_labels(requirement_issue_number, add: [sprint-ready], remove: [])`.
 ---
 
 ## Change Mode
+
+Load `.claude/templates/acceptance-criteria.md`.
 
 ### C1 — Read the Story
 
@@ -239,13 +222,7 @@ If no gaps exist, confirm alignment and proceed immediately.
 
 ### C3 — Translate to Acceptance Criteria
 
-Convert the clarified change into ACs using the exact format and criteria from Stage 4 of S2:
-
-```
-- [ ] When <condition>, the user sees/can/cannot <observable outcome>
-- [ ] The system <measurable behavior> when <condition>
-- [ ] <Feature> is only accessible to <user type>
-```
+Fill in `acceptance-criteria.md`.
 
 Classify each AC as:
 - **Added** — a new behaviour not covered by any existing AC
@@ -288,6 +265,8 @@ Stop here — do not continue to S1.
 
 ## Steps B1–B4: Bug Mode
 
+Load `.claude/templates/acceptance-criteria.md` (template already loaded at start of ba command).
+
 ### B1 — Analyse the Bug in Context
 
 Using the bug report (description, reproduction steps, expected/actual behaviour), determine:
@@ -300,28 +279,11 @@ If critical information is missing, use `AskUserQuestion` once to ask all blocki
 
 ### B2 — Write Acceptance Criteria
 
-Write 3–5 ACs:
-
-```
-- [ ] When <condition>, the user sees/can/cannot <observable outcome>
-- [ ] The system <measurable behavior> when <condition>
-```
-
-Each AC must be: specific, observable, non-technical, and verifiable by a non-engineer.
+Fill in `acceptance-criteria.md`.
 
 ### B3 — Update the Bug Issue
 
-`update_issue_body(<N>, body)` — append to the **end** of the existing body, do NOT modify the original `## Bug Report` section:
-
-```
-## Acceptance Criteria
-- [ ] <AC 1>
-- [ ] <AC 2>
-...
-
-## Notes
-<Edge cases, related scenarios, or constraints the implementer should know>
-```
+`update_issue_body(<N>, body)` using `acceptance-criteria.md` — append to the **end** of the existing body, do NOT modify the original `## Bug Report` section.
 
 ---
 

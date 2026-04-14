@@ -24,6 +24,8 @@ Implement **one ticket per invocation** — do not batch.
 
 ## Standard Mode (S1–S6)
 
+Read `.claude/templates/pr-story.md`.
+
 ### S1 — Gather All Story Context in Parallel
 
 In a single batch, fetch all context needed for dispatch:
@@ -90,24 +92,7 @@ Use `create_pr(title, body, head: story-branch, base: sprint-branch)` from the t
 
 **PR title:** `feat(#<ISSUE_NUMBER>): <short description>`
 
-**PR body:**
-```markdown
-## Summary
-<What was built and why>
-
-## Changes
-- `path/to/file` — <what changed>
-
-## Test plan
-- [ ] <test command from project config> passes
-- [ ] <lint/build command from project config> passes
-- [ ] <manual verification step>
-
-## Acceptance criteria
-- [x] <AC — satisfied>
-
-Closes #<ISSUE_NUMBER>
-```
+**PR body:** Use `pr-story.md`, then pass to `create_pr`.
 
 For multi-skill stories, open one PR per skill — each from its own codebase path, each targeting the sprint branch.
 
@@ -140,6 +125,8 @@ For multi-skill stories with two PRs:
 ---
 
 ## Change Mode (C1–C5)
+
+Read `.claude/templates/pr-story.md`.
 
 Entered when `change` is the first argument. The story already has an implementation on an existing branch. One or more of the labels `story-updated`, `design-updated`, or `technical-updated` is expected — implement the delta only; do not re-implement what is already on the branch.
 
