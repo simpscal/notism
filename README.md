@@ -4,6 +4,18 @@ An AI-powered development workflow using Claude Code slash commands. Issue track
 
 ---
 
+## Contents
+
+- [How It Works](#how-it-works)
+- [Commands](#commands)
+- [Structure](#structure)
+- [Setup for a New Project](#setup-for-a-new-project)
+- [Full Workflow](#full-workflow)
+- [Label Reference](#label-reference)
+- [Bug Workflow](#bug-workflow)
+
+---
+
 ## How It Works
 
 ```mermaid
