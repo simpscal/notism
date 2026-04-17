@@ -11,6 +11,34 @@ The **repo** value for all operations comes from `.claude/project.md` (Issue Tra
 
 ---
 
+## Confirmation Protocol
+
+Before executing any **mutating** operation (or a planned sequence of them), you must:
+
+1. **Summarize** all planned mutations in a single block — operation type, target, and key parameters
+2. **Ask the user once**: `"Proceed with these actions? (y/n)"`
+3. **Proceed only if confirmed.** If denied, stop and report what was skipped.
+
+Group related mutations into one confirmation (e.g. create milestone + stories + label = one prompt, not N prompts).
+
+**Read-only — no confirmation needed**: `fetch_issue`, `list_issues`, `list_milestones`, `gh pr list`, any `gh api` read.
+
+**Mutating — always confirm**: `create_issue`, `create_milestone`, `create_pr`, `update_issue_body`, `update_labels`, `post_comment`, `gh issue close`, `git push origin --delete`.
+
+**Example confirmation block:**
+```
+## Planned Tracker Actions
+
+1. create_milestone("Sprint 4", "User can log in")
+2. create_issue("[Story] Log in with email", labels: user-story, milestone: Sprint 4)
+3. create_issue("[Story] Log out", labels: user-story, milestone: Sprint 4)
+4. update_labels(#12, add: sprint-ready)
+
+Proceed with these actions? (y/n)
+```
+
+---
+
 ## Operations
 
 ### `link_to(id)`

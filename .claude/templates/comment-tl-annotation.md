@@ -13,13 +13,13 @@ Posted by `/tl` (bug mode T6).
 **Complexity**: <S | M | L>
 
 ### Root Cause
-<which layer/module is responsible and why>
+[frontend | backend | devops] <which layer/module is responsible and why>
 
 ### Scope
 <which layers and specific files are touched>
 
 ### Fix Approach
-<what needs to change — 1–3 sentences>
+[frontend | backend | devops | frontend + backend | ...] <what needs to change — 1–3 sentences>
 
 ### Key Decisions
 - <Decision: what was chosen and why>
@@ -57,11 +57,12 @@ Posted by `/tl` (bug mode T6).
 **REQUIRED** | text | 1-3 sentences
 
 **Rules**:
+- Open with `[frontend]`, `[backend]`, or `[devops]` tag to identify which side originates the bug
 - Identify specific layer/module responsible
 - Explain WHY bug occurs, not just WHAT
 - Technical but understandable to developer
 
-**Wrong**: ❌ "Code is broken" (not specific), ❌ Describes symptom not cause
+**Wrong**: ❌ "Code is broken" (not specific), ❌ Describes symptom not cause, ❌ Missing side tag
 
 ### Scope
 **REQUIRED** | text
@@ -77,12 +78,13 @@ Posted by `/tl` (bug mode T6).
 **REQUIRED** | text | 1-3 sentences
 
 **Rules**:
+- Open with `[frontend]`, `[backend]`, or `[devops]` tag (or combined, e.g. `[frontend + backend]`) to identify which side(s) need changes
 - Describe WHAT to change, not HOW to code
 - No code snippets
 - Actionable guidance
 - Use imperative: "Add", "Update", "Remove", "Change"
 
-**Wrong**: ❌ "Fix the bug", ❌ Code examples, ❌ "Developer should refactor everything"
+**Wrong**: ❌ "Fix the bug", ❌ Code examples, ❌ "Developer should refactor everything", ❌ Missing side tag
 
 ### Key Decisions
 **REQUIRED** | list | Min 1 decision
@@ -112,8 +114,10 @@ Posted by `/tl` (bug mode T6).
 - [ ] Skill is frontend | backend | both
 - [ ] Complexity is S | M | L
 - [ ] Complexity matches time/impact
+- [ ] Root Cause opens with [frontend | backend | devops] tag
 - [ ] Root Cause explains WHY, not WHAT
 - [ ] Scope has specific file paths
+- [ ] Fix Approach opens with side tag(s)
 - [ ] Fix Approach actionable, no code
 - [ ] Min 1 Key Decision with rationale
 - [ ] Risk level clearly stated

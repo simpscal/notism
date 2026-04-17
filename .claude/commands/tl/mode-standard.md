@@ -33,7 +33,7 @@ Also note each story's labels (`story-added`, `story-updated`, `story-removed`) 
 
 ## S4 — Read the Architecture
 
--> Follow `_read-architecture.md`
+-> Read each codebase's `CLAUDE.md` 
 
 ---
 

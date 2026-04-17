@@ -25,13 +25,7 @@ This file is the single source of truth for all project-specific values. Command
 
 Read in this order when studying the codebase:
 - `../notism-api/CLAUDE.md`
-- `../notism-api/docs/rules/architecture.md` (if it exists)
-- `../notism-api/docs/rules/best-practices.md` (if it exists)
-- `../notism-api/docs/rules/naming.md` (if it exists)
 - `../notism-web/CLAUDE.md`
-- `../notism-web/docs/rules/architecture.md` (if it exists)
-- `../notism-web/docs/rules/best-practices.md` (if it exists)
-- `../notism-web/docs/rules/naming.md` (if it exists)
 
 ---
 

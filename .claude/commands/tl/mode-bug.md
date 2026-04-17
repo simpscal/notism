@@ -14,7 +14,7 @@
 
 ## T2 — Read the Architecture
 
--> Follow `_read-architecture.md`, scoped to the bug's affected area.
+-> Read each codebase's `CLAUDE.md`, scoped to the bug's affected area.
 
 ---
 

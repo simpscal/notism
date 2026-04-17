@@ -35,7 +35,6 @@ A Senior Technical Lead who drives feature development by bridging business requ
 
 | Pattern | File | Purpose |
 |---------|------|---------|
-| Read Architecture | `tl/_read-architecture.md` | Read architecture docs |
 | Resolve Questions | `tl/_resolve-questions.md` | Block until all questions answered |
 | TL Methodology | `tl/_methodology.md` | 4-stage design process |
 | TDD Update Triggers | `tl/_tdd-update-triggers.md` | Section-by-section update rules |
