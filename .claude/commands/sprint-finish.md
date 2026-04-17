@@ -84,48 +84,7 @@ Output one line per deletion:
 ✓ Deleted {branch_name} from {codebase_name}
 ```
 
-### Step 5 — Commit TDD to This Repo
-
-Fetch the full body of the TDD issue using `fetch_issue(tdd_issue_id)`.
-
-The TDD is committed to **this repository**
-
-```bash
-git checkout main
-git pull origin main
-mkdir -p docs/designs
-```
-
-Write the TDD content to `docs/designs/sprint-N.md`. The file format:
-
-```markdown
-# Sprint N — Technical Design Document
-
-> Source: {repo}#{tdd_issue_number}
-> Sprint: Sprint N
-> Archived: {today's date}
-
----
-
-{tdd_issue_body verbatim}
-```
-
-Then commit and push directly to `main`:
-
-```bash
-git add docs/designs/sprint-N.md
-git commit -m "docs(sprint-N): archive Technical Design Document"
-git push origin main
-```
-
-If the file already exists (re-run scenario), overwrite it — the commit will be a no-op if unchanged.
-
-Output:
-```
-✓ TDD archived to docs/designs/sprint-N.md
-```
-
-### Step 6 — Check for EF Core Migrations (Backend Only)
+### Step 5 — Check for EF Core Migrations (Backend Only)
 
 For the backend codebase:
 
@@ -139,7 +98,7 @@ Capture the list of migration files (if any). This output is used in Step 7 and 
 
 If no migration files are found, note: "No database migrations in this sprint."
 
-### Step 7 — Create Release PRs (Sprint Branch → Main)
+### Step 6 — Create Release PRs (Sprint Branch → Main)
 
 For each codebase, create a PR via `create_pr(title, body, head, base)`:
 
@@ -148,7 +107,7 @@ For each codebase, create a PR via `create_pr(title, body, head, base)`:
 - **Head**: `feature/sprint-N`
 - **Body**: Use `pr-release.md`, then pass to `create_pr`.
 
-### Step 8 — Post Sprint Summary
+### Step 7 — Post Sprint Summary
 
 Use `comment-sprint-summary.md`, then `post_comment(requirement_issue_id, body)`.
 
