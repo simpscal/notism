@@ -1,6 +1,10 @@
 # Comment TL Annotation Template
 
-Technical Lead bug annotation comment. Used by `/tl` (bug mode T6).
+Posted by `/tl` (bug mode T6).
+
+---
+
+## OUTPUT FORMAT
 
 ```
 ## Technical Lead Annotation
@@ -24,16 +28,92 @@ Technical Lead bug annotation comment. Used by `/tl` (bug mode T6).
 <Low — logic fix only | Migration required: <details> | etc.>
 ```
 
-**Skill:** `frontend | backend | both` — determined in T5.
+---
 
-**Complexity:** `S | M | L` — S = <4h single layer, M = 4–8h standard pattern, L = >8h complex/cross-cutting.
+## FIELDS
 
-**Root Cause:** which layer/module is responsible and why.
+### Skill
+**REQUIRED** | enum[frontend | backend | both]
 
-**Scope:** which layers and specific files are touched.
+**Rules**:
+- `frontend`: Bug in React/UI layer only
+- `backend`: Bug in .NET API/database only
+- `both`: Changes span multiple codebases
 
-**Fix Approach:** what needs to change — 1–3 sentences, no code.
+**Wrong**: ❌ "Frontend", "Back-end", "fullstack", "ui"
 
-**Key Decisions:** at least one decision with rationale.
+### Complexity
+**REQUIRED** | enum[S | M | L]
 
-**Risk:** `Low — logic fix only` | `Migration required: <details>` | other.
+| Size | Time | Scope |
+|------|------|-------|
+| S | <4h | Single layer, isolated |
+| M | 4-8h | Standard pattern, one layer, multiple files |
+| L | >8h | Cross-cutting, multiple layers, refactoring |
+
+**Wrong**: ❌ "Small", "s", "medium", "1"
+
+### Root Cause
+**REQUIRED** | text | 1-3 sentences
+
+**Rules**:
+- Identify specific layer/module responsible
+- Explain WHY bug occurs, not just WHAT
+- Technical but understandable to developer
+
+**Wrong**: ❌ "Code is broken" (not specific), ❌ Describes symptom not cause
+
+### Scope
+**REQUIRED** | text
+
+**Include**:
+- Which architectural layers affected
+- Specific file paths (relative to codebase root)
+- May use wildcards (e.g., `*.Service.cs`)
+
+**Wrong**: ❌ "Backend files", "Multiple services"
+
+### Fix Approach
+**REQUIRED** | text | 1-3 sentences
+
+**Rules**:
+- Describe WHAT to change, not HOW to code
+- No code snippets
+- Actionable guidance
+- Use imperative: "Add", "Update", "Remove", "Change"
+
+**Wrong**: ❌ "Fix the bug", ❌ Code examples, ❌ "Developer should refactor everything"
+
+### Key Decisions
+**REQUIRED** | list | Min 1 decision
+
+**Format**: `<Decision>: <Rationale>`
+
+**Include**: Trade-offs, rejected alternatives with reasons
+
+**Wrong**: ❌ "Use best practices" (no decision), ❌ No rationale
+
+### Risk
+**REQUIRED** | text
+
+**Patterns**:
+- `Low — logic fix only`
+- `Low — no breaking changes`
+- `Medium — migration required: <details>`
+- `High — breaking API change: <impact>`
+- `High — data integrity risk: <mitigation>`
+
+**Wrong**: ❌ "No risk", "Some risk", "Risky"
+
+---
+
+## CHECKLIST
+
+- [ ] Skill is frontend | backend | both
+- [ ] Complexity is S | M | L
+- [ ] Complexity matches time/impact
+- [ ] Root Cause explains WHY, not WHAT
+- [ ] Scope has specific file paths
+- [ ] Fix Approach actionable, no code
+- [ ] Min 1 Key Decision with rationale
+- [ ] Risk level clearly stated

@@ -1,8 +1,16 @@
 # Issue TDD Template
 
-Technical Design Document issue body posted to GitHub. Used by `/tl` (standard mode S5, change mode C6, requirement-change mode RC6).
+Technical Design Document posted to GitHub by `/tl` (standard mode S5, change mode C6, requirement-change mode RC6).
 
-````
+---
+
+## OUTPUT FORMAT
+
+````markdown
+Part of #<requirement_issue_number>
+
+---
+
 # Sprint N — Technical Design Document
 
 ## 1. Executive Summary
@@ -11,101 +19,77 @@ Technical Design Document issue body posted to GitHub. Used by `/tl` (standard m
 **Author**: | **Reviewer**:
 
 ### Problem Statement
-<2–3 sentences: what gap or pain does this sprint address and why now?>
+<2–3 sentences: gap/pain, why now>
 
 ### Goals
-- <What the user gains>
+- <What user gains>
 
 ### Non-Goals
-- <What this sprint explicitly does not address>
+- <What not addressed>
 
 ---
 
 ## 2. Architectural Design
 
 ### High-Level Diagram
-<Mermaid diagram showing all services, databases, caches, and third-party tools involved>
+<Mermaid: services, databases, caches, third-party>
 
 ### Integration Flows
 
 #### Happy Path
-<Mermaid sequence diagram: user action → service(s) → storage → response>
+<Mermaid sequence: user → services → storage → response>
 
 #### Unhappy Path
-<Mermaid sequence diagram: key failure scenario(s) and how the system responds>
+<Mermaid sequence: failure scenario, system response>
 
 ### Technology Stack
-<Any new languages, frameworks, libraries, or infrastructure this sprint introduces>
+<New languages/frameworks/libraries/infrastructure>
 
 ### Components Design
-<Mermaid diagram showing the internal component structure for this feature. Use component diagram syntax showing:
-
-- **Components**: All new or modified components needed (e.g., services, handlers, repositories, UI components)
-- **Component responsibilities**: Label each component with its key responsibilities
-- **Interactions**: Show how components communicate (API calls, events, data flow) with arrows indicating direction
-
-Example format:
-```mermaid
-componentDiagram
-    A[UI Component] --> B[API Handler]
-    B --> C[Service Layer]
-    C --> D[Repository]
-    D --> E[(Database)]
-```
->
+<Mermaid: internal component structure>
 
 ---
 
 ## 3. Data & Interface Contracts
 
 ### Data Models
-<ERD or JSON schema for each new or modified entity. Include key indexes.>
+<ERD or JSON schema, include indexes>
 
 ### API Specification
 | Method | Route | Auth | Request Body | Response | Status Codes |
-|--------|-------|------|-------------|----------|--------------|
 
 ### Event Schemas
-<If a message bus is used: topic name, event structure, producer, consumer. Otherwise: N/A>
+<Topic, event structure, producer, consumer, or N/A>
 
 ---
 
 ## 4. Risk & Trade-offs
 
 ### Alternatives Considered
-| Decision | Chosen | Alternative | Why Alternative Was Rejected |
-|----------|--------|-------------|------------------------------|
+| Decision | Chosen | Alternative | Why Rejected |
 
 ### Security
-<Authentication, authorisation, data encryption at rest and in transit>
+<Auth, authz, encryption>
 
 ### Scalability & Performance
-<Expected throughput (TPS), latency targets, horizontal vs. vertical scaling strategy>
+<Throughput, latency targets, scaling strategy>
 
 ### Failure Modes
 | Scenario | Impact | Mitigation |
-|----------|--------|------------|
 
 ---
 
 ## 5. Migration Plan
 
-<How existing data is migrated; cutover strategy (flag-day vs. canary); rollback plan>
+<Data migration, cutover, rollback>
 
 ### Monitoring & Alerting
-<Key metrics to track (error rate, latency, queue depth); threshold that pages on-call>
+<Metrics, thresholds>
 
 ---
 
 ## Architecture Key Decisions
-<Canonical summary for downstream dev subagents — read THIS instead of re-reading full architecture docs. Include:>
-- **Layer responsibilities**: which layers own what
-- **Naming conventions**: key naming patterns enforced in this codebase
-- **Adding a new feature checklist**: steps recommended for extending this codebase
-- **Cross-cutting patterns**: error handling, result pattern, validation approach, layer communication
-- **Component/file organisation**: folder structure conventions, where new files of each type belong
-
-> Full architecture docs are available at the paths in project config — read them for deep-dives.
+<Canonical summary for dev agents>
 
 ---
 
@@ -113,32 +97,203 @@ componentDiagram
 
 | Priority | Stories |
 |----------|---------|
-| P1 | #<story_number>, #<story_number> |
-| P2 | #<story_number> |
-| P3 | #<story_number>, #<story_number> |
-
-Stories labeled `story-removed` are always P1 — orphaned work must be reverted first to clean the board. For remaining stories, assign priority based on implementation order. Multiple stories can share the same priority. No rationale needed.
+| P1 | #<story_number> |
 
 ---
 
 ## Lead's Review Checklist
-- [ ] Is there a single point of failure? (If yes, it is documented with a mitigation in §4)
-- [ ] Does this design introduce technical debt we'll regret in 6 months? (If yes, it is justified)
-- [ ] Could a developer who wasn't in the meetings build this from this document alone?
+- [ ] Single point of failure? (If yes, documented with mitigation in §4)
+- [ ] Tech debt regret in 6 months? (If yes, justified)
+- [ ] Developer can build from doc alone?
 ````
 
-**Status:** `Draft` on creation; updated to `Approved` after human review.
+---
 
-**Part of:** prepend `Part of #<requirement_issue_number>` at the very top before the document title.
+## FIELDS
 
-**Integration Flows:** use Mermaid sequence diagrams; cover happy path + at least one unhappy path.
+### Part of
+**REQUIRED** | text | Format: `Part of #<requirement_issue_number>`
 
-**Components Design:** use Mermaid component diagram; show all new/modified components with responsibilities and directional arrows.
+**Rules**: First line before title, followed by `---`
 
-**API Specification:** one row per endpoint — method, route, auth required, request body shape, response shape, status codes.
+### Document Title
+**REQUIRED** | heading | Pattern: `# Sprint N — Technical Design Document`
 
-**Event Schemas:** if no message bus: write `N/A`.
+**Rules**: Match milestone number
 
-**Migration Plan:** if no data migration: write `N/A`.
+### Status
+**REQUIRED** | enum[Draft | Approved | Deprecated]
 
-**Architecture Key Decisions:** canonical summary for dev subagents — they read this section instead of re-reading full architecture docs.
+**Default**: `Draft`
+**After review**: `Approved`
+**If superseded**: `Deprecated`
+
+### Author & Reviewer
+**OPTIONAL** | text | Format: `**Author**: <name> | **Reviewer**: <name>`
+
+**Rules**: May leave blank, use `|` separator
+
+### Problem Statement
+**REQUIRED** | text | 2-3 sentences
+
+**Rules**:
+- Sentence 1: Gap/pain
+- Sentence 2: Why now
+- Sentence 3 (optional): Expected impact
+- Business-focused, not technical
+
+### Goals
+**REQUIRED** | list | 2-6 items
+
+**Rules**: User-centric outcomes, not implementation
+
+### Non-Goals
+**REQUIRED** | list
+
+**Rules**: Clarify out of scope, prevent creep
+
+### High-Level Diagram
+**REQUIRED** | mermaid-graph
+
+**Show**: Services, databases, caches, third-party tools, data flow arrows
+
+**Rules**: Label new vs existing
+
+### Integration Flows - Happy Path
+**REQUIRED** | mermaid-sequence
+
+**Show**: User action → services → storage → response (complete end-to-end)
+
+**Wrong**: ❌ Incomplete flow, ❌ Missing user/storage
+
+### Integration Flows - Unhappy Path
+**REQUIRED** | mermaid-sequence
+
+**Show**: Key failure scenario, system response, user error handling
+
+### Technology Stack
+**REQUIRED** | text or list
+
+**If no new tech**: `No new technologies — uses existing stack`
+**If new**: List each with purpose
+
+**Wrong**: ❌ Listing existing stack
+
+### Components Design
+**REQUIRED** | mermaid-graph
+
+**Show**: All new/modified components, responsibilities, communication arrows
+
+**Components**: Services, handlers, repositories, UI components
+
+### Data Models
+**REQUIRED** | mermaid-erd or json-schema
+
+**Include**: New/modified entities, key indexes, relationships
+
+**If no changes**: `No new data models — uses existing schema`
+
+### API Specification
+**REQUIRED** | table | 6 columns
+
+**Include**: All new/modified endpoints, all status codes
+
+### Event Schemas
+**CONDITIONAL** | text or table
+
+**If no message bus**: `N/A`
+**If message bus**: Topic, schema, producer, consumer
+
+### Alternatives Considered
+**REQUIRED** | table | 4 columns
+
+**Rules**: Min 1 major decision, explain rejection
+
+**Wrong**: ❌ No rationale
+
+### Security
+**REQUIRED** | text
+
+**Cover**: Authentication, Authorization, Data encryption (rest/transit)
+
+### Scalability & Performance
+**REQUIRED** | text
+
+**Include**: Throughput/latency targets, scaling approach, concrete numbers
+
+### Failure Modes
+**REQUIRED** | table | 3 columns
+
+**Rules**: Key scenarios, min 2, include impact and mitigation
+
+### Migration Plan
+**CONDITIONAL** | text
+
+**If no migration**: `N/A — no data migration required`
+**If migration**: Cutover strategy, rollback plan
+
+### Monitoring & Alerting
+**REQUIRED** | text
+
+**Include**: Key metrics, alert thresholds (error rate, latency, volume)
+
+### Architecture Key Decisions
+**REQUIRED** | text (structured)
+
+**Include**:
+- Layer responsibilities
+- Naming conventions
+- Feature checklist
+- Cross-cutting patterns
+- File organization
+- Reference to full docs
+
+**Purpose**: Canonical summary for dev agents (replaces re-reading full arch docs)
+
+### Implementation Priority
+**REQUIRED** | table | 2 columns
+
+**Rules**:
+- Use P1, P2, P3
+- `story-removed` always P1
+- Multiple stories may share priority
+- No rationale needed
+- All milestone stories listed
+
+### Lead's Review Checklist
+**REQUIRED** | checklist (3 items, all unchecked)
+
+**Fixed content**:
+```
+- [ ] Single point of failure? (If yes, documented with mitigation in §4)
+- [ ] Tech debt regret in 6 months? (If yes, justified)
+- [ ] Developer can build from doc alone?
+```
+
+---
+
+## CHECKLIST
+
+- [ ] "Part of #N" before title
+- [ ] Sprint number matches milestone
+- [ ] Status is "Draft"
+- [ ] Problem Statement 2-3 sentences
+- [ ] Goals user-centric, 2-6 items
+- [ ] Non-Goals clarify scope
+- [ ] High-Level Diagram valid Mermaid
+- [ ] Happy Path complete end-to-end
+- [ ] Unhappy Path shows failure
+- [ ] Components Design shows all new/modified
+- [ ] Data Models has indexes or "No new"
+- [ ] API Spec lists all endpoints
+- [ ] Event Schemas is "N/A" or complete
+- [ ] Alternatives min 1 decision
+- [ ] Security covers auth/authz/encryption
+- [ ] Scalability has targets
+- [ ] Failure Modes min 2 scenarios
+- [ ] Migration Plan is "N/A" or has rollback
+- [ ] Monitoring has metrics/thresholds
+- [ ] Arch Key Decisions has 5 subsections
+- [ ] Priority includes all stories
+- [ ] story-removed are P1
+- [ ] Review Checklist 3 unchecked
