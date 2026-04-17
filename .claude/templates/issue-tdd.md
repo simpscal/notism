@@ -97,9 +97,6 @@ componentDiagram
 
 ---
 
-## Architecture Alignment
-<Checklist derived from architecture docs — Pass / Fail / N/A with note on any Fail>
-
 ## Architecture Key Decisions
 <Canonical summary for downstream dev subagents — read THIS instead of re-reading full architecture docs. Include:>
 - **Layer responsibilities**: which layers own what
@@ -110,8 +107,17 @@ componentDiagram
 
 > Full architecture docs are available at the paths in project config — read them for deep-dives.
 
-## Story Breakdown
-<One subsection per story — produced in Stage 5. Each entry: Skill, Complexity, Depends On, Scope, Key Decisions.>
+---
+
+## Implementation Priority
+
+| Priority | Stories |
+|----------|---------|
+| P1 | #<story_number>, #<story_number> |
+| P2 | #<story_number> |
+| P3 | #<story_number>, #<story_number> |
+
+Stories labeled `story-removed` are always P1 — orphaned work must be reverted first to clean the board. For remaining stories, assign priority based on implementation order. Multiple stories can share the same priority. No rationale needed.
 
 ---
 
@@ -135,22 +141,4 @@ componentDiagram
 
 **Migration Plan:** if no data migration: write `N/A`.
 
-**Architecture Alignment:** derive checklist items from actual architecture docs — not generic list. Mark each: `Pass | Fail | N/A` with short note on any Fail.
-
 **Architecture Key Decisions:** canonical summary for dev subagents — they read this section instead of re-reading full architecture docs.
-
-**Story Breakdown:** one subsection per story:
-```
-### #N — <Story Title>
-
-**Skill**: frontend | backend | devops
-**Complexity**: S | M | L
-**Depends on**: Story N (reason) — or "None"
-
-#### Scope
-<1–2 sentences: which layers/modules are touched, what is new vs. extended>
-
-#### Key Decisions
-- <Decision: what was chosen and why — reference TDD section if relevant>
-```
-Complexity guide: S = <4h single layer · M = 4–8h standard pattern · L = >8h complex/cross-cutting

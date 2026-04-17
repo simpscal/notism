@@ -71,12 +71,9 @@ Read in this order when studying the codebase:
 | Story amended after creation | `story-updated` |
 | Story removed during requirement change | `story-removed` |
 | Requirement updated after change | `requirement-updated` |
-| Design instructions updated after change | `design-updated` |
-| TDD updated after change | `technical-updated` |
 | Sprint closed | `sprint-completed` |
 | Skill prefix | `skill:` (e.g. `skill:frontend`) |
 | Bug issue | `bug` |
-| Story deferred to next sprint | `story-deferred` |
 | Dev implementation complete | `implemented` |
 
 ---
