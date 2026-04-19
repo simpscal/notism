@@ -20,7 +20,7 @@ An AI-powered development workflow using Claude Code slash commands. Issue track
 
 ```mermaid
 flowchart TD
-    A(["/po &lt;description&gt;"]) --> B["Requirement Issue<br/>`requirement`"]
+    A(["/po standard &lt;description&gt;"]) --> B["Requirement Issue<br/>`requirement`"]
     B --> G1{Gate 1<br/>Review requirement}
     G1 -->|Approve| C(["/ba &lt;issue&gt;"])
     C --> D["User Stories + Sprint Milestone<br/>`sprint-ready`"]
@@ -46,7 +46,7 @@ Each phase ends with a **human gate** — review the output before running the n
 
 #### 0. Create a requirement
 ```
-/po Build a user authentication system with OAuth
+/po standard Build a user authentication system with OAuth
 ```
 
 To update an existing requirement:
@@ -100,7 +100,7 @@ Separate pipeline for production bugs — runs independently of the sprint cycle
 
 ```mermaid
 flowchart TD
-    A(["/bug-report &lt;description&gt;"]) --> B["Bug Issue<br/>`bug`"]
+    A(["/po bug &lt;description&gt;"]) --> B["Bug Issue<br/>`bug`"]
     B --> G1{Gate 1<br/>Review bug report}
     G1 -->|Approve| C(["/ba &lt;issue&gt;"])
     C --> D["Acceptance Criteria<br/>appended to issue"]
@@ -120,9 +120,9 @@ flowchart TD
 
 | Command | Role | Input | Output |
 |---------|------|-------|--------|
-| `/po <description>` | Product Owner | raw requirement text | requirement issue with `requirement` label |
+| `/po standard <description>` | Product Owner | raw requirement text | requirement issue with `requirement` label |
 | `/po change <issue> <delta>` | Product Owner | issue # + change description | updated requirement issue with `requirement-updated` label |
-| `/bug-report <description>` | Bug Reporter | bug description | bug issue with `bug` label (interactively fills missing fields) |
+| `/po bug [description]` | Product Owner | bug description (optional) | bug issue with `bug` label (interactively fills missing fields) |
 | `/ba <issue-number>` | BA | requirement or bug issue # | user story issues + sprint milestone (`sprint-ready` on requirement) — or ACs appended to bug ticket |
 | `/design <milestone-id>` | Designer | milestone # | sprint-level design instructions issue (`design-reviewed`) — or updates existing if requirement changed |
 | `/tl <milestone-id or bug-issue>` | Technical Lead | milestone # or bug issue # | TDD issue + feature branches + annotated stories (sprints) — or technical annotation comment on bug ticket (`tl-reviewed` + `skill:*`) |
@@ -144,10 +144,13 @@ Skills: `frontend` · `backend` · `fullstack` · `devops`
   project.md            ← primary config: repo, tech stack, labels, branch patterns, tracker adapter
   commands/             ← slash commands (orchestration + methodology)
     po.md
+    po/
+      mode-standard.md
+      mode-change.md
+      mode-bug.md
     ba.md
     design.md
     tl.md
-    bug-report.md
     sprint-finish.md
   agents/               ← developer role agents (invoked by /dev)
     backend.md

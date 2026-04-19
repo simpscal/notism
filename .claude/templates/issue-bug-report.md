@@ -1,6 +1,6 @@
 # Issue Bug Report Template
 
-Posted to GitHub by `/bug-report`.
+Posted to GitHub by `/po bug`.
 
 ---
 
