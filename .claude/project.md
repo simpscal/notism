@@ -64,6 +64,7 @@ Read in this order when studying the codebase:
 | Dev in progress | `in-progress` |
 | Story amended after creation | `story-updated` |
 | Story removed during requirement change | `story-removed` |
+| Story added during requirement change | `story-added` |
 | Requirement updated after change | `requirement-updated` |
 | Sprint closed | `sprint-completed` |
 | Skill prefix | `skill:` (e.g. `skill:frontend`) |
