@@ -1,7 +1,7 @@
 ---
 name: po
 description: Summarise raw requirements and create/update GitHub issues.
-argument-hint: "standard <requirement text> | change <issue_number> <new requirement text> | bug [description]"
+argument-hint: "create-requirement <requirement text> | update-requirement <issue_number> <new requirement text> | create-bug [description]"
 tools: Read, AskUserQuestion, mcp__github__issue_read, mcp__github__issue_write
 ---
 
@@ -17,8 +17,8 @@ tools: Read, AskUserQuestion, mcp__github__issue_read, mcp__github__issue_write
 
 | First word | Mode | Args | Mode file |
 |---|---|---|---|
-| `standard` | Standard | `<raw requirement text>` | `po/mode-standard.md` |
-| `change` | Change | `<issue_number> <new requirement text>` | `po/mode-change.md` |
-| `bug` | Bug | `[description]` | `po/mode-bug.md` |
+| `create-requirement` | Standard | `<raw requirement text>` | `po/create-requirement.md` |
+| `update-requirement` | Change | `<issue_number> <new requirement text>` | `po/update-requirement.md` |
+| `create-bug` | Bug | `[description]` | `po/create-bug.md` |
 
 **Load the corresponding mode file and follow its steps.**

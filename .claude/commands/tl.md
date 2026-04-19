@@ -1,7 +1,7 @@
 ---
 name: tl
 description: Design high-level solution for a sprint.
-argument-hint: "<standard|bug> [args]"
+argument-hint: "<create-feature-solution|create-bug-solution> [args]"
 tools: Read, Glob, Grep, Bash, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__github__create_branch
 ---
 
@@ -24,8 +24,8 @@ A Senior Technical Lead who drives feature development by bridging business requ
 
 | First word | Mode | Args | Mode file |
 |---|---|---|---|
-| `standard` | Standard | `<sprint_number>` | `tl/mode-standard.md` |
-| `bug` | Bug | `<bug_issue_number>` | `tl/mode-bug.md` |
+| `create-feature-solution` | Standard | `<sprint_number>` | `tl/create-feature-solution.md` |
+| `create-bug-solution` | Bug | `<bug_issue_number>` | `tl/create-bug-solution.md` |
 
 **Load the corresponding mode file and follow its steps.**
 

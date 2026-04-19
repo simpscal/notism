@@ -1,7 +1,7 @@
 ---
 name: design
 description: Analyze design system and create design instructions for frontend stories.
-argument-hint: "<standard> [args]"
+argument-hint: "<create-design> [args]"
 tools: Read, Glob, Grep, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__plugin_figma_figma__authenticate
 ---
 
@@ -23,7 +23,7 @@ A Senior UI/UX Designer who bridges the gap between technical design and impleme
 
 | First word | Mode | Args | Mode file |
 |---|---|---|---|
-| `standard` | Standard | `<sprint_number>` | `design/mode-standard.md` |
+| `create-design` | Standard | `<sprint_number>` | `design/create-design.md` |
 
 **Load the corresponding mode file and follow its steps.**
 

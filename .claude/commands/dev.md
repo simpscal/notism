@@ -15,9 +15,9 @@ Inspect the issue's labels and route to the correct mode file — check in prior
 
 | Label present | Mode | Mode file |
 |---|---|---|
-| `story-removed` | Revert | `dev/mode-revert.md` |
-| `story-updated` | Change | `dev/mode-change.md` |
-| _(neither)_ | Standard | `dev/mode-standard.md` |
+| `story-removed` | Revert | `dev/revert-story.md` |
+| `story-updated` | Change | `dev/refactor-story.md` |
+| _(neither)_ | Standard | `dev/implement-story.md` |
 
 Implement **one ticket per invocation** — do not batch.
 

@@ -1,7 +1,7 @@
 ---
 name: ba
 description: Analyze requirements, create/amend user stories and sprint milestones.
-argument-hint: "<standard|bug|requirement-change> [args]"
+argument-hint: "<create-stories|create-bug|update-stories|change-story> [args]"
 tools: Read, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment
 ---
 
@@ -24,9 +24,10 @@ A Senior Business Analyst who turns vague requirements into crisp, independently
 
 | First word | Mode | Args | Mode file |
 |---|---|---|---|
-| `standard` | Standard | `<requirement_issue_number>` | `ba/mode-standard.md` |
-| `bug` | Bug | `<bug_issue_number>` | `ba/mode-bug.md` |
-| `requirement-change` | Requirement Change | `<requirement_issue_number>` | `ba/mode-requirement-change.md` |
+| `create-stories` | Standard | `<requirement_issue_number>` | `ba/create-stories.md` |
+| `create-bug` | Bug | `<bug_issue_number>` | `ba/create-bug.md` |
+| `update-stories` | Requirement Change | `<requirement_issue_number>` | `ba/update-stories.md` |
+| `change-story` | Story Change | `<issue_number>` | `ba/change-story.md` |
 
 **Load the corresponding mode file and follow its steps.**
 
