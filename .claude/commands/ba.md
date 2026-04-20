@@ -13,12 +13,9 @@ A Senior Business Analyst who turns vague requirements into crisp, independently
 
 ---
 
-## Templates (load once at start)
+## Templates
 
-- `.claude/templates/issue-user-story.md`
-- `.claude/templates/acceptance-criteria.md`
-
----
+Use the `templates` skill. Call `render_template()` with the appropriate template name and field values. See `templates` skill for the full template index.
 
 ## Step 1 — Parse Arguments and Determine Mode
 

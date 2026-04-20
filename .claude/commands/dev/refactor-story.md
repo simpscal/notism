@@ -105,7 +105,7 @@ feat(#<ISSUE_NUMBER>): update <short description> per story change
 - **Title**: `feat(#<N>): <short description> (change)`
 - **Head**: `<new story branch from C2>`
 - **Base**: `<sprint-branch>`
-- **Body**: Use `pr-story.md`, noting this is a change update and referencing the original merged PR
+- **Body**: Use `render_template("pr-story", {summary, changes, test_command, lint_command, manual_verification, acceptance_criteria, closes})`, noting this is a change update and referencing the original merged PR
 
 For multi-skill stories, update or open each PR independently.
 

@@ -59,7 +59,7 @@ Based on T4's scope:
 
 ## T6 — Annotate the Bug Ticket
 
-Use `comment-tl-annotation.md` to produce the annotation body.
+Use `render_template("comment-tl-annotation", {skill, complexity, root_cause, scope, fix_approach, key_decisions, risk})` to produce the annotation body.
 
 **If existing annotation (story-updated path):**
 - Hold the existing comment's ID from the comments read in T1

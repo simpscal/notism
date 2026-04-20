@@ -1,9 +1,5 @@
 # Mode: Bug
 
-Read `.claude/templates/issue-bug-report.md`.
-
----
-
 ## B1 — Gather Bug Details
 
 Parse the raw description. Identify which fields are already answered:
@@ -26,7 +22,7 @@ Use `create_issue(title, body, labels, milestone_id: null)` from the tracker ada
 - **Labels**: `["bug"]`
 - **Milestone**: `null`
 
-**Body**: Use `issue-bug-report.md`.
+**Body**: Use `render_template("issue-bug-report", {description, steps, expected, actual, severity})`.
 
 ---
 

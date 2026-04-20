@@ -77,7 +77,7 @@ Do not redesign unchanged areas.
 Use `create_issue(title, body, labels, milestone_id)`:
 
 **Title**: `Sprint N — Design Instructions`
-**Body**: Use `issue-design-instructions.md`
+**Body**: Use `render_template("issue-design-instructions", {requirement_issue, overview, layout, components, design_tokens, ui_states, responsive, accessibility, consistency_notes})`
 **Labels**: `design-reviewed` (and any design labels from project config)
 **Milestone**: `$MILESTONE_ID`
 

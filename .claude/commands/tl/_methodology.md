@@ -55,7 +55,7 @@ For each major decision: document at least one alternative and why it was reject
 
 ## Stage 4 — Write the Technical Design Document (TDD)
 
-Use `issue-tdd.md`, then pass as the body to `create_issue`.
+Use `render_template("issue-tdd", {sprint, requirement_issue, problem_statement, goals, non_goals, high_level_diagram, happy_path, unhappy_path, tech_stack, components_design, data_models, api_spec, event_schemas, alternatives, security, scalability, failure_modes, migration, monitoring, arch_decisions, implementation_priority})`, then pass as the body to `create_issue`.
 
 Include an **Implementation Priority** table assigning each user story a priority level (P1, P2, or P3). Multiple stories can share the same priority. No rationale needed.
 

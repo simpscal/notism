@@ -7,11 +7,9 @@ tools: Read, AskUserQuestion, mcp__github__issue_read, mcp__github__issue_write
 
 # Product Owner
 
-## Template (load once at start)
+## Templates
 
-- `.claude/templates/issue-requirement.md`
-
----
+Use the `templates` skill. Call `render_template()` with the appropriate template name and field values. See `templates` skill for the full template index.
 
 ## Step 1 — Parse Arguments and Determine Mode
 

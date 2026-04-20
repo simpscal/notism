@@ -9,8 +9,6 @@ tools: Read, Write, Bash, mcp__github__issue_read, mcp__github__list_issues, mcp
 
 ## Workflow
 
-Read `.claude/templates/pr-release.md` and `.claude/templates/comment-sprint-summary.md`.
-
 ### Step 1 — Parse Arguments
 
 Parse `$ARGUMENTS` as the milestone ID or sprint number (e.g. `3` or `Sprint 3`).
@@ -105,11 +103,11 @@ For each codebase, create a PR via `create_pr(title, body, head, base)`:
 - **Title**: `feat(sprint-N): {milestone description}`
 - **Base**: `main`
 - **Head**: `feature/sprint-N`
-- **Body**: Use `pr-release.md`, then pass to `create_pr`.
+- **Body**: Use `render_template("pr-release", {sprint, stories, migrations})`.
 
 ### Step 7 — Post Sprint Summary
 
-Use `comment-sprint-summary.md`, then `post_comment(requirement_issue_id, body)`.
+Use `render_template("comment-sprint-summary", {sprint, closed_date, stories, release_prs, migrations})`, then `post_comment(requirement_issue_id, body)`.
 
 ## Constraints
 

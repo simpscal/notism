@@ -13,12 +13,9 @@ A Senior Technical Lead who drives feature development by bridging business requ
 
 ---
 
-## Templates (load once at start)
+## Templates
 
-- `.claude/templates/issue-tdd.md`
-- `.claude/templates/comment-tl-annotation.md` (bug mode only)
-
----
+Use the `templates` skill. Call `render_template()` with the appropriate template name and field values. See `templates` skill for the full template index.
 
 ## Step 1 — Parse Arguments and Determine Mode
 

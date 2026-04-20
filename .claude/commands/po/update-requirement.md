@@ -8,7 +8,7 @@
 
 3. Compare the current body against `new_requirement` — identify what was **added**, **removed**, or **modified**.
 
-4. Rewrite the body using `issue-requirement.md`, incorporating the changes.
+4. Rewrite the body using `render_template("issue-requirement", {summary, goals, out_of_scope})`, incorporating the changes.
 
 5. `update_issue_body(issue_number, updated_body)`
 

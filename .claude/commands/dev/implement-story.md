@@ -46,7 +46,7 @@ Once all subagents complete:
 Use `create_pr(title, body, head: story-branch, base: sprint-branch)` from inside the codebase path:
 
 **PR title:** `feat(#<ISSUE_NUMBER>): <short description>`
-**PR body:** Use `pr-story.md`
+**PR body:** Use `render_template("pr-story", {summary, changes, test_command, lint_command, manual_verification, acceptance_criteria, closes})`
 
 For multi-skill stories, open one PR per skill — each from its own codebase path, each targeting the sprint branch.
 

@@ -19,7 +19,7 @@ If critical information is missing, use `AskUserQuestion` once to ask all blocki
 
 ## B2 — Write Acceptance Criteria
 
-Fill in `acceptance-criteria.md`.
+Use `render_template("acceptance-criteria", {criteria, notes})`.
 
 -> Apply `_validation.md` (AC Testability Checklist)
 
@@ -27,6 +27,6 @@ Fill in `acceptance-criteria.md`.
 
 ## B3 — Update the Bug Issue
 
-`update_issue_body(<N>, body)` using `acceptance-criteria.md` — append to the **end** of the existing body.
+`update_issue_body(<N>, body)` using `render_template("acceptance-criteria", {criteria, notes})` — append to the **end** of the existing body.
 
 Do NOT modify the original `## Bug Report` section.

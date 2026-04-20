@@ -102,9 +102,9 @@ For each **New** scope item:
 
 **Format**: `As a <user>, I want <action> so that <benefit>`
 
-3. Fill in `acceptance-criteria.md` for each story
+3. Use `render_template("acceptance-criteria", {criteria, notes})` for each story
 4. Include **Notes** section for edge cases, dependencies, constraints
-5. `create_issue("[Story] <title>", body, ["user-story", "story-added"], milestone_id)` using `issue-user-story.md` and link to `req_issue_number`
+5. `create_issue("[Story] <title>", body, ["user-story", "story-added"], milestone_id)` where body comes from `render_template("issue-user-story", {user_story, acceptance_criteria, notes, requirement_issue})` linked to `req_issue_number`
 6. Create all issues first, then back-fill `link_to(id)` references in Notes for dependency links
 
 ### 3. Remove Obsolete Stories

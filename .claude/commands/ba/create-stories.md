@@ -57,7 +57,7 @@ Break into **3-20 user stories**. Apply INVEST:
 
 ### Stage 4 — Write Acceptance Criteria
 
-Fill in `acceptance-criteria.md` for each story.
+Use `render_template("acceptance-criteria", {criteria, notes})` for each story.
 
 Include **Notes** section: edge cases, UX questions, dependencies, constraints. Use `link_to(id)` for inter-story references — back-fill once all issues created.
 
@@ -76,7 +76,7 @@ Include **Notes** section: edge cases, UX questions, dependencies, constraints. 
 
 ## S4 — Create User Story Issues
 
-For each story: `create_issue("[Story] <title>", body, ["user-story"], milestone_id)` using `issue-user-story.md`.
+For each story: `create_issue("[Story] <title>", body, ["user-story"], milestone_id)` where body comes from `render_template("issue-user-story", {user_story, acceptance_criteria, notes, requirement_issue})`.
 
 > **Dependency linking**: Create all issues first, then back-fill `link_to(id)` references in Notes for both `Depends on` and `Blocks` directions.
 
