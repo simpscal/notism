@@ -95,22 +95,7 @@ After user approval, execute the appropriate flow based on `issue_type`.
 
 2. `update_issue_body(issue_number, updated_body)`
 
-3. **Post-implementation guard**: Check if the fetched labels contain `implemented`.
-   - If YES:
-     a. `update_labels(issue_number, add: ["story-updated"], remove: [])`
-     b. `post_comment(issue_number, body)` with:
-        ```
-        ## ⚠️ Story Changed Post-Implementation
-
-        This story was amended after being marked `implemented`.
-
-        **Summary of AC changes:**
-        - Added: <N>
-        - Removed: <N>
-        - Modified: <N>
-
-        Please review the updated acceptance criteria and determine whether a follow-up change is required.
-        ```
+3. `update_labels(issue_number, add: ["story-updated"], remove: [])`
 
 ### Bug Path (`issue_type = bug`)
 
@@ -123,15 +108,3 @@ After user approval, execute the appropriate flow based on `issue_type`.
 2. `update_issue_body(issue_number, updated_body)`
 
 3. `update_labels(issue_number, add: ["story-updated"], remove: [])`
-
-4. `post_comment(issue_number, body)` with:
-   ```
-   ## AC Change Summary
-
-   Acceptance criteria updated.
-
-   **Changes:**
-   - Added: <N>
-   - Removed: <N>
-   - Modified: <N>
-   ```
