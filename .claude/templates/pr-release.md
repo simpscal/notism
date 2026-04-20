@@ -1,6 +1,6 @@
 # PR Release Template
 
-Posted to GitHub by `/sprint-finish` (Step 7).
+Posted to GitHub by `/po:finish-sprint` (Step 7).
 
 ---
 

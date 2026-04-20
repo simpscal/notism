@@ -34,7 +34,7 @@ flowchart TD
     H --> I["PR → sprint branch<br/>`implemented`"]
     I --> G4{Gate 4<br/>Review PR}
     G4 -->|More stories| H
-    G4 -->|All merged| J(["/sprint-finish &lt;N&gt;"])
+    G4 -->|All merged| J(["/po:finish-sprint &lt;N&gt;"])
     J --> K["Release PRs → main"]
     K --> G5{Gate 5<br/>Merge release PRs}
     G5 -->|Done| L([Sprint Shipped])
@@ -89,7 +89,7 @@ Or target a specific issue:
 
 #### 5. Finish the sprint
 ```
-/sprint-finish 3
+/po:finish-sprint 3
 ```
 
 **Human gate**: Review and merge the release PRs.
@@ -131,7 +131,7 @@ flowchart TD
 | `/tl create-feature-solution <milestone-id>` | Technical Lead | milestone # | TDD issue + feature branches + annotated stories (`tl-reviewed` + `skill:*`) |
 | `/tl create-bug-solution <bug-issue>` | Technical Lead | bug issue # | technical annotation comment on bug ticket (`tl-reviewed` + `skill:*`) |
 | `/dev [issue-number]` | Developer (auto) | optional issue # | PR to sprint branch (stories) or main (bugs) — auto-routes to implement/refactor/revert based on labels |
-| `/sprint-finish <sprint-number>` | Release Manager | sprint # | sprint issues closed (`sprint-completed`), story branches deleted, release PRs to main, migrations flagged |
+| `/po:finish-sprint <sprint-number>` | Release Manager | sprint # | sprint issues closed (`sprint-completed`), story branches deleted, release PRs to main, migrations flagged |
 
 Skills: `frontend` · `backend` · `fullstack` · `devops`
 
@@ -153,7 +153,8 @@ Skills: `frontend` · `backend` · `fullstack` · `devops`
     ba.md
     design.md
     tl.md
-    sprint-finish.md
+    po/
+      finish-sprint.md
   agents/               ← developer role agents (invoked by /dev)
     backend.md
     frontend.md

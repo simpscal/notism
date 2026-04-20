@@ -1,6 +1,6 @@
 # Comment Sprint Summary Template
 
-Posted to requirement issue by `/sprint-finish` (Step 8).
+Posted to requirement issue by `/po:finish-sprint` (Step 8).
 
 ---
 
