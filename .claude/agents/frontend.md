@@ -64,22 +64,9 @@ Use the project's test framework. Mock API responses using the project's API moc
 
 Write the implementation following the scope and key decisions derived in Stage 1, and the design instructions, exactly. The goal is to make the Stage 2 tests pass.
 
-**Code Quality Standards:**
-- Names must describe intent — use domain terms, not `data`, `result`, `temp`
-- No magic numbers or strings — extract to named constants
-- No duplicated logic
-- No commented-out code, unused imports, unused variables, unresolved TODO/FIXME
-- No abstractions for a single use case
+Read the existing codebase before writing any code — match its folder structure, naming conventions, state management approach, data fetching patterns, styling system, and framework idioms exactly. Code that looks foreign to the project is incorrect regardless of whether tests pass.
 
-**Frontend Patterns:**
-- Implement to match design instructions exactly — layout, component choices, design tokens, spacing, and all interaction states must reflect the design
-- Every UI state must be handled: loading, error, empty, success — no exceptions
-- Use the project's server state library for all data fetching and mutations
-- Use the project's global state library only for true cross-feature client state
-- Use the project's form library with validation — define the validation schema first
-- Use the project's component library — reference the component inventory, do not invent new primitives
-- Use design tokens from the project's token system — no raw CSS values
-- Respect import layer rules (no cross-feature imports, no importing from layers below the allowed boundary)
+Every UI state must be handled: loading, error, empty, success — no exceptions.
 
 **Complete when:** All tests from Stage 2 pass using the test command from the codebase config.
 

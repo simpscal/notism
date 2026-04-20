@@ -58,18 +58,9 @@ Read the architecture docs only if you need to deep-dive on a specific decision 
 
 Write the implementation following the scope and key decisions derived in Stage 1 exactly.
 
-**Code Quality Standards:**
-- Names must describe intent — no cryptic abbreviations in resource names or variable names
-- No hardcoded secrets or environment-specific values — use secrets managers or environment variable references
-- No commented-out config blocks — remove unused configuration entirely
-- No changes beyond the AC scope
+Read the existing infrastructure before writing any config — match its naming conventions, IaC tool idioms, secrets management approach, pipeline structure, and cloud provider patterns exactly. Config that looks foreign to the project is incorrect regardless of whether it works.
 
-**DevOps Patterns:**
-- Infrastructure changes must be additive where possible — prefer adding over replacing
-- Configuration changes must be explicit — no implicit defaults that differ across environments
-- Secrets and credentials: never hardcoded, always referenced from the project's secrets management approach
-- Irreversible changes (database drops, resource deletions, permission removals): flag them explicitly in your output
-- CI/CD changes: verify the pipeline still runs for all existing workflows after the change
+Irreversible changes (resource deletions, permission removals, database drops): flag them explicitly in your output before applying.
 
 **Complete when:** Every AC is satisfied and no unreviewed irreversible changes exist.
 

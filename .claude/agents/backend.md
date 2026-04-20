@@ -76,20 +76,7 @@ Skip this sub-step entirely if no existing schema is being modified.
 
 Write the implementation following the scope and key decisions derived in Stage 1 exactly. The goal is to make the Stage 2 tests pass.
 
-**Code Quality Standards:**
-- Names must describe intent — use domain terms, not `data`, `result`, `temp`
-- No magic numbers or strings — extract to named constants
-- No duplicated logic
-- No commented-out code, unused imports, unused variables, unresolved TODO/FIXME
-- No abstractions for a single use case
-
-**Backend Patterns:**
-- Place new features in the correct application layer directory following project folder conventions
-- Each new operation gets its own unit: input model, validator, handler, response model — colocated
-- Use the project's command/query dispatcher — handlers are the only place business logic lives
-- Use the project's validation framework — colocate validation rules with the input model
-- Use the project's result/error pattern — handlers return typed results, not exceptions for expected failures
-- API endpoints delegate entirely to the dispatcher — no business logic in the routing layer
+Read the existing codebase before writing any code — match its folder structure, naming conventions, error/result pattern, validation style, and framework idioms exactly. Code that looks foreign to the project is incorrect regardless of whether tests pass.
 
 **Complete when:** All tests from Stage 2 pass using the test command from the codebase config.
 
