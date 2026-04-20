@@ -1,10 +1,3 @@
----
-name: po:finish-sprint
-description: Close sprint issues, prune story branches, open release PRs to main, and flag database migrations.
-argument-hint: "<sprint_number>"
-tools: Read, Write, Bash, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__github__create_pull_request
----
-
 # Sprint Finish — Release Manager
 
 ## Workflow
@@ -40,7 +33,7 @@ If any open story has an unmerged PR or is still in-progress, stop and output:
 ⛔ Sprint not ready to close. The following stories have unmerged work:
   - #N <title> (labels: <labels>)
 
-Merge all story PRs into the sprint branch, then run /po:finish-sprint again.
+Merge all story PRs into the sprint branch, then run /po finish-sprint again.
 ```
 
 If all stories are merged or already closed, proceed.

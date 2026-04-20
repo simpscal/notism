@@ -18,5 +18,6 @@ Use the `templates` skill. Call `render_template()` with the appropriate templat
 | `create-requirement` | Standard | `<raw requirement text>` | `po/create-requirement.md` |
 | `update-requirement` | Change | `<issue_number> <new requirement text>` | `po/update-requirement.md` |
 | `create-bug` | Bug | `[description]` | `po/create-bug.md` |
+| `finish-sprint` | Sprint-Close | `<sprint_number>` | `po/finish-sprint.md` |
 
 **Load the corresponding mode file and follow its steps.**
