@@ -1,7 +1,5 @@
 # Mode: Bug
 
-**Usage**: `/ba bug <bug_issue_number>`
-
 `fetch_issue(bug_issue_number)` to read the bug report in full.
 
 ---

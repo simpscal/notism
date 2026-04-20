@@ -1,7 +1,5 @@
 # Mode: Standard
 
-**Usage**: `/ba standard <requirement_issue_number>`
-
 `fetch_issue(requirement_issue_number)` to read the requirement in full.
 
 ---

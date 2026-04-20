@@ -1,7 +1,5 @@
 # Mode: Standard
 
-**Usage**: `/design standard <sprint_number>`
-
 Use `list_milestones()` to find the milestone with title `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
 
 ---

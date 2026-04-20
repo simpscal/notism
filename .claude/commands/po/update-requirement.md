@@ -1,9 +1,5 @@
 # Mode: Change
 
-**Usage**: `/po change <issue_number> <new requirement text>`
-
----
-
 ## Steps
 
 1. Extract `issue_number` (first token after `change`) and `new_requirement` (the remainder).

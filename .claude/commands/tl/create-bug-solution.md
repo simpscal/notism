@@ -1,7 +1,5 @@
 # Mode: Bug
 
-**Usage**: `/tl bug <bug_issue_number>`
-
 `fetch_issue(bug_issue_number)` to read the bug report in full. No TDD issue is created. No feature branches are created. The bug ticket is annotated directly.
 
 ---

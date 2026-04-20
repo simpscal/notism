@@ -1,7 +1,5 @@
 # Mode: Standard
 
-**Usage**: `/dev standard <issue_number>`
-
 Implement **one ticket per invocation** — do not batch.
 
 ---

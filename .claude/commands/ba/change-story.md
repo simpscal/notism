@@ -1,7 +1,5 @@
 # Mode: Story Change
 
-**Usage**: `/ba story-change <issue_number>`
-
 Extract `issue_number` (the token after `story-change`).
 
 ---

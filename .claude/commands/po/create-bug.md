@@ -1,9 +1,5 @@
 # Mode: Bug
 
-**Usage**: `/po bug [description]`
-
-Treat `$ARGUMENTS` (everything after `bug`) as the raw bug description (may be empty or partial).
-
 Read `.claude/templates/issue-bug-report.md`.
 
 ---

@@ -1,7 +1,5 @@
 # Mode: Change
 
-**Usage**: `/dev <issue_number>` (invoked when issue carries `story-updated` label)
-
 The story already has an implementation (open or merged PR). Implement the delta only — do not re-implement what is already on the branch.
 
 ---

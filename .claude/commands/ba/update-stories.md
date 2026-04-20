@@ -1,7 +1,5 @@
 # Mode: Requirement Change
 
-**Usage**: `/ba requirement-change <requirement_issue_number>`
-
 Extract `req_issue_number` (the token after `requirement-change`).
 
 ---

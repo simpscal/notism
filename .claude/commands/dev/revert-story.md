@@ -1,7 +1,5 @@
 # Mode: Revert
 
-**Usage**: `/dev <issue_number>` (invoked when issue carries `story-removed` label)
-
 The story's requirement was dropped. Existing implementation must be reversed. This mode creates revert PRs targeting the sprint branch — one per existing story PR.
 
 ---

@@ -1,11 +1,5 @@
 # Mode: Standard
 
-**Usage**: `/po standard <raw requirement text>`
-
-Treat everything after `standard` as the raw requirement text.
-
----
-
 ## Steps
 
 1. Summarise the raw requirement using `issue-requirement.md`
