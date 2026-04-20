@@ -71,6 +71,7 @@ Replace the body of an existing issue with updated content.
 Add and/or remove labels on an issue.
 - **Tool**: `mcp__github__issue_write` with `{ owner, repo, issue_number: issue_id, labels: <current labels + add - remove> }`
 - Read current labels first with `fetch_issue` to avoid overwriting
+- **Rule**: If `remove` is empty (`[]`, `[""]`, or omitted), skip removal — keep all current labels untouched
 
 ### `post_comment(issue_id, body)`
 Post a comment on an issue.
