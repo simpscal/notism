@@ -76,6 +76,11 @@ Add and/or remove labels on an issue.
 Post a comment on an issue.
 - **Tool**: `mcp__github__add_issue_comment` with `{ owner, repo, issue_number: issue_id, body }`
 
+### `update_comment(comment_id, body)`
+Update the body of an existing comment.
+- **CLI**: `gh api repos/{owner}/{repo}/issues/comments/{comment_id} --method PATCH -f body="{body}"`
+- Use when revising an existing annotation or summary in-place rather than appending a new comment
+
 ### `create_milestone(title, description)`
 Create a new sprint milestone.
 - **Tool**: `mcp__github__issue_write` or `gh api repos/{owner}/{repo}/milestones -f title="{title}" -f description="{description}"`
