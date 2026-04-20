@@ -99,19 +99,7 @@ feat(#<ISSUE_NUMBER>): update <short description> per story change
 
 ## C6 — Open or Update PR
 
-**Open PR case** — append a change note to the existing PR body via `mcp__github__update_pull_request`:
-
-```
-## Change Update
-
-Story was updated — this commit implements the delta:
-
-**New / changed ACs:**
-- <list from delta summary>
-
-**Removed ACs:**
-- <list from delta summary, or "None">
-```
+**Open PR case** — no PR action needed. Skip to end.
 
 **Merged PR case** — open a new PR targeting the sprint branch via `create_pr(title, body, head, base)`:
 - **Title**: `feat(#<N>): <short description> (change)`
@@ -125,4 +113,6 @@ For multi-skill stories, update or open each PR independently.
 
 ## C7 — Notify
 
--> Follow `_notify-complete.md`
+**Merged PR case only** — follow `_notify-complete.md`.
+
+**Open PR case** — skip this step.
