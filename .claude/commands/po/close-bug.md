@@ -23,12 +23,10 @@ Use `fetch_issue(issue_number)` from the tracker adapter to read the issue's tit
 
 ### Step 3 — Readiness Gate
 
-Before doing anything destructive, verify the sprint is complete:
+Before doing anything destructive, verify the bug is ready to close:
 
-For each story that is still **open**:
-- Check its labels for `in-progress`
-- For each codebase repo (derive slug: owner from tracker config + directory name from codebase path), run:
-  `gh pr list --repo {codebase_repo} --state open --json number,title,url,headRefName | jq '[.[] | select(.headRefName | startswith("fix/issue-{N}-"))]'` to detect any unmerged PRs
+For each codebase repo (derive slug: owner from tracker config + directory name from codebase path), run:
+  `gh pr list --repo {codebase_repo} --state open --json number,title,url,headRefName --jq '[.[] | select(.headRefName | startswith("fix/issue-{N}-"))]'` to detect any unmerged PRs
 
 Collect results from all codebases. If any open PRs are found across any repo, stop:
 
@@ -64,7 +62,28 @@ Output:
 ✓ Closed #N — <title>
 ```
 
-### Step 5 — Delete Bug Branch
+### Step 5 — Check for EF Core Migrations (Backend Only)
+
+For the backend codebase, find the merged fix PR and inspect its changed files:
+
+```bash
+gh pr list --repo {backend_codebase_repo} --state merged \
+  --json number,headRefName \
+  --jq '[.[] | select(.headRefName | startswith("fix/issue-{N}-"))] | .[0].number'
+```
+
+If a PR number is found, check for migration files:
+
+```bash
+gh pr view {pr_number} --repo {backend_codebase_repo} --json files \
+  --jq '[.files[].path | select(test("/Migrations/"; "i"))]'
+```
+
+- If no merged backend PR found: note "No backend PR found for #N — skipping migration check."
+- If migration files found: capture the list. This output is used in Step 7.
+- If no migration files found: note "No database migrations in this bug fix."
+
+### Step 6 — Delete Bug Branch
 
 For each codebase listed in the project config:
 
@@ -87,9 +106,14 @@ Output one line per deletion:
 ✓ Deleted {branch_name} from {codebase_name}
 ```
 
+### Step 7 — Post Bug Summary
+
+Use `render_template("comment-bug-summary", {issue_number, title, closed_date, migrations})`, then `post_comment(issue_number, body)`.
+
 ## Constraints
 
 - Only operate on issues with the `bug` label. Reject all others.
 - Never merge any PR — only gate on them.
 - Confirmation required before any mutating action.
+- Migration check is backend-only. Skip silently if no merged backend PR is found.
 - All label names and branch patterns come from `project.md`. Do not hardcode them.
