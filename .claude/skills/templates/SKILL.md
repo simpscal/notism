@@ -308,7 +308,7 @@ Merges all Sprint N stories into main.
 |-------|------|----------|-------|
 | `sprint` | string | yes | Sprint number |
 | `closed_date` | string | yes | YYYY-MM-DD format |
-| `stories` | list of dicts | yes | Each: {issue: "#N", title: "...", skill: "frontend\|backend"} |
+| `stories` | list of dicts | yes | Each: {issue: "#N", title: "..."} |
 | `release_prs` | list of dicts | yes | Each: {codebase: "backend\|frontend", pr: "#N"} |
 | `migrations` | string | yes | Migration warning or "None" |
 
@@ -327,7 +327,6 @@ See `.claude/templates/comment-sprint-summary.md` for full structure.
 
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
-| `skill` | string | yes | frontend \| backend \| both |
 | `complexity` | string | yes | S \| M \| L |
 | `root_cause` | string | yes | Opens with [frontend\|backend\|devops] tag + WHY |
 | `scope` | string | yes | Layers + specific file paths |
@@ -340,7 +339,6 @@ See `.claude/templates/comment-sprint-summary.md` for full structure.
 ```
 ## Technical Lead Annotation
 
-**Skill**: <skill>
 **Complexity**: <complexity>
 
 ### Root Cause

@@ -13,9 +13,9 @@ Posted to requirement issue by `/po:finish-sprint` (Step 8).
 **Closed**: {today's date}
 
 ### Stories shipped
-| Issue | Title | Skill |
-|-------|-------|-------|
-| #N | <title> | <skill:* label value> |
+| Issue | Title |
+|-------|-------|
+| #N | <title> |
 
 ### Release PRs
 | Codebase | PR |
@@ -55,7 +55,6 @@ Posted to requirement issue by `/po:finish-sprint` (Step 8).
 - One row per story in milestone
 - Issue: `#[0-9]+` format
 - Title: Exact GitHub issue title
-- Skill: Value after `skill:` prefix (e.g., `skill:frontend` → `frontend`)
 - Sort by issue number ascending
 
 **Wrong**: ❌ Missing `#`, ❌ Truncated titles, ❌ Full label name
@@ -94,7 +93,6 @@ Posted to requirement issue by `/po:finish-sprint` (Step 8).
 - [ ] Date is today in YYYY-MM-DD
 - [ ] All milestone stories in table
 - [ ] Story titles match GitHub exactly
-- [ ] Skill values from `skill:*` labels
 - [ ] Only changed codebases in PRs table
 - [ ] PR numbers correct
 - [ ] Migrations status reflects detection

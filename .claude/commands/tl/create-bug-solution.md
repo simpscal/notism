@@ -48,18 +48,10 @@ Produce a concise technical analysis covering:
 
 ---
 
-## T5 — Determine Skill
-
-Based on T4's scope:
-- API / domain / persistence changes -> `skill:backend`
-- UI / component / state changes -> `skill:frontend`
-- Both -> `skill:backend` + `skill:frontend`
-
----
 
 ## T6 — Annotate the Bug Ticket
 
-Use `render_template("comment-tl-annotation", {skill, complexity, root_cause, scope, fix_approach, key_decisions, risk})` to produce the annotation body.
+Use `render_template("comment-tl-annotation", {complexity, root_cause, scope, fix_approach, key_decisions, risk})` to produce the annotation body.
 
 **If existing annotation (story-updated path):**
 - Hold the existing comment's ID from the comments read in T1
@@ -68,12 +60,11 @@ Use `render_template("comment-tl-annotation", {skill, complexity, root_cause, sc
 **If no existing annotation (new path):**
 - `post_comment(<N>, body)`
 
-Then `update_labels(<N>, add: [tl-reviewed, skill:<label(s)>], remove: [])`.
+Then `update_labels(<N>, add: [tl-reviewed], remove: [])`.
 
 ```
 ## Technical Review Complete
 
-**Skill**: <frontend | backend | both>
 **Complexity**: <S | M | L>
 
 ---

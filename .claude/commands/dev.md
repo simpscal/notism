@@ -9,7 +9,7 @@ tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops), mcp__github__is
 
 ## Step 1 — Acquire Ticket and Determine Mode
 
-`fetch_issue(issue_number)`. Read the issue in full and identify its `skill:` label(s) and change-state labels. `update_labels(issue_id, add: [in-progress], remove: [])`.
+`fetch_issue(issue_number)`. Read the issue in full and identify its change-state labels. `update_labels(issue_id, add: [in-progress], remove: [])`.
 
 Inspect the issue's labels and route to the correct mode file — check in priority order:
 

@@ -207,9 +207,5 @@ Skills: `frontend` · `backend` · `fullstack` · `devops`
 | `in-progress` | Dev is implementing |
 | `implemented` | Dev complete — awaiting review |
 | `sprint-completed` | Sprint closed |
-| `skill:frontend` | Frontend story or bug |
-| `skill:backend` | Backend story or bug |
-| `skill:fullstack` | Full-stack story |
-| `skill:devops` | Infrastructure story |
 
 > Label names are configurable in `project.md`.

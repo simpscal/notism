@@ -67,7 +67,6 @@ Read in this order when studying the codebase:
 | Story added during requirement change | `story-added` |
 | Requirement updated after change | `requirement-updated` |
 | Sprint closed | `sprint-completed` |
-| Skill prefix | `skill:` (e.g. `skill:frontend`) |
 | Bug issue | `bug` |
 | Dev implementation complete | `implemented` |
 
