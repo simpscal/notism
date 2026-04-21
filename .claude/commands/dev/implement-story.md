@@ -12,16 +12,25 @@ Implement **one ticket per invocation** — do not batch.
 
 ## S2 — Git Setup
 
-`cd` into the codebase path for the relevant skill. Create the story branch (follow the branch naming strategy) from the sprint branch:
+Determine branch strategy from issue labels (available after S1):
+
+**If issue has `bug` label:**
+- `base_branch` = `main`
+- Branch name from git-strategy Bugfix pattern: `fix/issue-{N}-{short-description}` (single-skill) or `fix/issue-{N}-{short-description}-backend` / `-frontend` (multi-skill)
+
+**Otherwise (user story):**
+- `base_branch` = sprint branch (`feature/sprint-{N}`)
+- Branch name from git-strategy Story pattern: `feature/issue-{N}-{short-description}` (single-skill) or `feature/issue-{N}-{short-description}-backend` / `-frontend` (multi-skill)
+- If sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
+
+`cd` into the codebase path for the relevant skill, then:
 
 ```bash
 git fetch origin
-git checkout <sprint-branch> && git pull
-git checkout -b <story-branch>  # name from git-strategy Story pattern
+git checkout <base_branch> && git pull
+git checkout -b <story-branch>
 git push -u origin <story-branch>
 ```
-
-If the sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
 
 For multi-skill stories, run setup independently in each codebase path.
 
@@ -43,9 +52,9 @@ Once all subagents complete:
 
 ## S5 — Open PR
 
-Use `create_pr(title, body, head: story-branch, base: sprint-branch)` from inside the codebase path:
+Use `create_pr(title, body, head: story-branch, base: base_branch)` from inside the codebase path:
 
-**PR title:** `feat(#<ISSUE_NUMBER>): <short description>`
+**PR title:** `fix(#<ISSUE_NUMBER>): <short description>` for bug issues; `feat(#<ISSUE_NUMBER>): <short description>` for user stories
 **PR body:** Use `render_template("pr-story", {summary, changes, test_command, lint_command, manual_verification, acceptance_criteria, closes})`
 
 For multi-skill stories, open one PR per skill — each from its own codebase path, each targeting the sprint branch.
