@@ -68,6 +68,7 @@ Read in this order when studying the codebase:
 | Requirement updated after change | `requirement-updated` |
 | Sprint closed | `sprint-completed` |
 | Bug issue | `bug` |
+| Bug resolved and closed | `bug-fixed` |
 | Dev implementation complete | `implemented` |
 
 ---

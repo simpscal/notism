@@ -29,5 +29,6 @@ create_label "story-removed"        "Story removed during requirement change"   
 create_label "story-added"          "Story added during requirement change"      "a2eeef"
 create_label "requirement-updated"  "Requirement updated after change"           "fef2c0"
 create_label "bug"                  "Reporter-created bug issue"                 "d73a4a"
+create_label "bug-fixed"            "Bug resolved and closed"                    "0e8a16"
 
 echo "Done. All labels created."

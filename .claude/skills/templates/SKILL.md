@@ -40,8 +40,8 @@ render_template("issue-user-story", {
 | Issue Design Instructions | `issue-design-instructions` | `/design` |
 | Acceptance Criteria | `acceptance-criteria` | (embedded in issue-user-story, issue-bug-report) |
 | PR Story | `pr-story` | `/dev` |
-| PR Release | `pr-release` | `/po finish-sprint` |
-| Comment Sprint Summary | `comment-sprint-summary` | `/po finish-sprint` |
+| PR Release | `pr-release` | `/po close-sprint` |
+| Comment Sprint Summary | `comment-sprint-summary` | `/po close-sprint` |
 | Comment TL Annotation | `comment-tl-annotation` | `/tl create-bug-solution` |
 
 ---
@@ -263,7 +263,7 @@ Closes <closes>
 
 ## `pr-release`
 
-**Used by**: `/po finish-sprint`
+**Used by**: `/po close-sprint`
 **Reference**: `.claude/templates/pr-release.md`
 
 ### Fields
@@ -299,7 +299,7 @@ Merges all Sprint N stories into main.
 
 ## `comment-sprint-summary`
 
-**Used by**: `/po finish-sprint`
+**Used by**: `/po close-sprint`
 **Reference**: `.claude/templates/comment-sprint-summary.md`
 
 ### Fields

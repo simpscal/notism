@@ -25,7 +25,8 @@ Before doing anything destructive, verify the sprint is complete:
 
 For each story that is still **open**:
 - Check its labels for `in-progress`
-- Run: `gh pr list --repo {repo} --head feature/issue-{N}-* --state open` to detect any unmerged PRs
+- For each codebase repo (derive slug: owner from tracker config + directory name from codebase path), run:
+  `gh pr list --repo {codebase_repo} --state open --json number,title,url,headRefName --jq '[.[] | select(.headRefName | startswith("feature/issue-{N}-"))]'` to detect any unmerged PRs
 
 If any open story has an unmerged PR or is still in-progress, stop and output:
 
@@ -33,7 +34,7 @@ If any open story has an unmerged PR or is still in-progress, stop and output:
 ⛔ Sprint not ready to close. The following stories have unmerged work:
   - #N <title> (labels: <labels>)
 
-Merge all story PRs into the sprint branch, then run /po finish-sprint again.
+Merge all story PRs into the sprint branch, then run /po close-sprint again.
 ```
 
 If all stories are merged or already closed, proceed.
