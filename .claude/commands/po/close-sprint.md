@@ -6,15 +6,16 @@
 
 Parse `$ARGUMENTS` as the milestone ID or sprint number (e.g. `3` or `Sprint 3`).
 
-If `$ARGUMENTS` is empty: run `gh api repos/{repo}/milestones --jq '[.[] | {number: .number, title: .title, open_issues: .open_issues}]'` and list the results for the user to choose from, then stop.
+If `$ARGUMENTS` is empty: run `list_milestones_detail()` from the tracker adapter and list the results for the user to choose from, then stop.
 
 ### Step 1 — Fetch Sprint Snapshot
 
 Use `list_issues(milestone_id)` from the tracker adapter to fetch **all** issues in the milestone (open and closed). For each issue, note its number, title, labels, and state.
 
-Partition issues into three groups:
+Partition issues into four groups:
 - **Stories**: issues with the `user-story` label
 - **TDD**: issue with the `technical-design` label
+- **Design**: issue with the `design-reviewed` label
 - **Requirement**: issue with the `requirement` label
 
 Derive the sprint branch name from the milestone title: `Sprint N` → `feature/sprint-N`.
@@ -26,7 +27,7 @@ Before doing anything destructive, verify the sprint is complete:
 For each story that is still **open**:
 - Check its labels for `in-progress`
 - For each codebase repo (derive slug: owner from tracker config + directory name from codebase path), run:
-  `gh pr list --repo {codebase_repo} --state open --json number,title,url,headRefName --jq '[.[] | select(.headRefName | startswith("feature/issue-{N}-"))]'` to detect any unmerged PRs
+  `list_prs(codebase_repo, open, "feature/issue-{N}-")` to detect any unmerged PRs
 
 If any open story has an unmerged PR or is still in-progress, stop and output:
 
@@ -44,7 +45,7 @@ If all stories are merged or already closed, proceed.
 For every issue in the milestone (stories, TDD issue, requirement issue):
 
 1. `update_labels(issue_id, add: [sprint-completed], remove: [in-progress, sprint-ready, tl-reviewed, design-reviewed, story-updated])`
-2. `gh issue close {issue_id} --repo {repo}`
+2. `close_issue(issue_id)`
 
 Output one line per issue as it completes:
 ```
@@ -57,19 +58,11 @@ Story branches follow the pattern `feature/issue-{N}-{description}` (with option
 
 For each codebase listed in the project config:
 
-```bash
-cd {codebase_path}
-git fetch --prune origin
-git branch -r | grep 'origin/feature/issue-' | sed 's|  origin/||'
-```
+Use `list_branches(codebase_repo, "feature/issue-")` to find all story branches on the remote.
 
-For each story branch found, delete it from the remote:
+For each story branch found, delete it from the remote using `delete_branch(codebase_repo, branch_name)`.
 
-```bash
-git push origin --delete {branch_name}
-```
-
-If the branch no longer exists on the remote (already pruned), skip silently.
+If the branch no longer exists on the remote, skip silently.
 
 Output one line per deletion:
 ```
@@ -78,15 +71,11 @@ Output one line per deletion:
 
 ### Step 5 — Check for EF Core Migrations (Backend Only)
 
-For the backend codebase:
+Use `diff_branches_files(backend_repo, "main", sprint_branch)` to get the list of files changed in the sprint branch relative to main.
 
-```bash
-cd {backend_path}
-git fetch origin
-git diff origin/main...origin/{sprint_branch} --name-only | grep -i '/Migrations/'
-```
+Filter that list for paths containing `/Migrations/`.
 
-Capture the list of migration files (if any). This output is used in Step 7 and Step 8.
+Capture the filtered list (if any). This output is used in Step 7 and Step 8.
 
 If no migration files are found, note: "No database migrations in this sprint."
 

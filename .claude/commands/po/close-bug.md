@@ -6,7 +6,7 @@
 
 Parse `$ARGUMENTS` as the bug issue number (e.g. `42`).
 
-If `$ARGUMENTS` is empty: run `gh issue list --repo {repo} --label bug --state open --json number,title --jq '.[] | "#\(.number) \(.title)"'` and list the results for the user to choose from, then stop.
+If `$ARGUMENTS` is empty: use `list_open_issues(["bug"])` from the tracker adapter and list the results for the user to choose from, then stop.
 
 ### Step 2 — Fetch Issue
 
@@ -25,8 +25,7 @@ Use `fetch_issue(issue_number)` from the tracker adapter to read the issue's tit
 
 Before doing anything destructive, verify the bug is ready to close:
 
-For each codebase repo (derive slug: owner from tracker config + directory name from codebase path), run:
-  `gh pr list --repo {codebase_repo} --state open --json number,title,url,headRefName --jq '[.[] | select(.headRefName | startswith("fix/issue-{N}-"))]'` to detect any unmerged PRs
+For each codebase repo (derive slug: owner from tracker config + directory name from codebase path), use `list_prs(codebase_repo, "open", "fix/issue-{N}-")` to detect any unmerged PRs.
 
 Collect results from all codebases. If any open PRs are found across any repo, stop:
 
@@ -47,7 +46,7 @@ Show the confirmation prompt (tracker adapter confirmation protocol):
 ## Planned Tracker Actions
 
 1. update_labels(#{N}, add: [bug-fixed], remove: [in-progress, sprint-ready, tl-reviewed, design-reviewed, implemented])
-2. gh issue close {N} --repo {repo}
+2. close_issue(#{N})
 
 Proceed with these actions? (y/n)
 ```
@@ -55,7 +54,7 @@ Proceed with these actions? (y/n)
 On confirmation:
 
 1. `update_labels(issue_number, add: [bug-fixed], remove: [in-progress, sprint-ready, tl-reviewed, design-reviewed, implemented])`
-2. `gh issue close {issue_number} --repo {repo}`
+2. `close_issue(issue_number)`
 
 Output:
 ```
@@ -64,20 +63,11 @@ Output:
 
 ### Step 5 — Check for EF Core Migrations (Backend Only)
 
-For the backend codebase, find the merged fix PR and inspect its changed files:
+For the backend codebase, find the merged fix PR:
 
-```bash
-gh pr list --repo {backend_codebase_repo} --state merged \
-  --json number,headRefName \
-  --jq '[.[] | select(.headRefName | startswith("fix/issue-{N}-"))] | .[0].number'
-```
+Use `list_prs(backend_codebase_repo, "closed", "fix/issue-{N}-")` and filter client-side for `merged: true`. Take the first result as `pr_number`.
 
-If a PR number is found, check for migration files:
-
-```bash
-gh pr view {pr_number} --repo {backend_codebase_repo} --json files \
-  --jq '[.files[].path | select(test("/Migrations/"; "i"))]'
-```
+If a PR number is found, use `get_pr(backend_codebase_repo, pr_number)` and inspect its `files[]` for paths matching `/Migrations/` (case-insensitive).
 
 - If no merged backend PR found: note "No backend PR found for #N — skipping migration check."
 - If migration files found: capture the list. This output is used in Step 7.
@@ -87,19 +77,11 @@ gh pr view {pr_number} --repo {backend_codebase_repo} --json files \
 
 For each codebase listed in the project config:
 
-```bash
-cd {codebase_path}
-git fetch --prune origin
-git branch -r | grep "origin/fix/issue-{N}-" | sed 's|  origin/||'
-```
+Use `list_branches(codebase_repo, "fix/issue-{N}-")` to find all bug branches on the remote.
 
-For each branch found, delete it from the remote:
+For each branch found, delete it from the remote using `delete_branch(codebase_repo, branch_name)`.
 
-```bash
-git push origin --delete {branch_name}
-```
-
-If the branch no longer exists on the remote (already pruned), skip silently.
+If the branch no longer exists on the remote, skip silently.
 
 Output one line per deletion:
 ```

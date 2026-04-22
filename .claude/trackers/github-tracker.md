@@ -92,3 +92,56 @@ Create a new sprint milestone.
 List all existing milestones to determine the next sprint number.
 - **CLI**: `gh api repos/{owner}/{repo}/milestones --jq '.[].title'`
 - Returns: list of milestone titles
+
+### `list_open_issues(labels)`
+List open issues filtered by one or more labels, without requiring a milestone.
+- **Tool**: `mcp__github__list_issues` with `{ owner, repo, state: "open", labels }`
+- Returns: array of `{number, title, labels}`
+
+### `get_pr(repo, pr_number)`
+Read a pull request in full (body, head/base refs, merge commit SHA, changed files).
+- **Tool**: `mcp__github__pull_request_read` with `{ owner, repo, pullNumber: pr_number }`
+- `repo` is the codebase repo slug (e.g. `simpscal/notism-api`)
+- Returns: `{number, title, body, state, merged, mergeCommitSha, headRefName, baseRefName, files[{filename, status, additions, deletions, patch}]}`
+
+### `list_milestones_detail()`
+List milestones with number, title, and open issue count.
+- **CLI**: `gh api repos/{owner}/{repo}/milestones --jq '[.[] | {number: .number, title: .title, open_issues: .open_issues}]'`
+- *(No GitHub MCP tool for milestones — CLI is the only path)*
+- Returns: array of `{number, title, open_issues}`
+
+### `close_issue(issue_id)`
+Close an issue.
+- **Tool**: `mcp__github__update_issue` with `{ owner, repo, issue_number: issue_id, state: "closed" }`
+
+### `create_pr(title, body, head, base)`
+Create a pull request.
+- **Tool**: `mcp__github__create_pull_request` with `{ owner, repo, title, body, head, base }`
+- Returns: PR number and URL
+
+### `list_prs(repo, state, head_prefix?)`
+List pull requests, optionally filtered by head branch prefix.
+- **Tool**: `mcp__github__list_pull_requests` with `{ owner, repo, state }`, then filter client-side by `headRefName.startsWith(head_prefix)` if prefix provided
+- `repo` is the codebase repo slug (e.g. `simpscal/notism-api`), not the issue tracker repo
+- `state`: `"open"` | `"closed"` | `"all"`. For merged-only, pass `"closed"` and filter client-side by `merged: true`
+- Returns: array of `{number, title, url, headRefName, state, merged}`
+
+### `list_branches(repo, pattern?)`
+List remote branches, optionally filtered by name prefix.
+- **Tool**: `mcp__github__list_branches` with `{ owner, repo }`
+- `repo` is the codebase repo slug
+- Filter results client-side by `pattern` if provided
+- Returns: array of branch names
+
+### `delete_branch(repo, branch)`
+Delete a branch from the remote.
+- **CLI**: `git push origin --delete {branch}` (run from within the codebase path)
+- *(No delete-branch MCP tool exists — CLI is the only path)*
+- If branch no longer exists on remote, skip silently ("remote ref does not exist" = OK)
+
+### `diff_branches_files(repo, base, head)`
+List files changed (added or modified) between two branches.
+- **CLI**: `gh api repos/{owner}/{repo}/compare/{base}...{head} --jq '[.files[].filename]'`
+- `repo` is the codebase repo slug
+- *(No compare-branches MCP tool exists — `gh api` is the only path)*
+- Returns: array of file paths

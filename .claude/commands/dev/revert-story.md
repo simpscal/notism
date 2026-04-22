@@ -8,9 +8,7 @@ The story's requirement was dropped. Existing implementation must be reversed. T
 
 For each codebase listed in the project config, search for PRs associated with this issue:
 
-```bash
-gh pr list --repo <repo> --head "feature/issue-<N>-*" --state all --json number,headRefName,state,merged,baseRefName
-```
+Use `list_prs(repo, "all", "feature/issue-<N>-")` from the tracker adapter.
 
 Collect all PRs found as `$STORY_PRS`.
 
@@ -34,8 +32,9 @@ If the sprint branch does not exist, halt: "Sprint feature branch `<sprint-branc
 
 If the PR was **merged** (`merged: true`), get its merge commit SHA and revert it:
 
+Use `get_pr(repo, pr_number)` and read `mergeCommitSha`. Then:
+
 ```bash
-gh api repos/<repo>/pulls/<pr-number> --jq '.merge_commit_sha'
 git revert -m 1 <merge-commit-sha> --no-edit
 ```
 

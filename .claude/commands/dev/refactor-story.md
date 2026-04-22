@@ -14,9 +14,7 @@ The story already has an implementation (open or merged PR). Implement the delta
 
 For each codebase / skill in scope, discover the existing PR state:
 
-```bash
-gh pr list --repo <repo> --head "feature/issue-<N>-*" --state open --json number,headRefName
-```
+Use `list_prs(repo, "open", "feature/issue-<N>-")` from the tracker adapter.
 
 - **Open PR found** — check out the existing branch. Hold PR number for C3:
   ```bash
@@ -24,9 +22,8 @@ gh pr list --repo <repo> --head "feature/issue-<N>-*" --state open --json number
   git checkout <existing-branch> && git pull
   ```
 
-- **No open PR** — find the merged PR, hold its number and `mergeCommit` SHA for C3, then create a new branch (follow the branch naming strategy).
+- **No open PR** — use `list_prs(repo, "closed", "feature/issue-<N>-")` and filter client-side for `merged: true`. Hold the PR number for C3. Use `get_pr(repo, pr_number)` to get the `mergeCommitSha`. Then create a new branch (follow the branch naming strategy):
   ```bash
-  gh pr list --repo <repo> --head "feature/issue-<N>-*" --state merged --json number,headRefName,mergeCommit
   git fetch origin
   git checkout <sprint-branch> && git pull
   git checkout -b <story-branch>
@@ -43,18 +40,10 @@ For multi-skill stories, run setup independently in each codebase path.
 For each PR found in C2 (open or merged), fetch its diff and body:
 
 **Open PR:**
-```bash
-gh pr diff <pr-number>
-gh pr view <pr-number> --json body
-```
+Use `get_pr(repo, pr_number)` to read the PR body and `files[]` (each entry includes `filename`, `status`, and `patch` with the line-level diff).
 
 **Merged PR:**
-```bash
-gh pr diff <pr-number>
-gh pr view <pr-number> --json body,mergeCommit
-# Or diff via the merge commit directly:
-git show <merge-commit-sha> --stat
-```
+Use `get_pr(repo, pr_number)` to read the PR body, `mergeCommitSha`, and `files[]`.
 
 Produce a **delta summary**:
 
@@ -78,7 +67,7 @@ In addition to the standard context table, pass the following to every subagent:
 | Extra context | Source |
 |---------------|--------|
 | Delta summary | Produced in C3 |
-| Affected files | From `gh pr diff` file list |
+| Affected files | From `get_pr` `files[].filename` |
 | Instruction | "Implement the delta only. Do not re-implement ACs already satisfied. Do not modify already-correct files unless an AC explicitly requires a change." |
 
 ---
