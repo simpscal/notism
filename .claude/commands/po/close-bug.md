@@ -40,19 +40,6 @@ If no open PRs in any codebase repo, proceed.
 
 ### Step 4 — Update Labels and Close
 
-Show the confirmation prompt (tracker adapter confirmation protocol):
-
-```
-## Planned Tracker Actions
-
-1. update_labels(#{N}, add: [bug-fixed], remove: [in-progress, sprint-ready, tl-reviewed, design-reviewed, implemented])
-2. close_issue(#{N})
-
-Proceed with these actions? (y/n)
-```
-
-On confirmation:
-
 1. `update_labels(issue_number, add: [bug-fixed], remove: [in-progress, sprint-ready, tl-reviewed, design-reviewed, implemented])`
 2. `close_issue(issue_number)`
 
