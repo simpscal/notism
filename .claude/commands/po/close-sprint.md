@@ -15,7 +15,7 @@ Use `list_issues(milestone_id)` from the tracker adapter to fetch **all** issues
 Partition issues into four groups:
 - **Stories**: issues with the `user-story` label
 - **TDD**: issue with the `technical-design` label
-- **Design**: issue with the `design-reviewed` label
+- **Design**: issue with the `design` label
 - **Requirement**: issue with the `requirement` label
 
 Derive the sprint branch name from the milestone title: `Sprint N` → `feature/sprint-N`.
@@ -42,7 +42,7 @@ If all stories are merged or already closed, proceed.
 
 ### Step 3 — Label and Close All Sprint Issues
 
-For every issue in the milestone (stories, TDD issue, requirement issue):
+For every issue in the milestone (stories, TDD issue, requirement issue, design issue):
 
 1. `update_labels(issue_id, add: [sprint-completed], remove: [in-progress, sprint-ready, tl-reviewed, design-reviewed, story-updated])`
 2. `close_issue(issue_id)`

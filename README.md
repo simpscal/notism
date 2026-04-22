@@ -43,7 +43,7 @@ flowchart TD
     C --> D["User Stories + Sprint Milestone<br/>`sprint-ready`"]
     D --> G2{Gate 2<br/>PO Reviews Stories}
     G2 -->|Approve| E1(["/design create-design <ms>"])
-    E1 --> F1["Design Instructions<br/>`design-reviewed`"]
+    E1 --> F1["Design Instructions<br/>`design`"]
     F1 --> E2(["/tl create-feature-solution <ms>"])
     E2 --> F2["TDD + Annotated Stories<br/>`tl-reviewed`"]
     F2 --> G3{Gate 3<br/>PO Reviews TDD + Design}
@@ -145,7 +145,7 @@ Human judges which roles are needed after reviewing approved AC changes.
 | `/ba create-bug <issue-number>` | BA | bug issue # | ACs appended to bug ticket | `/ba create-bug 42` |
 | `/ba update-stories <issue-number>` | BA | requirement issue # | updated user stories (add/update/remove) after requirement change | `/ba update-stories 42` |
 | `/ba change-story <issue-number>` | BA | story or bug issue # | updated ACs on existing story or bug + `story-updated` label | `/ba change-story 45` |
-| `/design create-design <milestone-id>` | Designer | milestone # | sprint-level design instructions issue (`design-reviewed`) — or updates existing if requirement changed | `/design create-design 3` |
+| `/design create-design <milestone-id>` | Designer | milestone # | sprint-level design instructions issue (`design`) — or updates existing if requirement changed | `/design create-design 3` |
 | `/tl create-feature-solution <milestone-id>` | Technical Lead | milestone # | TDD issue + feature branches + annotated stories (`tl-reviewed` + `skill:*`) | `/tl create-feature-solution 3` |
 | `/tl create-bug-solution <bug-issue>` | Technical Lead | bug issue # | technical annotation comment on bug ticket (`tl-reviewed` + `skill:*`) | `/tl create-bug-solution 42` |
 | `/dev [issue-number]` | Developer (auto) | optional issue # | PR to sprint branch (stories) or main (bugs) — auto-routes to implement/refactor/revert based on labels | `/dev` or `/dev 45` |
@@ -224,7 +224,8 @@ Human judges which roles are needed after reviewing approved AC changes.
 | `sprint-completed` | Sprint closed |
 | `tl-reviewed` | TL complete — awaiting dev |
 | `technical-design` | TDD issue |
-| `design-reviewed` | Sprint-level design instructions created — awaiting dev |
+| `design` | Sprint-level design instructions issue |
+| `design-reviewed` | Design complete |
 | `story-added` | New story added mid-sprint |
 | `story-updated` | Story ACs changed after initial implementation |
 | `story-removed` | Story dropped from scope |

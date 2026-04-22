@@ -35,7 +35,7 @@ Identify which stories involve user-facing UI changes by reading their descripti
 
 ## S4 — Check for Existing Design Instructions
 
-Use `list_issues($MILESTONE_ID, labels: ["design-reviewed"])` to check for an existing Design Instructions issue whose title matches `Sprint N — Design Instructions`.
+Use `list_issues($MILESTONE_ID, labels: ["design"])` to check for an existing Design Instructions issue whose title matches `Sprint N — Design Instructions`.
 
 - **If no Design Instructions exists**: Continue to S5 (new Design Instructions flow)
 - **If Design Instructions exists**: `fetch_issue(id)` to read it in full. Hold this as the **current Design Instructions** — subsequent steps will produce changes to this document, not a new design from scratch.
@@ -78,7 +78,7 @@ Use `create_issue(title, body, labels, milestone_id)`:
 
 **Title**: `Sprint N — Design Instructions`
 **Body**: Use `render_template("issue-design-instructions", {requirement_issue, overview, layout, components, design_tokens, ui_states, responsive, accessibility, consistency_notes})`
-**Labels**: `design-reviewed` (and any design labels from project config)
+**Labels**: `design` (and any design labels from project config)
 **Milestone**: `$MILESTONE_ID`
 
 **If existing Design Instructions (update):**
