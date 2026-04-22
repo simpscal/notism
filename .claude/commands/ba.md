@@ -1,7 +1,7 @@
 ---
 name: ba
 description: Analyze requirements, create/amend user stories and sprint milestones.
-argument-hint: "<create-stories|create-bug|update-stories|change-story|change-bug> [args]"
+argument-hint: "<write-stories|add-bug-acs|sync-stories|amend-story|amend-bug> [args]"
 tools: Read, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment
 ---
 
@@ -21,11 +21,11 @@ Use the `templates` skill. Call `render_template()` with the appropriate templat
 
 | First word | Mode | Args | Mode file |
 |---|---|---|---|
-| `create-stories` | Standard | `<requirement_issue_number>` | `ba/create-stories.md` |
-| `create-bug` | Bug | `<bug_issue_number>` | `ba/create-bug.md` |
-| `update-stories` | Requirement Change | `<requirement_issue_number>` | `ba/update-stories.md` |
-| `change-story` | Story Change | `<issue_number>` | `ba/change-story.md` |
-| `change-bug` | Bug AC Change | `<issue_number>` | `ba/change-bug.md` |
+| `write-stories` | Standard | `<requirement_issue_number>` | `ba/write-stories.md` |
+| `add-bug-acs` | Bug | `<bug_issue_number>` | `ba/add-bug-acs.md` |
+| `sync-stories` | Requirement Change | `<requirement_issue_number>` | `ba/sync-stories.md` |
+| `amend-story` | Story Change | `<issue_number>` | `ba/amend-story.md` |
+| `amend-bug` | Bug AC Change | `<issue_number>` | `ba/amend-bug.md` |
 
 **Load the corresponding mode file and follow its steps.**
 

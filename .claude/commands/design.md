@@ -1,7 +1,7 @@
 ---
 name: design
 description: Analyze design system and create design instructions for frontend stories.
-argument-hint: "<create-design> [args]"
+argument-hint: "<write-design> [args]"
 tools: Read, Glob, Grep, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__plugin_figma_figma__authenticate
 ---
 
@@ -21,7 +21,7 @@ Use the `templates` skill. Call `render_template()` with the appropriate templat
 
 | First word | Mode | Args | Mode file |
 |---|---|---|---|
-| `create-design` | Standard | `<sprint_number>` | `design/create-design.md` |
+| `write-design` | Standard | `<sprint_number>` | `design/write-design.md` |
 
 **Load the corresponding mode file and follow its steps.**
 

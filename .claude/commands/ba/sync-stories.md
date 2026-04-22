@@ -1,6 +1,6 @@
 # Mode: Requirement Change
 
-Extract `req_issue_number` (the token after `requirement-change`).
+Extract `req_issue_number` (the token after `sync-stories`).
 
 ---
 

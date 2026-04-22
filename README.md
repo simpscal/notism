@@ -39,12 +39,12 @@ An AI-powered development workflow using Claude Code slash commands. Issue track
 flowchart TD
     A(["/po create-requirement <description>"]) --> B["Requirement Issue<br/>`requirement`"]
     B --> G1{Gate 1<br/>PO Review}
-    G1 -->|Approve| C(["/ba create-stories <issue>"])
+    G1 -->|Approve| C(["/ba write-stories <issue>"])
     C --> D["User Stories + Sprint Milestone<br/>`sprint-ready`"]
     D --> G2{Gate 2<br/>PO Reviews Stories}
-    G2 -->|Approve| E1(["/design create-design <ms>"])
+    G2 -->|Approve| E1(["/design write-design <ms>"])
     E1 --> F1["Design Instructions<br/>`design`"]
-    F1 --> E2(["/tl create-feature-solution <ms>"])
+    F1 --> E2(["/tl write-feature-tdd <ms>"])
     E2 --> F2["TDD + Annotated Stories<br/>`tl-reviewed`"]
     F2 --> G3{Gate 3<br/>PO Reviews TDD + Design}
     G3 -->|Approve| H(["/dev <issue>"])
@@ -65,10 +65,10 @@ Separate pipeline — runs independently of sprint cycle. Bug PRs always target 
 flowchart TD
     A(["/po create-bug [description]"]) --> B["Bug Issue<br/>`bug`"]
     B --> G1{Gate 1<br/>PO Reviews Bug}
-    G1 -->|Approve| C(["/ba create-bug <issue>"])
+    G1 -->|Approve| C(["/ba add-bug-acs <issue>"])
     C --> D["Acceptance Criteria<br/>on bug issue"]
     D --> G2{Gate 2<br/>PO Reviews ACs}
-    G2 -->|Approve| E(["/tl create-bug-solution <issue>"])
+    G2 -->|Approve| E(["/tl annotate-bug <issue>"])
     E --> F["Technical Annotation<br/>`tl-reviewed`"]
     F --> G3{Gate 3<br/>PO Reviews Annotation}
     G3 -->|Approve| H(["/dev <issue>"])
@@ -84,15 +84,15 @@ Triggered when the PO changes scope mid-sprint. Affects stories, design, and TDD
 ```mermaid
 flowchart TD
     A(["/po update-requirement <N> <delta>"]) --> B["Requirement updated<br/>`requirement-updated`"]
-    B --> C(["/ba update-stories <N>"])
+    B --> C(["/ba sync-stories <N>"])
     C --> D["Change Plan<br/>Covered / Updatable / New / Removed"]
     D --> G1{Gate 1<br/>PO Approves Change Plan}
     G1 -->|Approve| E1["Update existing stories"]
     G1 -->|Approve| E2["Create new stories"]
     G1 -->|Approve| E3["Label removed stories<br/>`story-removed`"]
-    E1 & E2 & E3 --> F1(["/design create-design <sprint>"])
+    E1 & E2 & E3 --> F1(["/design write-design <sprint>"])
     F1 --> F2["Design Instructions updated<br/>incremental"]
-    F2 --> F3(["/tl create-feature-solution <sprint>"])
+    F2 --> F3(["/tl write-feature-tdd <sprint>"])
     F3 --> F4["TDD updated<br/>incremental"]
 ```
 
@@ -102,15 +102,15 @@ Triggered when a specific story's acceptance criteria need adjusting — not the
 
 ```mermaid
 flowchart TD
-    A(["/ba change-story <N>"]) --> B["AC Change Plan<br/>Added / Removed / Modified"]
+    A(["/ba amend-story <N> or /ba amend-bug <N>"]) --> B["AC Change Plan<br/>Added / Removed / Modified"]
     B --> G1{Gate 1<br/>PO Approves AC Changes}
     G1 -->|Approve| C["Story ACs updated<br/>`story-updated`"]
     C --> D{UI changes?}
-    D -->|Yes| E(["/design create-design <sprint>"])
+    D -->|Yes| E(["/design write-design <sprint>"])
     D -->|No| F{Tech design changes?}
     E --> E2["Design Instructions updated<br/>incremental"]
     E2 --> F
-    F -->|Yes| G(["/tl create-feature-solution <sprint>"])
+    F -->|Yes| G(["/tl write-feature-tdd <sprint>"])
     F -->|No| H(["/dev <N>"])
     G --> G2["TDD updated<br/>incremental"]
     G2 --> H
@@ -141,14 +141,14 @@ Human judges which roles are needed after reviewing approved AC changes.
 | `/po create-bug [description]` | Product Owner | bug description (optional) | bug issue with `bug` label (interactively fills missing fields) | `/po create-bug` |
 | `/po close-sprint <sprint-number>` | Release Manager | sprint # | sprint issues closed, story branches deleted, release PRs to main, migrations flagged | `/po close-sprint 3` |
 | `/po close-bug <issue-number>` | Release Manager | bug # | bug issue closed (`bug-fixed`), fix branch deleted, summary posted | `/po close-bug 42` |
-| `/ba create-stories <issue-number>` | BA | requirement issue # | user story issues + sprint milestone (`sprint-ready`) | `/ba create-stories 42` |
-| `/ba create-bug <issue-number>` | BA | bug issue # | ACs appended to bug ticket | `/ba create-bug 42` |
-| `/ba update-stories <issue-number>` | BA | requirement issue # | updated user stories (add/update/remove) after requirement change | `/ba update-stories 42` |
-| `/ba change-story <issue-number>` | BA | story issue # | updated ACs on existing story + `story-updated` label | `/ba change-story 45` |
-| `/ba change-bug <issue-number>` | BA | bug issue # | updated ACs on existing bug + `story-updated` label | `/ba change-bug 42` |
-| `/design create-design <milestone-id>` | Designer | milestone # | sprint-level design instructions issue (`design`) — or updates existing if requirement changed | `/design create-design 3` |
-| `/tl create-feature-solution <milestone-id>` | Technical Lead | milestone # | TDD issue + feature branches + annotated stories (`tl-reviewed` + `skill:*`) | `/tl create-feature-solution 3` |
-| `/tl create-bug-solution <bug-issue>` | Technical Lead | bug issue # | technical annotation comment on bug ticket (`tl-reviewed` + `skill:*`) | `/tl create-bug-solution 42` |
+| `/ba write-stories <issue-number>` | BA | requirement issue # | user story issues + sprint milestone (`sprint-ready`) | `/ba write-stories 42` |
+| `/ba add-bug-acs <issue-number>` | BA | bug issue # | ACs appended to bug ticket | `/ba add-bug-acs 42` |
+| `/ba sync-stories <issue-number>` | BA | requirement issue # | updated user stories (add/update/remove) after requirement change | `/ba sync-stories 42` |
+| `/ba amend-story <issue-number>` | BA | story issue # | updated ACs on existing story + `story-updated` label | `/ba amend-story 45` |
+| `/ba amend-bug <issue-number>` | BA | bug issue # | updated ACs on existing bug + `story-updated` label | `/ba amend-bug 42` |
+| `/design write-design <milestone-id>` | Designer | milestone # | sprint-level design instructions issue (`design`) — or updates existing if requirement changed | `/design write-design 3` |
+| `/tl write-feature-tdd <milestone-id>` | Technical Lead | milestone # | TDD issue + feature branches + annotated stories (`tl-reviewed` + `skill:*`) | `/tl write-feature-tdd 3` |
+| `/tl annotate-bug <bug-issue>` | Technical Lead | bug issue # | technical annotation comment on bug ticket (`tl-reviewed` + `skill:*`) | `/tl annotate-bug 42` |
 | `/dev [issue-number]` | Developer (auto) | optional issue # | PR to sprint branch (stories) or main (bugs) — auto-routes to implement/refactor/revert based on labels | `/dev` or `/dev 45` |
 
 **Skills:** `frontend` · `backend` · `fullstack` · `devops`
@@ -172,23 +172,24 @@ Human judges which roles are needed after reviewing approved AC changes.
       close-bug.md           ← Release Manager closes bug
     ba.md
     ba/
-      create-stories.md       ← BA decomposes requirement into stories
-      create-bug.md          ← BA writes ACs for bug
-      update-stories.md       ← BA re-classifies stories after requirement change
-      change-story.md         ← BA changes a single story's ACs
+      write-stories.md        ← BA decomposes requirement into stories
+      add-bug-acs.md          ← BA writes ACs for a bug issue
+      sync-stories.md         ← BA re-classifies stories after requirement change
+      amend-story.md          ← BA amends ACs on a user story
+      amend-bug.md            ← BA amends ACs on a bug issue
     design.md
     design/
-      create-design.md        ← Designer produces UI instructions for sprint
+      write-design.md         ← Designer produces UI instructions for sprint
     tl.md
     tl/
-      create-feature-solution.md  ← TL writes TDD for sprint
-      create-bug-solution.md       ← TL annotates bug fix
+      write-feature-tdd.md    ← TL writes TDD for sprint
+      annotate-bug.md         ← TL annotates bug fix
       _methodology.md              ← TL's 4-stage design process
     dev.md
     dev/
-      implement-story.md      ← Dev implements a story (standard)
-      refactor-story.md       ← Dev refactors after AC change
-      revert-story.md        ← Dev reverts when story removed from scope
+      implement.md            ← Dev implements a story (standard)
+      refactor.md             ← Dev implements AC delta changes
+      revert.md               ← Dev reverts when story removed from scope
   agents/               ← developer role agents (invoked by /dev)
     backend.md
     frontend.md
