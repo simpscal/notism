@@ -144,7 +144,8 @@ Human judges which roles are needed after reviewing approved AC changes.
 | `/ba create-stories <issue-number>` | BA | requirement issue # | user story issues + sprint milestone (`sprint-ready`) | `/ba create-stories 42` |
 | `/ba create-bug <issue-number>` | BA | bug issue # | ACs appended to bug ticket | `/ba create-bug 42` |
 | `/ba update-stories <issue-number>` | BA | requirement issue # | updated user stories (add/update/remove) after requirement change | `/ba update-stories 42` |
-| `/ba change-story <issue-number>` | BA | story or bug issue # | updated ACs on existing story or bug + `story-updated` label | `/ba change-story 45` |
+| `/ba change-story <issue-number>` | BA | story issue # | updated ACs on existing story + `story-updated` label | `/ba change-story 45` |
+| `/ba change-bug <issue-number>` | BA | bug issue # | updated ACs on existing bug + `story-updated` label | `/ba change-bug 42` |
 | `/design create-design <milestone-id>` | Designer | milestone # | sprint-level design instructions issue (`design`) — or updates existing if requirement changed | `/design create-design 3` |
 | `/tl create-feature-solution <milestone-id>` | Technical Lead | milestone # | TDD issue + feature branches + annotated stories (`tl-reviewed` + `skill:*`) | `/tl create-feature-solution 3` |
 | `/tl create-bug-solution <bug-issue>` | Technical Lead | bug issue # | technical annotation comment on bug ticket (`tl-reviewed` + `skill:*`) | `/tl create-bug-solution 42` |

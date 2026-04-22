@@ -1,14 +1,14 @@
-# Mode: Story Change
+# Mode: Bug AC Change
 
-Extract `issue_number` (the token after `change-story`).
+Extract `issue_number` (the token after `change-bug`).
 
 ---
 
 ## SC1 — Fetch Issue and Validate Type
 
 1. `fetch_issue(issue_number)` — read title, body, labels, milestone in full.
-2. If labels do NOT contain `user-story` → stop immediately and output:
-   > ⚠️ Cannot proceed: Issue #`<issue_number>` does not have a `user-story` label.
+2. If labels do NOT contain `bug` → stop immediately and output:
+   > ⚠️ Cannot proceed: Issue #`<issue_number>` does not have a `bug` label.
 
 3. Extract current AC state:
    - Locate the `## Acceptance Criteria` section in the body.
@@ -28,8 +28,8 @@ Provide context before opening dialogue:
 Discovery focus for this mode — synthesise answers to:
 - Which specific ACs are incorrect, incomplete, or no longer valid?
 - What new behaviour needs to be covered that is not in the current ACs?
-- What is the reason for this change (scope refinement, bug in the ACs, post-demo feedback)?
-- Is this change self-contained to this story, or does it imply changes to related stories?
+- What is the reason for this change (scope refinement, misdiagnosed bug, post-fix feedback)?
+- Is this change self-contained to this issue, or does it imply changes to related issues?
 
 Do not proceed to SC3 until all discovery questions are resolved.
 
@@ -57,7 +57,7 @@ Every existing AC must have an explicit classification. "Kept" is valid — it m
 Use `AskUserQuestion` to present:
 
 ```
-## Story Change Plan — Issue #<N>: <title>
+## Bug AC Change Plan — Issue #<N>: <title>
 
 **Added ACs** (<count>):
 - [ ] <new AC text>
@@ -84,9 +84,10 @@ Do NOT call any mutating operation until the user confirms.
 After user approval:
 
 1. Reconstruct the full issue body:
-   - Rewrite the `## Acceptance Criteria` section using the approved AC set (Added + Modified + Unchanged; omit Removed).
-   - Update `## Notes` if the discovery session surfaced new edge cases or dependency changes. Do not remove existing valid notes.
-   - Preserve all other sections verbatim (User Story statement, `---` footer, `Part of` link).
+   - Locate the `## Acceptance Criteria` section.
+   - Rewrite ONLY that section using the approved AC set (Added + Modified + Unchanged; omit Removed).
+   - Do NOT modify, reorder, or touch any content in or before the `## Bug Report` section.
+   - Preserve any `## Notes` section if present; update only if discovery surfaced changes.
 
 2. `update_issue_body(issue_number, updated_body)`
 

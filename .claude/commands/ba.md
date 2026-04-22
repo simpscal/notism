@@ -1,7 +1,7 @@
 ---
 name: ba
 description: Analyze requirements, create/amend user stories and sprint milestones.
-argument-hint: "<create-stories|create-bug|update-stories|change-story> [args]"
+argument-hint: "<create-stories|create-bug|update-stories|change-story|change-bug> [args]"
 tools: Read, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment
 ---
 
@@ -25,6 +25,7 @@ Use the `templates` skill. Call `render_template()` with the appropriate templat
 | `create-bug` | Bug | `<bug_issue_number>` | `ba/create-bug.md` |
 | `update-stories` | Requirement Change | `<requirement_issue_number>` | `ba/update-stories.md` |
 | `change-story` | Story Change | `<issue_number>` | `ba/change-story.md` |
+| `change-bug` | Bug AC Change | `<issue_number>` | `ba/change-bug.md` |
 
 **Load the corresponding mode file and follow its steps.**
 
