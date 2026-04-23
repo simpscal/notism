@@ -44,7 +44,7 @@ Use `list_issues($MILESTONE_ID, labels: ["design"])` to check for an existing De
 
 ## S5 — Read the Design System
 
--> Follow `_read-design-system.md`
+Read `DESIGN.md` at the repo root in full. This is the authoritative reference for all design tokens, component inventory, and page patterns. Capture exact token names and component names — these will be prescribed in design instructions.
 
 ---
 
