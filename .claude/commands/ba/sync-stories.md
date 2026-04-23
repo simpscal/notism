@@ -49,8 +49,7 @@ Output a **Change Plan Table** listing every scope item and affected story with 
 
 ## RC4 — Clarify with PO
 
-For any classified scope change that is ambiguous:
--> Follow `_discovery.md`
+For any classified scope change that is ambiguous, run a discovery session.
 
 Do not proceed to execution until all classifications are clear.
 
@@ -80,28 +79,18 @@ Execute the approved change plan in order:
 ### 1. Update Existing Stories
 
 For each **Updatable** story:
-1. Follow AC update flow per `_ac-classification.md`
+1. Run the AC amendment flow (classify changes, present plan, get approval, execute)
 2. Rewrite `## Acceptance Criteria` with updated AC set
 3. Update `## Notes` for new edge cases/dependencies
 4. `update_issue_body(story_id, updated_body)`
 5. If story has `## Implementation Complete` comment: `update_labels(story_id, add: ["story-updated"], remove: [])`
-6. -> Follow `_validation.md` (Amended Story Validation)
+6. Validate the amended story (no contradictions, complete coverage, every AC testable)
 
 ### 2. Create New Stories
 
 For each **New** scope item:
-1. If ambiguity exists: -> Follow `_discovery.md`
-2. Decompose into stories using INVEST framework:
-
-| I | Independent — can be built/delivered alone |
-| N | Negotiable — describes need, not spec |
-| V | Valuable — delivers something user cares about |
-| E | Estimable — clear enough to size |
-| S | Small — fits in sprint increment |
-| T | Testable — stakeholder can verify without reading code |
-
-**Format**: `As a <user>, I want <action> so that <benefit>`
-
+1. If ambiguity exists, run a discovery session
+2. Decompose into INVEST-compliant user stories with ACs
 3. Use `render_template("acceptance-criteria", {criteria, notes})` for each story
 4. Include **Notes** section for edge cases, dependencies, constraints
 5. `create_issue("[Story] <title>", body, ["user-story", "story-added"], milestone_id)` where body comes from `render_template("issue-user-story", {user_story, acceptance_criteria, notes, requirement_issue})` linked to `req_issue_number`

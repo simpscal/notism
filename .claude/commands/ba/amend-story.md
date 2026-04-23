@@ -9,11 +9,10 @@ Extract `issue_number` (the token after `amend-story`).
 1. `fetch_issue(issue_number)` — read title, body, labels, milestone in full.
 2. If labels do NOT contain `user-story` → stop immediately and output:
    > ⚠️ Cannot proceed: Issue #`<issue_number>` does not have a `user-story` label.
-
 3. Extract current AC state:
    - Locate the `## Acceptance Criteria` section in the body.
    - List all existing ACs as the **baseline AC set**.
-   - If no `## Acceptance Criteria` section exists: note that the issue has no existing ACs — treat baseline as empty.
+   - If no `## Acceptance Criteria` section exists: treat baseline as empty.
 
 ---
 
@@ -23,12 +22,10 @@ Provide context before opening dialogue:
 
 > "I have read issue #`<issue_number>`: **`<title>`**. It currently has `<N>` acceptance criteria. I need to understand exactly what you want to change."
 
--> Follow `_discovery.md`
-
-Discovery focus for this mode — synthesise answers to:
+Run a discovery session. Focus on:
 - Which specific ACs are incorrect, incomplete, or no longer valid?
 - What new behaviour needs to be covered that is not in the current ACs?
-- What is the reason for this change (scope refinement, bug in the ACs, post-demo feedback)?
+- What is the reason for this change? (scope refinement, bug in the ACs, post-demo feedback)
 - Is this change self-contained to this story, or does it imply changes to related stories?
 
 Do not proceed to SC3 until all discovery questions are resolved.
@@ -37,11 +34,7 @@ Do not proceed to SC3 until all discovery questions are resolved.
 
 ## SC3 — Classify AC Changes
 
-Using the clarified picture from SC2:
-
--> Follow `_ac-classification.md`
-
-Produce a **Classification Table**:
+Classify every AC. Produce a **Classification Table**:
 
 | # | AC Text (abbreviated) | Classification | Detail |
 |---|---|---|---|

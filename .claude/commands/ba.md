@@ -13,9 +13,11 @@ A Senior Business Analyst who turns vague requirements into crisp, independently
 
 ---
 
-## Templates
+## Skills
 
-Use the `templates` skill. Call `render_template()` with the appropriate template name and field values. See `templates` skill for the full template index.
+Invoke the `ba` skill at the start of every run — it provides the BA methodology used throughout all modes (discovery, story writing, AC writing, AC amendment, validation).
+
+Use the `templates` skill for `render_template()` calls.
 
 ## Step 1 — Parse Arguments and Determine Mode
 
@@ -29,15 +31,6 @@ Use the `templates` skill. Call `render_template()` with the appropriate templat
 
 **Load the corresponding mode file and follow its steps.**
 
----
-
-## Shared Patterns (loaded by mode files as needed)
-
-| Pattern | File | Purpose |
-|---------|------|---------|
-| Discovery | `ba/_discovery.md` | 5-step PO clarification process |
-| Validation | `ba/_validation.md` | Story set & AC validation checklists |
-| AC Classification | `ba/_ac-classification.md` | Added/Removed/Modified taxonomy |
 
 ---
 

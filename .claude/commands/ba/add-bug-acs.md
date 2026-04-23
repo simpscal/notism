@@ -6,12 +6,7 @@
 
 ## B1 — Analyse the Bug in Context
 
-Using the bug report (description, reproduction steps, expected/actual behaviour), determine:
-
-- What is the system's intended behaviour in this scenario?
-- What user need does the broken behaviour fail to satisfy?
-- What does "fixed" look like from a user's observable perspective?
-- What edge cases or related scenarios should the ACs cover?
+Determine what "fixed" looks like from the user's observable perspective, what the intended behaviour is, and what edge cases the ACs should cover.
 
 If critical information is missing, use `AskUserQuestion` once to ask all blocking questions in a single message.
 
@@ -20,8 +15,6 @@ If critical information is missing, use `AskUserQuestion` once to ask all blocki
 ## B2 — Write Acceptance Criteria
 
 Use `render_template("acceptance-criteria", {criteria, notes})`.
-
--> Apply `_validation.md` (AC Testability Checklist)
 
 ---
 
