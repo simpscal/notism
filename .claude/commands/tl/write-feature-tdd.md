@@ -31,26 +31,22 @@ Also note each story's labels (`story-added`, `story-updated`, `story-removed`) 
 
 ## S4 — Read the Architecture
 
--> Read each codebase's `CLAUDE.md` 
+-> Read each codebase's `CLAUDE.md`
 
 ---
 
-## S5 — Resolve Open Questions Before Proceeding
+## S5 — Resolve Blocking Questions
 
--> Follow `_resolve-questions.md`
+Identify every decision that cannot be made from the code and stories alone. Use `AskUserQuestion` to present all blocking questions in a single message. Do not proceed until every question is resolved.
 
 ---
 
-## S6 — Apply Technical Lead Methodology
+## S6 — Design the Solution
 
--> Follow `_methodology.md` (all 4 stages)
+Apply the `tl` skill's **Feature Design Mode** to produce the solution design.
 
 **If existing TDD was found in S3:**
-Use the current TDD as your starting document. For each element in Stage 3, evaluate whether the requirement changes affect it:
-- **No impact**: Keep existing content unchanged
-- **Impact**: Modify only the affected parts
-
-Do not redesign unchanged areas.
+Use the current TDD as the starting document. Evaluate each design area against the requirement changes — keep unchanged areas exactly, modify only affected parts. Do not redesign unchanged areas.
 
 ---
 
@@ -60,7 +56,7 @@ Do not redesign unchanged areas.
 
 Use `create_issue(title, body, labels)`:
 - **Title**: `Sprint N — Technical Design Document`
-- **Body**: full TDD from Stage 4, with `Part of #N` (parent requirement issue) at the very top
+- **Body**: full TDD rendered via `render_template("issue-tdd", {...})`, with `Part of #N` at the very top
 - **Labels**: `technical-design` and `tl-reviewed` labels from project config
 
 Capture the new issue number — referenced in S8 and S9.

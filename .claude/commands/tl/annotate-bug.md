@@ -22,34 +22,20 @@ Inspect labels:
 
 ## T3 — Resolve Blocking Questions
 
--> Follow `_resolve-questions.md`
+Identify every decision that cannot be made from the code and bug report alone. Use `AskUserQuestion` to present all blocking questions in a single message. Do not proceed until every question is resolved.
 
 ---
 
 ## T4 — Design the Fix Approach
 
+Apply the `tl` skill's **Bug Analysis Mode** to produce the fix design.
+
 **If existing annotation found (story-updated path):**
-Use the current annotation as the starting document. For each field, evaluate whether the AC changes affect it:
-- **No impact**: Keep existing content unchanged
-- **Impact**: Rewrite only the affected field(s)
-
-Do not redesign unaffected areas.
-
-**If no existing annotation (new path):**
-Produce a concise technical analysis covering:
-
-| Area | Content |
-|------|---------|
-| Root cause | Which layer/module is likely responsible and why |
-| Scope | Specific files and layers that need to change |
-| Fix approach | What to implement (1–3 sentences, no code) |
-| Key decisions | At least one decision with rationale |
-| Risk | Schema change? Migration? Rollback plan? Or "Low — logic fix only" |
+Use the current annotation as the starting document. Evaluate each field against the AC changes — keep unaffected fields exactly, rewrite only affected fields. Do not redesign unaffected areas.
 
 ---
 
-
-## T6 — Annotate the Bug Ticket
+## T5 — Annotate the Bug Ticket
 
 Use `render_template("comment-tl-annotation", {complexity, root_cause, scope, fix_approach, key_decisions, risk})` to produce the annotation body.
 
