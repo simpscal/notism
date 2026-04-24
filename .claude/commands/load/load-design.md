@@ -2,9 +2,9 @@
 
 ## Step 1 — Determine if Design or Story Number
 
-Fetch the issue to check its labels. If it has the `design-reviewed` label, it is a design issue — fetch it directly.
+Fetch the issue to check its labels. If it has the `design` label, it is a design issue — fetch it directly.
 
-If it does not have the `design-reviewed` label, it is a story issue — use its milestone to find the associated design instructions:
+If it does not have the `design` label, it is a story issue — use its milestone to find the associated design instructions:
 
 ```
 fetch_issue(<issue_number>)
@@ -12,7 +12,7 @@ fetch_issue(<issue_number>)
 
 Then:
 ```
-list_issues(<story.milestone>, labels: "design-reviewed")
+list_issues(<story.milestone>, labels: "design")
 ```
 
 If found, use that design issue number. If not found, output: "No Design Instructions found for this issue."

@@ -57,7 +57,7 @@ Use the current TDD as the starting document. Evaluate each design area against 
 Use `create_issue(title, body, labels)`:
 - **Title**: `Sprint N — Technical Design Document`
 - **Body**: full TDD rendered via `render_template("issue-tdd", {...})`, with `Part of #N` at the very top
-- **Labels**: `technical-design` and `tl-reviewed` labels from project config
+- **Labels**: `technical-design` label from project config
 
 Capture the new issue number — referenced in Step 8 and Step 9.
 
@@ -93,12 +93,3 @@ If this is a new TDD: Create sprint feature branches for each codebase listed in
 
 Skip if updating an existing TDD (branches already exist).
 
----
-
-## Step 9 — Update the Requirement Issue (new TDD only)
-
-If this is a new TDD:
-
-Use `update_labels($REQUIREMENT.id, add: [tl-reviewed], remove: [sprint-ready])`
-
-Skip if updating an existing TDD.

@@ -29,8 +29,3 @@ For each story: `create_issue("[Story] <title>", body, ["user-story"], milestone
 
 > **Dependency linking**: Create all issues first, then back-fill `link_to(id)` references in Notes for both `Depends on` and `Blocks` directions.
 
----
-
-## Step 5 — Label the Requirement
-
-`update_labels(requirement_issue_number, add: [sprint-ready], remove: [])`

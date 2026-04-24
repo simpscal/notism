@@ -18,7 +18,7 @@ Implement **one ticket per invocation** — do not batch.
    - Risks
    - Implementation priority
 
-3. **Design Instructions** (frontend only) — `list_issues(milestone_id, labels: [design-reviewed])` to find the design instructions issue. `fetch_issue` it in full — the document covers the entire sprint's UI design.
+3. **Design Instructions** (frontend only) — `list_issues(milestone_id, labels: [design])` to find the design instructions issue. `fetch_issue` it in full — the document covers the entire sprint's UI design.
 
 `update_labels(issue_number, add: ["in-progress"])`.
 

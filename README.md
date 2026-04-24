@@ -40,12 +40,12 @@ flowchart TD
     A(["/po create-requirement <description>"]) --> B["Requirement Issue<br/>`requirement`"]
     B --> G1{Gate 1<br/>PO Review}
     G1 -->|Approve| C(["/ba write-stories <issue>"])
-    C --> D["User Stories + Sprint Milestone<br/>`sprint-ready`"]
+    C --> D["User Stories + Sprint Milestone"]
     D --> G2{Gate 2<br/>PO Reviews Stories}
     G2 -->|Approve| E1(["/design write-design <ms>"])
     E1 --> F1["Design Instructions<br/>`design`"]
     F1 --> E2(["/tl write-feature-tdd <ms>"])
-    E2 --> F2["TDD + Annotated Stories<br/>`tl-reviewed`"]
+    E2 --> F2["TDD + feature branches"]
     F2 --> G3{Gate 3<br/>PO Reviews TDD + Design}
     G3 -->|Approve| H(["/dev <issue>"])
     H --> I["PR → sprint branch<br/>`implemented`"]
@@ -138,13 +138,13 @@ Human judges which roles are needed after reviewing approved AC changes.
 | `/po create-bug [description]` | Product Owner | bug description (optional) | bug issue with `bug` label (interactively fills missing fields) | `/po create-bug` |
 | `/po close-sprint <sprint-number>` | Release Manager | sprint # | sprint issues closed, story branches deleted, release PRs to main, migrations flagged | `/po close-sprint 3` |
 | `/po close-bug <issue-number>` | Release Manager | bug # | bug issue closed (`bug-fixed`), fix branch deleted, summary posted | `/po close-bug 42` |
-| `/ba write-stories <issue-number>` | BA | requirement issue # | user story issues + sprint milestone (`sprint-ready`) | `/ba write-stories 42` |
+| `/ba write-stories <issue-number>` | BA | requirement issue # | user story issues + sprint milestone | `/ba write-stories 42` |
 | `/ba add-bug-acs <issue-number>` | BA | bug issue # | ACs appended to bug ticket | `/ba add-bug-acs 42` |
 | `/ba sync-stories <issue-number>` | BA | requirement issue # | updated user stories (add/update/remove) after requirement change | `/ba sync-stories 42` |
 | `/ba amend-story <issue-number>` | BA | story issue # | updated ACs on existing story + `story-updated` label | `/ba amend-story 45` |
 | `/ba amend-bug <issue-number>` | BA | bug issue # | updated ACs on existing bug + `story-updated` label | `/ba amend-bug 42` |
 | `/design write-design <milestone-id>` | Designer | milestone # | sprint-level design instructions issue (`design`) — or updates existing if requirement changed | `/design write-design 3` |
-| `/tl write-feature-tdd <milestone-id>` | Technical Lead | milestone # | TDD issue + feature branches + annotated stories (`tl-reviewed` + `skill:*`) | `/tl write-feature-tdd 3` |
+| `/tl write-feature-tdd <milestone-id>` | Technical Lead | milestone # | TDD issue + feature branches + annotated stories | `/tl write-feature-tdd 3` |
 | `/dev <issue-number>` | Developer (auto) | story issue # | PR to sprint branch — auto-routes to implement/story-revisit/revert based on labels | `/dev 45` |
 | `/dev fix-bug <issue-number>` | Developer | bug issue # | investigation comment + fix PR to main (`implemented`) | `/dev fix-bug 42` |
 
@@ -217,12 +217,9 @@ Dev auto-selects backend/frontend/devops agent(s) from the investigation context
 | `user-story` | BA-created story |
 | `bug` | Reporter-created bug issue |
 | `bug-fixed` | Bug closed after successful fix |
-| `sprint-ready` | Awaiting design/TL |
 | `sprint-completed` | Sprint closed |
-| `tl-reviewed` | TL feature TDD complete — awaiting dev |
 | `technical-design` | TDD issue |
 | `design` | Sprint-level design instructions issue |
-| `design-reviewed` | Design complete |
 | `story-added` | New story added mid-sprint |
 | `story-updated` | Story ACs changed after initial implementation |
 | `story-removed` | Story dropped from scope |

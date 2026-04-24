@@ -18,7 +18,7 @@ The story already has an implementation (open or merged PR). Implement the delta
    - Risks
    - Implementation priority
 
-3. **Design Instructions** (frontend only) — `list_issues(milestone_id, labels: [design-reviewed])` to find the design instructions issue. `fetch_issue` it in full — the document covers the entire sprint's UI design.
+3. **Design Instructions** (frontend only) — `list_issues(milestone_id, labels: [design])` to find the design instructions issue. `fetch_issue` it in full — the document covers the entire sprint's UI design.
 
 ---
 

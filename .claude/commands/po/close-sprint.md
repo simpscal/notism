@@ -44,7 +44,7 @@ If all stories are merged or already closed, proceed.
 
 For every issue in the milestone (stories, TDD issue, requirement issue, design issue):
 
-1. `update_labels(issue_id, add: [sprint-completed], remove: [in-progress, sprint-ready, tl-reviewed, design-reviewed, story-updated])`
+1. `update_labels(issue_id, add: [sprint-completed], remove: [in-progress, story-updated])`
 2. `close_issue(issue_id)`
 
 Output one line per issue as it completes:

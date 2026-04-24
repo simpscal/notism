@@ -25,11 +25,8 @@ Never hardcode repo slugs, label names, paths, or branch patterns.
 |---------|-------|
 | PO requirement | `requirement` |
 | BA-created story | `user-story` |
-| Awaiting TL | `sprint-ready` |
-| TL complete | `tl-reviewed` |
 | TDD issue | `technical-design` |
 | Design instructions issue | `design` |
-| Design complete | `design-reviewed` |
 | Dev in progress | `in-progress` |
 | Story amended after creation | `story-updated` |
 | Story removed during requirement change | `story-removed` |
