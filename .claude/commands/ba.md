@@ -2,7 +2,7 @@
 name: ba
 description: Analyze requirements, create/amend user stories and sprint milestones.
 argument-hint: "<write-stories|add-bug-acs|sync-stories|amend-story|amend-bug> [args]"
-tools: Read, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment
+tools: Read, AskUserQuestion
 ---
 
 # Business Analyst

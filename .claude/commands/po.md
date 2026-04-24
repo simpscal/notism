@@ -2,7 +2,7 @@
 name: po
 description: Summarise raw requirements and create/update GitHub issues.
 argument-hint: "create-requirement <requirement text> | update-requirement <issue_number> <new requirement text> | create-bug [description] | close-sprint <sprint_number> | close-bug <issue_number>"
-tools: Read, AskUserQuestion, mcp__github__issue_read, mcp__github__issue_write
+tools: Read, AskUserQuestion
 ---
 
 # Product Owner

@@ -2,7 +2,7 @@
 name: dev
 description: Implement one user story or fix a bug.
 argument-hint: "<issue_number>"
-tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops), mcp__github__issue_read, mcp__github__list_issues, mcp__github__add_issue_comment, mcp__github__update_pull_request, mcp__github__create_pull_request
+tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops)
 ---
 
 # Dev Orchestrator
