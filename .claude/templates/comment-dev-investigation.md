@@ -1,30 +1,22 @@
-# Comment TL Annotation Template
+# Comment Dev Investigation Template
 
-Posted by `/tl` (bug mode T6).
+Posted by `/dev` (bug mode, after root cause investigation, before implementation).
 
 ---
 
 ## OUTPUT FORMAT
 
 ```
-## Technical Lead Annotation
+## Dev Investigation
 
-**Skill**: <frontend | backend | both>
 **Complexity**: <S | M | L>
 
 ### Root Cause
-[frontend | backend | devops]
-
-**<Group label — e.g. PRIMARY, SECONDARY, or descriptive heading>:**
-- <specific cause bullet>
-- <specific cause bullet>
-
-**<Group label>:**
-- <specific cause bullet>
-- <specific cause bullet>
+- <plain-English explanation of WHY the bug occurs — no technical terms, file names, or layer names>
+- <additional cause if multi-cause bug>
 
 ### Scope
-<which layers and specific files are touched>
+<plain-English description of which part of the product is affected — no file paths, no layer names>
 
 ### Fix Approach
 [frontend | backend | devops | frontend + backend | ...]
@@ -45,16 +37,6 @@ Posted by `/tl` (bug mode T6).
 
 ## FIELDS
 
-### Skill
-**REQUIRED** | enum[frontend | backend | both]
-
-**Rules**:
-- `frontend`: Bug in React/UI layer only
-- `backend`: Bug in .NET API/database only
-- `both`: Changes span multiple codebases
-
-**Wrong**: ❌ "Frontend", "Back-end", "fullstack", "ui"
-
 ### Complexity
 **REQUIRED** | enum[S | M | L]
 
@@ -67,26 +49,28 @@ Posted by `/tl` (bug mode T6).
 **Wrong**: ❌ "Small", "s", "medium", "1"
 
 ### Root Cause
-**REQUIRED** | structured bullets
+**REQUIRED** | plain-language bullets
+
+**Audience**: Non-technical stakeholders (PO, BA) — no jargon, no file names, no layer names.
 
 **Rules**:
-- Open with `[frontend]`, `[backend]`, or `[devops]` tag on its own line
-- Group bullets under bold headings (e.g. `**PRIMARY — <label>:**`, `**SECONDARY — <label>:**`)
-- Each bullet explains one specific cause — WHY it occurs, not just WHAT happens
-- Use `→` to show causality within a bullet when useful
-- Single-cause bugs may use one group; multi-cause bugs use multiple groups
+- One bullet per distinct cause — WHY the bug occurs, not WHAT happens
+- Use everyday language: "The system was saving the wrong value" not "userId was assigned to sessionToken in AuthService.cs"
+- Causality allowed: "X was missing, so Y happened" — but keep it simple
+- Single-cause bugs: one bullet. Multi-cause: multiple bullets.
 
-**Wrong**: ❌ Prose paragraph instead of bullets, ❌ Describes symptom not cause, ❌ Missing side tag
+**Wrong**: ❌ File paths, class names, technical layer names, ❌ Describes symptom not cause
 
 ### Scope
-**REQUIRED** | text
+**REQUIRED** | plain-language text
 
-**Include**:
-- Which architectural layers affected
-- Specific file paths (relative to codebase root)
-- May use wildcards (e.g., `*.Service.cs`)
+**Audience**: Non-technical stakeholders — describe WHAT part of the product is affected, not WHERE in the code.
 
-**Wrong**: ❌ "Backend files", "Multiple services"
+**Rules**:
+- Name the feature area or user-facing surface (e.g., "the login page", "email notifications", "the dashboard summary")
+- No file paths, no layer names (domain, application, infrastructure), no class names
+
+**Wrong**: ❌ "src/Auth/AuthService.cs", ❌ "Application layer and domain services", ❌ "Multiple services"
 
 ### Fix Approach
 **REQUIRED** | structured bullets
@@ -125,12 +109,11 @@ Posted by `/tl` (bug mode T6).
 
 ## CHECKLIST
 
-- [ ] Skill is frontend | backend | both
 - [ ] Complexity is S | M | L
 - [ ] Complexity matches time/impact
-- [ ] Root Cause opens with [frontend | backend | devops] tag on its own line
-- [ ] Root Cause uses grouped bullets, explains WHY not WHAT
-- [ ] Scope has specific file paths
+- [ ] Root Cause uses plain language — no file paths, class names, or layer names
+- [ ] Root Cause explains WHY (cause), not WHAT (symptom)
+- [ ] Scope names the product area, not code locations
 - [ ] Fix Approach opens with side tag(s) on its own line
 - [ ] Fix Approach uses bullets, actionable, no code
 - [ ] Min 1 Key Decision with rationale

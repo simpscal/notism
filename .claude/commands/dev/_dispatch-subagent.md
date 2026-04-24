@@ -9,7 +9,7 @@ Pass the following context to every subagent. **All context is passed directly �
 | Context | Source |
 |---------|--------|
 | Requirements | Story description + full `## Acceptance Criteria` section |
-| Architecture context | Relevant TDD sections verbatim — architecture key decisions, components design, API specification, data models, alternatives considered, risks |
+| Architecture context | **Story**: Relevant TDD sections verbatim — architecture key decisions, components design, API specification, data models, alternatives considered, risks. **Bug**: Dev investigation verbatim — Root Cause, Scope, Fix Approach, Risk. |
 | Design instructions | Full design instructions issue (frontend only) — sprint-level document |
 | Codebase config | Root path, test command, lint/build command (from project config) |
 

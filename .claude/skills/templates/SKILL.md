@@ -42,7 +42,8 @@ render_template("issue-user-story", {
 | PR Story | `pr-story` | `/dev` |
 | PR Release | `pr-release` | `/po close-sprint` |
 | Comment Sprint Summary | `comment-sprint-summary` | `/po close-sprint` |
-| Comment TL Annotation | `comment-tl-annotation` | `/tl create-bug-solution` |
+| Comment Dev Investigation | `comment-dev-investigation` | `/dev` (bug mode) |
+| Comment Bug Summary | `comment-bug-summary` | `/po close-bug` |
 
 ---
 
@@ -318,26 +319,26 @@ See `.claude/templates/comment-sprint-summary.md` for full structure.
 
 ---
 
-## `comment-tl-annotation`
+## `comment-dev-investigation`
 
-**Used by**: `/tl create-bug-solution`
-**Reference**: `.claude/templates/comment-tl-annotation.md`
+**Used by**: `/dev` (bug mode — posted after root cause investigation, before implementation)
+**Reference**: `.claude/templates/comment-dev-investigation.md`
 
 ### Fields
 
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
 | `complexity` | string | yes | S \| M \| L |
-| `root_cause` | string | yes | Opens with [frontend\|backend\|devops] tag + WHY |
-| `scope` | string | yes | Layers + specific file paths |
-| `fix_approach` | string | yes | Opens with [side] tag + 1-3 sentences |
+| `root_cause` | string | yes | Plain language — WHY the bug occurs, no file paths or technical terms |
+| `scope` | string | yes | Plain language — which product area is affected, no file paths or layer names |
+| `fix_approach` | string | yes | Opens with [side] tag + actionable bullets |
 | `key_decisions` | list of strings | yes | Min 1: "Decision: rationale" |
 | `risk` | string | yes | Pattern: "Low — ..." or "Medium — migration required: ..." |
 
 ### Output Structure
 
 ```
-## Technical Lead Annotation
+## Dev Investigation
 
 **Complexity**: <complexity>
 

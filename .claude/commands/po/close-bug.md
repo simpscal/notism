@@ -40,7 +40,7 @@ If no open PRs in any codebase repo, proceed.
 
 ### Step 4 — Update Labels and Close
 
-1. `update_labels(issue_number, add: [bug-fixed], remove: [in-progress, sprint-ready, tl-reviewed, design-reviewed, implemented])`
+1. `update_labels(issue_number, add: [bug-fixed], remove: [in-progress, sprint-ready, design-reviewed, implemented])`
 2. `close_issue(issue_number)`
 
 Output:

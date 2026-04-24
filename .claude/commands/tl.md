@@ -1,7 +1,7 @@
 ---
 name: tl
 description: Design high-level solution for a sprint.
-argument-hint: "<write-feature-tdd|annotate-bug> [args]"
+argument-hint: "write-feature-tdd <sprint_number>"
 tools: Read, Glob, Grep, Bash, AskUserQuestion, mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write, mcp__github__add_issue_comment, mcp__github__create_branch
 ---
 
@@ -22,7 +22,6 @@ Use the `templates` skill. Call `render_template()` with the appropriate templat
 | First word | Mode | Args | Mode file |
 |---|---|---|---|
 | `write-feature-tdd` | Standard | `<sprint_number>` | `tl/write-feature-tdd.md` |
-| `annotate-bug` | Bug | `<bug_issue_number>` | `tl/annotate-bug.md` |
 
 **Load the corresponding mode file and follow its steps.**
 

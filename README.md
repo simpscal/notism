@@ -25,7 +25,7 @@ An AI-powered development workflow using Claude Code slash commands. Issue track
 | **Product Owner (PO)** | User | Owns the requirement — creates, updates, prioritises. Closes sprints and bugs. |
 | **Business Analyst (BA)** | AI (BA persona) | Turns requirements into user stories with acceptance criteria. Manages scope changes. |
 | **Designer** | AI (Designer persona) | Reads the design system, produces sprint-level UI instructions for frontend stories. |
-| **Technical Lead (TL)** | AI (TL persona) | Reads architecture, designs system-level solution, writes TDD, annotates bug fixes. |
+| **Technical Lead (TL)** | AI (TL persona) | Reads architecture, designs system-level solution, writes TDD for features. |
 | **Developer** | AI (backend/frontend/devops) | Implements one story or bug per invocation. TDD: tests first, then code. |
 | **Release Manager** | AI (PO persona) | Closes sprints — verifies all PRs merged, closes issues, cleans branches, opens release PRs, flags migrations. |
 
@@ -68,13 +68,10 @@ flowchart TD
     G1 -->|Approve| C(["/ba add-bug-acs <issue>"])
     C --> D["Acceptance Criteria<br/>on bug issue"]
     D --> G2{Gate 2<br/>PO Reviews ACs}
-    G2 -->|Approve| E(["/tl annotate-bug <issue>"])
-    E --> F["Technical Annotation<br/>`tl-reviewed`"]
-    F --> G3{Gate 3<br/>PO Reviews Annotation}
-    G3 -->|Approve| H(["/dev <issue>"])
-    H --> I["Fix PR → main<br/>`implemented`"]
-    I --> G4{Gate 4<br/>PR Review}
-    G4 -->|Merged| J([Bug Fixed])
+    G2 -->|Approve| H(["/dev fix-bug <issue>"])
+    H --> I["Investigation comment posted<br/>Fix PR → main<br/>`implemented`"]
+    I --> G3{Gate 3<br/>PR Review}
+    G3 -->|Merged| J([Bug Fixed])
 ```
 
 ### Requirements Change
@@ -148,12 +145,10 @@ Human judges which roles are needed after reviewing approved AC changes.
 | `/ba amend-bug <issue-number>` | BA | bug issue # | updated ACs on existing bug + `story-updated` label | `/ba amend-bug 42` |
 | `/design write-design <milestone-id>` | Designer | milestone # | sprint-level design instructions issue (`design`) — or updates existing if requirement changed | `/design write-design 3` |
 | `/tl write-feature-tdd <milestone-id>` | Technical Lead | milestone # | TDD issue + feature branches + annotated stories (`tl-reviewed` + `skill:*`) | `/tl write-feature-tdd 3` |
-| `/tl annotate-bug <bug-issue>` | Technical Lead | bug issue # | technical annotation comment on bug ticket (`tl-reviewed` + `skill:*`) | `/tl annotate-bug 42` |
-| `/dev [issue-number]` | Developer (auto) | optional issue # | PR to sprint branch (stories) or main (bugs) — auto-routes to implement/refactor/revert based on labels | `/dev` or `/dev 45` |
+| `/dev <issue-number>` | Developer (auto) | story issue # | PR to sprint branch — auto-routes to implement/refactor/revert based on labels | `/dev 45` |
+| `/dev fix-bug <issue-number>` | Developer | bug issue # | investigation comment + fix PR to main (`implemented`) | `/dev fix-bug 42` |
 
-**Skills:** `frontend` · `backend` · `fullstack` · `devops`
-
-`/dev` auto-selects agent from `skill:` labels. Multi-skill tickets run agents in parallel. TDD: tests first, then code. One ticket per invocation.
+Dev auto-selects backend/frontend/devops agent(s) from the investigation context. Multi-skill tickets run agents in parallel. TDD: tests first, then code. One ticket per invocation.
 
 ---
 
@@ -183,11 +178,11 @@ Human judges which roles are needed after reviewing approved AC changes.
     tl.md
     tl/
       write-feature-tdd.md    ← TL writes TDD for sprint
-      annotate-bug.md         ← TL annotates bug fix
-      _methodology.md              ← TL's 4-stage design process
+      _methodology.md         ← TL's 4-stage design process
     dev.md
     dev/
       implement.md            ← Dev implements a story (standard)
+      fix-bug.md              ← Dev investigates and fixes a bug
       refactor.md             ← Dev implements AC delta changes
       revert.md               ← Dev reverts when story removed from scope
   agents/               ← developer role agents (invoked by /dev)
@@ -224,7 +219,7 @@ Human judges which roles are needed after reviewing approved AC changes.
 | `bug-fixed` | Bug closed after successful fix |
 | `sprint-ready` | Awaiting design/TL |
 | `sprint-completed` | Sprint closed |
-| `tl-reviewed` | TL complete — awaiting dev |
+| `tl-reviewed` | TL feature TDD complete — awaiting dev |
 | `technical-design` | TDD issue |
 | `design` | Sprint-level design instructions issue |
 | `design-reviewed` | Design complete |

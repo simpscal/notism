@@ -16,7 +16,7 @@ The invoker passes the following context:
 
 - **Requirements**: user story description + acceptance criteria list (remaining unchecked items only)
 - **Architecture context**: relevant TDD sections verbatim — architecture key decisions, components design, API specification, data models, alternatives considered, risks, story dependencies
-- **Design instructions**: full sprint-level design instructions issue — layout sketches, component table, design tokens, UI states, responsive behavior, accessibility
+- **Design instructions**: full sprint-level design instructions issue — layout sketches, component table, design tokens, UI states, responsive behavior, accessibility. **May be absent for bug fixes.**
 - **Codebase config**: root path, test command, lint command
 
 ## Workflow
@@ -26,6 +26,8 @@ The invoker passes the following context:
 Read every requirement and acceptance criterion — these are your done criteria.
 
 **Read design instructions.** Note: layout structure, component names and variants, design tokens used, all UI states shown, responsive behavior, accessibility requirements.
+
+**If design instructions are absent** (bug fix flow): read `DESIGN.md` at the codebase root. Use it as the sole source of truth for styling decisions — color tokens, typography hierarchy, component variants, spacing scale, layout patterns, and do/don't rules. Do not invent styles; derive everything from DESIGN.md. Bug UI changes must be indistinguishable in style from the existing application.
 
 **Derive scope and key decisions** from the architecture context:
 - Identify affected pages, routes, feature modules, and components from Components Design section
