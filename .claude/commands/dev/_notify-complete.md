@@ -25,7 +25,7 @@
 > Pause Human gate: Review both PR diffs. When approved, merge into the sprint branch.
 ```
 
-Then `update_labels(ISSUE_NUMBER, add: [implemented], remove: [in-progress])`.
+Then `update_labels(ISSUE_NUMBER, add: [implemented], remove: [in-progress, story-updated])`.
 
 ---
 
@@ -58,4 +58,4 @@ Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed a
 > Pause Human gate: Review both revert PR diffs. When approved, merge into the sprint branch.
 ```
 
-Then `update_labels(ISSUE_NUMBER, add: [implemented], remove: [in-progress])`.
+Then `update_labels(ISSUE_NUMBER, add: [implemented], remove: [in-progress, story-updated, story-removed])`.

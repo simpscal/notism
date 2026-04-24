@@ -112,7 +112,13 @@ For multi-skill stories, update or open each PR independently.
 
 ---
 
-## C7 — Notify
+## C7 — Remove Label
+
+Remove the `story-updated` label from the issue.
+
+---
+
+## C8 — Notify
 
 **Merged PR case only** — follow `_notify-complete.md`.
 

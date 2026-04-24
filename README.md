@@ -111,7 +111,7 @@ flowchart TD
     F -->|No| H(["/dev <N>"])
     G --> G2["TDD updated<br/>incremental"]
     G2 --> H
-    H --> I["Refactor PR → sprint branch"]
+    H --> I["Story Revisit PR → sprint branch"]
 ```
 
 **When to involve Designer and TL:**
@@ -145,7 +145,7 @@ Human judges which roles are needed after reviewing approved AC changes.
 | `/ba amend-bug <issue-number>` | BA | bug issue # | updated ACs on existing bug + `story-updated` label | `/ba amend-bug 42` |
 | `/design write-design <milestone-id>` | Designer | milestone # | sprint-level design instructions issue (`design`) — or updates existing if requirement changed | `/design write-design 3` |
 | `/tl write-feature-tdd <milestone-id>` | Technical Lead | milestone # | TDD issue + feature branches + annotated stories (`tl-reviewed` + `skill:*`) | `/tl write-feature-tdd 3` |
-| `/dev <issue-number>` | Developer (auto) | story issue # | PR to sprint branch — auto-routes to implement/refactor/revert based on labels | `/dev 45` |
+| `/dev <issue-number>` | Developer (auto) | story issue # | PR to sprint branch — auto-routes to implement/story-revisit/revert based on labels | `/dev 45` |
 | `/dev fix-bug <issue-number>` | Developer | bug issue # | investigation comment + fix PR to main (`implemented`) | `/dev fix-bug 42` |
 
 Dev auto-selects backend/frontend/devops agent(s) from the investigation context. Multi-skill tickets run agents in parallel. TDD: tests first, then code. One ticket per invocation.
@@ -183,7 +183,7 @@ Dev auto-selects backend/frontend/devops agent(s) from the investigation context
     dev/
       implement.md            ← Dev implements a story (standard)
       fix-bug.md              ← Dev investigates and fixes a bug
-      refactor.md             ← Dev implements AC delta changes
+      story-revisit.md        ← Dev implements AC delta changes
       revert.md               ← Dev reverts when story removed from scope
   agents/               ← developer role agents (invoked by /dev)
     backend.md

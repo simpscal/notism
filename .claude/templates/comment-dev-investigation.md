@@ -26,9 +26,6 @@ Posted by `/dev` (bug mode, after root cause investigation, before implementatio
   - <sub-bullet with detail>
   - <sub-bullet with detail>
 
-### Key Decisions
-- <Decision: what was chosen and why>
-
 ### Risk
 <Low — logic fix only | Migration required: <details> | etc.>
 ```
@@ -84,15 +81,6 @@ Posted by `/dev` (bug mode, after root cause investigation, before implementatio
 
 **Wrong**: ❌ Prose paragraph instead of bullets, ❌ Code examples, ❌ Missing side tag
 
-### Key Decisions
-**REQUIRED** | list | Min 1 decision
-
-**Format**: `<Decision>: <Rationale>`
-
-**Include**: Trade-offs, rejected alternatives with reasons
-
-**Wrong**: ❌ "Use best practices" (no decision), ❌ No rationale
-
 ### Risk
 **REQUIRED** | text
 
@@ -116,5 +104,4 @@ Posted by `/dev` (bug mode, after root cause investigation, before implementatio
 - [ ] Scope names the product area, not code locations
 - [ ] Fix Approach opens with side tag(s) on its own line
 - [ ] Fix Approach uses bullets, actionable, no code
-- [ ] Min 1 Key Decision with rationale
 - [ ] Risk level clearly stated

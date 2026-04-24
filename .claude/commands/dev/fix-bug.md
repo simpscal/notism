@@ -25,12 +25,11 @@ From the issue body extract:
 
 ## B3 — Root Cause Investigation
 
-Read each codebase's `CLAUDE.md` scoped to the affected area. Inspect the relevant source files. Derive:
+Inspect the relevant source files. Derive:
 
 - **Root Cause** — plain language: why the bug occurs (no file paths, class names, or layer names)
 - **Scope** — plain language: which product area / user-facing surface is affected (no file paths or layer names)
 - **Fix Approach** — technical: what to change (not how to code it); opens with `[frontend]`, `[backend]`, or `[devops]` tag
-- **Key Decisions** — technical: trade-offs and rejected alternatives; min 1
 - **Risk** — `Low — logic fix only` / `Medium — migration required: <details>` / `High — <impact>`
 - **Complexity** — `S` (<4h, isolated) / `M` (4-8h, one layer) / `L` (>8h, cross-cutting)
 
@@ -38,7 +37,7 @@ Read each codebase's `CLAUDE.md` scoped to the affected area. Inspect the releva
 
 ## B4 — Post Investigation Comment
 
-`render_template("comment-dev-investigation", {complexity, root_cause, scope, fix_approach, key_decisions, risk})`, then `post_comment(issue_number, body)`.
+`render_template("comment-dev-investigation", {complexity, root_cause, scope, fix_approach, risk})`, then `post_comment(issue_number, body)`.
 
 ---
 
@@ -64,7 +63,7 @@ For multi-skill bugs, run setup independently in each codebase path.
 
 -> Follow `_dispatch-subagent.md`
 
-Architecture context = investigation verbatim (Root Cause, Scope, Fix Approach, Key Decisions, Risk).
+Architecture context = investigation verbatim (Root Cause, Scope, Fix Approach, Risk).
 
 ---
 

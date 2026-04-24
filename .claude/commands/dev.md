@@ -1,7 +1,7 @@
 ---
 name: dev
 description: Implement one user story or fix a bug.
-argument-hint: "<issue_number> | fix-bug <issue_number>"
+argument-hint: "<issue_number>"
 tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops), mcp__github__issue_read, mcp__github__list_issues, mcp__github__add_issue_comment, mcp__github__update_pull_request, mcp__github__create_pull_request
 ---
 
@@ -9,20 +9,15 @@ tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops), mcp__github__is
 
 ## Step 1 — Parse Arguments and Determine Mode
 
-Check the first word of `$ARGUMENTS`:
-
-| First word | Mode | Args | Mode file |
-|---|---|---|---|
-| `fix-bug` | Bug Fix | `<bug_issue_number>` | `dev/fix-bug.md` |
-| _(issue number)_ | Story | `<issue_number>` — route by label below | — |
-
-**If Story mode**: `fetch_issue(issue_number)`. Read in full. `update_labels(issue_id, add: [in-progress], remove: [])`. Route by label (priority order):
+Parse `$ARGUMENTS` as an issue number. Fetch the issue, then route by label (priority order):
 
 | Label present | Mode | Mode file |
 |---|---|---|
+| `bug` + `story-updated` | Bug Revisit | `dev/bug-revisit.md` |
+| `bug` | Bug Fix | `dev/fix-bug.md` |
 | `story-removed` | Revert | `dev/revert.md` |
-| `story-updated` | Change | `dev/refactor.md` |
-| _(neither)_ | Standard | `dev/implement.md` |
+| `story-updated` | Change | `dev/story-revisit.md` |
+| _(none)_ | Standard | `dev/implement.md` |
 
 Implement **one ticket per invocation** — do not batch.
 
