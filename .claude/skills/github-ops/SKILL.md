@@ -1,21 +1,31 @@
 ---
-name: github-tracker
-description: GitHub tracker adapter — maps abstract workflow operations to GitHub MCP tools and CLI. Swap this file (and update project.md) to use a different tracker.
+name: github-ops
+description: >
+  GitHub operations library — use this skill to perform any GitHub issue tracker action:
+  create, read, or update issues; post comments; create or list milestones; manage labels;
+  create or list pull requests; list or delete branches; close issues. Auto-invoked whenever
+  workflow commands interact with GitHub issues, PRs, or milestones. Trigger phrases:
+  "create issue", "fetch issue", "post comment", "create milestone", "update labels",
+  "create PR", "list PRs", "list branches", "close issue", "tracker operation", "github ops".
+tools: mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write,
+  mcp__github__add_issue_comment, mcp__github__update_issue,
+  mcp__github__create_pull_request, mcp__github__list_pull_requests,
+  mcp__github__list_branches, Bash
 ---
 
-# Tracker Adapter: GitHub
+# GitHub Ops
 
-This file defines how each abstract workflow operation maps to GitHub-specific actions. Commands read this adapter (via project config) and use the operation definitions below — they never call GitHub tools directly.
+## Identity
 
-The **repo** value for all operations comes from `.claude/project.md` (Issue Tracker → Repo).
+The GitHub operations library for all workflow commands. Maps abstract tracker operations to GitHub MCP tools and CLI. All issue tracker interactions go through this skill — never call GitHub tools directly or hardcode repo slugs, label names, paths, or branch patterns.
 
 ---
 
 ## Confirmation Protocol
 
-Before executing any **mutating** operation (or a planned sequence of them), you must:
+Before executing any **mutating** operation (or a planned sequence of them):
 
-1. **Summarize** all planned mutations in a single block — operation type, target, and key parameters
+1. **Summarise** all planned mutations in a single block — operation type, target, and key parameters
 2. **Ask the user once**: `"Proceed with these actions? (y/n)"`
 3. **Proceed only if confirmed.** If denied, stop and report what was skipped.
 

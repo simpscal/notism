@@ -24,7 +24,7 @@ Specifically look for:
 - **Test conventions**: test file location, naming, assertion style (Testing Library, Enzyme, Vitest, Jest), what gets unit-tested vs e2e
 - **Import style**: path aliases (`@/components/...`), barrel exports, absolute vs relative imports
 
-If the codebase has a `CLAUDE.md`, `README`, design system docs, or a linting/formatting config (`.eslintrc`, `.prettierrc`, `tailwind.config`), read those first — they are authoritative.
+If the codebase has a `CLAUDE.md`, `README`, design system docs read those first — they are authoritative.
 
 When you write code examples, they must look like they belong in this codebase — same framework idioms, same naming, same file structure. A suggestion written in a foreign style will confuse more than it helps.
 

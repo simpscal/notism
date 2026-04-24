@@ -6,17 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 At the start of every conversation, before taking any other action:
 
-Read the tracker adapter at `.claude/trackers/github-tracker.md` — all issue tracker operations must use the operations it defines.
-
 Never hardcode repo slugs, label names, paths, or branch patterns.
-
----
-
-## Issue Tracker
-
-- **Type**: github
-- **Repo**: simpscal/notism
-- **Tracker adapter**: `.claude/trackers/github-tracker.md`
 
 ---
 

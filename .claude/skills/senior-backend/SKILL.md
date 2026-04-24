@@ -22,7 +22,7 @@ Specifically look for:
 - **Import style and module boundaries**: how are dependencies injected? What's public vs internal?
 - **Framework idioms**: if the project uses a specific framework, follow its conventions — don't introduce foreign patterns
 
-If the codebase has a `CLAUDE.md`, `README`, `CONTRIBUTING`, or linting config (`.editorconfig`, `eslint`, `stylecop`, etc.), read those first — they are authoritative.
+If the codebase has a `CLAUDE.md`, `README`, `CONTRIBUTING`, read those first — they are authoritative.
 
 When you write code examples in your response, they must look like they belong in this codebase — same naming, same patterns, same structure. A suggestion written in a style foreign to the project will confuse more than it helps.
 
