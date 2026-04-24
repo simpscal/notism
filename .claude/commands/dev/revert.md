@@ -4,7 +4,7 @@ The story's requirement was dropped. Existing implementation must be reversed. T
 
 ---
 
-## R1 — Find Existing Story PRs
+## Step 1 — Find Existing Story PRs
 
 For each codebase listed in the project config, search for PRs associated with this issue:
 
@@ -16,7 +16,7 @@ If none found in any codebase: `post_comment(ISSUE_NUMBER, "No story PRs found f
 
 ---
 
-## R2 — Build Revert Branches
+## Step 2 — Build Revert Branches
 
 For each PR in `$STORY_PRS`, `cd` into the relevant codebase path:
 
@@ -50,9 +50,9 @@ For multi-skill stories, run independently in each codebase path.
 
 ---
 
-## R3 — Open Revert PRs
+## Step 3 — Open Revert PRs
 
-For each revert branch created in R2, open a PR via `create_pr(title, body, head, base)`:
+For each revert branch created in Step 2, open a PR via `create_pr(title, body, head, base)`:
 
 - **Title**: `revert(#<N>): <story title>`
 - **Head**: `revert/issue-<N>-<slug>`
@@ -84,6 +84,6 @@ Collect all opened revert PR numbers as `$REVERT_PRS`.
 
 ---
 
-## R4 — Notify
+## Step 4 — Notify
 
 -> Follow `_notify-complete.md` (Revert stories variant)

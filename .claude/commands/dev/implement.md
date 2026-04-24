@@ -4,7 +4,7 @@ Implement **one ticket per invocation** — do not batch.
 
 ---
 
-## S1 — Gather Story Context in Parallel
+## Step 1 — Gather Story Context in Parallel
 
 1. **Issue body + comments** — the ticket already fetched in Step 1 (hold it)
 
@@ -24,7 +24,7 @@ Implement **one ticket per invocation** — do not batch.
 
 ---
 
-## S2 — Git Setup
+## Step 2 — Git Setup
 
 - `base_branch` = sprint branch (`feature/sprint-{N}`)
 - Branch name from git-strategy Story pattern: `feature/issue-{N}-{short-description}` (single-skill) or `feature/issue-{N}-{short-description}-backend` / `-frontend` (multi-skill)
@@ -43,13 +43,13 @@ For multi-skill stories, run setup independently in each codebase path.
 
 ---
 
-## S3 — Dispatch to Skill Subagent
+## Step 3 — Dispatch to Skill Subagent
 
 -> Follow `_dispatch-subagent.md`
 
 ---
 
-## S4 — Commit and Push
+## Step 4 — Commit and Push
 
 Once all subagents complete:
 
@@ -57,7 +57,7 @@ Once all subagents complete:
 
 ---
 
-## S5 — Open PR
+## Step 5 — Open PR
 
 Use `create_pr(title, body, head: story-branch, base: base_branch)` from inside the codebase path:
 
@@ -68,6 +68,6 @@ For multi-skill stories, open one PR per skill — each from its own codebase pa
 
 ---
 
-## S6 — Notify
+## Step 6 — Notify
 
 -> Follow `_notify-complete.md`

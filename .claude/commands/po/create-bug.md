@@ -1,6 +1,6 @@
 # Mode: Bug
 
-## B1 — Gather Bug Details
+## Step 1 — Gather Bug Details
 
 Parse the raw description. Identify which fields are already answered:
 
@@ -14,7 +14,7 @@ If any fields are missing, use `AskUserQuestion` to ask for all missing fields i
 
 ---
 
-## B2 — Create Issue
+## Step 2 — Create Issue
 
 Use `create_issue(title, body, labels, milestone_id: null)` from the tracker adapter with:
 
@@ -26,6 +26,6 @@ Use `create_issue(title, body, labels, milestone_id: null)` from the tracker ada
 
 ---
 
-## B3 — Output
+## Step 3 — Output
 
 Output the issue number and title.

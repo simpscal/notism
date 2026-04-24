@@ -4,7 +4,7 @@
 
 ---
 
-## B1 — Analyse the Bug in Context
+## Step 1 — Analyse the Bug in Context
 
 Determine what "fixed" looks like from the user's observable perspective, what the intended behaviour is, and what edge cases the ACs should cover.
 
@@ -12,13 +12,13 @@ If critical information is missing, use `AskUserQuestion` once to ask all blocki
 
 ---
 
-## B2 — Write Acceptance Criteria
+## Step 2 — Write Acceptance Criteria
 
 Use `render_template("acceptance-criteria", {criteria, notes})`.
 
 ---
 
-## B3 — Update the Bug Issue
+## Step 3 — Update the Bug Issue
 
 `update_issue_body(<N>, body)` using `render_template("acceptance-criteria", {criteria, notes})` — append to the **end** of the existing body.
 

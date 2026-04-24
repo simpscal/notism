@@ -4,7 +4,7 @@ Use `list_milestones()` to find the milestone with title `Sprint N`. Hold its Gi
 
 ---
 
-## S1 — Resolve Sprint Milestone
+## Step 1 — Resolve Sprint Milestone
 
 Resolve the sprint argument to a GitHub milestone ID:
 - Use `list_milestones()` from the tracker adapter
@@ -15,7 +15,7 @@ If no matching milestone is found, list available milestones and stop.
 
 ---
 
-## S2 — Fetch Sprint Context
+## Step 2 — Fetch Sprint Context
 
 Use `list_issues($MILESTONE_ID)` to list all issues in the milestone. Use `fetch_issue(id)` on each one to read it in full — body, acceptance criteria, and notes.
 
@@ -25,7 +25,7 @@ Identify which stories involve user-facing UI changes by reading their descripti
 
 ---
 
-## S3 — Fetch Requirement Context
+## Step 3 — Fetch Requirement Context
 
 `list_issues($MILESTONE_ID, labels: ["requirement"])` to find the requirement issue in this milestone.
 
@@ -33,35 +33,35 @@ Identify which stories involve user-facing UI changes by reading their descripti
 
 ---
 
-## S4 — Check for Existing Design Instructions
+## Step 4 — Check for Existing Design Instructions
 
 Use `list_issues($MILESTONE_ID, labels: ["design"])` to check for an existing Design Instructions issue whose title matches `Sprint N — Design Instructions`.
 
-- **If no Design Instructions exists**: Continue to S5 (new Design Instructions flow)
+- **If no Design Instructions exists**: Continue to Step 5 (new Design Instructions flow)
 - **If Design Instructions exists**: `fetch_issue(id)` to read it in full. Hold this as the **current Design Instructions** — subsequent steps will produce changes to this document, not a new design from scratch.
 
 ---
 
-## S5 — Read the Design System
+## Step 5 — Read the Design System
 
 Read `DESIGN.md` at the repo root in full. This is the authoritative reference for all design tokens, component inventory, and page patterns. Capture exact token names and component names — these will be prescribed in design instructions.
 
 ---
 
-## S6 — Sketch Layouts
+## Step 6 — Sketch Layouts
 
 -> Follow `_sketch-layouts.md`
 
-**If existing Design Instructions were found in S4:**
+**If existing Design Instructions were found in Step 4:**
 Only sketch layouts for UI surfaces affected by requirement changes. Preserve existing layouts for unchanged surfaces.
 
 ---
 
-## S7 — Design Sprint UI
+## Step 7 — Design Sprint UI
 
 -> Follow `_design-structure.md` to produce the full design instructions.
 
-**If existing Design Instructions were found in S4:**
+**If existing Design Instructions were found in Step 4:**
 Use the current Design Instructions as your starting document. For each section, evaluate whether the requirement changes affect it:
 - **No impact**: Keep existing content unchanged
 - **Impact**: Modify only the affected parts, noting deviations under Consistency Notes
@@ -70,7 +70,7 @@ Do not redesign unchanged areas.
 
 ---
 
-## S8 — Create or Update Design Instructions Issue
+## Step 8 — Create or Update Design Instructions Issue
 
 **If no existing Design Instructions (new):**
 

@@ -4,14 +4,14 @@ Extract `req_issue_number` (the token after `sync-stories`).
 
 ---
 
-## RC1 — Read Current Requirement
+## Step 1 — Read Current Requirement
 
 1. `fetch_issue(req_issue_number)` to read the requirement body in full.
 2. Extract the **Goals** section for scope comparison.
 
 ---
 
-## RC2 — Fetch All Relevant Stories
+## Step 2 — Fetch All Relevant Stories
 
 1. Determine the requirement's sprint milestone by checking `req_issue_number`'s milestone field.
 2. `list_issues(milestone_id: <sprint_milestone>, labels: ["user-story"], state: "open")` to fetch all open user stories in the current sprint.
@@ -22,16 +22,16 @@ Extract `req_issue_number` (the token after `sync-stories`).
 
 ---
 
-## RC2.5 — Clean Previous Change Labels
+## Step 2.5 — Clean Previous Change Labels
 
-For all linked stories fetched in RC2:
+For all linked stories fetched in Step 2:
 - `update_labels(story_id, add: [], remove: ["story-added", "story-updated"])`
 
-This resets change tracking labels before applying new classifications. `story-removed` labels are preserved (and block via RC2 safety check).
+This resets change tracking labels before applying new classifications. `story-removed` labels are preserved (and block via Step 2 safety check).
 
 ---
 
-## RC3 — Classify Scope Changes
+## Step 3 — Classify Scope Changes
 
 Compare the requirement's Goals against linked stories only. For each scope item AND each linked story, apply this classification:
 
@@ -47,7 +47,7 @@ Output a **Change Plan Table** listing every scope item and affected story with 
 
 ---
 
-## RC4 — Clarify with PO
+## Step 4 — Clarify with PO
 
 For any classified scope change that is ambiguous, run a discovery session.
 
@@ -55,7 +55,7 @@ Do not proceed to execution until all classifications are clear.
 
 ---
 
-## RC5 — Present Change Plan
+## Step 5 — Present Change Plan
 
 Use `AskUserQuestion` to present the complete change plan:
 
@@ -72,7 +72,7 @@ Get explicit PO approval: *"Please confirm this change plan, or specify adjustme
 
 ---
 
-## RC6 — Execute Changes
+## Step 6 — Execute Changes
 
 Execute the approved change plan in order:
 

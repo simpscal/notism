@@ -4,7 +4,7 @@ Use `list_milestones()` to find the milestone with title `Sprint N`. Hold its Gi
 
 ---
 
-## S1 — Fetch All Stories
+## Step 1 — Fetch All Stories
 
 Use `list_issues($MILESTONE_ID)` to list all open issues in the milestone. Use `fetch_issue(id)` on each one to read the full body — description, acceptance criteria, and notes.
 
@@ -12,7 +12,7 @@ Also note each story's labels (`story-added`, `story-updated`, `story-removed`) 
 
 ---
 
-## S2 — Fetch Requirement Context
+## Step 2 — Fetch Requirement Context
 
 `list_issues($MILESTONE_ID, labels: ["requirement"])` to find the requirement issue in this milestone.
 
@@ -20,37 +20,37 @@ Also note each story's labels (`story-added`, `story-updated`, `story-removed`) 
 
 ---
 
-## S3 — Check for Existing TDD
+## Step 3 — Check for Existing TDD
 
 `list_issues($MILESTONE_ID, labels: ["technical-design"])` to check for an existing TDD issue.
 
-- **If no TDD exists**: Continue to S4 (new TDD flow)
+- **If no TDD exists**: Continue to Step 4 (new TDD flow)
 - **If TDD exists**: `fetch_issue(tdd_id)` to read it in full. Hold this as the **current TDD** — subsequent steps will produce changes to this document, not a new design from scratch.
 
 ---
 
-## S4 — Read the Architecture
+## Step 4 — Read the Architecture
 
 -> Read each codebase's `CLAUDE.md`
 
 ---
 
-## S5 — Resolve Blocking Questions
+## Step 5 — Resolve Blocking Questions
 
 Identify every decision that cannot be made from the code and stories alone. Use `AskUserQuestion` to present all blocking questions in a single message. Do not proceed until every question is resolved.
 
 ---
 
-## S6 — Design the Solution
+## Step 6 — Design the Solution
 
 Apply the `tl` skill's **Feature Design Mode** to produce the solution design.
 
-**If existing TDD was found in S3:**
+**If existing TDD was found in Step 3:**
 Use the current TDD as the starting document. Evaluate each design area against the requirement changes — keep unchanged areas exactly, modify only affected parts. Do not redesign unchanged areas.
 
 ---
 
-## S7 — Create or Update TDD Issue
+## Step 7 — Create or Update TDD Issue
 
 **If no existing TDD (new):**
 
@@ -59,7 +59,7 @@ Use `create_issue(title, body, labels)`:
 - **Body**: full TDD rendered via `render_template("issue-tdd", {...})`, with `Part of #N` at the very top
 - **Labels**: `technical-design` and `tl-reviewed` labels from project config
 
-Capture the new issue number — referenced in S8 and S9.
+Capture the new issue number — referenced in Step 8 and Step 9.
 
 **If existing TDD (update):**
 
@@ -69,7 +69,7 @@ Apply changes to the current TDD document. Sections not affected by requirement 
 
 ---
 
-## S8 — Create Feature Branches (new TDD only)
+## Step 8 — Create Feature Branches (new TDD only)
 
 If this is a new TDD: Create sprint feature branches for each codebase listed in project config.
 
@@ -77,7 +77,7 @@ Skip if updating an existing TDD (branches already exist).
 
 ---
 
-## S9 — Update the Requirement Issue (new TDD only)
+## Step 9 — Update the Requirement Issue (new TDD only)
 
 If this is a new TDD:
 

@@ -4,7 +4,7 @@ Extract `issue_number` (the token after `amend-story`).
 
 ---
 
-## SC1 — Fetch Issue and Validate Type
+## Step 1 — Fetch Issue and Validate Type
 
 1. `fetch_issue(issue_number)` — read title, body, labels, milestone in full.
 2. If labels do NOT contain `user-story` → stop immediately and output:
@@ -16,7 +16,7 @@ Extract `issue_number` (the token after `amend-story`).
 
 ---
 
-## SC2 — Discovery: What Is Changing and Why
+## Step 2 — Discovery: What Is Changing and Why
 
 Provide context before opening dialogue:
 
@@ -28,11 +28,11 @@ Run a discovery session. Focus on:
 - What is the reason for this change? (scope refinement, bug in the ACs, post-demo feedback)
 - Is this change self-contained to this story, or does it imply changes to related stories?
 
-Do not proceed to SC3 until all discovery questions are resolved.
+Do not proceed to Step 3 until all discovery questions are resolved.
 
 ---
 
-## SC3 — Classify AC Changes
+## Step 3 — Classify AC Changes
 
 Classify every AC. Produce a **Classification Table**:
 
@@ -45,7 +45,7 @@ Every existing AC must have an explicit classification. "Kept" is valid — it m
 
 ---
 
-## SC4 — Present Change Plan and Gate on Approval
+## Step 4 — Present Change Plan and Gate on Approval
 
 Use `AskUserQuestion` to present:
 
@@ -72,7 +72,7 @@ Do NOT call any mutating operation until the user confirms.
 
 ---
 
-## SC5 — Execute
+## Step 5 — Execute
 
 After user approval:
 
