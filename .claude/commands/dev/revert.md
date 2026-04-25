@@ -20,15 +20,11 @@ If none found in any codebase: `post_comment(ISSUE_NUMBER, "No story PRs found f
 
 For each PR in `$STORY_PRS`, `cd` into the relevant codebase path:
 
-Create the revert branch (follow the branch naming strategy) from the sprint branch (the PR's `baseRefName`):
+- Base: sprint branch (the PR's `baseRefName`)
+- Branch name: apply the git-strategy skill's **Revert** pattern
+- If the sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
 
-```bash
-git fetch origin
-git checkout <sprint-branch> && git pull
-git checkout -b <revert-branch>  # name from git-strategy Revert pattern
-```
-
-If the sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
+-> Use `create_branch(branch_name, sprint_branch)` from the git-operations skill
 
 If the PR was **merged** (`merged: true`), get its merge commit SHA and revert it:
 
@@ -40,10 +36,10 @@ git revert -m 1 <merge-commit-sha> --no-edit
 
 If the PR was **not merged** (`merged: false`): no revert commit needed — code is not on the sprint branch.
 
-Push the revert branch:
+Push the revert commit:
 
 ```bash
-git push -u origin <revert-branch>
+git push
 ```
 
 For multi-skill stories, run independently in each codebase path.
@@ -55,7 +51,7 @@ For multi-skill stories, run independently in each codebase path.
 For each revert branch created in Step 2, open a PR via `create_pr(title, body, head, base)`:
 
 - **Title**: `revert(#<N>): <story title>`
-- **Head**: `revert/issue-<N>-<slug>`
+- **Head**: revert branch (from git-strategy **Revert** pattern)
 - **Base**: `<sprint-branch>` (from original PR's `baseRefName`)
 - **Body**:
 

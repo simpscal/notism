@@ -8,7 +8,7 @@ The story already has an implementation (open or merged PR). Implement the delta
 
 1. **Issue body + comments** — the ticket already fetched in Step 1 (hold it)
 
-2. **TDD** — `list_issues(milestone_id, labels: [technical-design label from project config])` to find it, then `fetch_issue(tdd_number)` to read full content. Extract:
+2. **TDD** — `list_issues(milestone_id, labels: [technical-design])` to find it, then `fetch_issue(tdd_number)` to read full content. Extract:
    - Problem statement
    - Proposed solution
    - Architecture key decisions
@@ -28,20 +28,12 @@ For each codebase / skill in scope, discover the existing PR state:
 
 Use `list_prs(repo, "open", "feature/issue-<N>-")` from the tracker adapter.
 
-- **Open PR found** — check out the existing branch. Hold PR number for Step 3:
-  ```bash
-  git fetch origin
-  git checkout <existing-branch> && git pull
-  ```
+- **Open PR found** — hold PR number for Step 3. Use `checkout_branch(existing_branch)` from the git-operations skill.
 
-- **No open PR** — use `list_prs(repo, "closed", "feature/issue-<N>-")` and filter client-side for `merged: true`. Hold the PR number for Step 3. Use `get_pr(repo, pr_number)` to get the `mergeCommitSha`. Then create a new branch (follow the branch naming strategy):
-  ```bash
-  git fetch origin
-  git checkout <sprint-branch> && git pull
-  git checkout -b <story-branch>
-  git push -u origin <story-branch>
-  ```
-  If the sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
+- **No open PR** — use `list_prs(repo, "closed", "feature/issue-<N>-")` and filter client-side for `merged: true`. Hold the PR number for Step 3. Use `get_pr(repo, pr_number)` to get the `mergeCommitSha`. Then:
+  - Branch name: apply the git-strategy skill's **Story** pattern
+  - If the sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
+  - Use `create_branch(branch_name, sprint_branch)` from the git-operations skill
 
 For multi-skill stories, run setup independently in each codebase path.
 

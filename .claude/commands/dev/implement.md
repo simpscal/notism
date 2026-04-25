@@ -8,7 +8,7 @@ Implement **one ticket per invocation** — do not batch.
 
 1. **Issue body + comments** — the ticket already fetched in Step 1 (hold it)
 
-2. **TDD** — `list_issues(milestone_id, labels: [technical-design label from project config])` to find it, then `fetch_issue(tdd_number)` to read full content. Extract:
+2. **TDD** — `list_issues(milestone_id, labels: [technical-design])` to find it, then `fetch_issue(tdd_number)` to read full content. Extract:
    - Problem statement
    - Proposed solution
    - Architecture key decisions
@@ -26,18 +26,13 @@ Implement **one ticket per invocation** — do not batch.
 
 ## Step 2 — Git Setup
 
-- `base_branch` = sprint branch (`feature/sprint-{N}`)
-- Branch name from git-strategy Story pattern: `feature/issue-{N}-{short-description}` (single-skill) or `feature/issue-{N}-{short-description}-backend` / `-frontend` (multi-skill)
+- `base_branch` = sprint branch (apply the git-strategy skill's **Sprint** pattern)
+- Branch name: apply the git-strategy skill's **Story** pattern
 - If sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
 
 `cd` into the codebase path for the relevant skill, then:
 
-```bash
-git fetch origin
-git checkout <base_branch> && git pull
-git checkout -b <story-branch>
-git push -u origin <story-branch>
-```
+-> Use `create_branch(branch_name, base_branch)` from the git-operations skill
 
 For multi-skill stories, run setup independently in each codebase path.
 

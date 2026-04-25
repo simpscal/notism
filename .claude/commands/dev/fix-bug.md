@@ -44,16 +44,11 @@ Inspect the relevant source files. Derive:
 ## Step 5 — Git Setup
 
 - `base_branch` = `main`
-- Branch name from git-strategy Bugfix pattern: `fix/issue-{N}-{short-description}` (single-skill) or `fix/issue-{N}-{short-description}-backend` / `-frontend` (multi-skill)
+- Branch name: apply the git-strategy skill's **Bugfix** pattern
 
 `cd` into the codebase path for the relevant skill, then:
 
-```bash
-git fetch origin
-git checkout main && git pull
-git checkout -b <bug-branch>
-git push -u origin <bug-branch>
-```
+-> Use `create_branch(branch_name, base_branch)` from the git-operations skill
 
 For multi-skill bugs, run setup independently in each codebase path.
 
