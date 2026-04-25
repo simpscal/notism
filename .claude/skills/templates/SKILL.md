@@ -31,26 +31,26 @@ render_template("issue-user-story", {
 
 ## Template Index
 
-| Template | Name for `render_template()` | Posted by |
-|---------|-------------------------------|-----------|
-| Issue User Story | `issue-user-story` | `/ba` |
-| Issue Requirement | `issue-requirement` | `/po` |
-| Issue Bug Report | `issue-bug-report` | `/po create-bug` |
-| Issue TDD | `issue-tdd` | `/tl` |
-| Issue Design Instructions | `issue-design-instructions` | `/design` |
-| Acceptance Criteria | `acceptance-criteria` | (embedded in issue-user-story, issue-bug-report) |
-| PR Story | `pr-story` | `/dev` |
-| PR Revert | `pr-revert` | `/dev` (revert mode) |
-| PR Release | `pr-release` | `/po close-sprint` |
-| Comment Sprint Summary | `comment-sprint-summary` | `/po close-sprint` |
-| Comment Dev Investigation | `comment-dev-investigation` | `/dev` (bug mode) |
-| Comment Bug Summary | `comment-bug-summary` | `/po close-bug` |
+| Template | Name for `render_template()` |
+|---------|-------------------------------|
+| Issue User Story | `issue-user-story` |
+| Issue Requirement | `issue-requirement` |
+| Issue Bug Report | `issue-bug-report` |
+| Issue TDD | `issue-tdd` |
+| Issue Design Instructions | `issue-design-instructions` |
+| Acceptance Criteria | `acceptance-criteria` |
+| PR Story | `pr-story` |
+| PR Revert | `pr-revert` |
+| PR Release | `pr-release` |
+| Comment Sprint Summary | `comment-sprint-summary` |
+| Comment Dev Investigation | `comment-dev-investigation` |
+| Comment Bug Summary | `comment-bug-summary` |
 
 ---
 
 ## `issue-user-story`
 
-**Used by**: `/ba create-stories`, `/ba update-stories` (story-change mode)
+**Used by**: Business analyst skill — story creation and story-change modes
 **Reference**: `.claude/templates/issue-user-story.md`
 
 ### Fields
@@ -94,7 +94,7 @@ render_template("issue-user-story", {
 
 ## `issue-requirement`
 
-**Used by**: `/po create-requirement`
+**Used by**: Product owner skill — requirement creation
 **Reference**: `.claude/templates/issue-requirement.md`
 
 ### Fields
@@ -123,7 +123,7 @@ render_template("issue-user-story", {
 
 ## `issue-bug-report`
 
-**Used by**: `/po create-bug`
+**Used by**: Product owner skill — bug report creation
 **Reference**: `.claude/templates/issue-bug-report.md`
 
 ### Fields
@@ -162,7 +162,7 @@ render_template("issue-user-story", {
 
 ## `issue-tdd`
 
-**Used by**: `/tl create-feature-solution`
+**Used by**: Tech lead skill — feature solution design
 **Reference**: `.claude/templates/issue-tdd.md`
 
 ### Fields
@@ -200,7 +200,7 @@ See `.claude/templates/issue-tdd.md` for full markdown structure.
 
 ## `issue-design-instructions`
 
-**Used by**: `/design create-design`
+**Used by**: Design skill — design instructions creation
 **Reference**: `.claude/templates/issue-design-instructions.md`
 
 ### Fields
@@ -225,7 +225,7 @@ See `.claude/templates/issue-design-instructions.md` for full markdown structure
 
 ## `pr-story`
 
-**Used by**: `/dev` (standard mode, change mode)
+**Used by**: Dev skill — standard and story-change modes
 **Reference**: `.claude/templates/pr-story.md`
 
 ### Fields
@@ -234,8 +234,8 @@ See `.claude/templates/issue-design-instructions.md` for full markdown structure
 |-------|------|----------|-------|
 | `summary` | string | yes | 1-2 sentences: what + why built |
 | `changes` | list of strings | yes | Format: "`path/to/file` — <what changed>" |
-| `test_command` | string | yes | From project.md (e.g. `cd ../notism-api && dotnet test`) |
-| `lint_command` | string | yes | From project.md (e.g. `cd ../notism-web && bun run lint`) |
+| `test_command` | string | yes | From CLAUDE.md or project config (e.g. `npm test`, `pytest`, `dotnet test`) |
+| `lint_command` | string | yes | From CLAUDE.md or project config (e.g. `npm run lint`, `ruff check .`) |
 | `manual_verification` | string | yes | At least 1 manual step |
 | `acceptance_criteria` | list of strings | yes | Copy ACs from issue verbatim, all checked |
 | `closes` | string | yes | Issue number, e.g. "#47" |
@@ -265,7 +265,7 @@ Closes <closes>
 
 ## `pr-revert`
 
-**Used by**: `/dev` (revert mode)
+**Used by**: Dev skill — revert mode
 **Reference**: `.claude/templates/pr-revert.md`
 
 ### Fields
@@ -276,8 +276,8 @@ Closes <closes>
 | `story_title` | string | yes | Story title verbatim, no `[Story]` prefix |
 | `original_pr` | string | yes | Original implementation PR number, e.g. "#67" |
 | `merge_commit` | string | yes | SHA from `mergeCommitSha` |
-| `test_command` | string | yes | From project.md |
-| `lint_command` | string | yes | From project.md |
+| `test_command` | string | yes | From CLAUDE.md or project config |
+| `lint_command` | string | yes | From CLAUDE.md or project config |
 
 ### Output Structure
 
@@ -306,7 +306,7 @@ Closes <story_number>
 
 ## `pr-release`
 
-**Used by**: `/po close-sprint`
+**Used by**: Product owner skill — sprint close
 **Reference**: `.claude/templates/pr-release.md`
 
 ### Fields
@@ -342,7 +342,7 @@ Merges all Sprint N stories into main.
 
 ## `comment-sprint-summary`
 
-**Used by**: `/po close-sprint`
+**Used by**: Product owner skill — sprint close
 **Reference**: `.claude/templates/comment-sprint-summary.md`
 
 ### Fields
@@ -363,7 +363,7 @@ See `.claude/templates/comment-sprint-summary.md` for full structure.
 
 ## `comment-dev-investigation`
 
-**Used by**: `/dev` (bug mode — posted after root cause investigation, before implementation)
+**Used by**: Dev skill — bug mode, posted after root cause investigation before implementation
 **Reference**: `.claude/templates/comment-dev-investigation.md`
 
 ### Fields
@@ -434,7 +434,7 @@ Instead of loading `.claude/templates/pr-story.md` at startup, a command should:
 1. Call `render_template("pr-story", fields)` to generate the artifact
 2. Post the rendered markdown to GitHub via the appropriate MCP tool
 
-Example — `/dev` command generates PR description:
+Example — dev skill generates PR description:
 
 ```
 render_template("pr-story", {
@@ -443,8 +443,8 @@ render_template("pr-story", {
     "`src/pages/Profile.tsx` — Added profile page component",
     "`src/store/userSlice.ts` — Extended user state with avatar field"
   ],
-  test_command: "cd ../notism-api && dotnet test",
-  lint_command: "cd ../notism-web && bun run lint",
+  test_command: "npm test",
+  lint_command: "npm run lint",
   manual_verification: "Navigate to /profile and upload an avatar",
   acceptance_criteria: ["Avatar visible after upload", "Upload fails gracefully on network error"],
   closes: "#47"
