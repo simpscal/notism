@@ -15,53 +15,38 @@ If no matching milestone is found, list available milestones and stop.
 
 ---
 
-## Step 2 — Fetch Sprint Context
+## Step 2 — Fetch All Issues
 
-Use `list_issues($MILESTONE_ID)` to list all issues in the milestone. Use `fetch_issue(id)` on each one to read it in full — body, acceptance criteria, and notes.
+Call `list_issues($MILESTONE_ID)` once. Partition the result in memory:
 
-Also note each story's labels (`story-added`, `story-updated`, `story-removed`) to identify requirement changes.
-
-Identify which stories involve user-facing UI changes by reading their descriptions and acceptance criteria. If no stories involve UI changes, report "No UI work found in this milestone — skipping design phase" and stop.
-
----
-
-## Step 3 — Fetch Requirement Context
-
-`list_issues($MILESTONE_ID, labels: ["requirement"])` to find the requirement issue in this milestone.
-
-`fetch_issue(requirement_id)` to read it in full. Hold as **$REQUIREMENT** — use this to understand the sprint goal, the intended user experience, and the PO's definition of done.
+- **$STORIES** — issues labelled `user-story`. Use `fetch_issue(id)` on each to read full body, acceptance criteria, and notes. Note each story's labels (`story-added`, `story-updated`, `story-removed`) to identify requirement changes. Identify which stories involve user-facing UI changes — if none do, report "No UI work found in this milestone — skipping design phase" and stop.
+- **$REQUIREMENT** — single issue labelled `requirement`. Use `fetch_issue(requirement_id)` to read it in full. Hold as **$REQUIREMENT** — use this to understand the sprint goal, the intended user experience, and the PO's definition of done.
+- **$DESIGN** — single issue labelled `design` whose title matches `Sprint N — Design Instructions` (may be absent).
+  - **If no Design Instructions exists**: Continue to Step 3 (new Design Instructions flow)
+  - **If Design Instructions exists**: `fetch_issue(id)` to read it in full. Hold this as the **current Design Instructions** — subsequent steps will produce changes to this document, not a new design from scratch.
 
 ---
 
-## Step 4 — Check for Existing Design Instructions
-
-Use `list_issues($MILESTONE_ID, labels: ["design"])` to check for an existing Design Instructions issue whose title matches `Sprint N — Design Instructions`.
-
-- **If no Design Instructions exists**: Continue to Step 5 (new Design Instructions flow)
-- **If Design Instructions exists**: `fetch_issue(id)` to read it in full. Hold this as the **current Design Instructions** — subsequent steps will produce changes to this document, not a new design from scratch.
-
----
-
-## Step 5 — Read the Design System
+## Step 3 — Read the Design System
 
 Read `DESIGN.md` at the repo root in full. This is the authoritative reference for all design tokens, component inventory, and page patterns. Capture exact token names and component names — these will be prescribed in design instructions.
 
 ---
 
-## Step 6 — Sketch Layouts
+## Step 4 — Sketch Layouts
 
 -> Follow `_sketch-layouts.md`
 
-**If existing Design Instructions were found in Step 4:**
+**If existing Design Instructions were found in Step 2:**
 Only sketch layouts for UI surfaces affected by requirement changes. Preserve existing layouts for unchanged surfaces.
 
 ---
 
-## Step 7 — Design Sprint UI
+## Step 5 — Design Sprint UI
 
 -> Follow `_design-structure.md` to produce the full design instructions.
 
-**If existing Design Instructions were found in Step 4:**
+**If existing Design Instructions were found in Step 2:**
 Use the current Design Instructions as your starting document. For each section, evaluate whether the requirement changes affect it:
 - **No impact**: Keep existing content unchanged
 - **Impact**: Modify only the affected parts, noting deviations under Consistency Notes
@@ -70,7 +55,7 @@ Do not redesign unchanged areas.
 
 ---
 
-## Step 8 — Create or Update Design Instructions Issue
+## Step 6 — Create or Update Design Instructions Issue
 
 **If no existing Design Instructions (new):**
 
