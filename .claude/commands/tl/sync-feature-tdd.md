@@ -16,6 +16,7 @@ Call `list_issues($MILESTONE_ID)` once. Partition the result in memory:
 - **$REQUIREMENT** — single issue labelled `requirement`. Use `fetch_issue(id)` to read it in full.
 - **$TDD** — single issue labelled `technical-design`. Use `fetch_issue(id)` to read it in full. Hold as the **current TDD**.
   - If no TDD exists, report "No TDD found for Sprint N — run `/tl Sprint N` first" and stop.
+- **$DESIGN** — single issue labelled `design` (may be absent). If present, use `fetch_issue(id)` to read it in full — use for UI component context in Components Design.
 
 ---
 
@@ -53,6 +54,8 @@ Apply the `tl` skill's **Feature Design Mode** to produce the updated solution d
 
 Use the current TDD as the starting document. Evaluate each design area against the changed stories — keep unchanged areas exactly, modify only affected parts. Do not redesign unchanged areas.
 
+Where design instructions exist, use the Layout and Components sections from $DESIGN to inform the solution design — let the layout drive the Components Design section structure, and use the Components table to list UI components alongside backend components (services, handlers, repositories) for a unified component map.
+
 ---
 
 ## Step 6 — Update TDD Issue
@@ -65,7 +68,7 @@ Evaluate every section of the TDD template against the revised design. Sections 
 | High-Level Diagram | Any service, database, cache, or integration added, updated, or removed |
 | Integration Flows (happy + unhappy paths) | Request or response flow added, updated, or removed |
 | Technology Stack | New library or infrastructure introduced or updated |
-| Components Design | Any component added, updated, removed, or restructured |
+| Components Design | Any component added, updated, removed, or restructured, OR design instructions updated |
 | Data Models | Any entity added, updated, removed, or field changed |
 | API Specification | Any endpoint added, updated, removed, or its contract changed |
 | Event Schemas | Any event added, updated, removed, or its structure changed |
