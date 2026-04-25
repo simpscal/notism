@@ -19,11 +19,9 @@ If no matching milestone is found, list available milestones and stop.
 
 Call `list_issues($MILESTONE_ID)` once. Partition the result in memory:
 
-- **$STORIES** — issues labelled `user-story`. Use `fetch_issue(id)` on each to read full body, acceptance criteria, and notes. Note each story's labels (`story-added`, `story-updated`, `story-removed`) to identify requirement changes. Identify which stories involve user-facing UI changes — if none do, report "No UI work found in this milestone — skipping design phase" and stop.
+- **$STORIES** — issues labelled `user-story`. Use `fetch_issue(id)` on each to read full body, acceptance criteria, and notes. Note each story's labels (`story-updated`, `story-removed`) to identify requirement changes. Identify which stories involve user-facing UI changes — if none do, report "No UI work found in this milestone — skipping design phase" and stop.
 - **$REQUIREMENT** — single issue labelled `requirement`. Use `fetch_issue(requirement_id)` to read it in full. Hold as **$REQUIREMENT** — use this to understand the sprint goal, the intended user experience, and the PO's definition of done.
-- **$DESIGN** — single issue labelled `design` whose title matches `Sprint N — Design Instructions` (may be absent).
-  - **If no Design Instructions exists**: Continue to Step 3 (new Design Instructions flow)
-  - **If Design Instructions exists**: `fetch_issue(id)` to read it in full. Hold this as the **current Design Instructions** — subsequent steps will produce changes to this document, not a new design from scratch.
+- **$DESIGN** — single issue labelled `design` whose title matches `Sprint N — Design Instructions` (may be absent). If one already exists, report "Design Instructions already exist for Sprint N — run `/design sync Sprint N` to update" and stop.
 
 ---
 
@@ -37,27 +35,15 @@ Read `DESIGN.md` at the repo root in full. This is the authoritative reference f
 
 -> Follow `_sketch-layouts.md`
 
-**If existing Design Instructions were found in Step 2:**
-Only sketch layouts for UI surfaces affected by requirement changes. Preserve existing layouts for unchanged surfaces.
-
 ---
 
 ## Step 5 — Design Sprint UI
 
 -> Follow `_design-structure.md` to produce the full design instructions.
 
-**If existing Design Instructions were found in Step 2:**
-Use the current Design Instructions as your starting document. For each section, evaluate whether the requirement changes affect it:
-- **No impact**: Keep existing content unchanged
-- **Impact**: Modify only the affected parts, noting deviations under Consistency Notes
-
-Do not redesign unchanged areas.
-
 ---
 
-## Step 6 — Create or Update Design Instructions Issue
-
-**If no existing Design Instructions (new):**
+## Step 6 — Create Design Instructions Issue
 
 Use `create_issue(title, body, labels, milestone_id)`:
 
@@ -65,7 +51,3 @@ Use `create_issue(title, body, labels, milestone_id)`:
 **Body**: Use `render_template("issue-design-instructions", {requirement_issue, overview, layout, components, design_tokens, ui_states, responsive, accessibility, consistency_notes})`
 **Labels**: `design` (and any design labels from project config)
 **Milestone**: `$MILESTONE_ID`
-
-**If existing Design Instructions (update):**
-
-Apply changes to the current Design Instructions document. Sections not affected by requirement changes must be preserved exactly. Then: `update_issue_body(id, updated_body)`.

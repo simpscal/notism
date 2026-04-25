@@ -1,7 +1,7 @@
 ---
 name: design
 description: Analyze design system and create design instructions for frontend stories.
-argument-hint: "<write-design> [args]"
+argument-hint: "<write-design|sync-design> [args]"
 tools: Read, Glob, Grep, mcp__plugin_figma_figma__authenticate
 ---
 
@@ -22,6 +22,7 @@ Use the `templates` skill. Call `render_template()` with the appropriate templat
 | First word | Mode | Args | Mode file |
 |---|---|---|---|
 | `write-design` | Standard | `<sprint_number>` | `design/write-design.md` |
+| `sync-design` | Requirement Change | `<sprint_number>` | `design/sync-design.md` |
 
 **Load the corresponding mode file and follow its steps.**
 

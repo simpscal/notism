@@ -22,15 +22,6 @@ Extract `req_issue_number` (the token after `sync-stories`).
 
 ---
 
-## Step 2.5 — Clean Previous Change Labels
-
-For all linked stories fetched in Step 2:
-- `update_labels(story_id, add: [], remove: ["story-added", "story-updated"])`
-
-This resets change tracking labels before applying new classifications. `story-removed` labels are preserved (and block via Step 2 safety check).
-
----
-
 ## Step 3 — Classify Scope Changes
 
 Compare the requirement's Goals against linked stories only. For each scope item AND each linked story, apply this classification:
@@ -83,7 +74,7 @@ For each **Updatable** story:
 2. Rewrite `## Acceptance Criteria` with updated AC set
 3. Update `## Notes` for new edge cases/dependencies
 4. `update_issue_body(story_id, updated_body)`
-5. If story has `## Implementation Complete` comment: `update_labels(story_id, add: ["story-updated"], remove: [])`
+5. If story has label `implemented`: `update_labels(story_id, add: ["story-updated"], remove: [])`
 6. Validate the amended story (no contradictions, complete coverage, every AC testable)
 
 ### 2. Create New Stories
@@ -93,12 +84,13 @@ For each **New** scope item:
 2. Decompose into INVEST-compliant user stories with ACs
 3. Use `render_template("acceptance-criteria", {criteria, notes})` for each story
 4. Include **Notes** section for edge cases, dependencies, constraints
-5. `create_issue("[Story] <title>", body, ["user-story", "story-added"], milestone_id)` where body comes from `render_template("issue-user-story", {user_story, acceptance_criteria, notes, requirement_issue})` linked to `req_issue_number`
+5. `create_issue("[Story] <title>", body, ["user-story"], milestone_id)` where body comes from `render_template("issue-user-story", {user_story, acceptance_criteria, notes, requirement_issue})` linked to `req_issue_number`
 6. Create all issues first, then back-fill `link_to(id)` references in Notes for dependency links
 
 ### 3. Remove Obsolete Stories
 
 For each **Removed** or **Orphaned** story:
-- `update_labels(story_id, add: ["story-removed"], remove: [])`
+- If story has label `implemented`: `update_labels(story_id, add: ["story-removed"], remove: [])`
+- If story does NOT have label `implemented`: `close_issue(story_id)`
 
 Do not modify the issue body — the label signals removal.

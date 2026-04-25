@@ -1,7 +1,7 @@
 ---
 name: tl
 description: Design high-level solution for a sprint.
-argument-hint: "write-feature-tdd <sprint_number>"
+argument-hint: "write-feature-tdd <sprint_number> | sync-feature-tdd <sprint_number>"
 tools: Read, Glob, Grep, Bash, AskUserQuestion
 ---
 
@@ -22,6 +22,7 @@ Use the `templates` skill. Call `render_template()` with the appropriate templat
 | First word | Mode | Args | Mode file |
 |---|---|---|---|
 | `write-feature-tdd` | Standard | `<sprint_number>` | `tl/write-feature-tdd.md` |
+| `sync-feature-tdd` | Requirement Change | `<sprint_number>` | `tl/sync-feature-tdd.md` |
 
 **Load the corresponding mode file and follow its steps.**
 

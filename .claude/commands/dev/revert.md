@@ -12,7 +12,7 @@ Use `list_prs(repo, "all", "feature/issue-<N>-")` from the tracker adapter.
 
 Collect all PRs found as `$STORY_PRS`.
 
-If none found in any codebase: `post_comment(ISSUE_NUMBER, "No story PRs found for #<N>. Nothing to revert.")`, `update_labels(ISSUE_NUMBER, add: [], remove: [in-progress])`, and stop.
+If none found in any codebase: `close_issue(ISSUE_NUMBER)` and stop.
 
 ---
 
@@ -26,6 +26,8 @@ For each PR in `$STORY_PRS`, `cd` into the relevant codebase path:
 
 -> Use `create_branch(branch_name, sprint_branch)` from the git-operations skill
 
+If the PR was **not merged** (`merged: false`): skip — code is not on the sprint branch. If all PRs in `$STORY_PRS` are unmerged, `close_issue(ISSUE_NUMBER)` and stop.
+
 If the PR was **merged** (`merged: true`), get its merge commit SHA and revert it:
 
 Use `get_pr(repo, pr_number)` and read `mergeCommitSha`. Then:
@@ -33,8 +35,6 @@ Use `get_pr(repo, pr_number)` and read `mergeCommitSha`. Then:
 ```bash
 git revert -m 1 <merge-commit-sha> --no-edit
 ```
-
-If the PR was **not merged** (`merged: false`): no revert commit needed — code is not on the sprint branch.
 
 Push the revert commit:
 
@@ -53,28 +53,7 @@ For each revert branch created in Step 2, open a PR via `create_pr(title, body, 
 - **Title**: `revert(#<N>): <story title>`
 - **Head**: revert branch (from git-strategy **Revert** pattern)
 - **Base**: `<sprint-branch>` (from original PR's `baseRefName`)
-- **Body**:
-
-```
-## Summary
-
-Reverts the implementation of story #<N> — <story title>.
-
-The story was removed from the requirement scope and the implementation must be undone.
-
-## Reverts
-
-- Original PR: #<original-pr-number>
-- Merge commit: `<sha>` _(or "PR was not merged — no commits on sprint branch")_
-
-## Acceptance Criteria
-
-- [ ] All changes introduced by #<original-pr-number> are absent from the sprint branch after merge
-- [ ] Tests pass: `<test command from project config>`
-- [ ] Build passes: `<lint/build command from project config>`
-
-Closes #<N>
-```
+- **Body**: `render_template("pr-revert", {story_number, story_title, original_pr, merge_commit, test_command, lint_command})`
 
 Collect all opened revert PR numbers as `$REVERT_PRS`.
 

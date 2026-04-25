@@ -40,6 +40,7 @@ render_template("issue-user-story", {
 | Issue Design Instructions | `issue-design-instructions` | `/design` |
 | Acceptance Criteria | `acceptance-criteria` | (embedded in issue-user-story, issue-bug-report) |
 | PR Story | `pr-story` | `/dev` |
+| PR Revert | `pr-revert` | `/dev` (revert mode) |
 | PR Release | `pr-release` | `/po close-sprint` |
 | Comment Sprint Summary | `comment-sprint-summary` | `/po close-sprint` |
 | Comment Dev Investigation | `comment-dev-investigation` | `/dev` (bug mode) |
@@ -258,6 +259,47 @@ See `.claude/templates/issue-design-instructions.md` for full markdown structure
 - [x] <AC 2>
 
 Closes <closes>
+```
+
+---
+
+## `pr-revert`
+
+**Used by**: `/dev` (revert mode)
+**Reference**: `.claude/templates/pr-revert.md`
+
+### Fields
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `story_number` | string | yes | GitHub issue number, e.g. "#45" |
+| `story_title` | string | yes | Story title verbatim, no `[Story]` prefix |
+| `original_pr` | string | yes | Original implementation PR number, e.g. "#67" |
+| `merge_commit` | string | yes | SHA from `mergeCommitSha` |
+| `test_command` | string | yes | From project.md |
+| `lint_command` | string | yes | From project.md |
+
+### Output Structure
+
+```
+## Summary
+
+Reverts the implementation of story <story_number> — <story_title>.
+
+The story was removed from the requirement scope and the implementation must be undone.
+
+## Reverts
+
+- Original PR: <original_pr>
+- Merge commit: `<merge_commit>`
+
+## Acceptance Criteria
+
+- [ ] All changes introduced by <original_pr> are absent from the sprint branch after merge
+- [ ] Tests pass: `<test_command>`
+- [ ] Build passes: `<lint_command>`
+
+Closes <story_number>
 ```
 
 ---
