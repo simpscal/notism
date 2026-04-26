@@ -44,7 +44,7 @@ flowchart TD
     D --> G2{Gate 2<br/>PO Reviews Stories}
     G2 -->|Approve| E1(["/design write-design <ms>"])
     E1 --> F1["Design Instructions<br/>`design`"]
-    F1 --> E2(["/tl write-feature-tdd <ms>"])
+    F1 --> E2(["/tech-lead write-feature-tdd <ms>"])
     E2 --> F2["TDD + feature branches"]
     F2 --> G3{Gate 3<br/>PO Reviews TDD + Design}
     G3 -->|Approve| H(["/dev <issue>"])
@@ -89,7 +89,7 @@ flowchart TD
     G1 -->|Approve| E3["Label removed stories<br/>`story-removed`"]
     E1 & E2 & E3 --> F1(["/design sync-design <sprint>"])
     F1 --> F2["Design Instructions updated<br/>incremental"]
-    F2 --> F3(["/tl sync-feature-tdd <sprint>"])
+    F2 --> F3(["/tech-lead sync-feature-tdd <sprint>"])
     F3 --> F4["TDD updated<br/>incremental"]
 ```
 
@@ -107,7 +107,7 @@ flowchart TD
     D -->|No| F{Tech design changes?}
     E --> E2["Design Instructions updated<br/>incremental"]
     E2 --> F
-    F -->|Yes| G(["/tl sync-feature-tdd <sprint>"])
+    F -->|Yes| G(["/tech-lead sync-feature-tdd <sprint>"])
     F -->|No| H(["/dev <N>"])
     G --> G2["TDD updated<br/>incremental"]
     G2 --> H
@@ -145,8 +145,8 @@ Human judges which roles are needed after reviewing approved AC changes.
 | `/ba amend-bug <issue-number>` | BA | bug issue # | updated ACs on existing bug + `story-updated` label | `/ba amend-bug 42` |
 | `/design write-design <milestone-id>` | Designer | milestone # | sprint-level design instructions issue (`design`) | `/design write-design 3` |
 | `/design sync-design <milestone-id>` | Designer | milestone # | updates existing design instructions after story changes | `/design sync-design 3` |
-| `/tl write-feature-tdd <milestone-id>` | Technical Lead | milestone # | TDD issue + feature branches | `/tl write-feature-tdd 3` |
-| `/tl sync-feature-tdd <milestone-id>` | Technical Lead | milestone # | updates existing TDD after story changes | `/tl sync-feature-tdd 3` |
+| `/tech-lead write-feature-tdd <milestone-id>` | Technical Lead | milestone # | TDD issue + feature branches | `/tech-lead write-feature-tdd 3` |
+| `/tech-lead sync-feature-tdd <milestone-id>` | Technical Lead | milestone # | updates existing TDD after story changes | `/tech-lead sync-feature-tdd 3` |
 | `/dev <issue-number>` | Developer (auto) | story issue # | PR to sprint branch — auto-routes to implement/story-revisit/revert based on labels | `/dev 45` |
 | `/dev fix-bug <issue-number>` | Developer | bug issue # | investigation comment + fix PR to main (`implemented`) | `/dev fix-bug 42` |
 
@@ -178,11 +178,10 @@ Dev auto-selects backend/frontend/devops agent(s) from the investigation context
     design/
       write-design.md         ← Designer produces UI instructions for sprint
       sync-design.md          ← Designer updates design instructions after story changes
-    tl.md
-    tl/
+    tech-lead.md
+    tech-lead/
       write-feature-tdd.md    ← TL writes TDD for sprint
       sync-feature-tdd.md     ← TL updates TDD after story changes
-      _methodology.md         ← TL's 4-stage design process
     dev.md
     dev/
       implement.md            ← Dev implements a story (standard)
