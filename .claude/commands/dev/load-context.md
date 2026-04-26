@@ -66,7 +66,7 @@ Complete when: you can describe the story goal, name every component and API inv
 
 ## Step 4 — Activate and Record
 
-Write the context snapshot below to `.claude/context/story-N-dev-context.md` (replace N with the actual issue number). Create the directory if it does not exist. Overwrite any existing file for this story.
+Write the context snapshot below to `context/story-N-dev-context.md` (replace N with the actual issue number). Create the directory if it does not exist. Overwrite any existing file for this story.
 
 This file is a record of the activated state — the actual activation happened in Step 3. Every section is mandatory; write "None" only when genuinely empty.
 
@@ -139,7 +139,7 @@ List any unresolved items from Notes or TDD that affect this story's implementat
 
 **Developer active — Story #N.**
 
-I have internalized the full implementation knowledgebase: story goal, ACs, relevant TDD sections, design instructions, and git state. Context snapshot written to `.claude/context/story-N-dev-context.md`.
+I have internalized the full implementation knowledgebase: story goal, ACs, relevant TDD sections, design instructions, and git state. Context snapshot written to `context/story-N-dev-context.md`.
 
 I am now operating as Developer for Story #N for the remainder of this session. What do you need?
 

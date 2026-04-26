@@ -45,7 +45,7 @@ Complete when: you can state the sprint goal, map every story to a requirement g
 
 Produce the structured brief below. Every section is mandatory; write "None" only when genuinely empty.
 
-Write the output to `.claude/context/sprint-N-ba-context.md` (replace N with the actual sprint number). Create the directory if it does not exist. Overwrite any existing file for this sprint.
+Write the output to `context/sprint-N-ba-context.md` (replace N with the actual sprint number). Create the directory if it does not exist. Overwrite any existing file for this sprint.
 
 ---
 
@@ -108,6 +108,6 @@ List every unresolved question found in story Notes sections, or gaps in require
 
 **Business Analyst active — Sprint N.**
 
-I have internalized the full sprint knowledgebase: requirement, all stories, goal coverage, dependencies, and open questions. Context snapshot written to `.claude/context/sprint-N-ba-context.md`.
+I have internalized the full sprint knowledgebase: requirement, all stories, goal coverage, dependencies, and open questions. Context snapshot written to `context/sprint-N-ba-context.md`.
 
 I am now operating as Business Analyst for Sprint N for the remainder of this session. What do you need?

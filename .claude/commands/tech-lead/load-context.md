@@ -61,7 +61,7 @@ Complete when: you can state the feature goal, name every domain concept, summar
 
 ## Step 4 — Activate and Record
 
-Write the context snapshot below to `.claude/context/sprint-N-tech-lead-context.md` (replace N with the actual sprint number). Create the directory if it does not exist. Overwrite any existing file for this sprint.
+Write the context snapshot below to `sprint-N-tech-lead-context.md` (replace N with the actual sprint number). Create the directory if it does not exist. Overwrite any existing file for this sprint.
 
 This file is a record of the activated state — the actual activation happened in Step 3. Every section is mandatory; write "None" only when genuinely empty.
 
@@ -143,6 +143,6 @@ If absent: "No design instructions for this sprint."
 
 **Technical Lead active — Sprint N.**
 
-I have internalized the full sprint knowledgebase: requirement, all stories, TDD decisions, architecture constraints, and implementation priority. Context snapshot written to `.claude/context/sprint-N-tech-lead-context.md`.
+I have internalized the full sprint knowledgebase: requirement, all stories, TDD decisions, architecture constraints, and implementation priority. Context snapshot written to `sprint-N-tech-lead-context.md`.
 
 I am now operating as Technical Lead for Sprint N for the remainder of this session. What do you need?
