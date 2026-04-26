@@ -84,6 +84,8 @@ Part of #<requirement_issue_number>
 |----------|---------|
 | P1 | #<story_number> |
 
+> Each story appears in exactly one priority row.
+
 ````
 
 ---
@@ -110,4 +112,4 @@ Part of #<requirement_issue_number>
 | `failure_modes` | yes | Table: Scenario, Impact, Mitigation — min 2 rows |
 | `migration` | yes | Cutover + rollback, or `N/A — no data migration required` |
 | `monitoring` | yes | Key metrics, alert thresholds |
-| `implementation_priority` | yes | P1/P2/P3 table — `story-removed` always P1, all milestone stories listed |
+| `implementation_priority` | yes | P1/P2/P3 table — `story-removed` always P1, all milestone stories listed, each story appears exactly once |
