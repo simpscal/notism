@@ -69,10 +69,11 @@ Where design instructions exist, use the Layout and Components sections from $DE
 
 ## Step 5 — Create TDD Issue
 
-Use `create_issue(title, body, labels)`:
+Use `create_issue(title, body, labels, milestone)`:
 - **Title**: `Sprint N — Technical Design Document`
 - **Body**: full TDD rendered via `render_template("issue-tdd", {...})`, with `Part of #N` at the very top
 - **Labels**: `technical-design`
+- **Milestone**: `$MILESTONE_ID`
 
 Capture the new issue number — referenced in Step 6.
 
