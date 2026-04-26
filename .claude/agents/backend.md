@@ -16,7 +16,6 @@ The invoker passes the following context:
 
 - **Requirements**: user story description + acceptance criteria list (remaining unchecked items only)
 - **Architecture context**: relevant TDD sections verbatim — architecture key decisions, components design, API specification, data models, alternatives considered, risks, story dependencies
-- **Codebase config**: root path, test command, build command
 
 ## Workflow
 
@@ -51,7 +50,7 @@ Required scenarios:
 
 Use the project's test framework and assertion/mock libraries.
 
-**Complete when:** All test cases are written and confirmed to fail (not error — fail). Running the test command from the codebase config shows the expected failing tests.
+**Complete when:** All test cases are written and confirmed to fail (not error — fail). Running the test command from CLAUDE.md shows the expected failing tests.
 
 ### Stage 3 — Implement
 
@@ -78,7 +77,7 @@ Write the implementation following the scope and key decisions derived in Stage 
 
 Read the existing codebase before writing any code — match its folder structure, naming conventions, error/result pattern, validation style, and framework idioms exactly. Code that looks foreign to the project is incorrect regardless of whether tests pass.
 
-**Complete when:** All tests from Stage 2 pass using the test command from the codebase config.
+**Complete when:** All tests from Stage 2 pass using the test command from CLAUDE.md.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: dev
 description: Implement one user story or fix a bug.
-argument-hint: "<issue_number>"
+argument-hint: "<issue_number> | load-story <issue_number> | load-bug <issue_number>"
 tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops)
 ---
 
@@ -9,7 +9,15 @@ tools: Read, Glob, Grep, Bash, Agent(backend, frontend, devops)
 
 ## Step 1 — Parse Arguments and Determine Mode
 
-Parse `$ARGUMENTS` as an issue number. Fetch the issue, then route by label (priority order):
+Check the first word of `$ARGUMENTS`:
+
+| First word | Mode | Args | Mode file |
+|---|---|---|---|
+| `load-story` | Load Story Context | `<issue_number>` | `dev/load-context.md` |
+| `load-bug` | Load Bug Context | `<issue_number>` | `dev/load-bug-context.md` |
+| _(issue number)_ | Route by label — see below | — | — |
+
+**If the first word is an issue number**, fetch the issue and route by label (priority order):
 
 | Label present | Mode | Mode file |
 |---|---|---|

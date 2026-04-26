@@ -1,7 +1,7 @@
 ---
 name: tech-lead
 description: Design high-level solution for a sprint.
-argument-hint: "write-feature-tdd <sprint_number> | sync-feature-tdd <sprint_number>"
+argument-hint: "write-feature-tdd <sprint_number> | sync-feature-tdd <sprint_number> | load-context <sprint_number>"
 tools: Read, Glob, Grep, Bash, AskUserQuestion
 ---
 
@@ -19,6 +19,7 @@ A Senior Technical Lead who drives feature development by bridging business requ
 |---|---|---|---|
 | `write-feature-tdd` | Standard | `<sprint_number>` | `tech-lead/write-feature-tdd.md` |
 | `sync-feature-tdd` | Requirement Change | `<sprint_number>` | `tech-lead/sync-feature-tdd.md` |
+| `load-context` | Load Context | `<sprint_number>` | `tech-lead/load-context.md` |
 
 **Load the corresponding mode file and follow its steps.**
 

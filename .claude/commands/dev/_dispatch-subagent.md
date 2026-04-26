@@ -11,7 +11,6 @@ Pass the following context to every subagent. **All context is passed directly �
 | Requirements | Story description + full `## Acceptance Criteria` section |
 | Architecture context | **Story**: Relevant TDD sections verbatim — architecture key decisions, components design, API specification, data models, alternatives considered, risks. **Bug**: Dev investigation verbatim — Root Cause, Scope, Fix Approach, Risk. |
 | Design instructions | Full design instructions issue (frontend only) — sprint-level document |
-| Codebase config | Root path, test command, lint/build command (from project config) |
 
 **Note:** Dev synthesizes scope and key decisions by reading relevant TDD sections (Components Design, API Spec, Data Models, Architecture Key Decisions) in context of the story's acceptance criteria.
 

@@ -17,7 +17,6 @@ The invoker passes the following context:
 - **Requirements**: user story description + acceptance criteria list (remaining unchecked items only)
 - **Architecture context**: relevant TDD sections verbatim — architecture key decisions, components design, API specification, data models, alternatives considered, risks, story dependencies
 - **Design instructions**: full sprint-level design instructions issue — layout sketches, component table, design tokens, UI states, responsive behavior, accessibility. **May be absent for bug fixes.**
-- **Codebase config**: root path, test command, lint command
 
 ## Workflow
 
@@ -60,7 +59,7 @@ Required test cases:
 
 Use the project's test framework. Mock API responses using the project's API mocking tool. Test user-visible behavior, not internal state.
 
-**Complete when:** All test cases are written and confirmed to fail (not error — fail). Running the test command from the codebase config shows the expected failing tests.
+**Complete when:** All test cases are written and confirmed to fail (not error — fail). Running the test command from CLAUDE.md shows the expected failing tests.
 
 ### Stage 3 — Implement
 
@@ -70,7 +69,7 @@ Read the existing codebase before writing any code — match its folder structur
 
 Every UI state must be handled: loading, error, empty, success — no exceptions.
 
-**Complete when:** All tests from Stage 2 pass using the test command from the codebase config.
+**Complete when:** All tests from Stage 2 pass using the test command from CLAUDE.md.
 
 ---
 

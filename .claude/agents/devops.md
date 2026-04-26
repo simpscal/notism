@@ -16,7 +16,6 @@ The invoker passes the following context:
 
 - **Requirements**: acceptance criteria list + description of the infrastructure change
 - **Architecture context**: relevant TDD sections verbatim — architecture key decisions, components design, data models, alternatives considered, risks & mitigations, cross-cutting concerns
-- **Codebase config**: relevant paths, build command
 
 ## Workflow
 
@@ -68,7 +67,7 @@ Irreversible changes (resource deletions, permission removals, database drops): 
 
 Run available automated checks:
 
-- Build command from codebase config — confirm the build passes
+- Build command from CLAUDE.md — confirm the build passes
 - Any smoke tests or integration checks applicable to the changed infrastructure
 
 If automated tests are not applicable (e.g. a pure CI/CD config change), document the manual verification steps that a reviewer must execute to confirm the change is correct.
