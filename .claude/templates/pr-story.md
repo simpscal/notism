@@ -1,9 +1,5 @@
 # PR Story Template
 
-Posted to GitHub by `/dev` (standard mode S5, change mode C5).
-
----
-
 ## OUTPUT FORMAT
 
 ```

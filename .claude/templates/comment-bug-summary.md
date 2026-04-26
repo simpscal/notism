@@ -1,9 +1,5 @@
 # Comment Bug Summary Template
 
-Posted to bug issue by `/po:close-bug` (Step 7).
-
----
-
 ## OUTPUT FORMAT
 
 ```

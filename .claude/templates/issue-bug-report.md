@@ -1,9 +1,5 @@
 # Issue Bug Report Template
 
-Posted to GitHub by `/po bug`.
-
----
-
 ## OUTPUT FORMAT
 
 ```

@@ -1,9 +1,5 @@
 # Issue TDD Template
 
-Technical Design Document posted to GitHub by `/tech-lead` (standard mode S5, change mode C6, requirement-change mode RC6).
-
----
-
 ## OUTPUT FORMAT
 
 ````markdown

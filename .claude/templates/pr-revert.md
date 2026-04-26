@@ -1,9 +1,5 @@
 # PR Revert Template
 
-Posted to GitHub by `/dev` (revert mode — one per story PR being reverted).
-
----
-
 ## OUTPUT FORMAT
 
 ```

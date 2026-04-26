@@ -1,9 +1,5 @@
 # Comment Dev Investigation Template
 
-Posted by `/dev` (bug mode, after root cause investigation, before implementation).
-
----
-
 ## OUTPUT FORMAT
 
 ```

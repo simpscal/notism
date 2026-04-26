@@ -1,9 +1,5 @@
 # PR Release Template
 
-Posted to GitHub by `/po:close-sprint` (Step 7).
-
----
-
 ## OUTPUT FORMAT
 
 ```

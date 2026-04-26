@@ -1,9 +1,5 @@
 # Issue Requirement Template
 
-Posted to GitHub by `/po`.
-
----
-
 ## OUTPUT FORMAT
 
 ```

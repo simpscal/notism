@@ -1,7 +1,5 @@
 # Issue User Story Template
 
-Posted to GitHub by `/ba` (standard mode S4, requirement-change mode RC4).
-
 Read `.claude/templates/acceptance-criteria.md` for AC format.
 
 ---

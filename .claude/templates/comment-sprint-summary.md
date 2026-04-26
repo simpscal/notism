@@ -1,9 +1,5 @@
 # Comment Sprint Summary Template
 
-Posted to requirement issue by `/po:close-sprint` (Step 8).
-
----
-
 ## OUTPUT FORMAT
 
 ```

@@ -1,9 +1,5 @@
 # Acceptance Criteria Template
 
-Used across all story and bug templates.
-
----
-
 ## OUTPUT FORMAT
 
 ```

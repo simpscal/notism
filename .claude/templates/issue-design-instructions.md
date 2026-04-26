@@ -1,9 +1,5 @@
 # Issue Design Instructions Template
 
-Posted to GitHub by `/design` (standard mode S6, change mode, requirement-change mode).
-
----
-
 ## OUTPUT FORMAT
 
 ```
