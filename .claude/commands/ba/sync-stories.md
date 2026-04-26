@@ -40,7 +40,20 @@ Output a **Change Plan Table** listing every scope item and affected story with 
 
 ## Step 4 — Clarify with PO
 
-For any classified scope change that is ambiguous, run a discovery session.
+For any classified scope change that is ambiguous, run a full discovery session:
+
+1. **Synthesise first.** State your current understanding of the scope delta — what changed, what's new, what's removed.
+
+2. **Surface every gap.** Identify ambiguities in classification, conflicting signals, and missing context that would materially change which stories are created, updated, or removed.
+
+3. **Open the dialogue.** Ask all blocking questions in one structured message:
+   - Lead: *"Here is what I understand — please correct anything wrong."*
+   - Follow: *"Before I proceed, I need to clarify:"* — list specific questions.
+   - Do NOT drip-feed questions one at a time.
+
+4. **Incorporate and iterate.** After each response, re-synthesise. Repeat until fully unambiguous.
+
+5. **Confirm alignment.** State final understanding before producing output.
 
 Do not proceed to execution until all classifications are clear.
 
@@ -81,9 +94,29 @@ For each **Updatable** story:
 
 For each **New** scope item:
 1. If ambiguity exists, run a discovery session
-2. Decompose into INVEST-compliant user stories with ACs
-3. Use `render_template("acceptance-criteria", {criteria, notes})` for each story
-4. Include **Notes** section for edge cases, dependencies, constraints
+2. Decompose into INVEST-compliant user stories:
+
+   | Letter | Criterion | What it means |
+   |---|---|---|
+   | **I** | Independent | Can be built and delivered alone |
+   | **N** | Negotiable | Describes the need, not the spec |
+   | **V** | Valuable | Delivers something the user actually cares about |
+   | **E** | Estimable | Clear enough to size |
+   | **S** | Small | Fits in a sprint increment |
+   | **T** | Testable | A stakeholder can verify it without reading code |
+
+   **Story format**: `As a <user>, I want <action> so that <benefit>`
+
+3. Write ACs for each story. **AC format**: *"When X, then Y"* or *"Given X, when Y, then Z"*
+
+   **AC testability checklist** — every AC must pass:
+   - Observable without reading code?
+   - Describes a specific condition and a specific outcome?
+   - Could a non-engineer verify it in a running system?
+
+   Include a **Notes** section for edge cases, dependencies, constraints.
+
+4. Use `render_template("acceptance-criteria", {criteria, notes})` for each story
 5. `create_issue("[Story] <title>", body, ["user-story"], milestone_id)` where body comes from `render_template("issue-user-story", {user_story, acceptance_criteria, notes, requirement_issue})` linked to `req_issue_number`
 6. Create all issues first, then back-fill `link_to(id)` references in Notes for dependency links
 
@@ -94,3 +127,13 @@ For each **Removed** or **Orphaned** story:
 - If story does NOT have label `implemented`: `close_issue(story_id)`
 
 Do not modify the issue body — the label signals removal.
+
+---
+
+## Constraints
+
+- Never add technical details to stories — that is the architect's job
+- Never invent scope — if unclear, run discovery
+- Never produce tracker output until the user confirms the picture is correct
+- Output is format-agnostic — produce clean markdown the user can paste wherever they need it
+- Every AC must be observable without reading code, describe a specific condition and outcome, and be verifiable by a non-engineer in a running system

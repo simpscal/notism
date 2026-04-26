@@ -22,11 +22,20 @@ Provide context before opening dialogue:
 
 > "I have read issue #`<issue_number>`: **`<title>`**. It currently has `<N>` acceptance criteria. I need to understand exactly what you want to change."
 
-Run a discovery session. Focus on:
-- Which specific ACs are incorrect, incomplete, or no longer valid?
-- What new behaviour needs to be covered that is not in the current ACs?
-- What is the reason for this change? (scope refinement, misdiagnosed bug, post-fix feedback)
-- Is this change self-contained to this issue, or does it imply changes to related issues?
+Run a full discovery session:
+
+1. **Synthesise first.** State your current understanding of the bug, its intended behaviour, and its existing ACs.
+
+2. **Surface every gap.** Identify which ACs are incorrect, incomplete, or no longer valid; what new behaviour needs coverage; the reason for the change (scope refinement, misdiagnosed bug, post-fix feedback); and whether the change affects related issues.
+
+3. **Open the dialogue.** Ask all blocking questions in one structured message:
+   - Lead: *"Here is what I understand — please correct anything wrong."*
+   - Follow: *"Before I proceed, I need to clarify:"* — list specific questions.
+   - Do NOT drip-feed questions one at a time.
+
+4. **Incorporate and iterate.** After each response, re-synthesise. Repeat until fully unambiguous.
+
+5. **Confirm alignment.** State final understanding before producing output.
 
 Do not proceed to Step 3 until all discovery questions are resolved.
 
@@ -42,6 +51,13 @@ Classify every AC. Produce a **Classification Table**:
 | — | _new AC text_ | Added | — |
 
 Every existing AC must have an explicit classification. "Kept" is valid — it means no change.
+
+**AC testability checklist** — verify every Added or Modified AC:
+- Observable without reading code?
+- Describes a specific condition and a specific outcome?
+- Could a non-engineer verify it in a running system?
+
+Rewrite any AC that fails until it passes.
 
 ---
 
@@ -85,3 +101,18 @@ After user approval:
 2. `update_issue_body(issue_number, updated_body)`
 
 3. `update_labels(issue_number, add: ["story-updated"], remove: [])`
+
+4. Report:
+   ```
+   ACs: Added <N> · Removed <N> · Modified <N>
+   ```
+
+---
+
+## Constraints
+
+- Never add technical details to ACs — that is the architect's job
+- Never invent scope — if unclear, run discovery
+- Never produce tracker output until the user confirms the picture is correct
+- Output is format-agnostic — produce clean markdown the user can paste wherever they need it
+- Every AC must be observable without reading code, describe a specific condition and outcome, and be verifiable by a non-engineer in a running system
