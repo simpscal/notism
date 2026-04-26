@@ -48,7 +48,7 @@ Inspect the relevant source files. Derive:
 
 `cd` into the codebase path for the relevant skill, then:
 
--> Use `create_branch(branch_name, base_branch)` from the git-operations skill
+-> Use `create_branch(branch_name, base_branch)`
 
 For multi-skill bugs, run setup independently in each codebase path.
 

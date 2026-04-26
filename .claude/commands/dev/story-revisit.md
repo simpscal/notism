@@ -28,12 +28,12 @@ For each codebase / skill in scope, discover the existing PR state:
 
 Use `list_prs(repo, "open", "feature/issue-<N>-")` from the tracker adapter.
 
-- **Open PR found** — hold PR number for Step 3. Use `checkout_branch(existing_branch)` from the git-operations skill.
+- **Open PR found** — hold PR number for Step 3. Use `checkout_branch(existing_branch)`.
 
 - **No open PR** — use `list_prs(repo, "closed", "feature/issue-<N>-")` and filter client-side for `merged: true`. Hold the PR number for Step 3. Use `get_pr(repo, pr_number)` to get the `mergeCommitSha`. Then:
   - Branch name: apply the git-strategy skill's **Story** pattern
   - If the sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
-  - Use `create_branch(branch_name, sprint_branch)` from the git-operations skill
+  - Use `create_branch(branch_name, sprint_branch)`
 
 For multi-skill stories, run setup independently in each codebase path.
 

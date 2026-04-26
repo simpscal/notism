@@ -32,7 +32,7 @@ Implement **one ticket per invocation** — do not batch.
 
 `cd` into the codebase path for the relevant skill, then:
 
--> Use `create_branch(branch_name, base_branch)` from the git-operations skill
+-> Use `create_branch(branch_name, base_branch)`
 
 For multi-skill stories, run setup independently in each codebase path.
 

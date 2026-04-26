@@ -207,8 +207,6 @@ Dev auto-selects backend/frontend/devops agent(s) from the investigation context
 
 **Agents** are developer personas invoked by `/dev`. Each follows TDD: understand requirements → write tests → implement code to pass tests.
 
-**Trackers** define how abstract workflow operations (`fetch_issue`, `create_pr`, etc.) map to a specific issue tracker. Swap `trackers/github-tracker.md` for `trackers/jira.md` and update `project.md` — zero changes to command files.
-
 ---
 
 ## Label Reference

@@ -24,7 +24,7 @@ For each PR in `$STORY_PRS`, `cd` into the relevant codebase path:
 - Branch name: apply the git-strategy skill's **Revert** pattern
 - If the sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
 
--> Use `create_branch(branch_name, sprint_branch)` from the git-operations skill
+-> Use `create_branch(branch_name, sprint_branch)`
 
 If the PR was **not merged** (`merged: false`): skip — code is not on the sprint branch. If all PRs in `$STORY_PRS` are unmerged, `close_issue(ISSUE_NUMBER)` and stop.
 
