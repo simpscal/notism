@@ -84,12 +84,6 @@ Part of #<requirement_issue_number>
 |----------|---------|
 | P1 | #<story_number> |
 
----
-
-## Lead's Review Checklist
-- [ ] Single point of failure? (If yes, documented with mitigation in §4)
-- [ ] Tech debt regret in 6 months? (If yes, justified)
-- [ ] Developer can build from doc alone?
 ````
 
 ---

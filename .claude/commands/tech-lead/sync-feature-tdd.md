@@ -60,20 +60,22 @@ Identify every decision that cannot be made from the code and stories alone. Use
 
 Use the current TDD as the baseline. For each design area below, evaluate whether changed stories affect it — keep unchanged areas exactly, rewrite only affected parts. Do not redesign unchanged areas.
 
-| Area | What to define |
-|------|----------------|
-| Services & integrations | Which services, databases, caches, third-party tools? New vs existing? |
-| Integration flows | Happy path + one key unhappy path — sequence or flow, not prose |
-| API contracts | Method, route, auth, request/response shape, status codes |
-| Data models | Entities, relationships, key indexes — ERD or schema fragment |
-| Frontend scope | New or changed pages, routes, component responsibilities |
-| Security | Authentication, authorisation, encryption at rest and in transit |
-| Failure modes | What happens when each external dependency fails? Mitigation for each |
-| Performance | Critical-path latency targets, query design (indexes, N+1 risks), caching strategy, async offloading |
-| Scalability | Expected load, horizontal vs vertical scaling approach, stateless constraints |
-| Migration & rollout | Data migration, rollback plan, or "N/A — no migration required" |
-
-For any new or changed decision: name at least one alternative and explain why it was rejected.
+| Area | TDD field | What to define |
+|------|-----------|----------------|
+| High-level diagram | `high_level_diagram` | Services, databases, caches, third-party — label new vs existing |
+| Happy path | `happy_path` | Mermaid sequence: user → services → storage → response |
+| Unhappy path | `unhappy_path` | Key failure scenario and system response |
+| Technology stack | `tech_stack` | New languages/frameworks/libraries/infra only |
+| Components design | `components_design` | All new/modified components — Mermaid graph |
+| Data models | `data_models` | Entities, relationships, key indexes — ERD or schema; include indexes |
+| API specification | `api_spec` | Method, route, auth, request/response shape, status codes |
+| Event schemas | `event_schemas` | Topic, event structure, producer, consumer — or N/A |
+| Alternatives considered | `alternatives` | Min 1 row: Decision, Chosen, Alternative, Why Rejected |
+| Security | `security` | Auth, authz, encryption at rest and in transit |
+| Scalability & performance | `scalability` | Throughput/latency targets, query design, caching, async offloading |
+| Failure modes | `failure_modes` | Min 2 rows: Scenario, Impact, Mitigation |
+| Migration plan | `migration` | Data migration, cutover, rollback — or N/A |
+| Monitoring & alerting | `monitoring` | Key metrics, alert thresholds |
 
 **Output structure:** lead with the key architectural decision, present areas in logical order (data model → API → flows), highlight risks and trade-offs explicitly, end with an **Implementation Priority** table: P1 (unblocks others), P2 (core path), P3 (follow-on). Use Mermaid diagrams when clearer than prose; tables for contracts and schemas.
 
