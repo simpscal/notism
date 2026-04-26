@@ -25,10 +25,6 @@ Implement **one ticket per invocation** — do not batch.
 
 ---
 
-## Templates
-
-Use the `artifacts` skill. Call `render_template()` with the appropriate template name and field values. See `templates` skill for the full template index.
-
 ## Shared Patterns (loaded by mode files as needed)
 
 | Pattern | File | Purpose |

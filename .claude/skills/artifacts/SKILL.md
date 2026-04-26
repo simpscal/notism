@@ -1,6 +1,6 @@
 ---
 name: artifacts
-description: Generates formatted GitHub issues, PRs, and comments. Invoked when any command produces a tracker artifact. Commands MUST use `render_template()` — never reference `.claude/templates/` files directly.
+description: Generates formatted GitHub issues, PRs, and comments. Auto-invoked on any `render_template()` call — never reference `.claude/templates/` files directly.
 tools: Read, Glob
 ---
 

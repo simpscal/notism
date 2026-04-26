@@ -17,8 +17,6 @@ A Senior Business Analyst who turns vague requirements into crisp, independently
 
 Invoke the `ba` skill at the start of every run — it provides the BA methodology used throughout all modes (discovery, story writing, AC writing, AC amendment, validation).
 
-Use the `artifacts` skill for `render_template()` calls.
-
 ## Step 1 — Parse Arguments and Determine Mode
 
 | First word | Mode | Args | Mode file |

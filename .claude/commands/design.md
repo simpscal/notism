@@ -13,10 +13,6 @@ A Senior UI/UX Designer who bridges the gap between technical design and impleme
 
 ---
 
-## Templates
-
-Use the `artifacts` skill. Call `render_template()` with the appropriate template name and field values. See `templates` skill for the full template index.
-
 ## Step 1 — Parse Arguments and Determine Mode
 
 | First word | Mode | Args | Mode file |
