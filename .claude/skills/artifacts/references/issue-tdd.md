@@ -11,17 +11,11 @@ Part of #<requirement_issue_number>
 
 ## 1. Executive Summary
 
-**Status**: Draft | Approved | Deprecated
-**Author**: | **Reviewer**:
-
 ### Problem Statement
 <2–3 sentences: gap/pain, why now>
 
 ### Goals
 - <What user gains>
-
-### Non-Goals
-- <What not addressed>
 
 ---
 
@@ -84,11 +78,6 @@ Part of #<requirement_issue_number>
 
 ---
 
-## Architecture Key Decisions
-<Canonical summary for dev agents>
-
----
-
 ## Implementation Priority
 
 | Priority | Stories |
@@ -111,10 +100,8 @@ Part of #<requirement_issue_number>
 |-------|-----|-------|
 | `requirement_issue` | yes | e.g. `#38` |
 | `sprint` | yes | e.g. `Sprint 5` |
-| `status` | no | `Draft` (default) \| `Approved` \| `Deprecated` |
 | `problem_statement` | yes | 2-3 sentences: gap/pain, why now |
 | `goals` | yes | 2-6 user-centric items |
-| `non_goals` | yes | Out-of-scope list |
 | `high_level_diagram` | yes | Mermaid graph — label new vs existing |
 | `happy_path` | yes | Mermaid sequence: user → services → storage → response |
 | `unhappy_path` | yes | Mermaid sequence: failure scenario + system response |
@@ -129,5 +116,4 @@ Part of #<requirement_issue_number>
 | `failure_modes` | yes | Table: Scenario, Impact, Mitigation — min 2 rows |
 | `migration` | yes | Cutover + rollback, or `N/A — no data migration required` |
 | `monitoring` | yes | Key metrics, alert thresholds |
-| `arch_decisions` | yes | Layer responsibilities, naming, patterns, file org |
 | `implementation_priority` | yes | P1/P2/P3 table — `story-removed` always P1, all milestone stories listed |
