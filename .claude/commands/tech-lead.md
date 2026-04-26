@@ -15,7 +15,7 @@ A Senior Technical Lead who drives feature development by bridging business requ
 
 ## Templates
 
-Use the `templates` skill. Call `render_template()` with the appropriate template name and field values. See `templates` skill for the full template index.
+Use the `artifacts` skill. Call `render_template()` with the appropriate template name and field values. See `templates` skill for the full template index.
 
 ## Step 1 — Parse Arguments and Determine Mode
 

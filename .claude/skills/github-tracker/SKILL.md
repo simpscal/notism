@@ -7,18 +7,12 @@ tools: mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_wri
   mcp__github__add_issue_comment, mcp__github__update_issue, Bash
 ---
 
-# GitHub Tracker
-
-Never call GitHub tools directly. Read `owner`, `repo`, label names, and branch patterns from project config.
-
----
-
 ## Confirmation Protocol
 
 Before any mutating operation:
-- Summarise all planned mutations in one block
-- Ask once: `"Proceed? (y/n)"` — group related mutations into a single prompt
-- Proceed only if confirmed; stop and report if denied
+1. Summarise all planned mutations in one block
+2. Ask once: `"Proceed? (y/n)"` — group related mutations into a single prompt
+3. Proceed only if confirmed; stop and report if denied
 
 **No confirmation needed**: `fetch_issue`, `list_issues`, `list_milestones`, any read-only `gh api`
 
