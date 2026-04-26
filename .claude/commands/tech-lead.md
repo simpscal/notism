@@ -1,5 +1,5 @@
 ---
-name: tl
+name: tech-lead
 description: Design high-level solution for a sprint.
 argument-hint: "write-feature-tdd <sprint_number> | sync-feature-tdd <sprint_number>"
 tools: Read, Glob, Grep, Bash, AskUserQuestion
@@ -21,8 +21,8 @@ Use the `templates` skill. Call `render_template()` with the appropriate templat
 
 | First word | Mode | Args | Mode file |
 |---|---|---|---|
-| `write-feature-tdd` | Standard | `<sprint_number>` | `tl/write-feature-tdd.md` |
-| `sync-feature-tdd` | Requirement Change | `<sprint_number>` | `tl/sync-feature-tdd.md` |
+| `write-feature-tdd` | Standard | `<sprint_number>` | `tech-lead/write-feature-tdd.md` |
+| `sync-feature-tdd` | Requirement Change | `<sprint_number>` | `tech-lead/sync-feature-tdd.md` |
 
 **Load the corresponding mode file and follow its steps.**
 
@@ -32,9 +32,9 @@ Use the `templates` skill. Call `render_template()` with the appropriate templat
 
 | Pattern | File | Purpose |
 |---------|------|---------|
-| Resolve Questions | `tl/_resolve-questions.md` | Block until all questions answered |
-| TL Methodology | `tl/_methodology.md` | 4-stage design process |
-| TDD Update Triggers | `tl/_tdd-update-triggers.md` | Section-by-section update rules |
+| Resolve Questions | `tech-lead/_resolve-questions.md` | Block until all questions answered |
+| TL Methodology | `tech-lead/_methodology.md` | 4-stage design process |
+| TDD Update Triggers | `tech-lead/_tdd-update-triggers.md` | Section-by-section update rules |
 
 ---
 

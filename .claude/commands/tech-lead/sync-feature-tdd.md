@@ -15,7 +15,7 @@ Call `list_issues($MILESTONE_ID)` once. Partition the result in memory:
   - If no changed stories exist, report "No story changes found — TDD is already in sync" and stop.
 - **$REQUIREMENT** — single issue labelled `requirement`. Use `fetch_issue(id)` to read it in full.
 - **$TDD** — single issue labelled `technical-design`. Use `fetch_issue(id)` to read it in full. Hold as the **current TDD**.
-  - If no TDD exists, report "No TDD found for Sprint N — run `/tl Sprint N` first" and stop.
+  - If no TDD exists, report "No TDD found for Sprint N — run `/tech-lead write-feature-tdd Sprint N` first" and stop.
 - **$DESIGN** — single issue labelled `design` (may be absent). If present, use `fetch_issue(id)` to read it in full — use for UI component context in Components Design.
 
 Before proceeding, build a mental model from `$STORIES`:
