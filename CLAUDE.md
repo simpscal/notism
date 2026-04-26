@@ -32,7 +32,7 @@ Never hardcode repo slugs, label names, paths, or branch patterns.
 | Story removed during requirement change | `story-removed` |
 | Requirement updated after change | `requirement-updated` |
 | Sprint closed | `sprint-completed` |
-| Bug issue | `bug` |
+| Bug issue | `bug-production` |
 | Bug resolved and closed | `bug-fixed` |
 | Dev implementation complete | `implemented` |
 

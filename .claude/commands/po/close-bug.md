@@ -6,13 +6,13 @@
 
 Parse `$ARGUMENTS` as the bug issue number (e.g. `42`).
 
-If `$ARGUMENTS` is empty: use `list_open_issues(["bug"])` from the tracker adapter and list the results for the user to choose from, then stop.
+If `$ARGUMENTS` is empty: use `list_open_issues(["bug-production"])` from the tracker adapter and list the results for the user to choose from, then stop.
 
 ### Step 2 — Fetch Issue
 
 Use `fetch_issue(issue_number)` from the tracker adapter to read the issue's title, labels, and state.
 
-- If the issue does not have the `bug` label, stop:
+- If the issue does not have the `bug-production` label, stop:
   ```
   ⛔ Issue #N is not a bug (labels: <labels>). Use /po close-bug only for bug issues.
   ```
@@ -81,7 +81,7 @@ Use `render_template("comment-bug-summary", {issue_number, title, closed_date, m
 
 ## Constraints
 
-- Only operate on issues with the `bug` label. Reject all others.
+- Only operate on issues with the `bug-production` label. Reject all others.
 - Never merge any PR — only gate on them.
 - Confirmation required before any mutating action.
 - Migration check is backend-only. Skip silently if no merged backend PR is found.

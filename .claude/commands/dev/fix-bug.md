@@ -8,7 +8,7 @@ Implement **one bug fix per invocation** — do not batch.
 
 `fetch_issue(bug_issue_number)`. Read in full. `update_labels(issue_number, add: [in-progress], remove: [])`.
 
-If the issue does not have the `bug` label, halt:
+If the issue does not have the `bug-production` label, halt:
 ```
 ⛔ Issue #<N> is not a bug (labels: <labels>). Use /dev fix-bug only for bug issues.
 ```

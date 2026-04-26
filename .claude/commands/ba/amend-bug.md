@@ -7,8 +7,8 @@ Extract `issue_number` (the token after `amend-bug`).
 ## Step 1 — Fetch Issue and Validate Type
 
 1. `fetch_issue(issue_number)` — read title, body, labels, milestone in full.
-2. If labels do NOT contain `bug` → stop immediately and output:
-   > ⚠️ Cannot proceed: Issue #`<issue_number>` does not have a `bug` label.
+2. If labels do NOT contain `bug-production` → stop immediately and output:
+   > ⚠️ Cannot proceed: Issue #`<issue_number>` does not have a `bug-production` label.
 3. Extract current AC state:
    - Locate the `## Acceptance Criteria` section in the body.
    - List all existing ACs as the **baseline AC set**.

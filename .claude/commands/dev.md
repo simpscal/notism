@@ -13,8 +13,8 @@ Parse `$ARGUMENTS` as an issue number. Fetch the issue, then route by label (pri
 
 | Label present | Mode | Mode file |
 |---|---|---|
-| `bug` + `story-updated` | Bug Revisit | `dev/bug-revisit.md` |
-| `bug` | Bug Fix | `dev/fix-bug.md` |
+| `bug-production` + `story-updated` | Bug Revisit | `dev/bug-revisit.md` |
+| `bug-production` | Bug Fix | `dev/fix-bug.md` |
 | `story-removed` | Revert | `dev/revert.md` |
 | `story-updated` | Change | `dev/story-revisit.md` |
 | _(none)_ | Standard | `dev/implement.md` |

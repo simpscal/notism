@@ -63,7 +63,7 @@ Separate pipeline — runs independently of sprint cycle. Bug PRs always target 
 
 ```mermaid
 flowchart TD
-    A(["/po create-bug [description]"]) --> B["Bug Issue<br/>`bug`"]
+    A(["/po create-bug [description]"]) --> B["Bug Issue<br/>`bug-production`"]
     B --> G1{Gate 1<br/>PO Reviews Bug}
     G1 -->|Approve| C(["/ba add-bug-acs <issue>"])
     C --> D["Acceptance Criteria<br/>on bug issue"]
@@ -135,7 +135,7 @@ Human judges which roles are needed after reviewing approved AC changes.
 |---------|------|-------|--------|---------|
 | `/po create-requirement <description>` | Product Owner | raw requirement text | requirement issue with `requirement` label | `/po create-requirement Build a user authentication system with OAuth` |
 | `/po update-requirement <issue> <delta>` | Product Owner | issue # + change description | updated requirement issue with `requirement-updated` label | `/po update-requirement 42 Drop OAuth, use magic link instead` |
-| `/po create-bug [description]` | Product Owner | bug description (optional) | bug issue with `bug` label (interactively fills missing fields) | `/po create-bug` |
+| `/po create-bug [description]` | Product Owner | bug description (optional) | bug issue with `bug-production` label (interactively fills missing fields) | `/po create-bug` |
 | `/po close-sprint <sprint-number>` | Release Manager | sprint # | sprint issues closed, story branches deleted, release PRs to main, migrations flagged | `/po close-sprint 3` |
 | `/po close-bug <issue-number>` | Release Manager | bug # | bug issue closed (`bug-fixed`), fix branch deleted, summary posted | `/po close-bug 42` |
 | `/ba write-stories <issue-number>` | BA | requirement issue # | user story issues + sprint milestone | `/ba write-stories 42` |
@@ -218,7 +218,7 @@ Dev auto-selects backend/frontend/devops agent(s) from the investigation context
 | `requirement` | PO-created requirement |
 | `requirement-updated` | Requirement changed mid-sprint |
 | `user-story` | BA-created story |
-| `bug` | Reporter-created bug issue |
+| `bug-production` | Reporter-created bug issue |
 | `bug-fixed` | Bug closed after successful fix |
 | `sprint-completed` | Sprint closed |
 | `technical-design` | TDD issue |

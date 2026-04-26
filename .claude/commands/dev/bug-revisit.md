@@ -2,7 +2,7 @@
 
 ## When to Use
 
-The BA has amended the ACs on a bug issue (labeled `bug` + `story-updated`) that has an **open** PR. The fix must be updated to satisfy the new ACs.
+The BA has amended the ACs on a bug issue (labeled `bug-production` + `story-updated`) that has an **open** PR. The fix must be updated to satisfy the new ACs.
 
 ## Step 1 — Gather Context
 

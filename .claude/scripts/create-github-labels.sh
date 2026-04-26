@@ -24,7 +24,7 @@ create_label "sprint-completed"     "Sprint closed"                             
 create_label "story-updated"        "Story amended after creation"               "bfd4f2"
 create_label "story-removed"        "Story removed during requirement change"    "e4e669"
 create_label "requirement-updated"  "Requirement updated after change"           "fef2c0"
-create_label "bug"                  "Reporter-created bug issue"                 "d73a4a"
+create_label "bug-production"       "Reporter-created bug issue"                 "d73a4a"
 create_label "bug-fixed"            "Bug resolved and closed"                    "0e8a16"
 
 echo "Done. All labels created."
