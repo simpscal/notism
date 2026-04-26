@@ -70,7 +70,7 @@ Where design instructions exist, use the Layout and Components sections from $DE
 Use `create_issue(title, body, labels)`:
 - **Title**: `Sprint N — Technical Design Document`
 - **Body**: full TDD rendered via `render_template("issue-tdd", {...})`, with `Part of #N` at the very top
-- **Labels**: `technical-design` label from project config
+- **Labels**: `technical-design`
 
 Capture the new issue number — referenced in Step 6.
 
@@ -78,7 +78,7 @@ Capture the new issue number — referenced in Step 6.
 
 ## Step 6 — Create Feature Branches (new TDD only)
 
-If this is a new TDD: Create sprint feature branches for each codebase listed in project config.
+If this is a new TDD: Create sprint feature branches for each codebase **except the current one**.
 
 Skip if updating an existing TDD (branches already exist).
 
