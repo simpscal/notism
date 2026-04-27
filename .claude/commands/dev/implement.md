@@ -8,7 +8,7 @@ Implement **one ticket per invocation** — do not batch.
 
 1. **Issue body + comments** — the ticket already fetched in Step 1 (hold it)
 
-2. **TDD** — `list_issues(milestone_id, labels: [technical-design])` to find it, then `fetch_issue(tdd_number)` to read full content. Extract:
+2. **TDD** — list issues labeled `technical-design` in the milestone to find it, then read the TDD issue in full. Extract:
    - Problem statement
    - Proposed solution
    - Architecture key decisions
@@ -18,9 +18,9 @@ Implement **one ticket per invocation** — do not batch.
    - Risks
    - Implementation priority
 
-3. **Design Instructions** (frontend only) — `list_issues(milestone_id, labels: [design])` to find the design instructions issue. `fetch_issue` it in full — the document covers the entire sprint's UI design.
+3. **Design Instructions** (frontend only) — list issues labeled `design` in the milestone to find the design instructions issue. Read it in full — the document covers the entire sprint's UI design.
 
-`update_labels(issue_number, add: ["in-progress"])`.
+Add label `in-progress` to the story issue.
 
 ---
 
@@ -32,7 +32,7 @@ Implement **one ticket per invocation** — do not batch.
 
 `cd` into the codebase path for the relevant skill, then:
 
--> Use `create_branch(branch_name, base_branch)`
+-> Create a new branch named `{branch_name}` from `{base_branch}`
 
 For multi-skill stories, run setup independently in each codebase path.
 
@@ -54,10 +54,10 @@ Once all subagents complete:
 
 ## Step 5 — Open PR
 
-Use `create_pr(title, body, head: story-branch, base: base_branch)` from inside the codebase path:
+Open a pull request from the story branch into the sprint branch from inside the codebase path:
 
 **PR title:** `feat(#<ISSUE_NUMBER>): <short description>`
-**PR body:** Use `render_template("pr-story", {summary, changes, test_command, lint_command, manual_verification, acceptance_criteria, closes})`
+**PR body:** Render the `pr-story` template with `{summary, changes, test_command, lint_command, manual_verification, acceptance_criteria, closes}`
 
 For multi-skill stories, open one PR per skill — each from its own codebase path, each targeting the sprint branch.
 

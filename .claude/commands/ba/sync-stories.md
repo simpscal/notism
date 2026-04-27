@@ -6,7 +6,7 @@ Extract `req_issue_number` (the token after `sync-stories`).
 
 ## Step 1 — Read Current Requirement
 
-1. `fetch_issue(req_issue_number)` to read the requirement body in full.
+1. Read issue `#req_issue_number` in full.
 2. Extract the **Goals** section for scope comparison.
 
 ---
@@ -14,9 +14,9 @@ Extract `req_issue_number` (the token after `sync-stories`).
 ## Step 2 — Fetch All Relevant Stories
 
 1. Determine the requirement's sprint milestone by checking `req_issue_number`'s milestone field.
-2. `list_issues(milestone_id: <sprint_milestone>, labels: ["user-story"], state: "open")` to fetch all open user stories in the current sprint.
-3. Filter for **Linked stories**: Stories with `link_to(req_issue_number)` or `#req_issue_number` in body.
-4. `fetch_issue` each one to read full body and current state.
+2. List open issues labeled `user-story` in the sprint milestone to fetch all open user stories.
+3. Filter for **Linked stories**: Stories with `#req_issue_number` referenced in the body.
+4. Read each linked story in full to get its body and current state.
 5. **Safety check**: If any linked story has label `story-removed` and state `open`, stop immediately and output:
    > ⚠️ Cannot proceed: Story #<number> is labeled `story-removed` but still open. Dev must revert this orphaned work before new requirement changes can be processed.
 
@@ -86,8 +86,8 @@ For each **Updatable** story:
 1. Run the AC amendment flow (classify changes, present plan, get approval, execute)
 2. Rewrite `## Acceptance Criteria` with updated AC set
 3. Update `## Notes` for new edge cases/dependencies
-4. `update_issue_body(story_id, updated_body)`
-5. If story has label `implemented`: `update_labels(story_id, add: ["story-updated"], remove: [])`
+4. Update the body of the story issue with the amended content.
+5. If story has label `implemented`: add label `story-updated` to the story issue.
 6. Validate the amended story (no contradictions, complete coverage, every AC testable)
 
 ### 2. Create New Stories
@@ -116,15 +116,15 @@ For each **New** scope item:
 
    Include a **Notes** section for edge cases, dependencies, constraints.
 
-4. Use `render_template("acceptance-criteria", {criteria, notes})` for each story
-5. `create_issue("[Story] <title>", body, ["user-story"], milestone_id)` where body comes from `render_template("issue-user-story", {user_story, acceptance_criteria, notes, requirement_issue})` linked to `req_issue_number`
-6. Create all issues first, then back-fill `link_to(id)` references in Notes for dependency links
+4. Render the `acceptance-criteria` template with `{criteria, notes}` for each story.
+5. Create an issue titled `[Story] <title>` with label `user-story` and the sprint milestone, where the body comes from the `issue-user-story` template with `{user_story, acceptance_criteria, notes, requirement_issue}` linked to `#req_issue_number`.
+6. Create all issues first, then back-fill dependency references in Notes for both `Depends on` and `Blocks` directions.
 
 ### 3. Remove Obsolete Stories
 
 For each **Removed** or **Orphaned** story:
-- If story has label `implemented`: `update_labels(story_id, add: ["story-removed"], remove: [])`
-- If story does NOT have label `implemented`: `close_issue(story_id)`
+- If story has label `implemented`: add label `story-removed` to the story issue.
+- If story does NOT have label `implemented`: close the story issue.
 
 Do not modify the issue body — the label signals removal.
 

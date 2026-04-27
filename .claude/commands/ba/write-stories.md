@@ -1,6 +1,6 @@
 # Mode: Standard
 
-`fetch_issue(requirement_issue_number)` to read the requirement in full.
+Read issue `#requirement_issue_number` in full.
 
 ---
 
@@ -90,16 +90,16 @@ Include a **Notes** section per story for: edge cases, UX considerations, depend
 
 ## Step 3 — Create Sprint Milestone
 
-`list_milestones()` to determine next sprint number.
-`create_milestone("Sprint N", sprint_goal)`
+List all milestones to determine the next sprint number.
+Create a milestone named `Sprint N` with the sprint goal.
 
 ---
 
 ## Step 4 — Create User Story Issues
 
-For each story: `create_issue("[Story] <title>", body, ["user-story"], milestone_id)` where body comes from `render_template("issue-user-story", {user_story, acceptance_criteria, notes, requirement_issue})`.
+For each story: create an issue titled `[Story] <title>` with label `user-story` and the sprint milestone, where the body comes from the `issue-user-story` template with `{user_story, acceptance_criteria, notes, requirement_issue}`.
 
-> **Dependency linking**: Create all issues first, then back-fill `link_to(id)` references in Notes for both `Depends on` and `Blocks` directions.
+> **Dependency linking**: Create all issues first, then back-fill dependency references in Notes for both `Depends on` and `Blocks` directions, linking to the relevant issue numbers.
 
 ---
 

@@ -1,6 +1,6 @@
 # Mode: Bug
 
-`fetch_issue(bug_issue_number)` to read the bug report in full.
+Read issue `#bug_issue_number` in full.
 
 ---
 
@@ -25,7 +25,7 @@ If critical information is missing, use `AskUserQuestion` once to ask all blocki
 
 ## Step 2 — Write Acceptance Criteria
 
-Use `render_template("acceptance-criteria", {criteria, notes})`.
+Render the `acceptance-criteria` template with `{criteria, notes}`.
 
 **AC format**: *"When X, then Y"* or *"Given X, when Y, then Z"*
 
@@ -35,7 +35,7 @@ Include a **Notes** section for: edge cases, related scenarios, dependencies, op
 
 ## Step 3 — Update the Bug Issue
 
-`update_issue_body(<N>, body)` using `render_template("acceptance-criteria", {criteria, notes})` — append to the **end** of the existing body.
+Update the body of issue `#N` using the `acceptance-criteria` template with `{criteria, notes}` — append to the **end** of the existing body.
 
 Do NOT modify the original `## Bug Report` section.
 

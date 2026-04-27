@@ -6,7 +6,7 @@ Implement **one bug fix per invocation** — do not batch.
 
 ## Step 1 — Fetch Issue
 
-`fetch_issue(bug_issue_number)`. Read in full. `update_labels(issue_number, add: [in-progress], remove: [])`.
+Read issue `#bug_issue_number` in full. Add label `in-progress` to the issue.
 
 If the issue does not have the `bug-production` label, halt:
 ```
@@ -37,7 +37,7 @@ Inspect the relevant source files. Derive:
 
 ## Step 4 — Post Investigation Comment
 
-`render_template("comment-dev-investigation", {complexity, root_cause, scope, fix_approach, risk})`, then `post_comment(issue_number, body)`.
+Render the `comment-dev-investigation` template with `{complexity, root_cause, scope, fix_approach, risk}`, then post it as a comment on issue `#issue_number`.
 
 ---
 
@@ -48,7 +48,7 @@ Inspect the relevant source files. Derive:
 
 `cd` into the codebase path for the relevant skill, then:
 
--> Use `create_branch(branch_name, base_branch)`
+-> Create a new branch named `{branch_name}` from `{base_branch}`
 
 For multi-skill bugs, run setup independently in each codebase path.
 
@@ -70,10 +70,10 @@ Architecture context = investigation verbatim (Root Cause, Scope, Fix Approach, 
 
 ## Step 8 — Open PR
 
-Use `create_pr(title, body, head: bug-branch, base: main)` from inside the codebase path:
+Open a pull request from the bug branch into `main` from inside the codebase path:
 
 **PR title:** `fix(#<ISSUE_NUMBER>): <short description>`
-**PR body:** `render_template("pr-story", {summary, changes, test_command, lint_command, manual_verification, acceptance_criteria, closes})`
+**PR body:** Render the `pr-story` template with `{summary, changes, test_command, lint_command, manual_verification, acceptance_criteria, closes}`
 
 For multi-skill bugs, open one PR per skill — each from its own codebase path, each targeting `main`.
 

@@ -16,13 +16,13 @@ If any fields are missing, use `AskUserQuestion` to ask for all missing fields i
 
 ## Step 2 — Create Issue
 
-Use `create_issue(title, body, labels, milestone_id: null)` from the tracker adapter with:
+Create an issue via the tracker adapter with:
 
 - **Title**: `[Bug] <concise description of what is broken>`
 - **Labels**: `["bug-production"]`
 - **Milestone**: `null`
 
-**Body**: Use `render_template("issue-bug-report", {description, steps, expected, actual, severity})`.
+**Body**: Render the `issue-bug-report` template with `{description, steps, expected, actual, severity}`.
 
 ---
 

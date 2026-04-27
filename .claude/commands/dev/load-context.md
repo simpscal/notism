@@ -10,11 +10,11 @@ Extract `story_issue_number` (the token after `load-story`).
 
 Run all three fetches simultaneously:
 
-1. `fetch_issue(story_issue_number)` → hold as **$STORY**. Read story body, acceptance criteria, and notes in full.
+1. Read issue `#story_issue_number` → hold as **$STORY**. Read story body, acceptance criteria, and notes in full.
 
 2. Determine `milestone_id` from `$STORY`'s milestone field. Then:
-   - `list_issues(milestone_id, labels: [technical-design])` to find the TDD issue
-   - `fetch_issue(tdd_number)` → hold as **$TDD**. Extract:
+   - List issues labeled `technical-design` in the milestone to find the TDD issue
+   - Read the TDD issue → hold as **$TDD**. Extract:
      - Problem statement
      - Components design
      - API specification
@@ -22,8 +22,8 @@ Run all three fetches simultaneously:
      - Architecture key decisions
      - Implementation priority
 
-3. `list_issues(milestone_id, labels: [design])` to find design instructions (may be absent).
-   - If present: `fetch_issue(design_number)` → hold as **$DESIGN**
+3. List issues labeled `design` in the milestone to find design instructions (may be absent).
+   - If present: read the design issue → hold as **$DESIGN**
 
 ---
 
@@ -31,8 +31,8 @@ Run all three fetches simultaneously:
 
 Apply the git-strategy skill's **Story** and **Sprint** patterns to derive branch names.
 
-- `list_branches(repo, pattern: $STORY_BRANCH)` — check if story branch exists on the remote
-- `list_prs(repo, "open", head_prefix: $STORY_BRANCH)` — check for an open PR
+- List remote branches matching `$STORY_BRANCH` — check if story branch exists on the remote
+- List open pull requests with branch prefix `$STORY_BRANCH` — check for an open PR
 
 Hold: `$STORY_BRANCH`, `$SPRINT_BRANCH`, `$PR_URL` (or "none").
 

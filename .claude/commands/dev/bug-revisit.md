@@ -6,11 +6,11 @@ The BA has amended the ACs on a bug issue (labeled `bug-production` + `story-upd
 
 ## Step 1 — Gather Context
 
-`fetch_issue(issue_number)`. Read in full.
+Read issue `#issue_number` in full.
 
-`list_prs(repo, "open", "fix/issue-{N}-")` to find the open bug-fix PR. Collect as `$FIX_PRS`.
+List open pull requests with branch prefix `fix/issue-{N}-` to find the open bug-fix PR. Collect as `$FIX_PRS`.
 
-`update_labels(issue_number, add: ["in-progress"])`.
+Add label `in-progress` to issue `#issue_number`.
 
 If no open PR found: halt with a comment noting no open fix PR exists — use `fix-bug` mode for a fresh start.
 
@@ -40,7 +40,7 @@ Replace the existing `## Dev Investigation` comment on the issue with the new in
 
 ## Step 4 — Diff Analysis
 
-`get_pr` for the open PR. Extract:
+Fetch the open PR. Extract:
 
 | Column | Content |
 |--------|---------|

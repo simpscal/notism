@@ -6,7 +6,7 @@ Extract `sprint_number` (the token after `sync-design`).
 
 ## Step 1 — Resolve Sprint Milestone
 
-- Use `list_milestones()` to find the milestone with title `Sprint N`
+- List all milestones to find the one with title `Sprint N`
 - Hold its GitHub ID as `$MILESTONE_ID`
 
 If no matching milestone is found, list available milestones and stop.
@@ -15,13 +15,13 @@ If no matching milestone is found, list available milestones and stop.
 
 ## Step 2 — Fetch All Issues
 
-Call `list_issues($MILESTONE_ID)` once. Partition the result in memory:
+List all issues in the sprint milestone once. Partition the result in memory:
 
-- **$STORIES** — issues labelled `user-story`. Use `fetch_issue(id)` on each to read full body, acceptance criteria, and notes.
+- **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes.
   - Identify **changed stories**: those with label `story-updated` or `story-removed`.
   - If no changed stories exist, report "No story changes found — design is already in sync" and stop.
-- **$REQUIREMENT** — single issue labelled `requirement`. Use `fetch_issue(id)` to read it in full.
-- **$DESIGN** — single issue labelled `design` whose title matches `Sprint N — Design Instructions`. Use `fetch_issue(id)` to read it in full. Hold as the **current Design Instructions**.
+- **$REQUIREMENT** — single issue labelled `requirement`. Read it in full.
+- **$DESIGN** — single issue labelled `design` whose title matches `Sprint N — Design Instructions`. Read it in full. Hold as the **current Design Instructions**.
   - If no Design Instructions issue exists, report "No Design Instructions found for Sprint N — run `/design Sprint N` first" and stop.
 
 ---
@@ -63,4 +63,4 @@ Use the current Design Instructions as the base document. For each section, eval
 - **No impact**: Keep existing content unchanged
 - **Impact**: Modify only the affected parts
 
-Apply changes following `_design-structure.md` for structure and token/component conventions. Then: `update_issue_body($DESIGN.id, updated_body)`.
+Apply changes following `_design-structure.md` for structure and token/component conventions. Then update the body of the design issue with the revised content.

@@ -8,7 +8,7 @@ Extract `bug_issue_number` (the token after `load-bug`).
 
 ## Step 1 — Fetch Issue
 
-`fetch_issue(bug_issue_number)`. Read in full.
+Read issue `#bug_issue_number` in full.
 
 If the issue does not have the `bug-production` label, halt:
 ```
@@ -26,9 +26,9 @@ Hold as **$BUG**. Extract:
 
 Apply the git-strategy skill's **Bugfix** pattern to derive the branch name.
 
-- `list_branches(repo, pattern: $BUG_BRANCH)` — check if bugfix branch exists on the remote
-- `list_prs(repo, "open", head_prefix: $BUG_BRANCH)` — check for an open PR
-- `list_comments(bug_issue_number)` — check for existing investigation comment
+- List remote branches matching `$BUG_BRANCH` — check if bugfix branch exists on the remote
+- List open pull requests with branch prefix `$BUG_BRANCH` — check for an open PR
+- List all comments on issue `#bug_issue_number` — check for existing investigation comment
 
 Hold: `$BUG_BRANCH`, `$PR_URL` (or "none"), `$INVESTIGATION` (comment body or "not posted").
 

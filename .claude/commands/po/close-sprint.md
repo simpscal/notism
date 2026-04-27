@@ -6,11 +6,11 @@
 
 Parse `$ARGUMENTS` as the milestone ID or sprint number (e.g. `3` or `Sprint 3`).
 
-If `$ARGUMENTS` is empty: run `list_milestones_detail()` from the tracker adapter and list the results for the user to choose from, then stop.
+If `$ARGUMENTS` is empty: list all milestones with details from the tracker adapter and show the results for the user to choose from, then stop.
 
 ### Step 1 — Fetch Sprint Snapshot
 
-Use `list_issues(milestone_id)` from the tracker adapter to fetch **all** issues in the milestone (open and closed). For each issue, note its number, title, labels, and state.
+List all issues in the milestone (open and closed) from the tracker adapter. For each issue, note its number, title, labels, and state.
 
 Partition issues into four groups:
 - **Stories**: issues with the `user-story` label
@@ -27,7 +27,7 @@ Before doing anything destructive, verify the sprint is complete:
 For each story that is still **open**:
 - Check its labels for `in-progress`
 - For each codebase repo (derive slug: owner from tracker config + directory name from codebase path), run:
-  `list_prs(codebase_repo, open, "feature/issue-{N}-")` to detect any unmerged PRs
+  list open pull requests with branch prefix `feature/issue-{N}-` in each codebase repo to detect any unmerged PRs
 
 If any open story has an unmerged PR or is still in-progress, stop and output:
 
@@ -44,8 +44,8 @@ If all stories are merged or already closed, proceed.
 
 For every issue in the milestone (stories, TDD issue, requirement issue, design issue):
 
-1. `update_labels(issue_id, add: [sprint-completed], remove: [in-progress, story-updated])`
-2. `close_issue(issue_id)`
+1. Add label `sprint-completed` and remove labels `in-progress` and `story-updated` from the issue.
+2. Close the issue.
 
 Output one line per issue as it completes:
 ```
@@ -58,9 +58,9 @@ Story branches follow the pattern `feature/issue-{N}-{description}` (with option
 
 For each codebase listed in the project config:
 
-Use `list_branches(codebase_repo, "feature/issue-")` to find all story branches on the remote.
+List remote branches matching `feature/issue-` in each codebase repo.
 
-For each story branch found, delete it from the remote using `delete_branch(codebase_repo, branch_name)`.
+For each story branch found, delete it from the remote.
 
 If the branch no longer exists on the remote, skip silently.
 
@@ -71,7 +71,7 @@ Output one line per deletion:
 
 ### Step 5 — Check for EF Core Migrations (Backend Only)
 
-Use `diff_branches_files(backend_repo, "main", sprint_branch)` to get the list of files changed in the sprint branch relative to main.
+Get the list of files changed between `main` and `{sprint_branch}` in the backend repo.
 
 Filter that list for paths containing `/Migrations/`.
 
@@ -81,16 +81,16 @@ If no migration files are found, note: "No database migrations in this sprint."
 
 ### Step 6 — Create Release PRs (Sprint Branch → Main)
 
-For each codebase, create a PR via `create_pr(title, body, head, base)`:
+For each codebase, open a pull request:
 
 - **Title**: `feat(sprint-N): {milestone description}`
 - **Base**: `main`
 - **Head**: `feature/sprint-N`
-- **Body**: Use `render_template("pr-release", {sprint, stories, migrations})`.
+- **Body**: Render the `pr-release` template with `{sprint, stories, migrations}`.
 
 ### Step 7 — Post Sprint Summary
 
-Use `render_template("comment-sprint-summary", {sprint, closed_date, stories, release_prs, migrations})`, then `post_comment(requirement_issue_id, body)`.
+Render the `comment-sprint-summary` template with `{sprint, closed_date, stories, release_prs, migrations}`, then post it as a comment on the requirement issue.
 
 ## Constraints
 

@@ -4,19 +4,19 @@
 
 Extract `sprint_number` (the token after `load-context`).
 
-Use `list_milestones()` to find the milestone with title `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
+List all milestones to find the one titled `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
 
 ---
 
 ## Step 1 — Fetch All Sprint Issues
 
-Call `list_issues($MILESTONE_ID)` once. Partition the result in memory:
+List all issues in the sprint milestone once. Partition the result in memory:
 
-- **$STORIES** — issues labelled `user-story`. Use `fetch_issue(id)` on each to read full body, acceptance criteria, and notes. Identify which stories involve user-facing UI changes.
+- **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes. Identify which stories involve user-facing UI changes.
   - If none do, report "No UI work found in Sprint N — design load-context not applicable" and stop.
-- **$REQUIREMENT** — single issue labelled `requirement`. Use `fetch_issue(id)` to read it in full.
+- **$REQUIREMENT** — single issue labelled `requirement`. Read it in full.
   - If absent, report "No requirement found for Sprint N — run `/po create-requirement` first" and stop.
-- **$DESIGN** — single issue labelled `design` (may be absent). If present, use `fetch_issue(id)` to read it in full.
+- **$DESIGN** — single issue labelled `design` (may be absent). If present, read it in full.
 
 ---
 

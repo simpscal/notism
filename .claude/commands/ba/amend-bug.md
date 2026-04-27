@@ -6,7 +6,7 @@ Extract `issue_number` (the token after `amend-bug`).
 
 ## Step 1 — Fetch Issue and Validate Type
 
-1. `fetch_issue(issue_number)` — read title, body, labels, milestone in full.
+1. Read issue `#issue_number` in full — title, body, labels, milestone.
 2. If labels do NOT contain `bug-production` → stop immediately and output:
    > ⚠️ Cannot proceed: Issue #`<issue_number>` does not have a `bug-production` label.
 3. Extract current AC state:
@@ -98,9 +98,9 @@ After user approval:
    - Do NOT modify, reorder, or touch any content in or before the `## Bug Report` section.
    - Preserve any `## Notes` section if present; update only if discovery surfaced changes.
 
-2. `update_issue_body(issue_number, updated_body)`
+2. Update the body of issue `#issue_number` with the reconstructed content.
 
-3. `update_labels(issue_number, add: ["story-updated"], remove: [])`
+3. Add label `story-updated` to issue `#issue_number`.
 
 4. Report:
    ```

@@ -1,6 +1,6 @@
 # Notify Implementation Complete
 
-`post_comment(ISSUE_NUMBER, body)`:
+Post a comment on issue `#ISSUE_NUMBER` with the following body:
 
 ## Single-skill stories
 
@@ -25,7 +25,7 @@
 > Pause Human gate: Review both PR diffs. When approved, merge into the sprint branch.
 ```
 
-Then `update_labels(ISSUE_NUMBER, add: [implemented], remove: [in-progress, story-updated])`.
+Then add label `implemented` and remove labels `in-progress` and `story-updated` from issue `#ISSUE_NUMBER`.
 
 ---
 
@@ -58,4 +58,4 @@ Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed a
 > Pause Human gate: Review both revert PR diffs. When approved, merge into the sprint branch.
 ```
 
-Then `update_labels(ISSUE_NUMBER, add: [implemented], remove: [in-progress, story-updated, story-removed])`.
+Then add label `implemented` and remove labels `in-progress`, `story-updated`, and `story-removed` from issue `#ISSUE_NUMBER`.

@@ -4,17 +4,17 @@
 
 Extract `sprint_number` (the token after `load-context`).
 
-Use `list_milestones()` to find the milestone with title `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
+List all milestones to find the one titled `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
 
 ---
 
 ## Step 1 — Fetch All Sprint Issues
 
-Call `list_issues($MILESTONE_ID)` once. Partition the result in memory:
+List all issues in the sprint milestone once. Partition the result in memory:
 
-- **$REQUIREMENT** — single issue labelled `requirement`. Use `fetch_issue(id)` to read it in full.
+- **$REQUIREMENT** — single issue labelled `requirement`. Read it in full.
   - If absent, report "No requirement found for Sprint N — run `/po create-requirement` first" and stop.
-- **$STORIES** — issues labelled `user-story`. Use `fetch_issue(id)` on each to read full body, acceptance criteria, and notes.
+- **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes.
   - If none exist, report "No stories found for Sprint N — run `/ba write-stories <req_issue_number>` to create them" and stop.
 
 ---

@@ -6,17 +6,17 @@ Extract `sprint_number` (the token after `sync-feature-tdd`).
 
 ## Step 1 — Fetch All Issues
 
-Use `list_milestones()` to find the milestone with title `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
+List all milestones to find the one titled `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
 
-Call `list_issues($MILESTONE_ID)` once. Partition the result in memory:
+List all issues in the sprint milestone once. Partition the result in memory:
 
-- **$STORIES** — issues labelled `user-story`. Use `fetch_issue(id)` on each to read full body, acceptance criteria, and notes.
+- **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes.
   - Identify **changed stories**: those with label `story-updated` or `story-removed`.
   - If no changed stories exist, report "No story changes found — TDD is already in sync" and stop.
-- **$REQUIREMENT** — single issue labelled `requirement`. Use `fetch_issue(id)` to read it in full.
-- **$TDD** — single issue labelled `technical-design`. Use `fetch_issue(id)` to read it in full. Hold as the **current TDD**.
+- **$REQUIREMENT** — single issue labelled `requirement`. Read it in full.
+- **$TDD** — single issue labelled `technical-design`. Read it in full. Hold as the **current TDD**.
   - If no TDD exists, report "No TDD found for Sprint N — run `/tech-lead write-feature-tdd Sprint N` first" and stop.
-- **$DESIGN** — single issue labelled `design` (may be absent). If present, use `fetch_issue(id)` to read it in full — use for UI component context in Components Design.
+- **$DESIGN** — single issue labelled `design` (may be absent). If present, read it in full — use for UI component context in Components Design.
 
 Before proceeding, build a mental model from `$STORIES`:
 - What is the feature goal? What capability does the user gain?
@@ -105,4 +105,4 @@ Evaluate every section of the TDD template against the revised design. Sections 
 | Architecture Key Decisions | Naming, layering, or cross-cutting patterns added, updated, or changed |
 | Implementation Priority | Any story added, updated, removed, or implementation order reconsidered |
 
-Apply changes to the current TDD document. Then: `update_issue_body($TDD.id, updated_body)`.
+Apply changes to the current TDD document. Then update the body of the TDD issue with the revised content.

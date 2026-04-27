@@ -6,11 +6,11 @@
 
 Parse `$ARGUMENTS` as the bug issue number (e.g. `42`).
 
-If `$ARGUMENTS` is empty: use `list_open_issues(["bug-production"])` from the tracker adapter and list the results for the user to choose from, then stop.
+If `$ARGUMENTS` is empty: list all open issues labeled `bug-production` from the tracker adapter and show the results for the user to choose from, then stop.
 
 ### Step 2 — Fetch Issue
 
-Use `fetch_issue(issue_number)` from the tracker adapter to read the issue's title, labels, and state.
+Read issue `#issue_number` from the tracker adapter to get its title, labels, and state.
 
 - If the issue does not have the `bug-production` label, stop:
   ```
@@ -25,7 +25,7 @@ Use `fetch_issue(issue_number)` from the tracker adapter to read the issue's tit
 
 Before doing anything destructive, verify the bug is ready to close:
 
-For each codebase repo (derive slug: owner from tracker config + directory name from codebase path), use `list_prs(codebase_repo, "open", "fix/issue-{N}-")` to detect any unmerged PRs.
+For each codebase repo (derive slug: owner from tracker config + directory name from codebase path), list open pull requests with branch prefix `fix/issue-{N}-` to detect any unmerged PRs.
 
 Collect results from all codebases. If any open PRs are found across any repo, stop:
 
@@ -40,8 +40,8 @@ If no open PRs in any codebase repo, proceed.
 
 ### Step 4 — Update Labels and Close
 
-1. `update_labels(issue_number, add: [bug-fixed], remove: [in-progress, implemented])`
-2. `close_issue(issue_number)`
+1. Add label `bug-fixed` and remove labels `in-progress` and `implemented` from issue `#issue_number`.
+2. Close issue `#issue_number`.
 
 Output:
 ```
@@ -52,9 +52,9 @@ Output:
 
 For the backend codebase, find the merged fix PR:
 
-Use `list_prs(backend_codebase_repo, "closed", "fix/issue-{N}-")` and filter client-side for `merged: true`. Take the first result as `pr_number`.
+List closed pull requests with branch prefix `fix/issue-{N}-` in the backend codebase repo and filter client-side for `merged: true`. Take the first result as `pr_number`.
 
-If a PR number is found, use `get_pr(backend_codebase_repo, pr_number)` and inspect its `files[]` for paths matching `/Migrations/` (case-insensitive).
+If a PR number is found, fetch pull request `#pr_number` and inspect its `files[]` for paths matching `/Migrations/` (case-insensitive).
 
 - If no merged backend PR found: note "No backend PR found for #N — skipping migration check."
 - If migration files found: capture the list. This output is used in Step 7.
@@ -64,9 +64,9 @@ If a PR number is found, use `get_pr(backend_codebase_repo, pr_number)` and insp
 
 For each codebase listed in the project config:
 
-Use `list_branches(codebase_repo, "fix/issue-{N}-")` to find all bug branches on the remote.
+List remote branches matching `fix/issue-{N}-` in each codebase repo.
 
-For each branch found, delete it from the remote using `delete_branch(codebase_repo, branch_name)`.
+For each branch found, delete it from the remote.
 
 If the branch no longer exists on the remote, skip silently.
 
@@ -77,7 +77,7 @@ Output one line per deletion:
 
 ### Step 7 — Post Bug Summary
 
-Use `render_template("comment-bug-summary", {issue_number, title, closed_date, migrations})`, then `post_comment(issue_number, body)`.
+Render the `comment-bug-summary` template with `{issue_number, title, closed_date, migrations}`, then post it as a comment on issue `#issue_number`.
 
 ## Constraints
 

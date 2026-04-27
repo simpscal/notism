@@ -4,15 +4,15 @@
 
 1. Extract `issue_number` (first token after `change`) and `new_requirement` (the remainder).
 
-2. `fetch_issue(issue_number)` — read the current body in full.
+2. Read issue `#issue_number` in full.
 
 3. Compare the current body against `new_requirement` — identify what was **added**, **removed**, or **modified**.
 
-4. Rewrite the body using `render_template("issue-requirement", {summary, goals, out_of_scope})`, incorporating the changes.
+4. Rewrite the body using the `issue-requirement` template with `{summary, goals, out_of_scope}`, incorporating the changes.
 
-5. `update_issue_body(issue_number, updated_body)`
+5. Update the body of issue `#issue_number` with the rewritten content.
 
-6. `update_labels(issue_number, add: ["requirement-updated"], remove: [])`
+6. Add label `requirement-updated` to issue `#issue_number`.
 
 ---
 

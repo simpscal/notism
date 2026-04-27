@@ -1,17 +1,17 @@
 # Mode: Standard
 
-Use `list_milestones()` to find the milestone with title `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
+List all milestones to find the one titled `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
 
 ---
 
 ## Step 1 — Fetch All Issues
 
-Call `list_issues($MILESTONE_ID)` once. Partition the result in memory:
+List all issues in the sprint milestone once. Partition the result in memory:
 
-- **$STORIES** — issues labelled `user-story`. Use `fetch_issue(id)` on each to read full body, acceptance criteria, and notes.
-- **$REQUIREMENT** — single issue labelled `requirement`. Use `fetch_issue(requirement_id)` to read it in full. Hold as **$REQUIREMENT** — use this to understand the sprint goal, the user problem being solved, and what "done" looks like from the PO's perspective.
+- **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes.
+- **$REQUIREMENT** — single issue labelled `requirement`. Read it in full. Hold as **$REQUIREMENT** — use this to understand the sprint goal, the user problem being solved, and what "done" looks like from the PO's perspective.
 - **$TDD** — single issue labelled `technical-design` (may be absent). If one already exists, report "TDD already exists for Sprint N — run `/tech-lead sync-feature-tdd Sprint N` to update" and stop.
-- **$DESIGN** — single issue labelled `design` (may be absent). If present, use `fetch_issue(id)` to read it in full — use for UI component context in Components Design.
+- **$DESIGN** — single issue labelled `design` (may be absent). If present, read it in full — use for UI component context in Components Design.
 
 Before proceeding, build a mental model from `$STORIES`:
 - What is the feature goal? What capability does the user gain?
@@ -69,9 +69,9 @@ Where design instructions exist, use the Layout and Components sections from $DE
 
 ## Step 5 — Create TDD Issue
 
-Use `create_issue(title, body, labels, milestone)`:
+Create an issue:
 - **Title**: `Sprint N — Technical Design Document`
-- **Body**: full TDD rendered via `render_template("issue-tdd", {...})`, with `Part of #N` at the very top
+- **Body**: full TDD rendered via the `issue-tdd` template, with `Part of #N` at the very top
 - **Labels**: `technical-design`
 - **Milestone**: `$MILESTONE_ID`
 

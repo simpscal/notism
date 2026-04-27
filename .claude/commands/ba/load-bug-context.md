@@ -8,7 +8,7 @@ Extract `bug_issue_number` (the token after `load-bug-context`).
 
 ## Step 1 — Fetch the Bug Issue
 
-`fetch_issue(bug_issue_number)` to read the bug report in full.
+Read issue `#bug_issue_number` in full.
 
 If absent or not labelled `bug-production`, report "Issue #N is not a bug report" and stop.
 

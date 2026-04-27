@@ -28,4 +28,4 @@ Agent determines which subagent(s) to invoke based on requirements and architect
 | Frontend + DevOps | `frontend` + `devops` | **parallel** |
 | All three | `backend` + `frontend` + `devops` | **parallel** |
 
-If any subagent reports a blocker, `post_comment(ISSUE_NUMBER)` with the blocker and halt.
+If any subagent reports a blocker, post a comment on issue `#ISSUE_NUMBER` with the blocker details and halt.

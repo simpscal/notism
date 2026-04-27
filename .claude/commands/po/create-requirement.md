@@ -2,6 +2,6 @@
 
 ## Steps
 
-1. Summarise the raw requirement using `render_template("issue-requirement", {summary, goals, out_of_scope})`
+1. Summarise the raw requirement using the `issue-requirement` template with `{summary, goals, out_of_scope}`.
 
-2. `create_issue("[Requirement] <concise title>", body, ["requirement"], null)`
+2. Create an issue titled `[Requirement] <concise title>` with the rendered body, label `requirement`, and no milestone.
