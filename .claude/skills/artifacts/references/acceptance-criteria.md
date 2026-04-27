@@ -18,4 +18,4 @@
 | Field | Req | Notes |
 |-------|-----|-------|
 | `criteria` | yes | 2-8 items — observable, testable, pass/fail, no implementation details |
-| `notes` | no | Edge cases, dependencies — use `link_to(id)` for issue references |
+| `notes` | no | Edge cases, dependencies — format issue references as `#id` (e.g. `#17`) |

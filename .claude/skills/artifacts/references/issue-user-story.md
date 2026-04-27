@@ -11,7 +11,7 @@ As a <role>, I want <action> so that <benefit>
 <Acceptance Criteria + Notes from acceptance-criteria.md>
 
 ---
-Part of <link_to(requirement_issue_number)>
+Part of #requirement_issue_number
 ```
 
 ---
@@ -23,4 +23,4 @@ Part of <link_to(requirement_issue_number)>
 | `user_story` | yes | `As a <role>, I want <action> so that <benefit>` — specific role, user need, not implementation |
 | `acceptance_criteria` | yes | See `acceptance-criteria.md` |
 | `notes` | no | Edge cases, dependencies |
-| `requirement_issue` | yes | Use `link_to(id)` — not direct `#N` |
+| `requirement_issue` | yes | Format as `#id` (e.g. `#17`) |
