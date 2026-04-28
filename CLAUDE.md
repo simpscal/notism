@@ -16,6 +16,7 @@ Never hardcode repo slugs, label names, paths, or branch patterns.
 |------|------|---------|
 | backend | `../notism-api` | .NET (C#), Clean Architecture (Onion), CQRS via MediatR, EF Core, PostgreSQL |
 | frontend | `../notism-web` | React 19, TypeScript, Tailwind v4, shadcn/ui (Radix UI), TanStack Query, Redux Toolkit |
+| infrastructure | `../notism-api/terraform` | AWS (EC2, RDS, S3, CloudFront, ECR) |
 
 ---
 
@@ -35,12 +36,3 @@ Never hardcode repo slugs, label names, paths, or branch patterns.
 | Bug issue | `bug-production` |
 | Bug resolved and closed | `bug-fixed` |
 | Dev implementation complete | `implemented` |
-
----
-
-## Commands
-
-| Codebase | Test | Lint / Build |
-|----------|------|-------------|
-| backend | `cd ../notism-api && dotnet test` | `cd ../notism-api && dotnet build` |
-| frontend | `cd ../notism-web && bun run test` | `cd ../notism-web && bun run lint` |
