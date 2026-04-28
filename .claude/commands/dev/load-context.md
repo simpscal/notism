@@ -33,8 +33,9 @@ Apply the git-strategy skill's **Story** and **Sprint** patterns to derive branc
 
 - List remote branches matching `$STORY_BRANCH` — check if story branch exists on the remote
 - List open pull requests with branch prefix `$STORY_BRANCH` — check for an open PR
+- If a PR is found: fetch the list of files changed in that PR
 
-Hold: `$STORY_BRANCH`, `$SPRINT_BRANCH`, `$PR_URL` (or "none").
+Hold: `$STORY_BRANCH`, `$SPRINT_BRANCH`, `$PR_URL` (or "none"), `$PR_FILES` (list of changed file paths or "none").
 
 ---
 
@@ -59,6 +60,7 @@ Work through the loaded material silently. Produce no output in this step. Build
 **From git state:**
 - Has implementation started (branch exists)?
 - Is there an open PR?
+- Which files have already been modified in the PR (if open)?
 
 Complete when: you can describe the story goal, name every component and API involved, state the architecture constraints, and assess implementation progress — without re-reading any issue.
 
@@ -128,6 +130,7 @@ If absent: "No design instructions for this sprint."
 | Story branch | `branch-name` or "not created" |
 | Sprint branch | `branch-name` |
 | Open PR | URL or "none" |
+| PR files changed | comma-separated paths or "none" |
 
 ---
 

@@ -28,9 +28,10 @@ Apply the git-strategy skill's **Bugfix** pattern to derive the branch name.
 
 - List remote branches matching `$BUG_BRANCH` — check if bugfix branch exists on the remote
 - List open pull requests with branch prefix `$BUG_BRANCH` — check for an open PR
+- If a PR is found: fetch the list of files changed in that PR
 - List all comments on issue `#bug_issue_number` — check for existing investigation comment
 
-Hold: `$BUG_BRANCH`, `$PR_URL` (or "none"), `$INVESTIGATION` (comment body or "not posted").
+Hold: `$BUG_BRANCH`, `$PR_URL` (or "none"), `$PR_FILES` (list of changed file paths or "none"), `$INVESTIGATION` (comment body or "not posted").
 
 ---
 
@@ -56,6 +57,7 @@ Work through the loaded material silently. Produce no output in this step. Build
 **From git state:**
 - Has the fix started (branch exists)?
 - Is there an open PR?
+- Which files have already been modified in the PR (if open)?
 
 Complete when: you can state the root cause, describe the fix approach, name every AC, and assess fix progress — without re-reading any issue.
 
@@ -121,6 +123,7 @@ If not posted: "Investigation not yet posted — run `/dev N` to start from Step
 | Bugfix branch | `branch-name` or "not created" |
 | Base branch | `main` |
 | Open PR | URL or "none" |
+| PR files changed | comma-separated paths or "none" |
 
 ---
 
