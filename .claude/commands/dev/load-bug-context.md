@@ -65,7 +65,7 @@ Complete when: you can state the root cause, describe the fix approach, name eve
 
 ## Step 4 — Activate and Record
 
-Write the context snapshot below to `context/bug-N-dev-context.md` (replace N with the actual issue number). Create the directory if it does not exist. Overwrite any existing file for this bug.
+Write the context snapshot below to `context/bug-N-dev-context.md` at the repo root (replace N with the actual issue number). Create the directory if it does not exist. Overwrite any existing file for this bug.
 
 This file is a record of the activated state — the actual activation happened in Step 3. Every section is mandatory; write "None" only when genuinely empty.
 
@@ -129,7 +129,7 @@ If not posted: "Investigation not yet posted — run `/dev N` to start from Step
 
 **Developer active — Bug #N.**
 
-I have internalized the full fix knowledgebase: bug report, ACs, investigation results, and git state. Context snapshot written to `context/bug-N-dev-context.md`.
+I have internalized the full fix knowledgebase: bug report, ACs, investigation results, and git state. Context snapshot written to `context/bug-N-dev-context.md` at the repo root.
 
 I am now operating as Developer for Bug #N for the remainder of this session. What do you need?
 

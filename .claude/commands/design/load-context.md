@@ -57,7 +57,7 @@ Complete when: you can name every affected surface, map each to the stories driv
 
 ## Step 4 — Activate and Record
 
-Write the context snapshot below to `context/sprint-N-design-context.md` (replace N with the actual sprint number). Create the directory if it does not exist. Overwrite any existing file for this sprint.
+Write the context snapshot below to `context/sprint-N-design-context.md` at the repo root (replace N with the actual sprint number). Create the directory if it does not exist. Overwrite any existing file for this sprint.
 
 Every section is mandatory; write "None" only when genuinely empty.
 
@@ -114,6 +114,6 @@ List every unresolved design decision found in $DESIGN or story Notes sections. 
 
 **Design specialist active — Sprint N.**
 
-I have internalized the full sprint knowledgebase: requirement, UI stories, design system coverage, and existing design instructions. Context snapshot written to `context/sprint-N-design-context.md`.
+I have internalized the full sprint knowledgebase: requirement, UI stories, design system coverage, and existing design instructions. Context snapshot written to `context/sprint-N-design-context.md` at the repo root.
 
 I am now operating as Design specialist for Sprint N for the remainder of this session. What do you need?

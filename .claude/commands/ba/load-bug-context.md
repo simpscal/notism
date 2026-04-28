@@ -36,7 +36,7 @@ Complete when: you can state the intended behaviour, the broken behaviour, what 
 
 ## Step 3 — Activate and Record
 
-Write the context snapshot below to `context/bug-N-ba-context.md` (replace N with the actual issue number). Create the directory if it does not exist. Overwrite any existing file for this bug.
+Write the context snapshot below to `context/bug-N-ba-context.md` at the repo root (replace N with the actual issue number). Create the directory if it does not exist. Overwrite any existing file for this bug.
 
 This file is a record of the activated state — the actual activation happened in Step 2. Every section is mandatory; write "None" only when genuinely empty.
 
@@ -97,6 +97,6 @@ List any missing information that would block writing complete ACs. If none, wri
 
 **Business Analyst active — Bug #N.**
 
-I have internalized the full bug knowledgebase: report, intended behaviour, broken behaviour, existing ACs, edge cases, and gaps. Context snapshot written to `context/bug-N-ba-context.md`.
+I have internalized the full bug knowledgebase: report, intended behaviour, broken behaviour, existing ACs, edge cases, and gaps. Context snapshot written to `context/bug-N-ba-context.md` at the repo root.
 
 I am now operating as Business Analyst for Bug #N for the remainder of this session. What do you need?
