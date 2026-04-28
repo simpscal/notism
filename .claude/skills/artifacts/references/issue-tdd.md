@@ -38,6 +38,9 @@ Part of #<requirement_issue_number>
 ### Components Design
 <Mermaid: internal component structure>
 
+### Infrastructure Design
+<AWS services, networking, deployment topology — Mermaid or N/A>
+
 ---
 
 ## 3. Data & Interface Contracts
@@ -103,6 +106,7 @@ Part of #<requirement_issue_number>
 | `unhappy_path` | yes | Mermaid sequence: failure scenario + system response |
 | `tech_stack` | yes | New tech only, or `No new technologies — uses existing stack` |
 | `components_design` | yes | Mermaid graph: all new/modified components |
+| `infrastructure_design` | yes | AWS services, networking, deployment topology — Mermaid or `N/A` |
 | `data_models` | yes | ERD/schema with indexes, or `No new data models — uses existing schema` |
 | `api_spec` | yes | Table: Method, Route, Auth, Request, Response, Status Codes |
 | `event_schemas` | yes | Table or `N/A` |

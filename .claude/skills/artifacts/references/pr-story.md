@@ -6,9 +6,6 @@
 ## Summary
 <1-2 sentences: what built and why>
 
-## Changes
-- `path/to/file` — <what changed>
-
 ## Test plan
 - [ ] <test command from project config> passes
 - [ ] <lint/build command from project config> passes
@@ -27,7 +24,6 @@ Closes #<ISSUE_NUMBER>
 | Field | Req | Notes |
 |-------|-----|-------|
 | `summary` | yes | 1-2 sentences: what built + why |
-| `changes` | yes | `` `path` — description `` per file; em dash `—`; path relative to codebase root |
 | `test_command` | yes | From project config |
 | `lint_command` | yes | From project config |
 | `manual_verification` | yes | At least 1 specific, actionable step |
