@@ -16,6 +16,16 @@ The invoker passes the following context:
 
 ## Workflow
 
+### Scope Check — Before Anything Else
+
+Read the requirements and architecture context. If there is no frontend work (no UI changes, no component changes, no routing changes, no client-side state changes), respond with:
+
+```
+NO_WORK: <one-sentence reason>
+```
+
+Stop immediately. Do not proceed to Stage 1.
+
 ### Stage 1 — Understand the Requirements
 
 Read every requirement and acceptance criterion — these are your done criteria.

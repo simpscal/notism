@@ -1,6 +1,6 @@
 # Dispatch to Skill Subagent
 
-Inspect the requirements and architecture context to determine which subagent(s) to invoke.
+Always spawn all three subagents (`backend`, `frontend`, `devops`) in **parallel**. Each subagent self-evaluates scope and reports back. Do NOT pre-filter.
 
 ## Context to Pass
 
@@ -14,18 +14,18 @@ Pass the following context to every subagent. **All context is passed directly �
 
 **Note:** Dev synthesizes scope and key decisions by reading relevant TDD sections (Components Design, API Spec, Data Models, Architecture Key Decisions) in context of the story's acceptance criteria.
 
-## Dispatch Table
+## Dispatch Rules
 
-Agent determines which subagent(s) to invoke based on requirements and architecture context:
+Always launch all three subagents in a single parallel message:
 
-| Condition | Subagent(s) | Execution |
-|-----------|-------------|-----------|
-| Backend work only | `backend` | single |
-| Frontend work only | `frontend` | single |
-| DevOps work only | `devops` | single |
-| Backend + Frontend | `backend` + `frontend` | **parallel** |
-| Backend + DevOps | `backend` + `devops` | **parallel** |
-| Frontend + DevOps | `frontend` + `devops` | **parallel** |
-| All three | `backend` + `frontend` + `devops` | **parallel** |
+```
+backend + frontend + devops  →  parallel (always)
+```
 
-If any subagent reports a blocker, post a comment on issue `#ISSUE_NUMBER` with the blocker details and halt.
+## Orchestrator Response
+
+After all three subagents complete:
+
+- Subagent returns `NO_WORK: …` → log it, take no further action for that domain.
+- Subagent returns work done → verify output, mark domain complete.
+- Subagent reports a blocker → post a comment on issue `#ISSUE_NUMBER` with the blocker details and halt all remaining work.

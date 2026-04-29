@@ -15,6 +15,16 @@ The invoker passes the following context:
 
 ## Workflow
 
+### Scope Check — Before Anything Else
+
+Read the requirements and architecture context. If there is no backend work (no API changes, no domain logic, no data model changes, no migrations), respond with:
+
+```
+NO_WORK: <one-sentence reason>
+```
+
+Stop immediately. Do not proceed to Stage 1.
+
 ### Stage 1 — Understand the Requirements
 
 Read every requirement and acceptance criterion — these are your done criteria.
