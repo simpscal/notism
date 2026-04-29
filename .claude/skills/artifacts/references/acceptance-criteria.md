@@ -17,5 +17,5 @@
 
 | Field | Req | Notes |
 |-------|-----|-------|
-| `criteria` | yes | 2-8 items — observable, testable, pass/fail, no implementation details |
+| `criteria` | yes | 2-8 items — each must name the user-visible area affected, be observable, testable, pass/fail, no implementation details |
 | `notes` | no | Edge cases, dependencies — format issue references as `#id` (e.g. `#17`) |

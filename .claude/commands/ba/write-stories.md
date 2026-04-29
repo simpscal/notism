@@ -72,6 +72,7 @@ For each story, write ACs immediately:
 **AC format**: *"When X, then Y"* or *"Given X, when Y, then Z"*
 
 **AC testability checklist** — every AC must pass:
+- Names the specific user-visible area where the change appears (e.g. "in the comment panel", "on the settings page")?
 - Observable without reading code?
 - Describes a specific condition and a specific outcome?
 - Could a non-engineer verify it in a running system?

@@ -110,6 +110,7 @@ For each **New** scope item:
 3. Write ACs for each story. **AC format**: *"When X, then Y"* or *"Given X, when Y, then Z"*
 
    **AC testability checklist** — every AC must pass:
+   - Names the specific user-visible area where the change appears (e.g. "in the comment panel", "on the settings page")?
    - Observable without reading code?
    - Describes a specific condition and a specific outcome?
    - Could a non-engineer verify it in a running system?
@@ -136,4 +137,4 @@ Do not modify the issue body — the label signals removal.
 - Never invent scope — if unclear, run discovery
 - Never produce tracker output until the user confirms the picture is correct
 - Output is format-agnostic — produce clean markdown the user can paste wherever they need it
-- Every AC must be observable without reading code, describe a specific condition and outcome, and be verifiable by a non-engineer in a running system
+- Every AC must name the user-visible area it affects, be observable without reading code, describe a specific condition and outcome, and be verifiable by a non-engineer in a running system
