@@ -26,7 +26,8 @@ Add label `in-progress` to the story issue.
 
 ## Step 2 — Git Setup
 
-- `base_branch` = sprint branch (apply the git-strategy skill's **Sprint** pattern)
+- Sprint number N: read from the issue's milestone title (format: `Sprint N`)
+- `base_branch` = `feature/sprint-{N}` (git-strategy skill's **Sprint** pattern, N from above)
 - Branch name: apply the git-strategy skill's **Story** pattern
 - If sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
 
