@@ -9,7 +9,7 @@ Pass the following context to every subagent. **All context is passed directly �
 | Context | Source |
 |---------|--------|
 | Requirements | Story description + full `## Acceptance Criteria` section |
-| Architecture context | **Story**: Relevant TDD sections verbatim — architecture key decisions, components design, API specification, data models, alternatives considered, risks. **Bug**: Dev investigation verbatim — Root Cause, Scope, Fix Approach, Risk. |
+| Decisions | **Story**: Relevant TDD sections verbatim — architecture key decisions, components design, API specification, data models, alternatives considered, risks. Pass `none` if no TDD exists — subagents derive scope from the story ACs and existing codebase. **Bug**: Dev investigation verbatim — Root Cause, Scope, Fix Approach, Risk. |
 | Design instructions | Full design instructions issue (frontend only) — sprint-level document |
 
 ## Dispatch Rules

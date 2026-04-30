@@ -8,7 +8,7 @@ The story already has an implementation (open or merged PR). Implement the delta
 
 1. **Issue body + comments** — the ticket already fetched in Step 1 (hold it)
 
-2. **TDD** — list issues labeled `technical-design` in the milestone to find it, then read the TDD issue in full. Extract:
+2. **TDD** *(optional)* — list issues labeled `technical-design` in the milestone to find it. If found, read in full and extract:
    - Problem statement
    - Proposed solution
    - Architecture key decisions
@@ -17,6 +17,8 @@ The story already has an implementation (open or merged PR). Implement the delta
    - Data models
    - Risks
    - Implementation priority
+
+   If no TDD issue exists, note it — subagents will derive scope from the story ACs and the existing codebase.
 
 3. **Design Instructions** (frontend only) — list issues labeled `design` in the milestone to find the design instructions issue. Read it in full — the document covers the entire sprint's UI design.
 

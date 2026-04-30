@@ -11,7 +11,9 @@ tools: Read, Write, Edit, Glob, Grep, Bash, mcp__plugin_figma_figma__authenticat
 The invoker passes the following context:
 
 - **Requirements**: user story description + acceptance criteria list (remaining unchecked items only)
-- **Architecture context**: relevant TDD sections verbatim — architecture key decisions, components design, API specification, data models, alternatives considered, risks, story dependencies
+- **Decisions** *(optional)*: one of:
+  - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, API specification, data models, alternatives considered, risks, story dependencies. Pass `none` if no TDD exists.
+  - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
 - **Design instructions**: full sprint-level design instructions issue — layout sketches, component table, design tokens, UI states, responsive behavior, accessibility. **May be absent for bug fixes.**
 
 ## Workflow
@@ -24,7 +26,7 @@ Read every requirement and acceptance criterion — these are your done criteria
 
 **If design instructions are absent** (bug fix flow): read `DESIGN.md` at the codebase root. Use it as the sole source of truth for styling decisions — color tokens, typography hierarchy, component variants, spacing scale, layout patterns, and do/don't rules. Do not invent styles; derive everything from DESIGN.md. Bug UI changes must be indistinguishable in style from the existing application.
 
-**Derive scope and key decisions** from the architecture context:
+**Derive scope and key decisions** from the decisions:
 
 - **Integration Flows** (Happy/Unhappy Path): understand the user-facing request/response chain and where each AC fits
 - **Components Design**: identify which UI components are new or modified
@@ -32,6 +34,8 @@ Read every requirement and acceptance criterion — these are your done criteria
 - **Data Models**: understand the shape of data rendered in the UI
 - **Failure Modes**: map each failure scenario to a UI state (error, empty, partial)
 - **Security**: note auth-gated views or conditional rendering based on permissions
+
+**If decisions is absent (`none`)**: derive scope by reading the existing codebase. Trace from each AC to the affected page or feature area, read the relevant components and API hooks, and infer the endpoint shape from existing hooks or backend route files. Document your derived scope explicitly so it is visible for review.
 
 For each AC, identify:
 - Which UI states are required (loading, error, empty, success)

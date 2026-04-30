@@ -53,7 +53,7 @@ For multi-skill bugs, run checkout independently in each codebase path.
 
 -> Follow `_dispatch-subagent.md`
 
-Architecture context = investigation verbatim (Root Cause, Scope, Fix Approach, Risk).
+Decisions = investigation verbatim (Root Cause, Scope, Fix Approach, Risk).
 
 ---
 

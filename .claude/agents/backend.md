@@ -11,7 +11,9 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 The invoker passes the following context:
 
 - **Requirements**: user story description + acceptance criteria list (remaining unchecked items only)
-- **Architecture context**: relevant TDD sections verbatim — architecture key decisions, components design, API specification, data models, alternatives considered, risks, story dependencies
+- **Decisions** *(optional)*: one of:
+  - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, API specification, data models, alternatives considered, risks, story dependencies. Pass `none` if no TDD exists.
+  - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
 
 ## Workflow
 
@@ -19,7 +21,7 @@ The invoker passes the following context:
 
 Read every requirement and acceptance criterion — these are your done criteria.
 
-**Derive scope and key decisions** from the architecture context:
+**Derive scope and key decisions** from the decisions:
 
 - **Integration Flows** (Happy/Unhappy Path): trace the request/response chain and locate where each AC fits
 - **Components Design**: identify which layers and files are in scope
@@ -29,6 +31,8 @@ Read every requirement and acceptance criterion — these are your done criteria
 - **Failure Modes**: note every failure scenario this story must handle
 - **Security**: note auth/authz requirements and encryption constraints
 - **Migration Plan**: confirm whether a data migration step is part of this story
+
+**If decisions is absent (`none`)**: derive scope by reading the existing codebase. Trace from each AC to the affected entry point (controller/endpoint), identify the layers it touches (handler, domain, repository), and read those files to understand conventions before planning. Document your derived scope explicitly so it is visible for review.
 
 For each AC, confirm:
 - You can map it to a specific implementation action

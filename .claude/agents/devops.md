@@ -11,7 +11,9 @@ tools: Read, Write, Edit, Glob, Grep, Bash
 The invoker passes the following context:
 
 - **Requirements**: acceptance criteria list + description of the infrastructure change
-- **Architecture context**: relevant TDD sections verbatim — architecture key decisions, components design, data models, alternatives considered, risks & mitigations, cross-cutting concerns
+- **Decisions** *(optional)*: one of:
+  - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, data models, alternatives considered, risks & mitigations, cross-cutting concerns. Pass `none` if no TDD exists.
+  - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
 
 ## Workflow
 
@@ -19,7 +21,7 @@ The invoker passes the following context:
 
 Read every requirement and acceptance criterion — these are your done criteria.
 
-**Derive scope and key decisions** from the architecture context:
+**Derive scope and key decisions** from the decisions:
 
 - **High-Level Diagram**: confirm deployment topology and integration points
 - **Infrastructure Design**: identify every AWS resource, network component, or CI/CD artifact that changes
@@ -29,6 +31,8 @@ Read every requirement and acceptance criterion — these are your done criteria
 - **Scalability & Performance**: note throughput/latency targets the infrastructure must satisfy
 - **Migration Plan**: determine cutover sequence and rollback procedures
 - **Monitoring & Alerting**: identify metrics and alert thresholds this story must establish
+
+**If decisions is absent (`none`)**: derive scope by reading the existing IaC files. Identify the relevant Terraform modules and CI/CD configs from the AC descriptions, read them, and document your inferred scope before planning. Flag any irreversible changes you discover as open questions before proceeding.
 
 For each AC, identify:
 - What infrastructure or configuration artifact changes (from above derivation)
