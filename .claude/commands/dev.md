@@ -46,8 +46,4 @@ Implement **one ticket per invocation** — do not batch.
 
 - Implement strictly within the scope of the ACs — no extras, no refactors beyond what the ticket requires
 - Do not merge any PR — merging is a human action
-- If a blocker is found, comment on the issue and stop — do not guess
-- Standard Mode PRs target the sprint feature branch
-- Change Mode with **unmerged PR**: commits to existing branch and appends to existing PR — no new branch or PR
-- Change Mode with **merged PR**: creates new branch from sprint branch and opens new PR — original PR is already closed
-- Revert Mode: creates revert branches from the sprint branch and opens revert PRs — does not modify the original story branch
+- If a blocker is found, stop — do not guess
