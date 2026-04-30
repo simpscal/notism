@@ -43,14 +43,9 @@ Render the `comment-dev-investigation` template with `{complexity, root_cause, s
 
 ## Step 5 — Git Setup
 
-- `base_branch` = `main`
-- Branch name: apply the git-strategy skill's **Bugfix** pattern
+`cd` into each relevant codebase path, checkout `main`, and pull latest.
 
-`cd` into the codebase path for the relevant skill, then:
-
--> Create a new branch named `{branch_name}` from `{base_branch}`
-
-For multi-skill bugs, run setup independently in each codebase path.
+For multi-skill bugs, run checkout independently in each codebase path.
 
 ---
 
@@ -62,13 +57,23 @@ Architecture context = investigation verbatim (Root Cause, Scope, Fix Approach, 
 
 ---
 
-## Step 7 — Commit and Push
+## Step 7 — Git Branch Setup
+
+For each subagent that returned `NO_WORK:` — skip, no branch needed.
+
+For each subagent that completed work:
+- Derive the bugfix branch name from the issue number and title
+- Create bug branch in that codebase path
+
+---
+
+## Step 8 — Commit and Push
 
 -> Follow `_commit-push.md`
 
 ---
 
-## Step 8 — Open PR
+## Step 9 — Open PR
 
 Open a pull request from the bug branch into `main` from inside the codebase path:
 
@@ -79,6 +84,6 @@ For multi-skill bugs, open one PR per skill — each from its own codebase path,
 
 ---
 
-## Step 9 — Notify
+## Step 10 — Notify
 
 -> Follow `_notify-complete.md`

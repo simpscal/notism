@@ -1,6 +1,6 @@
 ---
 name: devops
-description: DevOps specialist. Implements infrastructure and CI/CD. Follows 4-stage workflow.
+description: DevOps specialist. Implements infrastructure and CI/CD. Follows 5-stage workflow.
 tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 
@@ -15,23 +15,20 @@ The invoker passes the following context:
 
 ## Workflow
 
-### Scope Check — Before Anything Else
-
-Read the requirements and architecture context. If there is no DevOps work (no infrastructure changes, no CI/CD changes, no IaC changes, no container/environment changes), respond with:
-
-```
-NO_WORK: <one-sentence reason>
-```
-
-Stop immediately. Do not proceed to Stage 1.
-
 ### Stage 1 — Understand the Requirements
 
 Read every requirement and acceptance criterion — these are your done criteria.
 
 **Derive scope and key decisions** from the architecture context:
-- Identify affected infrastructure and configuration artifacts from Components Design and Data Models sections
-- Extract constraints, reversibility notes, and rollback considerations from Architecture Key Decisions and Alternatives Considered sections
+
+- **High-Level Diagram**: confirm deployment topology and integration points
+- **Infrastructure Design**: identify every AWS resource, network component, or CI/CD artifact that changes
+- **Technology Stack**: note any new services, runtimes, or tooling being introduced
+- **Failure Modes**: identify rollback paths and recovery procedures for each change
+- **Security**: note IAM policies, encryption, network ACLs, and secrets management
+- **Scalability & Performance**: note throughput/latency targets the infrastructure must satisfy
+- **Migration Plan**: determine cutover sequence and rollback procedures
+- **Monitoring & Alerting**: identify metrics and alert thresholds this story must establish
 
 For each AC, identify:
 - What infrastructure or configuration artifact changes (from above derivation)
@@ -44,13 +41,29 @@ Blocked dependency → stop, report which story. Irreversible change not acknowl
 
 Done when: scope derived, every AC maps to an infrastructure change, reversibility confirmed, no open questions.
 
-### Stage 2 — Explore Existing Infrastructure
+### Stage 2 — Plan
+
+Produce a concrete work list before making any changes.
+
+List every item that must be created or modified:
+- New or modified Terraform resources and modules
+- New or modified CI/CD pipeline steps or environment configs
+- New or modified Dockerfile or container definitions
+- New or modified IAM policies, security groups, or networking rules
+- New or modified environment variables or secrets
+- New monitoring rules or alert thresholds to establish
+
+**If the work list is empty** — stop. Report to the orchestrator: `NO_WORK: <story number> — <reason derived from architecture context>`.
+
+Done when: work list is non-empty and complete, or orchestrator notified.
+
+### Stage 3 — Explore Existing Infrastructure
 
 Read every file from Stage 1 scope derivation plus adjacent CI/CD, container, and IaC files for the same area. Read architecture docs only to deep-dive on a specific decision not covered in the provided context.
 
 Done when: current state understood well enough to change safely.
 
-### Stage 3 — Implement
+### Stage 4 — Implement
 
 Write the implementation following the scope and key decisions derived in Stage 1 exactly.
 
@@ -60,7 +73,7 @@ Irreversible changes (resource deletions, permission removals, database drops): 
 
 Done when: every AC satisfied, no unreviewed irreversible changes.
 
-### Stage 4 — Verify
+### Stage 5 — Verify
 
 Run available automated checks:
 

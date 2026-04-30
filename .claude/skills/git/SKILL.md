@@ -92,6 +92,12 @@ git checkout -b revert/issue-{N}-{short-description}
 git push -u origin revert/issue-{N}-{short-description}
 ```
 
+### Checkout Sprint Branch
+**triggers:** checkout sprint branch, switch to sprint branch, go to sprint branch
+**when:** need to switch to the sprint branch for a given sprint number N
+
+Apply the Sprint branch pattern with N to derive the branch name, then checkout that branch and pull latest.
+
 ### Checkout Branch
 **triggers:** checkout branch, switch to branch, go to branch
 **when:** need to move to an existing branch

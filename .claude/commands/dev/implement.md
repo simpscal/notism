@@ -26,16 +26,11 @@ Add label `in-progress` to the story issue.
 
 ## Step 2 — Git Setup
 
-- Sprint number N: read from the issue's milestone title (format: `Sprint N`)
-- `base_branch` = `feature/sprint-{N}` (git-strategy skill's **Sprint** pattern, N from above)
-- Branch name: apply the git-strategy skill's **Story** pattern
-- If sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
+Sprint number N: read from the issue's milestone title (format: `Sprint N`).
 
-`cd` into the codebase path for the relevant skill, then:
+`cd` into each relevant codebase path, checkout the sprint branch for sprint N, and pull latest.
 
--> Create a new branch named `{branch_name}` from `{base_branch}`
-
-For multi-skill stories, run setup independently in each codebase path.
+For multi-skill stories, run checkout independently in each codebase path.
 
 ---
 
@@ -45,7 +40,17 @@ For multi-skill stories, run setup independently in each codebase path.
 
 ---
 
-## Step 4 — Commit and Push
+## Step 4 — Git Branch Setup
+
+For each subagent that returned `NO_WORK:` — skip, no branch needed.
+
+For each subagent that completed work:
+- Derive the story branch name from the issue number and title
+- Create that branch from the sprint branch in that codebase path
+
+---
+
+## Step 5 — Commit and Push
 
 Once all subagents complete:
 
@@ -53,7 +58,7 @@ Once all subagents complete:
 
 ---
 
-## Step 5 — Open PR
+## Step 6 — Open PR
 
 Open a pull request from the story branch into the sprint branch from inside the codebase path:
 
@@ -64,6 +69,6 @@ For multi-skill stories, open one PR per skill — each from its own codebase pa
 
 ---
 
-## Step 6 — Notify
+## Step 7 — Notify
 
 -> Follow `_notify-complete.md`
