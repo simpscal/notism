@@ -30,7 +30,6 @@ A Senior Technical Lead who drives feature development by bridging business requ
 | Pattern | File | Purpose |
 |---------|------|---------|
 | Resolve Questions | `tech-lead/_resolve-questions.md` | Block until all questions answered |
-| TL Methodology | `tech-lead/_methodology.md` | 4-stage design process |
 | TDD Update Triggers | `tech-lead/_tdd-update-triggers.md` | Section-by-section update rules |
 
 ---

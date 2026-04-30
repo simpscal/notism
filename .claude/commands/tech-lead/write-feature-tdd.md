@@ -132,7 +132,7 @@ Capture the new issue number — referenced in Step 6.
 
 ## Step 5 — Create Feature Branches (new TDD only)
 
-If this is a new TDD: Create sprint feature branches for each codebase **except the current one**.
-
 Skip if updating an existing TDD (branches already exist).
+
+For each codebase in CLAUDE.md's Codebases table (not the orchestration repo): create sprint branch from `main`.
 
