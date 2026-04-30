@@ -1,7 +1,6 @@
 # AI Development Workflow
 
-An AI-powered development workflow using Claude Code slash commands. Issue tracker and all project-specific values defined in `project.md` — making the workflow reusable across projects.
-
+An AI-powered development workflow using Claude Code slash commands.
 ---
 
 ## Contents
@@ -158,7 +157,6 @@ Dev auto-selects backend/frontend/devops agent(s) from the investigation context
 
 ```
 .claude/
-  project.md            ← primary config: repo, tech stack, labels, branch patterns, tracker adapter
   commands/             ← slash commands (orchestration + methodology)
     po.md
     po/
@@ -201,8 +199,6 @@ Dev auto-selects backend/frontend/devops agent(s) from the investigation context
     create-github-labels.sh
 ```
 
-**`project.md`** is the primary config: repo, codebases, tech stack, labels, branch patterns, architecture doc paths, test/lint commands, and active tracker adapter path.
-
 **Commands** are self-contained: each file includes the role methodology and calls tracker operations by name.
 
 **Agents** are developer personas invoked by `/dev`. Each follows TDD: understand requirements → write tests → implement code to pass tests.
@@ -225,5 +221,3 @@ Dev auto-selects backend/frontend/devops agent(s) from the investigation context
 | `story-removed` | Story dropped from scope |
 | `in-progress` | Dev is implementing |
 | `implemented` | Dev complete — awaiting review |
-
-> Label names are configurable in `project.md`.

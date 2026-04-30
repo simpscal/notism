@@ -75,4 +75,3 @@ Render the `comment-bug-summary` template with `{issue_number, title, closed_dat
 - Never merge any PR — only gate on them.
 - Confirmation required before any mutating action.
 - Migration check is backend-only. Skip silently if no merged backend PR is found.
-- All label names and branch patterns come from `project.md`. Do not hardcode them.
