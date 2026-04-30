@@ -80,15 +80,20 @@ Get explicit PO approval: *"Please confirm this change plan, or specify adjustme
 
 Execute the approved change plan in order:
 
+### 0. Prune Stale Dependencies (All Stories)
+
+Before any other changes, scan all open story issues involved in this sync. Remove any `Depends on:` or `Blocks:` reference that points to a closed issue. Keep dependency lists accurate.
+
 ### 1. Update Existing Stories
 
 For each **Updatable** story:
 1. Run the AC amendment flow (classify changes, present plan, get approval, execute)
 2. Rewrite `## Acceptance Criteria` with updated AC set
 3. Update `## Notes` for new edge cases/dependencies
-4. Update the body of the story issue with the amended content.
-5. If story has label `implemented`: add label `story-updated` to the story issue.
-6. Validate the amended story (no contradictions, complete coverage, every AC testable)
+4. **Prune stale dependencies.** Scan `Depends on:` and `Blocks:` lines — any reference to a closed issue must be removed. Dependency lists must only reference active (open) issues.
+5. Update the body of the story issue with the amended content.
+6. If story has label `implemented`: add label `story-updated` to the story issue.
+7. Validate the amended story (no contradictions, complete coverage, every AC testable)
 
 ### 2. Create New Stories
 
