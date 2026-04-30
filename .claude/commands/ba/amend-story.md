@@ -1,4 +1,4 @@
-# Mode: Story Change
+# Mode: Amend Story
 
 Extract `issue_number` (the token after `amend-story`).
 

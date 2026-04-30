@@ -1,4 +1,4 @@
-# Mode: Requirement Change
+# Mode: Sync Stories
 
 Extract `req_issue_number` (the token after `sync-stories`).
 

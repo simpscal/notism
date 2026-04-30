@@ -1,4 +1,4 @@
-# Mode: Standard
+# Mode: Write Stories
 
 Read issue `#requirement_issue_number` in full.
 

@@ -1,4 +1,4 @@
-# Mode: Bug AC Change
+# Mode: Bug AC
 
 Extract `issue_number` (the token after `amend-bug`).
 

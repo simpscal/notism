@@ -1,4 +1,4 @@
-# Mode: Bug
+# Mode: Add Bug ACs
 
 Read issue `#bug_issue_number` in full.
 
