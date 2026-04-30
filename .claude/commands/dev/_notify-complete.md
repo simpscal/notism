@@ -7,7 +7,7 @@ Post a comment on issue `#ISSUE_NUMBER` with the following body:
 ```
 ## Implementation Complete
 
-- PR #<pr-number>
+- PR: <pr-url>
 
 ---
 > Pause Human gate: Review the PR diff. When approved, merge into the sprint branch.
@@ -18,8 +18,8 @@ Post a comment on issue `#ISSUE_NUMBER` with the following body:
 ```
 ## Implementation Complete
 
-- Backend: PR #<pr-number>
-- Frontend: PR #<pr-number>
+- Backend: <pr-url>
+- Frontend: <pr-url>
 
 ---
 > Pause Human gate: Review both PR diffs. When approved, merge into the sprint branch.
@@ -38,7 +38,7 @@ Then add label `implemented` and remove labels `in-progress` and `story-updated`
 
 Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed.
 
-- Revert PR: #<revert-pr-number>
+- Revert PR: <revert-pr-url>
 
 ---
 > Pause Human gate: Review the revert PR diff. When approved, merge into the sprint branch.
@@ -51,8 +51,8 @@ Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed.
 
 Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed across all codebases.
 
-- Backend revert PR: #<revert-pr-number>
-- Frontend revert PR: #<revert-pr-number>
+- Backend revert PR: <revert-pr-url>
+- Frontend revert PR: <revert-pr-url>
 
 ---
 > Pause Human gate: Review both revert PR diffs. When approved, merge into the sprint branch.
