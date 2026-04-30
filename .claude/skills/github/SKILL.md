@@ -1,10 +1,19 @@
 ---
-name: github-tracker
-description: >
-  GitHub issue tracker library — create, read, update issues; post comments; create/list milestones;
-  manage labels; close issues. Never hardcode repo slugs, label names, or branch patterns.
+name: github
+description: GitHub issue tracker — create, read, update issues; post comments; create/list milestones; manage labels; close issues. Never hardcode repo slugs, label names, or branch patterns.
 tools: mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write,
   mcp__github__add_issue_comment, mcp__github__update_issue, Bash
+---
+
+## Repo Derivation
+
+Derive at runtime — never hardcode:
+
+- **Orchestration repo** (issues, milestones, stories, TDD, design): run `gh repo view --json owner,name --jq '[.owner.login,.name]|join("/")'` from the orchestration repo root.
+- **Codebase repos** (PRs, branches): run the same from inside the codebase directory (path from CLAUDE.md Codebases table).
+
+Hold results for the session.
+
 ---
 
 ## Confirmation Protocol
