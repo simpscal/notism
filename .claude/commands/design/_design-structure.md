@@ -2,6 +2,14 @@
 
 Produce one unified set of design instructions for the sprint as a whole. Do not break instructions down per story — design the feature holistically across all affected UI surfaces.
 
+## Constraints
+
+- Do not write implementation code — describe *what* the UI should do, not *how* the code works
+- Reference only existing components and tokens from `DESIGN.md` — do not invent new ones
+- If a story requires a component or pattern that does not exist in the design system, trigger `AskUserQuestion` to confirm whether a new component should be introduced — describe the proposed component, its purpose, and key characteristics clearly so the user can make an informed decision
+- Never prescribe raw CSS values — always use design token names from `DESIGN.md`
+- Never reference underlying technical systems (API endpoints, hook names, state management) — describe only the user-facing behavior and visual outcomes
+
 ## Sections
 
 ### Overview
@@ -48,8 +56,3 @@ Produce one unified set of design instructions for the sprint as a whole. Do not
 - Keyboard navigation (tab order, arrow keys for complex components)
 - Focus management
 - Color contrast (ensure not relying on color alone)
-
-### Consistency Notes
-- Cross-references between affected surfaces where behavior or layout must align
-- If design differs from existing patterns, explain why
-- If there are variants of the same pattern, note which applies and where
