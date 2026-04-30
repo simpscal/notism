@@ -8,7 +8,7 @@ The BA has amended the ACs on a bug issue (labeled `bug-production` + `story-upd
 
 Read issue `#issue_number` in full.
 
-List open pull requests with branch prefix `fix/issue-{N}-` to find the open bug-fix PR. Collect as `$FIX_PRS`.
+List open bugfix PRs for issue `<N>` to find the open bug-fix PR. Collect as `$FIX_PRS`.
 
 Add label `in-progress` to issue `#issue_number`.
 
@@ -55,7 +55,7 @@ Pass this delta summary to every subagent with an explicit instruction: **implem
 
 ## Step 5 — Git Setup
 
-Check out the existing `fix/issue-{N}-` branch, pull latest from remote.
+Check out bugfix branch for issue `<N>` and pull latest from remote.
 
 ---
 
@@ -72,7 +72,7 @@ Follow `_dispatch-subagent.md`. Pass:
 
 ## Step 7 — Commit and Push
 
-Commit and push in each codebase path using the files each subagent reported. Commit message: `fix(#<ISSUE_NUMBER>): revise bug fix per updated ACs`.
+Commit and push all changed files from this implementation in each codebase path. Commit message: `fix(#<ISSUE_NUMBER>): revise bug fix per updated ACs`.
 
 ---
 

@@ -35,5 +35,5 @@
 | `sprint` | yes | `Sprint N` — match milestone name exactly |
 | `closed_date` | yes | `YYYY-MM-DD` |
 | `stories` | yes | All milestone stories, sorted by issue number ascending, exact GitHub titles |
-| `release_prs` | yes | Changed codebases only — codebase name from project config, `#N` format |
+| `release_prs` | yes | Changed codebases only — codebase name, `#N` format |
 | `migrations` | yes | Warning phrase above or `None` — detected by `**/Migrations/*.cs` in backend changes |

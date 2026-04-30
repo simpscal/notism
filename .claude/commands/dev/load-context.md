@@ -29,11 +29,11 @@ Run all three fetches simultaneously:
 
 ## Step 2 — Check Git State
 
-Apply the git-strategy skill's **Story** and **Sprint** patterns to derive branch names.
+List story branches for issue `<N>` — check if story branch exists on the remote.
 
-- List remote branches matching `$STORY_BRANCH` — check if story branch exists on the remote
-- List open pull requests with branch prefix `$STORY_BRANCH` — check for an open PR
-- If a PR is found: fetch the list of files changed in that PR
+List open story PRs for issue `<N>` — check for an open PR.
+
+If a PR is found: fetch the list of files changed in that PR.
 
 Hold: `$STORY_BRANCH`, `$SPRINT_BRANCH`, `$PR_URL` (or "none"), `$PR_FILES` (list of changed file paths or "none").
 

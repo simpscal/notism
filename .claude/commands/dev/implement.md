@@ -28,9 +28,9 @@ Add label `in-progress` to the story issue.
 
 Sprint number N: read from the issue's milestone title (format: `Sprint N`).
 
-`cd` into each relevant codebase path, checkout the sprint branch for sprint N, and pull latest.
+Checkout sprint branch for sprint N — one call per codebase path.
 
-For multi-skill stories, run checkout independently in each codebase path.
+For multi-skill stories, run independently in each codebase path.
 
 ---
 
@@ -45,23 +45,22 @@ For multi-skill stories, run checkout independently in each codebase path.
 For each subagent that returned `NO_WORK:` — skip, no branch needed.
 
 For each subagent that completed work:
-- Derive the story branch name from the issue number and title
-- Create that branch from the sprint branch in that codebase path
+- Create story branch for issue `<ISSUE_NUMBER>` and `<short-description>` — one call per codebase path
 
 ---
 
 ## Step 5 — Commit and Push
 
-Once all subagents complete, commit and push in each codebase path using the files each subagent reported. Commit message: `feat(#<ISSUE_NUMBER>): <imperative-tense description>`.
+Once all subagents complete, commit and push all changed files from this implementation in each codebase path.
+Commit message: `feat(#<ISSUE_NUMBER>): <imperative-tense description>`.
 
 ---
 
 ## Step 6 — Open PR
 
-Open a pull request from the story branch into the sprint branch from inside the codebase path:
-
-**PR title:** `feat(#<ISSUE_NUMBER>): <short description>`
-**PR body:** Render the `pr-story` template with `{summary, changes, test_command, lint_command, manual_verification, acceptance_criteria, closes}`
+Create PR for issue `<ISSUE_NUMBER>` — one call per codebase path.
+- **PR title:** `feat(#<ISSUE_NUMBER>): <short description>`
+- **PR body:** Render the `pr-story` template with `{summary, changes, test_command, lint_command, manual_verification, acceptance_criteria, closes}`
 
 For multi-skill stories, open one PR per skill — each from its own codebase path, each targeting the sprint branch.
 

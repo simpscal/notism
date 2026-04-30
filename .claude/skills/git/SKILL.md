@@ -4,17 +4,32 @@ description: Git operations, branching strategy, and PR management. Branch namin
 tools: Bash, mcp__github__pull_request_read, mcp__github__create_pull_request, mcp__github__list_pull_requests, mcp__github__list_branches
 ---
 
-# Git
-
-**triggers:** create sprint branch, create story branch, create bug branch, create revert branch, create feature branch, branch name, name branch, create branch, checkout branch, switch branch, commit and push, create PR, open PR, delete branch, list branches, diff branches
-
-Apply the strategy below whenever a branch needs to be created or selected.
-
----
-
 ## Repo Derivation
 
 `owner`/`repo` derived via `gh repo view --json owner,name --jq '[.owner.login,.name]|join("/")'` from inside the codebase directory. Codebase paths come from CLAUDE.md Codebases table — never hardcode.
+
+---
+
+## Confirmation Protocol
+
+Before any mutating operation:
+1. Summarise all planned mutations in one block
+2. Ask once: `"Proceed? (y/n)"` — group related mutations into a single prompt
+3. Proceed only if confirmed; stop and report if denied
+
+**No confirmation needed**: list branches, check branch exists, show diff, fetch PR, list PRs — any read-only operation
+
+**Always confirm**: delete branch, delete all story branches, force push
+
+**Example:**
+```
+## Planned Git Operations
+
+1. Delete remote branch feature/issue-42-display-toast from <backend_codebase>
+2. Delete remote branch feature/issue-42-display-toast from <frontend_codebase>
+
+Proceed? (y/n)
+```
 
 ---
 
@@ -24,12 +39,9 @@ Apply the strategy below whenever a branch needs to be created or selected.
 |---------|---------|
 | Main | `main` |
 | Sprint | `feature/sprint-{N}` |
-| Story (single-skill) | `feature/issue-{N}-{short-description}` |
-| Story (multi-skill) | `feature/issue-{N}-{short-description}-backend` / `-frontend` |
-| Revert (single-skill) | `revert/issue-{N}-{short-description}` |
-| Revert (multi-skill) | `revert/issue-{N}-{short-description}-backend` / `-frontend` |
-| Bugfix (single-skill) | `fix/issue-{N}-{short-description}` |
-| Bugfix (multi-skill) | `fix/issue-{N}-{short-description}-backend` / `-frontend` |
+| Story | `feature/issue-{N}-{short-description}` |
+| Revert | `revert/issue-{N}-{short-description}` |
+| Bugfix | `fix/issue-{N}-{short-description}` |
 
 `short-description` derivation:
 1. Strip leading `[Tag]` prefix
@@ -54,7 +66,7 @@ git checkout -b feature/sprint-{N}
 git push -u origin feature/sprint-{N}
 ```
 
-### Create Story Branch (single-skill)
+### Create Story Branch
 **triggers:** create story branch, create feature branch
 **when:** need a story branch for an issue
 ```bash
@@ -62,16 +74,6 @@ git checkout feature/sprint-{N}
 git pull
 git checkout -b feature/issue-{N}-{short-description}
 git push -u origin feature/issue-{N}-{short-description}
-```
-
-### Create Story Branch (multi-skill)
-**triggers:** create story branch backend, create story branch frontend
-**when:** need separate backend/frontend branches
-```bash
-git checkout feature/sprint-{N}
-git pull
-git checkout -b feature/issue-{N}-{short-description}-{skill}
-git push -u origin feature/issue-{N}-{short-description}-{skill}
 ```
 
 ### Create Bug Branch
@@ -129,6 +131,14 @@ git push origin {branch_name}
 git push origin --delete {branch}
 ```
 "remote ref does not exist" = skip silently.
+
+### Delete All Story Branches
+**triggers:** delete all story branches, delete all issue branches, clean up story branches, delete story sub-branches
+**when:** user wants to mass-delete story branches for a given issue
+- **Tool**: `mcp__github__list_branches` → `{ owner, repo }`
+- Filter: branches matching `feature/issue-{N}` or `fix/issue-{N}` or `revert/issue-{N}`
+- Delete each via: `git push origin --delete {branch}` (skip "remote ref does not exist")
+- Report count deleted and any that failed
 
 ---
 

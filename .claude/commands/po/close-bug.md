@@ -25,7 +25,7 @@ Read issue `#issue_number` from the tracker adapter to get its title, labels, an
 
 Before doing anything destructive, verify the bug is ready to close:
 
-For each codebase repo (derive slug: owner from tracker config + directory name from codebase path), list open pull requests with branch prefix `fix/issue-{N}-` to detect any unmerged PRs.
+For each codebase repo, list open bugfix PRs for issue N to detect any unmerged PRs.
 
 Collect results from all codebases. If any open PRs are found across any repo, stop:
 
@@ -50,11 +50,7 @@ Output:
 
 ### Step 5 — Check for EF Core Migrations (Backend Only)
 
-For the backend codebase, find the merged fix PR:
-
-List closed pull requests with branch prefix `fix/issue-{N}-` in the backend codebase repo and filter client-side for `merged: true`. Take the first result as `pr_number`.
-
-If a PR number is found, fetch pull request `#pr_number` and inspect its `files[]` for paths matching `/Migrations/` (case-insensitive).
+For the backend codebase, Find merged bugfix PR for issue N to get the PR number and inspect its `files[]` for paths matching `/Migrations/` (case-insensitive).
 
 - If no merged backend PR found: note "No backend PR found for #N — skipping migration check."
 - If migration files found: capture the list. This output is used in Step 7.
@@ -62,13 +58,7 @@ If a PR number is found, fetch pull request `#pr_number` and inspect its `files[
 
 ### Step 6 — Delete Bug Branch
 
-For each codebase listed in the project config:
-
-List remote branches matching `fix/issue-{N}-` in each codebase repo.
-
-For each branch found, delete it from the remote.
-
-If the branch no longer exists on the remote, skip silently.
+For each codebase, list bugfix branches for issue N and delete each.
 
 Output one line per deletion:
 ```

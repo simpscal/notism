@@ -49,5 +49,5 @@ Create an issue:
 
 **Title**: `Sprint N — Design Instructions`
 **Body**: Render the `issue-design-instructions` template with `{requirement_issue, overview, layout, components, design_tokens, ui_states, responsive, accessibility, consistency_notes}`
-**Labels**: `design` (and any design labels from project config)
+**Labels**: `design`
 **Milestone**: `$MILESTONE_ID`

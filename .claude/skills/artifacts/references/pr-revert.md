@@ -17,8 +17,6 @@ The story was removed from the requirement scope and the implementation must be 
 ## Acceptance Criteria
 
 - [ ] All changes introduced by <original_pr> are absent from the sprint branch after merge
-- [ ] Tests pass: `<test_command>`
-- [ ] Build passes: `<lint_command>`
 
 Closes <story_number>
 ```
@@ -33,5 +31,3 @@ Closes <story_number>
 | `story_title` | yes | Verbatim from issue title — strip `[Story]` prefix |
 | `original_pr` | yes | `#N` format |
 | `merge_commit` | yes | Full SHA from `mergeCommitSha` |
-| `test_command` | yes | From project config |
-| `lint_command` | yes | From project config |

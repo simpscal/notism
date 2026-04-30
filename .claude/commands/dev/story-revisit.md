@@ -26,14 +26,13 @@ The story already has an implementation (open or merged PR). Implement the delta
 
 For each codebase / skill in scope, discover the existing PR state:
 
-List open pull requests with branch prefix `feature/issue-<N>-` from the tracker adapter.
+List story branches for issue `<N>` — one call per codebase path.
 
-- **Open PR found** — hold PR number for Step 3. Switch to the existing branch.
+- **Open PR found** — hold PR number for Step 3. Checkout story branch for issue `<N>` in that codebase.
 
-- **No open PR** — list closed pull requests with branch prefix `feature/issue-<N>-` and filter client-side for `merged: true`. Hold the PR number for Step 3. Fetch that pull request to get the `mergeCommitSha`. Then:
-  - Branch name: apply the git-strategy skill's **Story** pattern
+- **No open PR** — List merged story branches for issue `<N>` to find the merged PR. Hold PR number for Step 3. Then:
   - If the sprint branch does not exist, halt: "Sprint feature branch `<sprint-branch>` not found in `<codebase-path>`."
-  - Create a new branch named `{branch_name}` from `{sprint_branch}`
+  - Create story branch for issue `<N>` and `<short-description>` — creates from sprint branch
 
 For multi-skill stories, run setup independently in each codebase path.
 
@@ -78,7 +77,7 @@ In addition to the standard context table, pass the following to every subagent:
 
 ## Step 5 — Commit and Push
 
-Once all subagents complete, commit and push in each codebase path using the files each subagent reported. Push to the existing story branch. Commit message: `feat(#<ISSUE_NUMBER>): update <short description> per story change`.
+Once all subagents complete, commit and push all changed files from this implementation in each codebase path. Push to the existing story branch. Commit message: `feat(#<ISSUE_NUMBER>): update <short description> per story change`.
 
 ---
 
@@ -86,13 +85,7 @@ Once all subagents complete, commit and push in each codebase path using the fil
 
 **Open PR case** — no PR action needed. Skip to end.
 
-**Merged PR case** — open a new pull request targeting the sprint branch:
-- **Title**: `feat(#<N>): <short description> (change)`
-- **Head**: `<new story branch from Step 2>`
-- **Base**: `<sprint-branch>`
-- **Body**: Render the `pr-story` template with `{summary, changes, test_command, lint_command, manual_verification, acceptance_criteria, closes}`, noting this is a change update and referencing the original merged PR
-
-For multi-skill stories, update or open each PR independently.
+**Merged PR case** — Create PR for issue `<N>` as a story change, targeting the sprint branch from the original PR — one call per codebase path.
 
 ---
 

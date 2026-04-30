@@ -24,12 +24,13 @@ Hold as **$BUG**. Extract:
 
 ## Step 2 — Check Git State
 
-Apply the git-strategy skill's **Bugfix** pattern to derive the branch name.
+List bugfix branches for issue `<N>` — check if bugfix branch exists on the remote.
 
-- List remote branches matching `$BUG_BRANCH` — check if bugfix branch exists on the remote
-- List open pull requests with branch prefix `$BUG_BRANCH` — check for an open PR
-- If a PR is found: fetch the list of files changed in that PR
-- List all comments on issue `#bug_issue_number` — check for existing investigation comment
+List open bugfix PRs for issue `<N>` — check for an open PR.
+
+If a PR is found: fetch the list of files changed in that PR.
+
+List all comments on issue `#bug_issue_number` — check for existing investigation comment.
 
 Hold: `$BUG_BRANCH`, `$PR_URL` (or "none"), `$PR_FILES` (list of changed file paths or "none"), `$INVESTIGATION` (comment body or "not posted").
 

@@ -18,7 +18,7 @@ Partition issues into four groups:
 - **Design**: issue with the `design` label
 - **Requirement**: issue with the `requirement` label
 
-Derive the sprint branch name from the milestone title: `Sprint N` → `feature/sprint-N`.
+Derive sprint branch name for sprint N (from milestone title).
 
 ### Step 2 — Readiness Gate
 
@@ -27,7 +27,7 @@ Before doing anything destructive, verify the sprint is complete:
 For each story that is still **open**:
 - Check its labels for `in-progress`
 - For each codebase repo (derive slug: owner from tracker config + directory name from codebase path), run:
-  list open pull requests with branch prefix `feature/issue-{N}-` in each codebase repo to detect any unmerged PRs
+  list open pull requests for story branches of issue N in each codebase repo to detect any unmerged PRs
 
 If any open story has an unmerged PR or is still in-progress, stop and output:
 
@@ -54,15 +54,13 @@ Output one line per issue as it completes:
 
 ### Step 4 — Delete Story Sub-branches
 
-Story branches follow the pattern `feature/issue-{N}-{description}` (with optional `-backend` / `-frontend` suffix). Sprint branches (`feature/sprint-{N}`) must **not** be deleted.
+Story branches (not sprint branches) must be deleted at sprint close.
 
-For each codebase listed in the project config:
+For each codebase:
 
-List remote branches matching `feature/issue-` in each codebase repo.
+List story branches for sprint N in each codebase repo. Only delete story branches — sprint branches must not be deleted.
 
 For each story branch found, delete it from the remote.
-
-If the branch no longer exists on the remote, skip silently.
 
 Output one line per deletion:
 ```
@@ -81,12 +79,7 @@ If no migration files are found, note: "No database migrations in this sprint."
 
 ### Step 6 — Create Release PRs (Sprint Branch → Main)
 
-For each codebase, open a pull request:
-
-- **Title**: `feat(sprint-N): {milestone description}`
-- **Base**: `main`
-- **Head**: `feature/sprint-N`
-- **Body**: Render the `pr-release` template with `{sprint, stories, migrations}`.
+For each codebase, create sprint release PR for sprint N with title `feat(sprint-N): {milestone description}`, base `main`, body rendered from `pr-release` template.
 
 ### Step 7 — Post Sprint Summary
 
@@ -94,7 +87,6 @@ Render the `comment-sprint-summary` template with `{sprint, closed_date, stories
 
 ## Constraints
 
-- Never delete a sprint branch (`feature/sprint-{N}`). Only delete story branches (`feature/issue-{N}-*`).
+- Never delete a sprint branch. Only delete story branches.
 - Never merge any PR — only create them. Merging is a human action.
 - Do not proceed past Step 2 if any story has unmerged work.
-- All label names and branch patterns come from `project.md`. Do not hardcode them.
