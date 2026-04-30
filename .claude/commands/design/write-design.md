@@ -15,9 +15,9 @@ If no matching milestone is found, list available milestones and stop.
 
 ---
 
-## Step 2 — Fetch All Issues
+## Step 2 — Fetch Open Issues
 
-List all issues in the sprint milestone once. Partition the result in memory:
+List all **open** issues in the sprint milestone once. Partition the result in memory:
 
 - **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes. Note each story's labels (`story-updated`, `story-removed`) to identify requirement changes. Identify which stories involve user-facing UI changes — if none do, report "No UI work found in this milestone — skipping design phase" and stop.
 - **$REQUIREMENT** — single issue labelled `requirement`. Read it in full. Hold as **$REQUIREMENT** — use this to understand the sprint goal, the intended user experience, and the PO's definition of done.

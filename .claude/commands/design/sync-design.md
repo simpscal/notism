@@ -13,9 +13,9 @@ If no matching milestone is found, list available milestones and stop.
 
 ---
 
-## Step 2 — Fetch All Issues
+## Step 2 — Fetch Open Issues
 
-List all issues in the sprint milestone once. Partition the result in memory:
+List all **open** issues in the sprint milestone once. Partition the result in memory:
 
 - **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes.
   - Identify **changed stories**: those with label `story-updated` or `story-removed`.

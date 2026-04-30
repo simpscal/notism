@@ -4,9 +4,9 @@ List all milestones to find the one titled `Sprint N`. Hold its GitHub ID as `$M
 
 ---
 
-## Step 1 — Fetch All Issues
+## Step 1 — Fetch Open Issues
 
-List all issues in the sprint milestone once. Partition the result in memory:
+List all **open** issues in the sprint milestone once. Partition the result in memory:
 
 - **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes.
 - **$REQUIREMENT** — single issue labelled `requirement`. Read it in full. Hold as **$REQUIREMENT** — use this to understand the sprint goal, the user problem being solved, and what "done" looks like from the PO's perspective.

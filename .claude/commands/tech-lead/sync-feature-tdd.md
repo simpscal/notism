@@ -4,11 +4,11 @@ Extract `sprint_number` (the token after `sync-feature-tdd`).
 
 ---
 
-## Step 1 — Fetch All Issues
+## Step 1 — Fetch Open Issues
 
 List all milestones to find the one titled `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
 
-List all issues in the sprint milestone once. Partition the result in memory:
+List all **open** issues in the sprint milestone once. Partition the result in memory:
 
 - **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes.
   - Identify **changed stories**: those with label `story-updated` or `story-removed`.
