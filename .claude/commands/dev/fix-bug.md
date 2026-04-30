@@ -69,7 +69,7 @@ For each subagent that completed work:
 
 ## Step 8 — Commit and Push
 
--> Follow `_commit-push.md`
+Commit and push in each codebase path using the files each subagent reported. Commit message: `fix(#<ISSUE_NUMBER>): <imperative-tense description>`.
 
 ---
 

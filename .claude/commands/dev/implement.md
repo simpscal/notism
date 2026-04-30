@@ -52,9 +52,7 @@ For each subagent that completed work:
 
 ## Step 5 — Commit and Push
 
-Once all subagents complete:
-
--> Follow `_commit-push.md`
+Once all subagents complete, commit and push in each codebase path using the files each subagent reported. Commit message: `feat(#<ISSUE_NUMBER>): <imperative-tense description>`.
 
 ---
 

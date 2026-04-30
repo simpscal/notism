@@ -38,7 +38,6 @@ Implement **one ticket per invocation** — do not batch.
 | Pattern | File | Purpose |
 |---------|------|---------|
 | Dispatch Subagent | `dev/_dispatch-subagent.md` | Skill label routing and context passing |
-| Commit Push | `dev/_commit-push.md` | Git commit and push rules |
 | Notify Complete | `dev/_notify-complete.md` | Post implementation complete comment |
 
 ---

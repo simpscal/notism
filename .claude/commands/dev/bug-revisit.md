@@ -72,7 +72,7 @@ Follow `_dispatch-subagent.md`. Pass:
 
 ## Step 7 — Commit and Push
 
-Follow `_commit-push.md`. Commit message: `fix(#<ISSUE_NUMBER>): revise bug fix per updated ACs`.
+Commit and push in each codebase path using the files each subagent reported. Commit message: `fix(#<ISSUE_NUMBER>): revise bug fix per updated ACs`.
 
 ---
 

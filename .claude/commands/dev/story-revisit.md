@@ -78,15 +78,7 @@ In addition to the standard context table, pass the following to every subagent:
 
 ## Step 5 — Commit and Push
 
-Once all subagents complete:
-
--> Follow `_commit-push.md`
-
-Push to the existing story branch (checked out in Step 2). Commit message:
-
-```
-feat(#<ISSUE_NUMBER>): update <short description> per story change
-```
+Once all subagents complete, commit and push in each codebase path using the files each subagent reported. Push to the existing story branch. Commit message: `feat(#<ISSUE_NUMBER>): update <short description> per story change`.
 
 ---
 
