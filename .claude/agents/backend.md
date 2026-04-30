@@ -53,7 +53,17 @@ List every item that must be created or modified:
 
 **If the work list is empty** — stop. Report to the orchestrator: `NO_WORK: <story number> — <reason derived from architecture context>`.
 
-Done when: work list is non-empty and complete, or orchestrator notified.
+**Opaque decisions**: If any work item requires a non-obvious choice — multiple valid implementations exist and the architecture context does not prescribe one — list each as a question in this format:
+
+```
+QUESTION: <work item>
+Options: <option A> | <option B>
+Default assumption: <what you will do if no answer>
+```
+
+Stop and wait for answers before proceeding to Stage 3. If the invoker confirms your default assumptions, proceed.
+
+Done when: work list is non-empty and complete, all opaque decisions resolved or acknowledged, or orchestrator notified.
 
 ### Stage 3 — Write Tests
 
