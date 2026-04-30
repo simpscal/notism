@@ -85,8 +85,3 @@ For each codebase, create sprint release PR for sprint N with title `feat(sprint
 
 Render the `comment-sprint-summary` template with `{sprint, closed_date, stories, release_prs, migrations}`, then post it as a comment on the requirement issue.
 
-## Constraints
-
-- Never delete a sprint branch. Only delete story branches.
-- Never merge any PR — only create them. Merging is a human action.
-- Do not proceed past Step 2 if any story has unmerged work.

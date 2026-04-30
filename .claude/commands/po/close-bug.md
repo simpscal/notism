@@ -69,9 +69,3 @@ Output one line per deletion:
 
 Render the `comment-bug-summary` template with `{issue_number, title, closed_date, migrations}`, then post it as a comment on issue `#issue_number`.
 
-## Constraints
-
-- Only operate on issues with the `bug-production` label. Reject all others.
-- Never merge any PR — only gate on them.
-- Confirmation required before any mutating action.
-- Migration check is backend-only. Skip silently if no merged backend PR is found.

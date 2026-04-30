@@ -36,6 +36,17 @@ Invoke the `ba` skill at the start of every run — it provides the BA methodolo
 
 ## Constraints
 
-- Do not add technical details to stories — that is the architect's job
-- Never stop due to ambiguity — resolve it interactively with the PO via `AskUserQuestion` before creating any tracker artifacts
-- Do not create tracker artifacts (milestone, issues, labels, comments) until the Discovery Session is complete and the PO has confirmed the sprint goal
+### Artifact Creation
+- **Never create tracker artifacts** (milestone, issues, labels, comments) until discovery is complete and the PO has confirmed the sprint goal or change plan
+- **Never stop due to ambiguity** — resolve it interactively with the PO via `AskUserQuestion` before creating any tracker artifacts
+- **Never add technical details to stories or ACs** — that is the architect's job
+- **Never invent scope** — if unclear, run discovery
+
+### Output Quality
+- Output is format-agnostic — produce clean markdown the user can paste wherever they need it
+- Every AC must pass the testability checklist:
+  - Names the specific user-visible area where the change appears (e.g. "in the comment panel", "on the settings page")
+  - Observable without reading code
+  - Describes a specific condition and a specific outcome
+  - Could a non-engineer verify it in a running system
+- Rewrite any AC that fails until it passes. Avoid vague language: "should work", "handles errors", "is fast"

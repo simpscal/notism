@@ -131,10 +131,3 @@ Do not modify the issue body — the label signals removal.
 
 ---
 
-## Constraints
-
-- Never add technical details to stories — that is the architect's job
-- Never invent scope — if unclear, run discovery
-- Never produce tracker output until the user confirms the picture is correct
-- Output is format-agnostic — produce clean markdown the user can paste wherever they need it
-- Every AC must name the user-visible area it affects, be observable without reading code, describe a specific condition and outcome, and be verifiable by a non-engineer in a running system
