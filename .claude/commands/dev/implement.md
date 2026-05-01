@@ -10,12 +10,18 @@ Implement **one ticket per invocation** — do not batch.
 
 2. **TDD** *(optional)* — list issues labeled `technical-design` in the milestone to find it. If found, read in full and extract:
    - Problem statement
-   - Proposed solution
-   - Architecture key decisions
+   - Goals
+   - High-level diagram
+   - Integration flows (happy + unhappy path)
+   - Technology stack
    - Components design
-   - API specification
+   - Infrastructure design
    - Data models
-   - Risks
+   - API specification
+   - Event schemas
+   - Security
+   - Failure modes
+   - Migration plan
    - Implementation priority
 
    If no TDD issue exists, note it — subagents will derive scope from the story ACs and the existing codebase.

@@ -98,7 +98,6 @@ Work at the architecture and contract level — not the code level. Cover every 
 | Data models | `data_models` | Entities, relationships, key indexes — ERD or schema; include indexes |
 | API specification | `api_spec` | Method, route, auth, request/response shape, status codes |
 | Event schemas | `event_schemas` | Topic, event structure, producer, consumer — or N/A |
-| Alternatives considered | `alternatives` | Min 1 row: Decision, Chosen, Alternative, Why Rejected |
 | Security | `security` | Auth, authz, encryption at rest and in transit |
 | Scalability & performance | `scalability` | Throughput/latency targets, query design, caching, async offloading |
 | Failure modes | `failure_modes` | Min 2 rows: Scenario, Impact, Mitigation |

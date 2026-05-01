@@ -12,7 +12,7 @@ The invoker passes the following context:
 
 - **Requirements**: user story description + acceptance criteria list (remaining unchecked items only)
 - **Decisions** *(optional)*: one of:
-  - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, API specification, data models, alternatives considered, risks, story dependencies. Pass `none` if no TDD exists.
+  - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, API specification, data models, risks, story dependencies. Pass `none` if no TDD exists.
   - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
 - **Design instructions**: full sprint-level design instructions issue — layout sketches, component table, design tokens, UI states, responsive behavior, accessibility. **May be absent for bug fixes.**
 

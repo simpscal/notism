@@ -119,7 +119,6 @@ Use the current TDD as the baseline. For each design area below, evaluate whethe
 | Data models | `data_models` | Entities, relationships, key indexes — ERD or schema; include indexes |
 | API specification | `api_spec` | Method, route, auth, request/response shape, status codes |
 | Event schemas | `event_schemas` | Topic, event structure, producer, consumer — or N/A |
-| Alternatives considered | `alternatives` | Min 1 row: Decision, Chosen, Alternative, Why Rejected |
 | Security | `security` | Auth, authz, encryption at rest and in transit |
 | Scalability & performance | `scalability` | Throughput/latency targets, query design, caching, async offloading |
 | Failure modes | `failure_modes` | Min 2 rows: Scenario, Impact, Mitigation |
@@ -149,7 +148,6 @@ Evaluate every section of the TDD template against the revised design. Sections 
 | Data Models | Any entity added, updated, removed, or field changed |
 | API Specification | Any endpoint added, updated, removed, or its contract changed |
 | Event Schemas | Any event added, updated, removed, or its structure changed |
-| Alternatives Considered | Any decision revisited or updated |
 | Security | Auth or encryption requirements added, updated, or changed |
 | Scalability & Performance | Load characteristics added or changed |
 | Failure Modes | Any new or updated external dependency or failure scenario |

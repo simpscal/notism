@@ -21,6 +21,16 @@ From the issue body extract:
 - Bug Report (Description, Steps to Reproduce, Expected Behaviour, Actual Behaviour, Severity)
 - Acceptance Criteria section
 
+**TDD** *(optional)* — if the issue belongs to a milestone, list issues labeled `technical-design` in that milestone. If found, read in full and extract:
+- High-level diagram
+- Components design
+- Data models
+- API specification
+- Security
+- Failure modes
+
+Pass extracted sections to the subagent as architectural context alongside the investigation.
+
 ---
 
 ## Step 3 — Root Cause Investigation

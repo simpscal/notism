@@ -12,7 +12,7 @@ The invoker passes the following context:
 
 - **Requirements**: acceptance criteria list + description of the infrastructure change
 - **Decisions** *(optional)*: one of:
-  - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, data models, alternatives considered, risks & mitigations, cross-cutting concerns. Pass `none` if no TDD exists.
+  - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, data models, risks & mitigations, cross-cutting concerns. Pass `none` if no TDD exists.
   - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
 
 ## Workflow

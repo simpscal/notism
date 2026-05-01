@@ -58,9 +58,6 @@ Part of #<requirement_issue_number>
 
 ## 4. Risk & Trade-offs
 
-### Alternatives Considered
-| Decision | Chosen | Alternative | Why Rejected |
-
 ### Security
 <Auth, authz, encryption>
 
@@ -110,7 +107,6 @@ Part of #<requirement_issue_number>
 | `data_models` | yes | ERD/schema with indexes, or `No new data models — uses existing schema` |
 | `api_spec` | yes | Table: Method, Route, Auth, Request, Response, Status Codes |
 | `event_schemas` | yes | Table or `N/A` |
-| `alternatives` | yes | Table: Decision, Chosen, Alternative, Why Rejected — min 1 |
 | `security` | yes | Auth, authz, encryption at rest and in transit |
 | `scalability` | yes | Throughput/latency targets, scaling approach |
 | `failure_modes` | yes | Table: Scenario, Impact, Mitigation — min 2 rows |
