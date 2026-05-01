@@ -114,7 +114,7 @@ Use the current TDD as the baseline. For each design area below, evaluate whethe
 | Happy path | `happy_path` | Mermaid sequence: user → services → storage → response |
 | Unhappy path | `unhappy_path` | Key failure scenario and system response |
 | Technology stack | `tech_stack` | New languages/frameworks/libraries/infra only |
-| Infrastructure | `infrastructure` | Cloud resources added/modified; IaC module changes; environment-specific config |
+| Infrastructure Design | `infrastructure_design` | Cloud resources added/modified; IaC module changes; environment-specific config. If no changes, explicitly report "None". |
 | Components design | `components_design` | All new/modified components — Mermaid graph |
 | Data models | `data_models` | Entities, relationships, key indexes — ERD or schema; include indexes |
 | API specification | `api_spec` | Method, route, auth, request/response shape, status codes |
@@ -144,7 +144,7 @@ Evaluate every section of the TDD template against the revised design. Sections 
 | High-Level Diagram | Any service, database, cache, or integration added, updated, or removed |
 | Integration Flows (happy + unhappy paths) | Request or response flow added, updated, or removed |
 | Technology Stack | New library or infrastructure introduced or updated |
-| Infrastructure | Any cloud resource added, updated, or removed; IaC module or env config changed |
+| Infrastructure Design | Any cloud resource added, updated, or removed; IaC module or env config changed. If no changes, explicitly report "None". |
 | Components Design | Any component added, updated, removed, or restructured, OR design instructions updated |
 | Data Models | Any entity added, updated, removed, or field changed |
 | API Specification | Any endpoint added, updated, removed, or its contract changed |

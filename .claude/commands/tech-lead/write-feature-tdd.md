@@ -93,7 +93,7 @@ Work at the architecture and contract level — not the code level. Cover every 
 | Happy path | `happy_path` | Mermaid sequence: user → services → storage → response |
 | Unhappy path | `unhappy_path` | Key failure scenario and system response |
 | Technology stack | `tech_stack` | New languages/frameworks/libraries/infra only |
-| Infrastructure | `infrastructure` | Cloud resources added/modified; IaC module changes; environment-specific config |
+| Infrastructure Design | `infrastructure_design` | Cloud resources added/modified; IaC module changes; environment-specific config. If no changes, explicitly report "None". |
 | Components design | `components_design` | All new/modified components — Mermaid graph |
 | Data models | `data_models` | Entities, relationships, key indexes — ERD or schema; include indexes |
 | API specification | `api_spec` | Method, route, auth, request/response shape, status codes |
