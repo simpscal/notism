@@ -123,8 +123,9 @@ For each **New** scope item:
    Include a **Notes** section for edge cases, dependencies, constraints.
 
 4. Render the `acceptance-criteria` template with `{criteria, notes}` for each story.
-5. Create an issue titled `[Story] <title>` with label `user-story` and the sprint milestone, where the body comes from the `issue-user-story` template with `{user_story, acceptance_criteria, notes, requirement_issue}` linked to `#req_issue_number`.
-6. Create all issues first, then back-fill dependency references in Notes for both `Depends on` and `Blocks` directions.
+5. Create an issue titled `[Story] <title>` with label `user-story`, where the body comes from the `issue-user-story` template with `{user_story, acceptance_criteria, notes, requirement_issue}` linked to `#req_issue_number`.
+6. Set the milestone on each new issue to the sprint milestone (from Step 2).
+7. Create all issues first, then back-fill dependency references in Notes for both `Depends on` and `Blocks` directions.
 
 ### 3. Remove Obsolete Stories
 

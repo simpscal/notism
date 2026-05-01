@@ -125,7 +125,7 @@ Use the current TDD as the baseline. For each design area below, evaluate whethe
 | Migration plan | `migration` | Data migration, cutover, rollback — or N/A |
 | Monitoring & alerting | `monitoring` | Key metrics, alert thresholds |
 
-**Output structure:** lead with the key architectural decision, present areas in logical order (data model → API → flows), highlight risks and trade-offs explicitly, end with an **Implementation Priority** table listing open `user-story` labeled issues only (exclude closed/implemented): P1 (unblocks others), P2 (core path), P3 (follow-on). Use Mermaid diagrams when clearer than prose; tables for contracts and schemas.
+**Output structure:** lead with the key architectural decision, present areas in logical order (data model → API → flows), highlight risks and trade-offs explicitly, end with an **Implementation Priority** table listing open `user-story` labeled issues only (exclude closed/implemented): P1 (unblocks others), P2 (core path), P3 (follow-on). Use tables for contracts and schemas.
 
 Ground every design decision in `$CODEBASE_CONTEXT` — extend existing patterns rather than introducing new ones where possible. Call out explicitly when the design diverges from existing patterns and why.
 

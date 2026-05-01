@@ -98,7 +98,9 @@ Create a milestone named `Sprint N` with the sprint goal.
 
 ## Step 4 — Create User Story Issues
 
-For each story: create an issue titled `[Story] <title>` with label `user-story` and the sprint milestone, where the body comes from the `issue-user-story` template with `{user_story, acceptance_criteria, notes, requirement_issue}`.
+For each story:
+1. Create an issue titled `[Story] <title>` with label `user-story`, where the body comes from the `issue-user-story` template with `{user_story, acceptance_criteria, notes, requirement_issue}`.
+2. Set the milestone to `Sprint N` (the milestone created in Step 3).
 
 > **Dependency linking**: Create all issues first, then back-fill dependency references in Notes for both `Depends on` and `Blocks` directions, linking to the relevant issue numbers.
 
