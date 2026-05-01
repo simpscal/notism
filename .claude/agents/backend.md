@@ -24,7 +24,7 @@ Read every requirement and acceptance criterion — these are your done criteria
 **Derive scope and key decisions** from the decisions:
 
 - **Integration Flows** (Happy/Unhappy Path): trace the request/response chain and locate where each AC fits
-- **Components Design**: identify which layers and files are in scope
+- **Components Design**: identify which components are involved in this feature and how they interact
 - **API Specification**: note every endpoint this story adds or modifies — method, route, auth, request/response shape, status codes
 - **Data Models**: note schema changes, new entities, indexes, and whether a migration is required
 - **Event Schemas**: note any events produced or consumed (skip if N/A)

@@ -24,7 +24,7 @@ Read every requirement and acceptance criterion — these are your done criteria
 **Derive scope and key decisions** from the decisions:
 
 - **High-Level Diagram**: confirm deployment topology and integration points
-- **Infrastructure Design**: identify every AWS resource, network component, or CI/CD artifact that changes
+- **Infrastructure Design**: identify every cloud resource, network component, or CI/CD artifact that changes
 - **Technology Stack**: note any new services, runtimes, or tooling being introduced
 - **Failure Modes**: identify rollback paths and recovery procedures for each change
 - **Security**: note IAM policies, encryption, network ACLs, and secrets management

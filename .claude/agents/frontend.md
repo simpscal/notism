@@ -29,7 +29,7 @@ Read every requirement and acceptance criterion — these are your done criteria
 **Derive scope and key decisions** from the decisions:
 
 - **Integration Flows** (Happy/Unhappy Path): understand the user-facing request/response chain and where each AC fits
-- **Components Design**: identify which UI components are new or modified
+- **Components Design**: identify which UI components are involved in this feature and how they interact
 - **API Specification**: note every endpoint consumed — method, route, auth, request shape, response shape, all status codes
 - **Data Models**: understand the shape of data rendered in the UI
 - **Failure Modes**: map each failure scenario to a UI state (error, empty, partial)

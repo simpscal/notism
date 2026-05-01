@@ -36,10 +36,10 @@ Part of #<requirement_issue_number>
 <New languages/frameworks/libraries/infrastructure>
 
 ### Components Design
-<Mermaid: internal component structure>
+<Mermaid flowchart or sequence: only the components involved in this feature and how they interact — exclude unrelated components>
 
 ### Infrastructure Design
-<AWS services, networking, deployment topology — Mermaid or N/A>
+<Cloud provider resources, networking, deployment topology — Mermaid or N/A>
 
 ---
 
@@ -102,8 +102,8 @@ Part of #<requirement_issue_number>
 | `happy_path` | yes | Mermaid sequence: user → services → storage → response |
 | `unhappy_path` | yes | Mermaid sequence: failure scenario + system response |
 | `tech_stack` | yes | New tech only, or `No new technologies — uses existing stack` |
-| `components_design` | yes | Mermaid graph: all new/modified components |
-| `infrastructure_design` | yes | AWS services, networking, deployment topology — Mermaid or `N/A` |
+| `components_design` | yes | Mermaid flowchart or sequence: feature-relevant components and their interactions — exclude unrelated components |
+| `infrastructure_design` | yes | Cloud provider resources, networking, deployment topology — Mermaid or `N/A` |
 | `data_models` | yes | ERD/schema with indexes, or `No new data models — uses existing schema` |
 | `api_spec` | yes | Table: Method, Route, Auth, Request, Response, Status Codes |
 | `event_schemas` | yes | Table or `N/A` |
