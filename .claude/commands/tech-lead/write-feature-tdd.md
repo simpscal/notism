@@ -133,5 +133,5 @@ Capture the new issue number — referenced in Step 6.
 
 Skip if updating an existing TDD (branches already exist).
 
-For each codebase in CLAUDE.md's Codebases table (not the orchestration repo): create sprint branch from `main`.
+Create sprint branches for each codebase.
 
