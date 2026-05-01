@@ -108,8 +108,8 @@ Work at the architecture and contract level — not the code level. Cover every 
 - Lead with the key architectural decision — the one call that shapes everything else
 - Present areas in logical order (data model → API → flows)
 - Highlight risks and trade-offs explicitly
-- End with an **Implementation Priority** table: P1 (unblocks others), P2 (core path), P3 (follow-on)
-- Use Mermaid diagrams when clearer than prose; tables for contracts and schemas
+- End with an **Implementation Priority** table listing open `user-story` labeled issues only (exclude closed/implemented): P1 (unblocks others), P2 (core path), P3 (follow-on)
+- Use tables for contracts and schemas.
 
 Ground every design decision in `$CODEBASE_CONTEXT` — extend existing patterns rather than introducing new ones where possible. Call out explicitly when the design diverges from existing patterns and why.
 

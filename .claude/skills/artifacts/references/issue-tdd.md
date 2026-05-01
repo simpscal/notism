@@ -112,4 +112,4 @@ Part of #<requirement_issue_number>
 | `failure_modes` | yes | Table: Scenario, Impact, Mitigation — min 2 rows |
 | `migration` | yes | Cutover + rollback, or `N/A — no data migration required` |
 | `monitoring` | yes | Key metrics, alert thresholds |
-| `implementation_priority` | yes | P1/P2/P3 table — `story-removed` always P1, all milestone stories listed, each story appears exactly once |
+| `implementation_priority` | yes | P1/P2/P3 table — `story-removed` always P1, open `user-story` labeled issues only (exclude closed/implemented), each story appears exactly once |
