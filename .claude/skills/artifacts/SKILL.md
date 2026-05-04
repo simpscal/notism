@@ -42,3 +42,4 @@ Before calling `render_template()`, Read the corresponding reference file to get
 | Comment: Sprint Summary | `comment-sprint-summary` | `references/comment-sprint-summary.md` |
 | Comment: Dev Investigation | `comment-dev-investigation` | `references/comment-dev-investigation.md` |
 | Comment: Bug Summary | `comment-bug-summary` | `references/comment-bug-summary.md` |
+| Comment: QA Test Cases | `comment-qa-test-cases` | `references/comment-qa-test-cases.md` |

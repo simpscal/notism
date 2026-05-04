@@ -36,3 +36,5 @@ Never hardcode repo slugs, label names, paths, or branch patterns.
 | Bug issue | `bug-production` |
 | Bug resolved and closed | `bug-fixed` |
 | Dev implementation complete | `implemented` |
+| QA test cases verified by human | `qa-passed` |
+| QA test cases have failures | `qa-blocked` |

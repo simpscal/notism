@@ -14,7 +14,7 @@ Read issue `#issue_number` from the tracker adapter to get its title, labels, an
 
 - If the issue does not have the `bug-production` label, stop:
   ```
-  ⛔ Issue #N is not a bug (labels: <labels>). Use /po close-bug only for bug issues.
+  ⛔ Issue #N is not a bug (labels: <labels>). Use /release hotfix only for bug issues.
   ```
 - If the issue is already closed, stop:
   ```
@@ -25,6 +25,11 @@ Read issue `#issue_number` from the tracker adapter to get its title, labels, an
 
 Before doing anything destructive, verify the bug is ready to close:
 
+Check that issue `#issue_number` has the `qa-passed` label. If not, stop:
+```
+⛔ Bug #N has not passed QA. Run /qa write-test-cases <N>, verify on staging, then /qa pass <N> before releasing.
+```
+
 For each codebase repo, list open bugfix PRs for issue N to detect any unmerged PRs.
 
 Collect results from all codebases. If any open PRs are found across any repo, stop:
@@ -33,7 +38,7 @@ Collect results from all codebases. If any open PRs are found across any repo, s
 ⛔ Bug not ready to close. Unmerged PR(s) found for #N:
   - <pr_title> (<pr_url>)
 
-Merge all PRs first, then run /po close-bug {N} again.
+Merge all PRs first, then run /release hotfix {N} again.
 ```
 
 If no open PRs in any codebase repo, proceed.
@@ -68,4 +73,3 @@ Output one line per deletion:
 ### Step 7 — Post Bug Summary
 
 Render the `comment-bug-summary` template with `{issue_number, title, closed_date, migrations}`, then post it as a comment on issue `#issue_number`.
-

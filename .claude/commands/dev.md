@@ -22,8 +22,10 @@ Check the first word of `$ARGUMENTS`:
 | Label present | Mode | Mode file |
 |---|---|---|
 | `bug-production` + `story-updated` | Bug Revisit | `dev/bug-revisit.md` |
+| `bug-production` + `qa-blocked` | QA Fix (Bug) | `dev/qa-fix-bug.md` |
 | `bug-production` | Bug Fix | `dev/fix-bug.md` |
 | `story-removed` | Revert | `dev/revert.md` |
+| `qa-blocked` | QA Fix | `dev/qa-fix.md` |
 | `story-updated` | Change | `dev/story-revisit.md` |
 | _(none)_ | Standard | `dev/implement.md` |
 

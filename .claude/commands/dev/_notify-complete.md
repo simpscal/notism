@@ -10,7 +10,7 @@ Post a comment on issue `#ISSUE_NUMBER` with the following body:
 - PR: <pr-url>
 
 ---
-> Pause Human gate: Review the PR diff. When approved, merge into the sprint branch.
+> ⏸ Human gate: Review the PR diff. When approved, merge into the staging branch.
 ```
 
 ## Multi-skill stories (two PRs)
@@ -22,7 +22,7 @@ Post a comment on issue `#ISSUE_NUMBER` with the following body:
 - Frontend: <pr-url>
 
 ---
-> Pause Human gate: Review both PR diffs. When approved, merge into the sprint branch.
+> ⏸ Human gate: Review both PR diffs. When approved, merge into the staging branch.
 ```
 
 Then add label `implemented` and remove labels `in-progress` and `story-updated` from issue `#ISSUE_NUMBER`.

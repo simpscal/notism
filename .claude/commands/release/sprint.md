@@ -35,7 +35,7 @@ If any open story has an unmerged PR or is still in-progress, stop and output:
 ⛔ Sprint not ready to close. The following stories have unmerged work:
   - #N <title> (labels: <labels>)
 
-Merge all story PRs into the sprint branch, then run /po close-sprint again.
+Merge all story PRs into the sprint branch, then run /release sprint again.
 ```
 
 If all stories are merged or already closed, proceed.
@@ -84,4 +84,3 @@ For each codebase, create sprint release PR for sprint N with title `feat(sprint
 ### Step 7 — Post Sprint Summary
 
 Render the `comment-sprint-summary` template with `{sprint, closed_date, stories, release_prs, migrations}`, then post it as a comment on the requirement issue.
-
