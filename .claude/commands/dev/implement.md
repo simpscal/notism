@@ -42,9 +42,9 @@ For multi-skill stories, run independently in each codebase path.
 
 ---
 
-## Step 3 — Dispatch to Skill Subagent
+## Step 3 — Dispatch Agents
 
--> Follow `_dispatch-subagent.md`
+Spawn `backend`, `frontend`, and `devops` in a single parallel message.
 
 ---
 

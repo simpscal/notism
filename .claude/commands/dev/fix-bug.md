@@ -59,9 +59,9 @@ For multi-skill bugs, run checkout independently in each codebase path.
 
 ---
 
-## Step 6 — Dispatch to Skill Subagent
+## Step 6 — Dispatch Agents
 
--> Follow `_dispatch-subagent.md`
+Spawn only agents whose domain matches the `[tag]` in Fix Approach (e.g. `[backend]` → `backend`; `[frontend]` → `frontend`; `[devops]` → `devops`). For multi-domain fixes, spawn all matching agents in a single parallel message.
 
 Decisions = investigation verbatim (Root Cause, Scope, Fix Approach, Risk).
 

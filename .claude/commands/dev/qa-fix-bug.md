@@ -22,17 +22,14 @@ For multi-skill bugs, run independently in each codebase path.
 
 ---
 
-## Step 3 — Dispatch to Skill Subagent
+## Step 3 — Dispatch Agents
 
--> Follow `_dispatch-subagent.md`
+Spawn only agents whose domain matches the `[tag]` in Fix Approach.
 
-In addition to standard context, pass the following to every subagent:
-
-| Extra context | Source |
-|---------------|--------|
-| Root Cause, Scope, Fix Approach, Risk | Verbatim from investigation comment |
-| Failing test cases | Verbatim from QA test cases comment — all unchecked `- [ ]` items |
-| Instruction | "Fix only the failing test cases. Do not re-implement already-passing work. Do not modify files unrelated to the failing cases." |
+Pass `Constraints` to every agent:
+- Investigation: Root Cause, Scope, Fix Approach, Risk verbatim from investigation comment
+- Failing test cases: verbatim from QA test cases comment — all unchecked `- [ ]` items
+- Instruction: "Fix only the failing test cases. Do not re-implement already-passing work. Do not modify files unrelated to the failing cases."
 
 ---
 

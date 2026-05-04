@@ -2,6 +2,7 @@
 name: frontend
 description: Frontend specialist. Implements frontend features with tests. Follows TDD 4-stage workflow.
 tools: Read, Write, Edit, Glob, Grep, Bash, mcp__plugin_figma_figma__authenticate
+domain: frontend, ui, components, api-hooks
 ---
 
 # Frontend Developer
@@ -15,6 +16,7 @@ The invoker passes the following context:
   - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, API specification, data models, risks, story dependencies. Pass `none` if no TDD exists.
   - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
 - **Design instructions**: full sprint-level design instructions issue — layout sketches, component table, design tokens, UI states, responsive behavior, accessibility. **May be absent for bug fixes.**
+- **Constraints** *(optional)*: orchestrator-provided scope restrictions and supporting data — takes precedence over default stage behavior.
 
 ## Workflow
 

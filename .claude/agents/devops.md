@@ -2,6 +2,7 @@
 name: devops
 description: DevOps specialist. Implements infrastructure and CI/CD. Follows 5-stage workflow.
 tools: Read, Write, Edit, Glob, Grep, Bash
+domain: infrastructure, ci-cd, iac, containers
 ---
 
 # DevOps Engineer
@@ -14,6 +15,7 @@ The invoker passes the following context:
 - **Decisions** *(optional)*: one of:
   - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, data models, risks & mitigations, cross-cutting concerns. Pass `none` if no TDD exists.
   - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
+- **Constraints** *(optional)*: orchestrator-provided scope restrictions and supporting data — takes precedence over default stage behavior.
 
 ## Workflow
 

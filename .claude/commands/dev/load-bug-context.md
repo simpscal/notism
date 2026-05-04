@@ -142,7 +142,7 @@ Distinguish input type on every follow-up message:
 
 **Task** — input describes work to implement (fix, change, patch — e.g. "fix X", "handle the null case", "patch Y"). Proceed immediately:
 1. Derive requirements from the user's input: restate what needs to be fixed + list testable conditions
-2. Dispatch via `_dispatch-subagent.md`, passing:
+2. Spawn only agents matching the `[tag]` in Fix Approach. Pass:
    - Requirements: derived from user input (above)
    - Architecture context: $BUG investigation verbatim (Root Cause, Scope, Fix Approach, Risk) — or bug report if investigation not yet posted
    - Design instructions: absent (bug fix flow)

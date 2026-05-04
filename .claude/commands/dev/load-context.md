@@ -154,7 +154,7 @@ Distinguish input type on every follow-up message:
 
 **Task** — input describes work to implement (feature, change, fix — e.g. "add X", "update Y", "implement Z"). Proceed immediately:
 1. Derive requirements from the user's input: restate goal + list testable conditions
-2. Dispatch via `_dispatch-subagent.md`, passing:
+2. Spawn `backend`, `frontend`, and `devops` in a single parallel message. Pass:
    - Requirements: derived from user input (above)
    - Architecture context: relevant sections from $TDD verbatim
    - Design instructions: $DESIGN (if loaded)

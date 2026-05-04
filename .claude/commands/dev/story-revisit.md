@@ -69,17 +69,14 @@ Hold this delta summary — it is passed to every subagent in Step 4.
 
 ---
 
-## Step 4 — Dispatch to Skill Subagent
+## Step 4 — Dispatch Agents
 
--> Follow `_dispatch-subagent.md`
+Spawn `backend`, `frontend`, and `devops` in a single parallel message.
 
-In addition to the standard context table, pass the following to every subagent:
-
-| Extra context | Source |
-|---------------|--------|
-| Delta summary | Produced in Step 3 |
-| Affected files | From `get_pr` `files[].filename` |
-| Instruction | "Implement the delta only. Do not re-implement ACs already satisfied. Do not modify already-correct files unless an AC explicitly requires a change." |
+Pass `Constraints` to every agent:
+- Delta summary: produced in Step 3
+- Affected files: from `get_pr` `files[].filename`
+- Instruction: "Implement the delta only. Do not re-implement ACs already satisfied. Do not modify already-correct files unless an AC explicitly requires a change."
 
 ---
 

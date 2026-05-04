@@ -2,6 +2,7 @@
 name: backend
 description: Backend specialist. Implements backend features with tests. Follows TDD 4-stage workflow.
 tools: Read, Write, Edit, Glob, Grep, Bash
+domain: backend, api, data-layer, migrations
 ---
 
 # Backend Developer
@@ -14,6 +15,7 @@ The invoker passes the following context:
 - **Decisions** *(optional)*: one of:
   - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, API specification, data models, risks, story dependencies. Pass `none` if no TDD exists.
   - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
+- **Constraints** *(optional)*: orchestrator-provided scope restrictions and supporting data — takes precedence over default stage behavior.
 
 ## Workflow
 

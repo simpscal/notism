@@ -59,14 +59,13 @@ Check out bugfix branch for issue `<N>` and pull latest from remote.
 
 ---
 
-## Step 6 — Dispatch to Skill Subagent
+## Step 6 — Dispatch Agents
 
-Follow `_dispatch-subagent.md`. Pass:
-
+Spawn only agents whose domain matches the `[tag]` in Fix Approach. Pass `Constraints`:
 - Updated investigation verbatim (Root Cause, Scope, Fix Approach, Risk, Complexity)
 - Delta summary from Step 4
 - Affected file list from Step 4
-- Explicit instruction: "Implement the delta only. Revert code for removed ACs. Add code for new/changed ACs. Do not modify files that are already correct under the new ACs."
+- Instruction: "Implement the delta only. Revert code for removed ACs. Add code for new/changed ACs. Do not modify files that are already correct under the new ACs."
 
 ---
 
