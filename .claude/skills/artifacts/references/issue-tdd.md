@@ -36,7 +36,12 @@ Part of #<requirement_issue_number>
 <New languages/frameworks/libraries/infrastructure>
 
 ### Components Design
-<Mermaid flowchart or sequence: only the components involved in this feature and how they interact — exclude unrelated components>
+
+#### Backend
+<New/existing/modified backend components, their responsibilities, and how they interact — Mermaid flowchart or graph>
+
+#### Frontend
+<High-level components only: UI components, hooks, and services (API clients / data-fetching layers). Show responsibilities and interactions via Mermaid flowchart or graph. No internal states, variables, or fine-grained implementation details.>
 
 ### Infrastructure Design
 <Cloud provider resources, networking, deployment topology — Mermaid or N/A>
@@ -102,7 +107,7 @@ Part of #<requirement_issue_number>
 | `happy_path` | yes | Mermaid sequence: user → services → storage → response |
 | `unhappy_path` | yes | Mermaid sequence: failure scenario + system response |
 | `tech_stack` | yes | New tech only, or `No new technologies — uses existing stack` |
-| `components_design` | yes | Mermaid flowchart or sequence: feature-relevant components and their interactions — exclude unrelated components |
+| `components_design` | yes | Two sections — **Backend** and **Frontend**. Backend: new/existing/modified components, responsibilities, interactions via Mermaid flowchart or graph. Frontend: high-level UI components, hooks, and services only — no internal states or fine-grained details — responsibilities and interactions via Mermaid flowchart or graph. No sequence diagrams in either section. |
 | `infrastructure_design` | yes | Cloud provider resources, networking, deployment topology — Mermaid or `N/A` |
 | `data_models` | yes | ERD/schema with indexes, or `No new data models — uses existing schema` |
 | `api_spec` | yes | Table: Method, Route, Auth, Request, Response, Status Codes |

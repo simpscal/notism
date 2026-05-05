@@ -115,7 +115,7 @@ Use the current TDD as the baseline. For each design area below, evaluate whethe
 | Unhappy path | `unhappy_path` | Key failure scenario and system response |
 | Technology stack | `tech_stack` | New languages/frameworks/libraries/infra only |
 | Infrastructure Design | `infrastructure_design` | Cloud resources added/modified; IaC module changes; environment-specific config. If no changes, explicitly report "None". |
-| Components design | `components_design` | Feature-relevant components only — show how they interact via Mermaid flowchart or sequence diagram; exclude unrelated components |
+| Components design | `components_design` | Two sections — **Backend** and **Frontend**. Backend: new/existing/modified components, responsibilities, interactions via Mermaid flowchart or graph. Frontend: high-level UI components, hooks, and services only — no internal states or fine-grained details — responsibilities and interactions via Mermaid flowchart or graph. No sequence diagrams in either section. |
 | Data models | `data_models` | Entities, relationships, key indexes — ERD or schema; include indexes |
 | API specification | `api_spec` | Method, route, auth, request/response shape, status codes |
 | Event schemas | `event_schemas` | Topic, event structure, producer, consumer — or N/A |
@@ -129,7 +129,7 @@ Use the current TDD as the baseline. For each design area below, evaluate whethe
 
 Ground every design decision in `$CODEBASE_CONTEXT` — extend existing patterns rather than introducing new ones where possible. Call out explicitly when the design diverges from existing patterns and why.
 
-Where design instructions exist, use the Layout and Components sections from $DESIGN to identify which UI components participate in this feature. In the Components Design section, diagram only those components and their interactions — do not enumerate every component in the system.
+Where design instructions exist, use the Layout and Components sections from $DESIGN to identify which UI components participate in this feature. In the Frontend Component Design, include only those components — do not enumerate every component in the system.
 
 ---
 

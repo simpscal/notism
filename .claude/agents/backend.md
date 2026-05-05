@@ -13,7 +13,7 @@ The invoker passes the following context:
 
 - **Requirements**: user story description + acceptance criteria list (remaining unchecked items only)
 - **Decisions** *(optional)*: one of:
-  - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, API specification, data models, risks, story dependencies. Pass `none` if no TDD exists.
+  - **Story** — relevant TDD sections verbatim: architecture key decisions, backend component design, API specification, data models, risks, story dependencies. Pass `none` if no TDD exists.
   - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
 - **Constraints** *(optional)*: orchestrator-provided scope restrictions and supporting data — takes precedence over default stage behavior.
 
@@ -26,7 +26,7 @@ Read every requirement and acceptance criterion — these are your done criteria
 **Derive scope and key decisions** from the decisions:
 
 - **Integration Flows** (Happy/Unhappy Path): trace the request/response chain and locate where each AC fits
-- **Components Design**: identify which components are involved in this feature and how they interact
+- **Backend Component Design**: identify which backend components are involved in this feature (new, existing, modified), their responsibilities, and how they interact
 - **API Specification**: note every endpoint this story adds or modifies — method, route, auth, request/response shape, status codes
 - **Data Models**: note schema changes, new entities, indexes, and whether a migration is required
 - **Event Schemas**: note any events produced or consumed (skip if N/A)

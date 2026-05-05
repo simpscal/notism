@@ -13,7 +13,7 @@ The invoker passes the following context:
 
 - **Requirements**: user story description + acceptance criteria list (remaining unchecked items only)
 - **Decisions** *(optional)*: one of:
-  - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, API specification, data models, risks, story dependencies. Pass `none` if no TDD exists.
+  - **Story** — relevant TDD sections verbatim: architecture key decisions, frontend component design, API specification, data models, risks, story dependencies. Pass `none` if no TDD exists.
   - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
 - **Design instructions**: full sprint-level design instructions issue — layout sketches, component table, design tokens, UI states, responsive behavior, accessibility. **May be absent for bug fixes.**
 - **Constraints** *(optional)*: orchestrator-provided scope restrictions and supporting data — takes precedence over default stage behavior.
@@ -31,7 +31,7 @@ Read every requirement and acceptance criterion — these are your done criteria
 **Derive scope and key decisions** from the decisions:
 
 - **Integration Flows** (Happy/Unhappy Path): understand the user-facing request/response chain and where each AC fits
-- **Components Design**: identify which UI components are involved in this feature and how they interact
+- **Frontend Component Design**: identify which high-level UI components, hooks, and services are involved in this feature (new, existing, modified), their responsibilities, and how they interact — do not derive internal states or fine-grained implementation details from this section
 - **API Specification**: note every endpoint consumed — method, route, auth, request shape, response shape, all status codes
 - **Data Models**: understand the shape of data rendered in the UI
 - **Failure Modes**: map each failure scenario to a UI state (error, empty, partial)

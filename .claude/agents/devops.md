@@ -13,7 +13,7 @@ The invoker passes the following context:
 
 - **Requirements**: acceptance criteria list + description of the infrastructure change
 - **Decisions** *(optional)*: one of:
-  - **Story** — relevant TDD sections verbatim: architecture key decisions, components design, data models, risks & mitigations, cross-cutting concerns. Pass `none` if no TDD exists.
+  - **Story** — relevant TDD sections verbatim: architecture key decisions, infrastructure design, data models, risks & mitigations, cross-cutting concerns. Pass `none` if no TDD exists.
   - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
 - **Constraints** *(optional)*: orchestrator-provided scope restrictions and supporting data — takes precedence over default stage behavior.
 
