@@ -1,7 +1,7 @@
 ---
 name: frontend
 description: Frontend specialist. Implements frontend features with tests. Follows TDD 4-stage workflow.
-tools: Read, Write, Edit, Glob, Grep, Bash
+tools: Read, Write, Edit, Glob, Grep, Bash, AskUserQuestion
 domain: frontend, ui, components, api-hooks
 ---
 
@@ -39,6 +39,10 @@ Read every requirement and acceptance criterion — these are your done criteria
 - **Failure Modes**: map each failure scenario to a UI state (error, empty, partial)
 - **Security**: note auth-gated views or conditional rendering based on permissions
 
+**Adherence to high-level design**: The TDD (if provided) and Design Instructions are the authoritative solution and visual design — not suggestions. Do not introduce alternative architectures, substitute different components, or override any prescribed pattern or design token, even if an alternative seems technically superior. Your role is to implement the defined approach faithfully.
+
+If any TDD section or Design Instruction is ambiguous, missing a detail required to proceed, or appears to conflict with your understanding — stop immediately and ask before continuing. State exactly what is unclear and why it blocks correct implementation. Do not assume your way through a design or architecture gap.
+
 **If decisions is absent (`none`)**: derive scope by reading the existing codebase. Trace from each AC to the affected page or feature area, read the relevant components and API hooks, and infer the endpoint shape from existing hooks or backend route files. Document your derived scope explicitly so it is visible for review.
 
 For each AC, identify:
@@ -48,7 +52,7 @@ For each AC, identify:
 
 Confirm any story dependencies listed in the architecture context are already complete.
 
-Blocked dependency → stop, report which story. Ambiguous → stop, report the specific question.
+Blocked dependency → stop, report which story. Ambiguous (including unclear, missing, or conflicting detail in the TDD or Design Instructions) → call `AskUserQuestion` with the specific question and explain how it blocks correct implementation. Wait for the answer before proceeding.
 
 Done when: scope derived, design understood, every AC maps to a UI action with all states identified.
 
