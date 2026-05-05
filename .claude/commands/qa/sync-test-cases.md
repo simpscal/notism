@@ -37,7 +37,33 @@ Compare current ACs from the issue against the AC sections in the existing test 
 
 ---
 
-## Step 4 — Update Comment
+## Step 4 — Clarify Ambiguities
+
+For ACs marked as "changed" or "added" in the diff, review each for the following signals:
+
+| Signal | Example |
+|--------|---------|
+| No error path defined | AC describes happy path but no AC covers invalid input or failure |
+| Vague quantifiers | Words like "recent", "large", "several" with no concrete definition |
+| Missing role scoping | Action described without specifying which user roles it applies to |
+| Undefined state dependency | AC assumes prior state not guaranteed elsewhere in the story |
+| Conflicting ACs | Two ACs describe different outcomes for the same trigger |
+| Validation rules without boundaries | Field must be "valid" or "correct" but limits are not stated |
+
+Only check changed/added ACs — do not re-examine unchanged ACs.
+
+If ambiguities are found:
+- Trigger `askUserQuestion` — do NOT proceed to Step 5
+- For each ambiguity: cite the specific AC verbatim, state what is unclear, and offer 2–3 possible interpretations where applicable
+- Ask each question independently and specifically — do not bundle unrelated questions
+
+Do NOT infer or invent missing business logic. If critical logic is undefined, it must be resolved here before proceeding.
+
+If no ambiguities are found, proceed directly to Step 5.
+
+---
+
+## Step 5 — Update Comment
 
 Edit the existing test cases comment in-place with the updated content.
 

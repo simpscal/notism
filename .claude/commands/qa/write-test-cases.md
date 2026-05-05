@@ -28,7 +28,31 @@ If the issue already has `qa-passed`, confirm with the user before overwriting e
 
 ---
 
-## Step 2 — Generate Test Cases
+## Step 2 — Clarify Ambiguities
+
+Before writing any test cases, review all extracted ACs and notes for the following signals:
+
+| Signal | Example |
+|--------|---------|
+| No error path defined | AC describes happy path but no AC covers invalid input or failure |
+| Vague quantifiers | Words like "recent", "large", "several" with no concrete definition |
+| Missing role scoping | Action described without specifying which user roles it applies to |
+| Undefined state dependency | AC assumes prior state not guaranteed elsewhere in the story |
+| Conflicting ACs | Two ACs describe different outcomes for the same trigger |
+| Validation rules without boundaries | Field must be "valid" or "correct" but limits are not stated |
+
+If ambiguities are found:
+- Trigger `askUserQuestion` — do NOT proceed to Step 3
+- For each ambiguity: cite the specific AC or note verbatim, state what is unclear, and offer 2–3 possible interpretations where applicable
+- Ask each question independently and specifically — do not bundle unrelated questions
+
+Do NOT infer or invent missing business logic. If critical logic is undefined, it must be resolved here before proceeding.
+
+If no ambiguities are found, proceed directly to Step 3.
+
+---
+
+## Step 3 — Generate Test Cases
 
 For each AC in the story, generate a test case table:
 
@@ -44,7 +68,7 @@ For each AC in the story, generate a test case table:
 
 ---
 
-## Step 3 — Post Test Cases Comment
+## Step 4 — Post Test Cases Comment
 
 Render the `comment-qa-test-cases` template with `{issue_number, test_cases}`, then post it as a comment on issue `#story_number`.
 
