@@ -46,7 +46,7 @@ For each AC in the story, generate a test case table:
 
 ## Step 3 — Post Test Cases Comment
 
-Render the `comment-qa-test-cases` template with `{issue_number, story_title, test_cases}`, then post it as a comment on issue `#story_number`.
+Render the `comment-qa-test-cases` template with `{issue_number, test_cases}`, then post it as a comment on issue `#story_number`.
 
 Output:
 ```
