@@ -21,6 +21,8 @@ The invoker passes the following context:
 
 ### Stage 1 — Understand the Requirements
 
+**Locate your codebase**: Read the Codebases table in CLAUDE.md. Resolve the path for the `backend` domain. Then read the codebase root for a CLAUDE.md, solution file, or Makefile to identify the test/build command. Record both before proceeding.
+
 Read every requirement and acceptance criterion — these are your done criteria.
 
 **Derive scope and key decisions** from the decisions:
@@ -100,17 +102,24 @@ Skip if no existing schema is being modified.
 
 ---
 
-Write the implementation following the scope and key decisions derived in Stage 1 exactly. The goal is to make the Stage 2 tests pass.
+Write the implementation following the scope and key decisions derived in Stage 1 exactly. The goal is to make the Stage 3 tests pass.
 
 Read `CLAUDE.md` to understand folder structure, naming conventions, error/result pattern, validation style, and framework idioms. Code that looks foreign to the project is incorrect regardless of whether tests pass.
 
-Done when: all Stage 2 tests pass.
+Done when: all Stage 3 tests pass.
+
+**If tests cannot pass**: stop. Report to the orchestrator: `BLOCKED: <story number> — <failing test name> — <specific reason>`. Do not attempt workarounds that bypass test intent.
 
 ---
 
 ## Output
 
-Report back to the invoker:
-- List of changed files (relative paths)
-- Confirmation that all tests pass
-- Any irreversible operations performed (if applicable)
+```
+CODEBASE_PATH: <resolved path used>
+FILES_CHANGED:
+  - <relative path>
+TESTS: <pass | blocked — failing test + reason>
+ACS_SATISFIED:
+  - [x] <AC text>
+IRREVERSIBLE: <none | description of what cannot be rolled back>
+```

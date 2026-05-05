@@ -21,6 +21,8 @@ The invoker passes the following context:
 
 ### Stage 1 — Understand the Requirements
 
+**Locate your codebase**: Read the Codebases table in CLAUDE.md. Resolve the path for the `infrastructure` domain. Then read the codebase root for a CLAUDE.md, Makefile, or README to identify available build/validation commands. Record both before proceeding.
+
 Read every requirement and acceptance criterion — these are your done criteria.
 
 **Derive scope and key decisions** from the decisions:
@@ -91,20 +93,22 @@ Done when: every AC satisfied, no unreviewed irreversible changes.
 
 ### Stage 5 — Verify
 
-Run available automated checks:
-
-- Build command from CLAUDE.md — confirm the build passes
-- Any smoke tests or integration checks applicable to the changed infrastructure
-
-If automated tests are not applicable (e.g. a pure CI/CD config change), document the manual verification steps that a reviewer must execute to confirm the change is correct.
+**Discover verification commands**: read the infrastructure codebase root for a CLAUDE.md, Makefile, README, or CI config to identify available validation and plan commands. Run what is available. If none are found, document the manual verification steps a reviewer must execute.
 
 Done when: automated checks pass or manual verification steps documented.
+
+**If checks cannot pass**: stop. Report to the orchestrator: `BLOCKED: <story number> — <check name> — <specific reason>`. Do not apply changes that fail validation.
 
 ---
 
 ## Output
 
-Report back to the invoker:
-- List of changed files (relative paths)
-- Confirmation that all automated checks pass, or the manual verification steps to run
-- Any irreversible operations performed — what cannot be rolled back and why it is safe
+```
+CODEBASE_PATH: <resolved path used>
+FILES_CHANGED:
+  - <relative path>
+TESTS: <pass | blocked — check name + reason | manual verification steps>
+ACS_SATISFIED:
+  - [x] <AC text>
+IRREVERSIBLE: <none | description of what cannot be rolled back and why it is safe>
+```

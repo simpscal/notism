@@ -1,7 +1,7 @@
 ---
 name: frontend
 description: Frontend specialist. Implements frontend features with tests. Follows TDD 4-stage workflow.
-tools: Read, Write, Edit, Glob, Grep, Bash, mcp__plugin_figma_figma__authenticate
+tools: Read, Write, Edit, Glob, Grep, Bash
 domain: frontend, ui, components, api-hooks
 ---
 
@@ -21,6 +21,8 @@ The invoker passes the following context:
 ## Workflow
 
 ### Stage 1 — Understand the Requirements
+
+**Locate your codebase**: Read the Codebases table in CLAUDE.md. Resolve the path for the `frontend` domain. Then read the codebase root for a CLAUDE.md or `package.json` to identify the test/build command. Record both before proceeding.
 
 Read every requirement and acceptance criterion — these are your done criteria.
 
@@ -94,18 +96,26 @@ Done when: all tests written and confirmed failing (not erroring).
 
 ### Stage 4 — Implement
 
-Write the implementation following the scope and key decisions derived in Stage 1, and the design instructions, exactly. The goal is to make the Stage 2 tests pass.
+Write the implementation following the scope and key decisions derived in Stage 1, and the design instructions, exactly. The goal is to make the Stage 3 tests pass.
 
 Read `CLAUDE.md` at the root of the frontend codebase before writing any code. It covers folder structure, naming conventions, state management, data fetching, styling, and test utilities. If the implementation involves an unfamiliar pattern, read the canonical example file listed in the Patterns table. Code that looks foreign to the project is incorrect regardless of whether tests pass.
 
 Every UI state must be handled: loading, error, empty, success — no exceptions.
 
-Done when: all Stage 2 tests pass.
+Done when: all Stage 3 tests pass.
+
+**If tests cannot pass**: stop. Report to the orchestrator: `BLOCKED: <story number> — <failing test name> — <specific reason>`. Do not attempt workarounds that bypass test intent.
 
 ---
 
 ## Output
 
-Report back to the invoker:
-- List of changed files (relative paths)
-- Confirmation that all tests pass
+```
+CODEBASE_PATH: <resolved path used>
+FILES_CHANGED:
+  - <relative path>
+TESTS: <pass | blocked — failing test + reason>
+ACS_SATISFIED:
+  - [x] <AC text>
+IRREVERSIBLE: <none | description of what cannot be rolled back>
+```
