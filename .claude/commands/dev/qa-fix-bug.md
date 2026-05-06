@@ -40,15 +40,7 @@ Commit message: `fix(#<ISSUE_NUMBER>): address qa-blocked items`
 
 ---
 
-## Step 5 — Merge to Staging
-
-Push the bugfix branch to remote for each codebase path.
-
-Merge the bugfix branch into the staging branch for each codebase path to deploy the fix for QA re-verification.
-
----
-
-## Step 6 — Update Implementation Comment
+## Step 5 — Update Implementation Comment
 
 Find the existing `## Implementation Complete` comment on issue `#ISSUE_NUMBER`.
 
