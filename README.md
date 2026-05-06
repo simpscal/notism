@@ -221,9 +221,9 @@ Dev auto-selects backend/frontend/devops agent(s). Multi-skill stories run agent
 |---------|-------|--------|
 | `/qa write-test-cases <issue>` | Story or bug issue # (must be `implemented`) | Test cases comment posted on issue — one table per AC |
 | `/qa sync-test-cases <issue>` | Story issue # | Test cases updated when ACs change (`story-updated`) |
+| `/qa amend-test-cases <issue>` | Story issue # | Opens dialog to discuss and revise test cases |
 | `/qa pass <issue>` | Story or bug issue # | `qa-passed` label applied — human then merges branch → sprint or main |
 | `/qa block <issue> <notes>` | Story or bug issue # + failure notes | `qa-blocked` label applied — triggers dev qa-fix cycle |
-| `/qa load-context <issue>` | Story or bug issue # | Displays existing test cases and QA status |
 
 QA never runs test commands. Test execution and verification is human-only. Test steps are user-action steps against a running staging environment.
 
@@ -273,9 +273,9 @@ QA never runs test commands. Test execution and verification is human-only. Test
     qa/
       write-test-cases.md     ← QA generates test cases from story ACs
       sync-test-cases.md      ← QA updates test cases after AC changes
+      amend-test-cases.md     ← QA discusses and revises test cases
       pass.md                 ← QA marks story passed — triggers sprint merge
       block.md                ← QA marks story blocked — triggers dev qa-fix
-      load-context.md         ← QA loads existing test cases and status
     release.md
     release/
       sprint.md               ← Release Manager closes sprint, opens release PRs

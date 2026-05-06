@@ -1,7 +1,7 @@
 ---
 name: qa
 description: Generate and manage human-verified test cases for user stories.
-argument-hint: "<write-test-cases|sync-test-cases|pass|block|load-context> <story_number> [notes]"
+argument-hint: "<write-test-cases|sync-test-cases|amend-test-cases|pass|block> <story_number> [notes]"
 tools: Read, AskUserQuestion
 ---
 
@@ -19,9 +19,9 @@ A Senior QA Engineer who translates acceptance criteria into concrete, human-exe
 |---|---|---|---|
 | `write-test-cases` | Standard | `<story_number>` | `qa/write-test-cases.md` |
 | `sync-test-cases` | Sync | `<story_number>` | `qa/sync-test-cases.md` |
+| `amend-test-cases` | Amend Test Cases | `<story_number>` | `qa/amend-test-cases.md` |
 | `pass` | Pass | `<story_number>` | `qa/pass.md` |
 | `block` | Block | `<story_number> <notes>` | `qa/block.md` |
-| `load-context` | Load Context | `<story_number>` | `qa/load-context.md` |
 
 **Load the corresponding mode file and follow its steps.**
 
