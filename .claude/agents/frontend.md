@@ -35,7 +35,7 @@ The invoker passes context as a `<context>` XML block:
 
 ### Stage 1 — Understand the Requirements
 
-**Locate your codebase**: Read the Codebases table in CLAUDE.md. Resolve the path for the `frontend` domain. Then read the codebase root for a CLAUDE.md or `package.json` to identify the test/build command. Record both before proceeding.
+**Locate your codebase**: Read the Codebases table in `config.md`. Resolve the path for the `frontend` domain. Then read the codebase root for a CLAUDE.md or `package.json` to identify the test/build command. Record both before proceeding.
 
 Read every requirement and acceptance criterion — these are your done criteria.
 

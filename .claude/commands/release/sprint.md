@@ -81,7 +81,7 @@ Output one line per deletion:
 
 Get the list of files changed between `main` and `{sprint_branch}` in the backend repo.
 
-Apply migration detection from CLAUDE.md.
+Apply migration detection from `config.md`.
 
 Capture the filtered list (if any). This output is used in Step 7 and Step 8.
 

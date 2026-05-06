@@ -10,7 +10,7 @@ tools: mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_wri
 Derive at runtime — never hardcode:
 
 - **Orchestration repo** (issues, milestones, stories, TDD, design): run `gh repo view --json owner,name --jq '[.owner.login,.name]|join("/")'` from the orchestration repo root.
-- **Codebase repos** (PRs, branches): run the same from inside the codebase directory (path from CLAUDE.md Codebases table).
+- **Codebase repos** (PRs, branches): run the same from inside the codebase directory (path from `config.md` Codebases table).
 
 Hold results for the session.
 
