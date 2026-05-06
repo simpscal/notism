@@ -16,3 +16,14 @@ tools: Read, AskUserQuestion
 | `create-bug` | Bug | `[description]` | `po/create-bug.md` |
 
 **Load the corresponding mode file and follow its steps.**
+
+---
+
+## Constraints
+
+### Step Tracking
+After completing each numbered step (`## Step N`), emit exactly:
+
+> STEP [N] COMPLETE
+
+before proceeding to the next step. Do not skip or batch emit — one signal per step, inline in the response.

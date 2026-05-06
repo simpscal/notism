@@ -48,3 +48,10 @@ Implement **one ticket per invocation** — do not batch.
 - Implement strictly within the scope of the ACs — no extras, no refactors beyond what the ticket requires
 - Do not merge any PR — merging is a human action
 - If a blocker is found, stop — do not guess
+
+### Step Tracking
+After completing each numbered step (`## Step N`), emit exactly:
+
+> STEP [N] COMPLETE
+
+before proceeding to the next step. Do not skip or batch emit — one signal per step, inline in the response.

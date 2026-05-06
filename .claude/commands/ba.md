@@ -52,3 +52,10 @@ Invoke the `ba` skill at the start of every run — it provides the BA methodolo
   - Describes a specific condition and a specific outcome
   - Could a non-engineer verify it in a running system
 - Rewrite any AC that fails until it passes. Avoid vague language: "should work", "handles errors", "is fast"
+
+### Step Tracking
+After completing each numbered step (`## Step N`), emit exactly:
+
+> STEP [N] COMPLETE
+
+before proceeding to the next step. Do not skip or batch emit — one signal per step, inline in the response.
