@@ -61,7 +61,7 @@ Output:
 
 ## Step 5 — Check for EF Core Migrations (Backend Only)
 
-For the backend codebase, Find merged bugfix PR for issue N to get the PR number and inspect its `files[]` for paths matching `/Migrations/` (case-insensitive).
+For the backend codebase, find the merged bugfix PR for issue N and apply migration detection from CLAUDE.md to its changed files.
 
 - If no merged backend PR found: note "No backend PR found for #N — skipping migration check."
 - If migration files found: capture the list. This output is used in Step 7.

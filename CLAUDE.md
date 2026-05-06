@@ -20,6 +20,12 @@ Never hardcode repo slugs, label names, paths, or branch patterns.
 
 ---
 
+## Migration Detection
+
+EF Core migrations live in the backend codebase at paths containing `/Migrations/`. To detect whether a branch or PR includes migrations, filter its changed files for paths matching `/Migrations/` (case-insensitive).
+
+---
+
 ## Labels
 
 | Purpose | Label |
