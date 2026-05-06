@@ -108,6 +108,26 @@ Proceed? (y/n)
 - **CLI**: `gh api repos/{owner}/{repo}/milestones --jq '[.[] | {number: .number, title: .title, open_issues: .open_issues}]'`
 - Returns: `[{number, title, open_issues}]`
 
+### Resolve Sprint Milestone
+**triggers:** resolve sprint milestone, find sprint milestone, locate sprint N milestone ID
+**when:** need only the milestone ID for a given sprint number
+- List all milestones: `gh api repos/{owner}/{repo}/milestones`
+- Find the milestone whose title is `Sprint N`.
+- If not found: list available milestone titles and stop — `⛔ No milestone found titled "Sprint N". Available: <titles>`
+- Hold GitHub ID as `$MILESTONE_ID` for the session.
+
+### Load Sprint Snapshot
+**triggers:** load sprint context, fetch sprint issues, partition sprint issues, sprint snapshot
+**when:** need the full set of open sprint issues partitioned by type — standard starting point for most sprint commands
+1. -> Resolve Sprint Milestone for Sprint N. Hold `$MILESTONE_ID`.
+2. List all **open** issues in the milestone once.
+3. Partition in memory and read all present partitions in parallel:
+   - **$STORIES** — issues labelled `user-story`. Read each in full (body, ACs, notes).
+   - **$REQUIREMENT** — single issue labelled `requirement`. Read in full. May be absent.
+   - **$TDD** — single issue labelled `technical-design`. Read in full if present. May be absent.
+   - **$DESIGN** — single issue labelled `design`. Read in full if present. May be absent.
+4. Hold all partitions for the session.
+
 ### List Open Issues
 **triggers:** list open issues, find open issues, open bugs, open stories, issues by label
 **when:** need all open issues filtered by label regardless of milestone

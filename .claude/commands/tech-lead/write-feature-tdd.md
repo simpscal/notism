@@ -1,17 +1,12 @@
 # Mode: Standard
 
-List all milestones to find the one titled `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
-
 ---
 
-## Step 1 — Fetch Open Issues
+## Step 1 — Load Sprint Context
 
-List all **open** issues in the sprint milestone once. Partition the result in memory:
+-> Load Sprint Snapshot for Sprint N (github skill). Hold $MILESTONE_ID, $STORIES, $REQUIREMENT, $TDD, $DESIGN.
 
-- **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes.
-- **$REQUIREMENT** — single issue labelled `requirement`. Read it in full. Hold as **$REQUIREMENT** — use this to understand the sprint goal, the user problem being solved, and what "done" looks like from the PO's perspective.
-- **$TDD** — single issue labelled `technical-design` (may be absent). If one already exists, report "TDD already exists for Sprint N — run `/tech-lead sync-feature-tdd Sprint N` to update" and stop.
-- **$DESIGN** — single issue labelled `design` (may be absent). If present, read it in full — use for UI component context in Components Design.
+**Mode-specific guard**: If `$TDD` already exists → report "TDD already exists for Sprint N — run `/tech-lead sync-feature-tdd Sprint N` to update" and stop.
 
 Before proceeding, build a mental model from `$STORIES` and `$REQUIREMENT`:
 - What is the feature goal? What capability does the user gain?

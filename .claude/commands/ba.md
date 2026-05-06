@@ -1,7 +1,7 @@
 ---
 name: ba
 description: Analyze requirements, create/amend user stories and sprint milestones.
-argument-hint: "<write-stories|add-story|add-bug-acs|sync-stories|amend-story|amend-bug|merge-stories> [args]"
+argument-hint: "<write-stories|add-story|add-bug-acs|sync-stories|amend|merge-stories> [args]"
 tools: Read, AskUserQuestion
 ---
 
@@ -25,8 +25,7 @@ Invoke the `ba` skill at the start of every run — it provides the BA methodolo
 | `add-story` | Add Story | `<requirement_issue_number>` | `ba/add-story.md` |
 | `add-bug-acs` | Bug | `<bug_issue_number>` | `ba/add-bug-acs.md` |
 | `sync-stories` | Requirement Change | `<requirement_issue_number>` | `ba/sync-stories.md` |
-| `amend-story` | Story Change | `<issue_number>` | `ba/amend-story.md` |
-| `amend-bug` | Bug AC Change | `<issue_number>` | `ba/amend-bug.md` |
+| `amend` | AC Change (story or bug) | `<issue_number>` | `ba/amend.md` |
 | `merge-stories` | Merge Stories | `<target_issue_number> <source_issue_number> [...]` | `ba/merge-stories.md` |
 
 **Load the corresponding mode file and follow its steps.**

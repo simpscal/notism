@@ -14,9 +14,15 @@ Extract `req_issue_number` (the token after `sync-stories`).
 ## Step 2 — Fetch All Relevant Stories
 
 1. Determine the requirement's sprint milestone by checking `req_issue_number`'s milestone field.
+   - If the requirement has no milestone, stop: `⛔ Issue #<N> has no sprint milestone. Stories cannot be synced until a sprint milestone is assigned.`
 2. List open issues labeled `user-story` in the sprint milestone to fetch all open user stories.
 3. Filter for **Linked stories**: Stories with `#req_issue_number` referenced in the body.
 4. Read each linked story in full to get its body and current state.
+
+**Precondition checks** (stop immediately if any fail):
+
+- Linked stories list is empty → `⛔ No user stories found linked to #<req_issue_number> in the sprint milestone. Run \`/ba write-stories <req_issue_number>\` first.`
+
 5. **Safety check**: If any linked story has label `story-removed` and state `open`, stop immediately and output:
    > ⚠️ Cannot proceed: Story #<number> is labeled `story-removed` but still open. Dev must revert this orphaned work before new requirement changes can be processed.
 

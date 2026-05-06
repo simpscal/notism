@@ -10,7 +10,9 @@ If `$ARGUMENTS` is empty: list all milestones with details from the tracker adap
 
 ## Step 2 — Fetch Sprint Snapshot
 
-List all issues in the milestone (open and closed) from the tracker adapter. For each issue, note its number, title, labels, and state.
+-> Resolve Sprint Milestone for Sprint N (github skill). Hold `$MILESTONE_ID`.
+
+List **all** issues in the milestone (open and closed). For each issue, note its number, title, labels, and state.
 
 Partition issues into four groups:
 - **Stories**: issues with the `user-story` label

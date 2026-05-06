@@ -6,14 +6,9 @@ Extract `sprint_number` (the token after `amend-design`).
 
 ## Step 1 — Load Sprint Context
 
-List all milestones to find the one titled `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
+-> Load Sprint Snapshot for Sprint N (github skill). Hold $MILESTONE_ID, $STORIES, $REQUIREMENT, $TDD, $DESIGN.
 
-List all **open** issues in the sprint milestone once. Partition the result in memory:
-
-- **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes.
-- **$REQUIREMENT** — single issue labelled `requirement`. Read it in full.
-- **$DESIGN** — single issue labelled `design`. Read it in full.
-  - If no Design Instructions exist, report "No Design Instructions found for Sprint N — run `/design write-design Sprint N` first" and stop.
+**Mode-specific guard**: If `$DESIGN` is absent → report "No Design Instructions found for Sprint N — run `/design write-design Sprint N` first" and stop.
 
 ---
 
@@ -50,27 +45,31 @@ Work through all loaded material silently. Produce no output in this step. Build
 
 Complete when: you can name every affected surface, map each to the stories driving it, identify applicable components and tokens, and flag any design system gaps — without re-reading any issue.
 
-Activate as Design specialist for Sprint N. State:
+When complete, activate using this format:
 
-> Design specialist active — Sprint N. Full sprint knowledgebase loaded: requirement, all stories, design instructions, and design system. Ready to discuss changes or alternatives.
+> Design Specialist active — Sprint N Design Instructions. Full knowledgebase loaded: [list what was loaded]. Ready to discuss changes or alternatives.
+
+Do not proceed to Step 4 until activation is complete.
 
 ---
 
 ## Step 4 — Open Amendment Dialog
 
-Ask the design specialist a single `AskUserQuestion`:
+Ask a single `AskUserQuestion`:
 
-> What changed in the design, and why? Describe the problem with the current design instructions and the direction you want to go — or share options you'd like to evaluate.
+> What changed, and why? Describe the problem with the current Design Instructions and the direction you want to go — or share options you'd like to evaluate.
 
 Hold the response as **$CHANGE_INPUT**. Do not proceed until answered.
 
-Use $CHANGE_INPUT to engage in discussion if exploring alternatives. Answer trade-off questions, surface constraints from the design system, flag where DESIGN.md has no matching component or token. Continue until the final direction is confirmed.
+Use $CHANGE_INPUT to engage in discussion — answer trade-off questions, surface constraints from the mental model, flag risks from loaded material. Continue iterating until the final direction is confirmed.
 
 ---
 
 ## Step 5 — Revise Design Instructions
 
-Use the current $DESIGN as the baseline. Evaluate each section against the confirmed change — keep unchanged sections exactly, rewrite only affected parts. Follow `_design-structure.md` for structure and token/component conventions.
+Use the current Design Instructions as the baseline. The output must be the full revised artifact, not a summary or diff.
+
+Evaluate each section against the confirmed change. Follow `_design-structure.md` for structure and token/component conventions.
 
 | Section | Update trigger |
 |---------|----------------|
@@ -86,16 +85,16 @@ Update the body of the $DESIGN issue with the revised content.
 
 ---
 
-## Step 6 — Classify Scope Changes
+## Step 6 — Classify Scope Changes and Label Affected Stories
 
-From $STORIES, filter to only stories carrying the `implemented` label. Compare the revised design against each implemented story and classify the impact:
+From $STORIES, filter to only stories carrying the `implemented` label. Compare the revised Design Instructions against each implemented story and classify the impact:
 
 | Classification | Condition |
 |----------------|-----------|
-| `additive` | Design change adds new UI behaviour; existing frontend implementation remains valid |
-| `breaking` | Design change conflicts with or invalidates the existing frontend implementation |
-| `structural` | Design change requires full revisit of the frontend implementation; affected components treated as blank slate |
-| `unaffected` | Story's UI is not touched by the design change |
+| `additive` | Change adds new behaviour; existing implementation remains valid |
+| `breaking` | Change conflicts with or invalidates the existing implementation |
+| `structural` | Change requires full revisit; affected files treated as blank slate |
+| `unaffected` | Story is not touched by this change |
 
 Produce a **Scope Classification Table**:
 
@@ -105,14 +104,8 @@ Produce a **Scope Classification Table**:
 
 If any classification is ambiguous, ask before proceeding.
 
----
-
-## Step 7 — Label Affected Stories
-
-For each story classified `additive`, `breaking`, or `structural` in Step 6:
-
-- Check if the story carries the `implemented` label.
-- If yes — add label `story-updated` to the issue.
-- If no — skip. The story has not been implemented yet; dev will implement against the revised design when they pick it up.
+**Label updates**: For each story classified `additive`, `breaking`, or `structural`:
+- If the story has label `implemented` → add label `story-updated`.
+- If no `implemented` label → skip.
 
 Run all label additions in parallel.

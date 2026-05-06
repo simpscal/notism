@@ -37,6 +37,7 @@ Before calling `render_template()`, Read the corresponding reference file to get
 | Issue: Design Instructions | `issue-design-instructions` | `references/issue-design-instructions.md` |
 | Acceptance Criteria | `acceptance-criteria` | `references/acceptance-criteria.md` |
 | PR: Story | `pr-story` | `references/pr-story.md` |
+| PR: Bug Fix | `pr-bug` | `references/pr-bug.md` |
 | PR: Revert | `pr-revert` | `references/pr-revert.md` |
 | PR: Release | `pr-release` | `references/pr-release.md` |
 | Comment: Sprint Summary | `comment-sprint-summary` | `references/comment-sprint-summary.md` |

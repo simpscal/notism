@@ -37,4 +37,8 @@ After all spawned agents complete:
 
 - Agent returns `<no_work>` → log the `<reason>`, take no further action for that domain.
 - Agent returns `<result>` → verify `<files_changed>`, mark domain complete.
-- Agent returns `<blocked>` → post a comment on issue `#ISSUE_NUMBER` with the `<reason>` details and halt all remaining work.
+- Agent returns `<blocked>` → post a comment on issue `#ISSUE_NUMBER` with the `<reason>` details and halt all remaining work. Output to the user:
+
+  ```
+  ⛔ Blocked on #<ISSUE_NUMBER>: <reason summary>
+  ```

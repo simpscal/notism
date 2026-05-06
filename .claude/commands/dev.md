@@ -16,17 +16,18 @@ Check the first word of `$ARGUMENTS`:
 | `amend-work` | Amend Work | `<issue_number>` | `dev/amend-work.md` |
 | _(issue number)_ | Route by label — see below | — | — |
 
-**If the first word is an issue number**, fetch the issue and route by label (priority order):
+**If the first word is an issue number**, fetch the issue and apply the following routing rules **in strict order** — use the first rule that matches and stop:
 
-| Label present | Mode | Mode file |
-|---|---|---|
-| `story-removed` | Revert | `dev/revert.md` |
-| `bug-production` + `story-updated` | Bug Revisit | `dev/bug-revisit.md` |
-| `bug-production` + `qa-blocked` | QA Fix (Bug) | `dev/qa-fix-bug.md` |
-| `bug-production` | Bug Fix | `dev/fix-bug.md` |
-| `story-updated` | Change | `dev/story-revisit.md` |
-| `qa-blocked` | QA Fix | `dev/qa-fix.md` |
-| _(none)_ | Standard | `dev/implement.md` |
+| Rule | Label condition | Mode | Mode file |
+|------|----------------|------|-----------|
+| **1** (highest) | Has `story-removed` | Revert | `dev/revert.md` |
+| **2** | Has `bug-production` AND `story-updated` | Revisit (Bug) | `dev/revisit.md` |
+| **3** | Has `bug-production` AND `qa-blocked` | QA Fix (Bug path) | `dev/qa-fix.md` |
+| **4** | Has `bug-production` (without `story-updated` or `qa-blocked`) | Bug Fix | `dev/fix-bug.md` |
+| **5** | Has `story-updated` (without `bug-production`) | Revisit (Story) | `dev/revisit.md` |
+| **6** | Has `qa-blocked` (without `bug-production`) | QA Fix (Story path) | `dev/qa-fix.md` |
+| **7** (fallback) | No lifecycle labels | Standard | `dev/implement.md` |
+
 
 Implement **one ticket per invocation** — do not batch.
 

@@ -66,9 +66,11 @@ Work through all loaded material silently. Produce no output in this step.
 
 Complete when: you can state the goal or root cause, name every component or layer involved, describe what already exists on the branch, and assess what still needs to change — without re-reading.
 
-Activate as Developer for `#issue_number`. State:
+When complete, activate using this format:
 
-> Developer active — #N: <title>. Full knowledgebase loaded: [story goal + TDD + design + git state | bug report + ACs + investigation + git state]. Ready to discuss changes or implement.
+> Developer active — #issue_number. Full knowledgebase loaded: [list what was loaded]. Ready to discuss changes or alternatives.
+
+Do not proceed to Step 5 until activation is complete.
 
 ---
 
@@ -76,11 +78,11 @@ Activate as Developer for `#issue_number`. State:
 
 Ask a single `AskUserQuestion`:
 
-> What needs to change in the current implementation? Describe what is incomplete, broken, or different from what was originally built — or share options you'd like to evaluate.
+> What changed, and why? Describe the problem with the current implementation and the direction you want to go — or share options you'd like to evaluate.
 
-Hold response as **$CHANGE_INPUT**. Do not proceed until answered.
+Hold the response as **$CHANGE_INPUT**. Do not proceed until answered.
 
-Use $CHANGE_INPUT to engage in discussion — answer architecture questions, surface constraints from TDD or bug investigation, flag risks from existing PR files. Continue until the exact scope of changes is confirmed.
+Use $CHANGE_INPUT to engage in discussion — answer trade-off questions, surface constraints from the mental model, flag risks from loaded material. Continue iterating until the final direction is confirmed.
 
 ---
 

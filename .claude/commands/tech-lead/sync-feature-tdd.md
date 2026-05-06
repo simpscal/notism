@@ -4,19 +4,18 @@ Extract `sprint_number` (the token after `sync-feature-tdd`).
 
 ---
 
-## Step 1 — Fetch Open Issues
+## Step 1 — Load Sprint Context
 
-List all milestones to find the one titled `Sprint N`. Hold its GitHub ID as `$MILESTONE_ID`.
+-> Load Sprint Snapshot for Sprint N (github skill). Hold $MILESTONE_ID, $STORIES, $REQUIREMENT, $TDD, $DESIGN.
 
-List all **open** issues in the sprint milestone once. Partition the result in memory:
+**Precondition checks** (stop immediately if any fail):
 
-- **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes.
-  - Identify **changed stories**: those with label `story-updated` or `story-removed`.
-  - If no changed stories exist, report "No story changes found — TDD is already in sync" and stop.
-- **$REQUIREMENT** — single issue labelled `requirement`. Read it in full.
-- **$TDD** — single issue labelled `technical-design`. Read it in full. Hold as the **current TDD**.
-  - If no TDD exists, report "No TDD found for Sprint N — run `/tech-lead write-feature-tdd Sprint N` first" and stop.
-- **$DESIGN** — single issue labelled `design` (may be absent). If present, read it in full — use for UI component context in Components Design.
+- `$REQUIREMENT` is absent → `⛔ No requirement issue found in Sprint N. Cannot sync TDD without a requirement.`
+- `$STORIES` is empty → `⛔ No user stories found in Sprint N. Run \`/ba write-stories <requirement_issue>\` first.`
+- `$TDD` is absent → `⛔ No TDD found for Sprint N — run \`/tech-lead write-feature-tdd N\` first.`
+
+Identify **changed stories**: those with label `story-updated` or `story-removed`.
+If no changed stories exist, report "No story changes found — TDD is already in sync" and stop.
 
 Before proceeding, build a mental model from `$STORIES` and `$REQUIREMENT`:
 - What is the feature goal? What capability does the user gain?

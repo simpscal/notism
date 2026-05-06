@@ -1,14 +1,16 @@
-# Mode: Bug AC
+# Mode: Amend (Story or Bug)
 
-Extract `issue_number` (the token after `amend-bug`).
+Extract `issue_number` (the token after `amend-story` or `amend-bug`).
 
 ---
 
-## Step 1 — Fetch Issue and Validate Type
+## Step 1 — Fetch Issue and Determine Type
 
 1. Read issue `#issue_number` in full — title, body, labels, milestone.
-2. If labels do NOT contain `bug-production` → stop immediately and output:
-   > ⚠️ Cannot proceed: Issue #`<issue_number>` does not have a `bug-production` label.
+2. Check labels:
+   - Has `user-story` → **Type = Story**. Proceed.
+   - Has `bug-production` → **Type = Bug**. Proceed.
+   - Neither → stop: `⚠️ Issue #N is neither a user story nor a bug (labels: <labels>).`
 3. Extract current AC state:
    - Locate the `## Acceptance Criteria` section in the body.
    - List all existing ACs as the **baseline AC set**.
@@ -24,9 +26,11 @@ Provide context before opening dialogue:
 
 Run a full discovery session:
 
-1. **Synthesise first.** State your current understanding of the bug, its intended behaviour, and its existing ACs.
+1. **Synthesise first.** State your current understanding:
+   - **Story path**: who is the user, what are they trying to do, what does success look like.
+   - **Bug path**: the bug's intended behaviour and its existing ACs.
 
-2. **Surface every gap.** Identify which ACs are incorrect, incomplete, or no longer valid; what new behaviour needs coverage; the reason for the change (scope refinement, misdiagnosed bug, post-fix feedback); and whether the change affects related issues.
+2. **Surface every gap.** Identify which ACs are incorrect, incomplete, or no longer valid; what new behaviour needs coverage; the reason for the change; and whether the change affects related issues.
 
 3. **Open the dialogue.** Ask all blocking questions in one structured message:
    - Lead: *"Here is what I understand — please correct anything wrong."*
@@ -66,7 +70,7 @@ Rewrite any AC that fails until it passes.
 Use `AskUserQuestion` to present:
 
 ```
-## Bug AC Change Plan — Issue #<N>: <title>
+## [Story Change Plan | Bug AC Change Plan] — Issue #<N>: <title>
 
 **Added ACs** (<count>):
 - [ ] <new AC text>
@@ -82,6 +86,8 @@ Use `AskUserQuestion` to present:
 - [ ] <unchanged AC text>
 ```
 
+Use heading `## Story Change Plan` for Story path, `## Bug AC Change Plan` for Bug path.
+
 Ask: *"Please confirm this change plan, or specify adjustments before I proceed."*
 
 Do NOT call any mutating operation until the user confirms.
@@ -93,10 +99,8 @@ Do NOT call any mutating operation until the user confirms.
 After user approval:
 
 1. Reconstruct the full issue body:
-   - Locate the `## Acceptance Criteria` section.
-   - Rewrite ONLY that section using the approved AC set (Added + Modified + Unchanged; omit Removed).
-   - Do NOT modify, reorder, or touch any content in or before the `## Bug Report` section.
-   - Preserve any `## Notes` section if present; update only if discovery surfaced changes.
+   - **Story path**: Rewrite the `## Acceptance Criteria` section using the approved AC set (Added + Modified + Unchanged; omit Removed). Update `## Notes` if the discovery session surfaced new edge cases or dependency changes. Preserve all other sections verbatim (User Story statement, `---` footer, `Part of` link).
+   - **Bug path**: Locate the `## Acceptance Criteria` section. Rewrite ONLY that section using the approved AC set. Do NOT modify, reorder, or touch any content in or before the `## Bug Report` section. Preserve any `## Notes` section; update only if discovery surfaced changes.
 
 2. Update the body of issue `#issue_number` with the reconstructed content.
 
@@ -109,3 +113,9 @@ After user approval:
 
 ---
 
+## Constraints
+
+- Never add technical details to stories — that is the architect's job
+- Never invent scope — if unclear, run discovery
+- Never produce tracker output until the user confirms the picture is correct
+- Every AC must be observable without reading code, describe a specific condition and outcome, and be verifiable by a non-engineer in a running system

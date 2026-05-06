@@ -4,25 +4,18 @@ Extract `sprint_number` (the token after `sync-design`).
 
 ---
 
-## Step 1 — Resolve Sprint Milestone
+## Step 1 — Load Sprint Context
 
-- List all milestones to find the one with title `Sprint N`
-- Hold its GitHub ID as `$MILESTONE_ID`
+-> Load Sprint Snapshot for Sprint N (github skill). Hold $MILESTONE_ID, $STORIES, $REQUIREMENT, $TDD, $DESIGN.
 
-If no matching milestone is found, list available milestones and stop.
+**Precondition checks** (stop immediately if any fail):
 
----
+- `$REQUIREMENT` is absent → `⛔ No requirement issue found in Sprint N. Cannot sync design without a requirement.`
+- `$STORIES` is empty → `⛔ No user stories found in Sprint N. Run \`/ba write-stories <requirement_issue>\` first.`
+- `$DESIGN` is absent → `⛔ No Design Instructions found for Sprint N — run \`/design write-design N\` first.`
 
-## Step 2 — Fetch Open Issues
-
-List all **open** issues in the sprint milestone once. Partition the result in memory:
-
-- **$STORIES** — issues labelled `user-story`. Read each in full — body, acceptance criteria, and notes.
-  - Identify **changed stories**: those with label `story-updated` or `story-removed`.
-  - If no changed stories exist, report "No story changes found — design is already in sync" and stop.
-- **$REQUIREMENT** — single issue labelled `requirement`. Read it in full.
-- **$DESIGN** — single issue labelled `design` whose title matches `Sprint N — Design Instructions`. Read it in full. Hold as the **current Design Instructions**.
-  - If no Design Instructions issue exists, report "No Design Instructions found for Sprint N — run `/design Sprint N` first" and stop.
+Identify **changed stories**: those with label `story-updated` or `story-removed`.
+If no changed stories exist, report "No story changes found — design is already in sync" and stop.
 
 ---
 
