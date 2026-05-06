@@ -129,9 +129,7 @@ For each **New** scope item:
 
 ### 3. Remove Obsolete Stories
 
-For each **Removed** or **Orphaned** story:
-- If story has label `implemented`: add label `story-removed` to the story issue.
-- If story does NOT have label `implemented`: close the story issue.
+For each **Removed** or **Orphaned** story: add label `story-removed` to the story issue.
 
 Do not modify the issue body — the label signals removal.
 
