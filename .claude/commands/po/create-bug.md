@@ -26,6 +26,6 @@ Create an issue via the tracker adapter with:
 
 ---
 
-## Step 3 — Output
+## Step 3 — Report
 
 Output the issue number and title.

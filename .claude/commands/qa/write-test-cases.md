@@ -42,7 +42,7 @@ Before writing any test cases, review all extracted ACs and notes for the follow
 | Validation rules without boundaries | Field must be "valid" or "correct" but limits are not stated |
 
 If ambiguities are found:
-- Trigger `askUserQuestion` — do NOT proceed to Step 3
+- Use `AskUserQuestion` — do NOT proceed to Step 3
 - For each ambiguity: cite the specific AC or note verbatim, state what is unclear, and offer 2–3 possible interpretations where applicable
 - Ask each question independently and specifically — do not bundle unrelated questions
 

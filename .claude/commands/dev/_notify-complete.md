@@ -41,7 +41,7 @@ Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed.
 - Revert PR: <revert-pr-url>
 
 ---
-> Pause Human gate: Review the revert PR diff. When approved, merge into the sprint branch.
+> ⏸ Human gate: Review the revert PR diff. When approved, merge into the sprint branch.
 ```
 
 ### Multi-skill (two revert PRs)
@@ -55,7 +55,7 @@ Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed a
 - Frontend revert PR: <revert-pr-url>
 
 ---
-> Pause Human gate: Review both revert PR diffs. When approved, merge into the sprint branch.
+> ⏸ Human gate: Review both revert PR diffs. When approved, merge into the sprint branch.
 ```
 
 Then add label `implemented` and remove labels `in-progress`, `story-updated`, and `story-removed` from issue `#ISSUE_NUMBER`.

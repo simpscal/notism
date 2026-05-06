@@ -53,7 +53,7 @@ For ACs marked as "changed" or "added" in the diff, review each for the followin
 Only check changed/added ACs — do not re-examine unchanged ACs.
 
 If ambiguities are found:
-- Trigger `askUserQuestion` — do NOT proceed to Step 5
+- Use `AskUserQuestion` — do NOT proceed to Step 5
 - For each ambiguity: cite the specific AC verbatim, state what is unclear, and offer 2–3 possible interpretations where applicable
 - Ask each question independently and specifically — do not bundle unrelated questions
 

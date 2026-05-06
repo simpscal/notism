@@ -1,14 +1,14 @@
-# Bug Close — Release Manager
+# Mode: Hotfix Release
 
-## Workflow
-
-### Step 1 — Parse Arguments
+## Step 1 — Parse Arguments
 
 Parse `$ARGUMENTS` as the bug issue number (e.g. `42`).
 
 If `$ARGUMENTS` is empty: list all open issues labeled `bug-production` from the tracker adapter and show the results for the user to choose from, then stop.
 
-### Step 2 — Fetch Issue
+---
+
+## Step 2 — Fetch Issue
 
 Read issue `#issue_number` from the tracker adapter to get its title, labels, and state.
 
@@ -21,7 +21,9 @@ Read issue `#issue_number` from the tracker adapter to get its title, labels, an
   ℹ Issue #N is already closed.
   ```
 
-### Step 3 — Readiness Gate
+---
+
+## Step 3 — Readiness Gate
 
 Before doing anything destructive, verify the bug is ready to close:
 
@@ -43,7 +45,9 @@ Merge all PRs first, then run /release hotfix {N} again.
 
 If no open PRs in any codebase repo, proceed.
 
-### Step 4 — Update Labels and Close
+---
+
+## Step 4 — Update Labels and Close
 
 1. Add label `bug-fixed` and remove labels `in-progress` and `implemented` from issue `#issue_number`.
 2. Close issue `#issue_number`.
@@ -53,7 +57,9 @@ Output:
 ✓ Closed #N — <title>
 ```
 
-### Step 5 — Check for EF Core Migrations (Backend Only)
+---
+
+## Step 5 — Check for EF Core Migrations (Backend Only)
 
 For the backend codebase, Find merged bugfix PR for issue N to get the PR number and inspect its `files[]` for paths matching `/Migrations/` (case-insensitive).
 
@@ -61,7 +67,9 @@ For the backend codebase, Find merged bugfix PR for issue N to get the PR number
 - If migration files found: capture the list. This output is used in Step 7.
 - If no migration files found: note "No database migrations in this bug fix."
 
-### Step 6 — Delete Bug Branch
+---
+
+## Step 6 — Delete Bug Branch
 
 For each codebase, list bugfix branches for issue N and delete each.
 
@@ -70,6 +78,8 @@ Output one line per deletion:
 ✓ Deleted {branch_name} from {codebase_name}
 ```
 
-### Step 7 — Post Bug Summary
+---
+
+## Step 7 — Post Bug Summary
 
 Render the `comment-bug-summary` template with `{issue_number, title, closed_date, migrations}`, then post it as a comment on issue `#issue_number`.

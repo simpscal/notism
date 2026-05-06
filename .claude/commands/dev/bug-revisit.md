@@ -1,4 +1,4 @@
-# Bug Revisit — Mode: Bug AC Change
+# Mode: Bug AC Change
 
 ## When to Use
 

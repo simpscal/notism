@@ -10,7 +10,7 @@ The bug issue has `qa-blocked` — one or more test cases failed after the fix w
 
 2. **QA test cases comment** — search for comment with heading `## QA Test Cases`. Read in full. Identify all failing test cases: any `- [ ]` item that is unchecked. These are the primary scope driver — fix only what failed here.
 
-3. **Investigation comment** — search for comment with heading `## Bug Investigation`. Extract Root Cause, Scope, Fix Approach, Risk verbatim — this is the architectural context for the fix.
+3. **Investigation comment** — search for comment with heading `## Dev Investigation`. Extract Root Cause, Scope, Fix Approach, Risk verbatim — this is the architectural context for the fix.
 
 ---
 
