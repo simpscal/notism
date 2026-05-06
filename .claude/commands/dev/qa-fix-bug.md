@@ -24,12 +24,14 @@ For multi-skill bugs, run independently in each codebase path.
 
 ## Step 3 — Dispatch Agents
 
-Spawn only agents whose domain matches the `[tag]` in Fix Approach.
+Spawn only agents whose domain matches the `[tag]` in Fix Approach. Pass context as a `<context>` XML block per the dispatch-agents protocol, with `<decisions type="investigation">` containing Root Cause, Scope, Fix Approach, Risk verbatim, and `<constraints>` containing:
 
-Pass `Constraints` to every agent:
-- Investigation: Root Cause, Scope, Fix Approach, Risk verbatim from investigation comment
-- Failing test cases: verbatim from QA test cases comment — all unchecked `- [ ]` items
-- Instruction: "Fix only the failing test cases. Do not re-implement already-passing work. Do not modify files unrelated to the failing cases."
+```xml
+<constraints>
+  <failing_test_cases>[verbatim unchecked - [ ] items from QA test cases comment]</failing_test_cases>
+  <instruction>Fix only the failing test cases. Do not re-implement already-passing work. Do not modify files unrelated to the failing cases.</instruction>
+</constraints>
+```
 
 ---
 

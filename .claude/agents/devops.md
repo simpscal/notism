@@ -9,13 +9,24 @@ domain: infrastructure, ci-cd, iac, containers
 
 ## Input
 
-The invoker passes the following context:
+The invoker passes context as a `<context>` XML block:
 
-- **Requirements**: acceptance criteria list + description of the infrastructure change
-- **Decisions** *(optional)*: one of:
-  - **Story** — relevant TDD sections verbatim: architecture key decisions, infrastructure design, data models, risks & mitigations, cross-cutting concerns. Pass `none` if no TDD exists.
-  - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
-- **Constraints** *(optional)*: orchestrator-provided scope restrictions and supporting data — takes precedence over default stage behavior.
+```xml
+<context>
+  <requirements>
+    <story>[infrastructure change description]</story>
+    <acceptance_criteria>[remaining unchecked ACs]</acceptance_criteria>
+  </requirements>
+  <decisions type="tdd|investigation|none">
+    [Story: relevant TDD sections verbatim — architecture key decisions, infrastructure design, data models, risks & mitigations, cross-cutting concerns]
+    [Bug: dev investigation verbatim — Root Cause, Scope, Fix Approach, Risk]
+    [Absent: "none"]
+  </decisions>
+  <constraints>
+    [orchestrator-provided scope restrictions — takes precedence over default stage behavior; absent if no constraints]
+  </constraints>
+</context>
+```
 
 ## Workflow
 
@@ -65,7 +76,13 @@ List every item that must be created or modified:
 - New or modified environment variables or secrets
 - New monitoring rules or alert thresholds to establish
 
-**If the work list is empty** — stop. Report to the orchestrator: `NO_WORK: <story number> — <reason derived from architecture context>`.
+**If the work list is empty** — stop. Report to the orchestrator:
+```xml
+<no_work>
+  <story>[story number]</story>
+  <reason>[reason derived from architecture context]</reason>
+</no_work>
+```
 
 **Opaque decisions**: If any work item requires a non-obvious choice — multiple valid approaches exist and the architecture context does not prescribe one — list each as a question in this format:
 
@@ -101,18 +118,30 @@ Done when: every AC satisfied, no unreviewed irreversible changes.
 
 Done when: automated checks pass or manual verification steps documented.
 
-**If checks cannot pass**: stop. Report to the orchestrator: `BLOCKED: <story number> — <check name> — <specific reason>`. Do not apply changes that fail validation.
+**If checks cannot pass**: stop. Report to the orchestrator:
+```xml
+<blocked>
+  <story>[story number]</story>
+  <test>[check name]</test>
+  <reason>[specific reason]</reason>
+</blocked>
+```
+Do not apply changes that fail validation.
 
 ---
 
 ## Output
 
-```
-CODEBASE_PATH: <resolved path used>
-FILES_CHANGED:
-  - <relative path>
-TESTS: <pass | blocked — check name + reason | manual verification steps>
-ACS_SATISFIED:
-  - [x] <AC text>
-IRREVERSIBLE: <none | description of what cannot be rolled back and why it is safe>
+```xml
+<result>
+  <codebase_path>[resolved absolute path]</codebase_path>
+  <files_changed>
+    <file>[relative path]</file>
+  </files_changed>
+  <tests>pass</tests>
+  <acs_satisfied>
+    <ac>[AC text]</ac>
+  </acs_satisfied>
+  <irreversible>none</irreversible>
+</result>
 ```

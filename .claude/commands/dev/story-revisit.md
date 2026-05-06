@@ -71,12 +71,17 @@ Hold this delta summary — it is passed to every subagent in Step 4.
 
 ## Step 4 — Dispatch Agents
 
-Spawn `backend`, `frontend`, and `devops` in a single parallel message.
+Spawn `backend`, `frontend`, and `devops` in a single parallel message. Pass context as a `<context>` XML block per the dispatch-agents protocol, with `<constraints>` containing:
 
-Pass `Constraints` to every agent:
-- Delta summary: produced in Step 3
-- Affected files: from `get_pr` `files[].filename`
-- Instruction: "Implement the delta only. Do not re-implement ACs already satisfied. Do not modify already-correct files unless an AC explicitly requires a change."
+```xml
+<constraints>
+  <delta_summary>[delta table produced in Step 3]</delta_summary>
+  <affected_files>
+    <file>[filename from get_pr files[]]</file>
+  </affected_files>
+  <instruction>Implement the delta only. Do not re-implement ACs already satisfied. Do not modify already-correct files unless an AC explicitly requires a change.</instruction>
+</constraints>
+```
 
 ---
 

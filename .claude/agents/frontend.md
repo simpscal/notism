@@ -9,14 +9,27 @@ domain: frontend, ui, components, api-hooks
 
 ## Input
 
-The invoker passes the following context:
+The invoker passes context as a `<context>` XML block:
 
-- **Requirements**: user story description + acceptance criteria list (remaining unchecked items only)
-- **Decisions** *(optional)*: one of:
-  - **Story** — relevant TDD sections verbatim: architecture key decisions, frontend component design, API specification, data models, risks, story dependencies. Pass `none` if no TDD exists.
-  - **Bug** — dev investigation verbatim: Root Cause, Scope, Fix Approach, Risk.
-- **Design instructions**: full sprint-level design instructions issue — layout sketches, component table, design tokens, UI states, responsive behavior, accessibility. **May be absent for bug fixes.**
-- **Constraints** *(optional)*: orchestrator-provided scope restrictions and supporting data — takes precedence over default stage behavior.
+```xml
+<context>
+  <requirements>
+    <story>[user story statement]</story>
+    <acceptance_criteria>[remaining unchecked ACs]</acceptance_criteria>
+  </requirements>
+  <decisions type="tdd|investigation|none">
+    [Story: relevant TDD sections verbatim — architecture key decisions, frontend component design, API spec, data models, risks, dependencies]
+    [Bug: dev investigation verbatim — Root Cause, Scope, Fix Approach, Risk]
+    [Absent: "none"]
+  </decisions>
+  <design_instructions>
+    [full sprint-level design instructions — layout sketches, component table, design tokens, UI states, responsive behavior, accessibility; absent for bug fixes]
+  </design_instructions>
+  <constraints>
+    [orchestrator-provided scope restrictions — takes precedence over default stage behavior; absent if no constraints]
+  </constraints>
+</context>
+```
 
 ## Workflow
 
@@ -67,7 +80,13 @@ List every item that must be created or modified:
 - New or modified API hooks and query/mutation definitions
 - New or modified Redux slices or context providers (if applicable)
 
-**If the work list is empty** — stop. Report to the orchestrator: `NO_WORK: <story number> — <reason derived from architecture context>`.
+**If the work list is empty** — stop. Report to the orchestrator:
+```xml
+<no_work>
+  <story>[story number]</story>
+  <reason>[reason derived from architecture context]</reason>
+</no_work>
+```
 
 **Opaque decisions**: If any work item requires a non-obvious choice — multiple valid implementations exist and the architecture context or design instructions do not prescribe one — list each as a question in this format:
 
@@ -108,18 +127,30 @@ Every UI state must be handled: loading, error, empty, success — no exceptions
 
 Done when: all Stage 3 tests pass.
 
-**If tests cannot pass**: stop. Report to the orchestrator: `BLOCKED: <story number> — <failing test name> — <specific reason>`. Do not attempt workarounds that bypass test intent.
+**If tests cannot pass**: stop. Report to the orchestrator:
+```xml
+<blocked>
+  <story>[story number]</story>
+  <test>[failing test name]</test>
+  <reason>[specific reason]</reason>
+</blocked>
+```
+Do not attempt workarounds that bypass test intent.
 
 ---
 
 ## Output
 
-```
-CODEBASE_PATH: <resolved path used>
-FILES_CHANGED:
-  - <relative path>
-TESTS: <pass | blocked — failing test + reason>
-ACS_SATISFIED:
-  - [x] <AC text>
-IRREVERSIBLE: <none | description of what cannot be rolled back>
+```xml
+<result>
+  <codebase_path>[resolved absolute path]</codebase_path>
+  <files_changed>
+    <file>[relative path]</file>
+  </files_changed>
+  <tests>pass</tests>
+  <acs_satisfied>
+    <ac>[AC text]</ac>
+  </acs_satisfied>
+  <irreversible>none</irreversible>
+</result>
 ```

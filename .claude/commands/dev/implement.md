@@ -44,13 +44,13 @@ For multi-skill stories, run independently in each codebase path.
 
 ## Step 3 — Dispatch Agents
 
-Spawn `backend`, `frontend`, and `devops` in a single parallel message.
+Spawn `backend`, `frontend`, and `devops` in a single parallel message. Pass context as a `<context>` XML block per the dispatch-agents protocol.
 
 ---
 
 ## Step 4 — Git Branch Setup
 
-For each subagent that returned `NO_WORK:` — skip, no branch needed.
+For each subagent that returned `<no_work>` — skip, no branch needed.
 
 For each subagent that completed work:
 - Create story branch for issue `<ISSUE_NUMBER>` and `<short-description>` — one call per codebase path

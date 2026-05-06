@@ -63,13 +63,13 @@ For multi-skill bugs, run checkout independently in each codebase path.
 
 Spawn only agents whose domain matches the `[tag]` in Fix Approach (e.g. `[backend]` → `backend`; `[frontend]` → `frontend`; `[devops]` → `devops`). For multi-domain fixes, spawn all matching agents in a single parallel message.
 
-Decisions = investigation verbatim (Root Cause, Scope, Fix Approach, Risk).
+Pass context as a `<context>` XML block with `<decisions type="investigation">` containing Root Cause, Scope, Fix Approach, Risk verbatim.
 
 ---
 
 ## Step 7 — Git Branch Setup
 
-For each subagent that returned `NO_WORK:` — skip, no branch needed.
+For each subagent that returned `<no_work>` — skip, no branch needed.
 
 For each subagent that completed work:
 - Derive the bugfix branch name from the issue number and title

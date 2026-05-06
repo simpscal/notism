@@ -26,11 +26,14 @@ For multi-skill stories, run independently in each codebase path.
 
 ## Step 3 — Dispatch Agents
 
-Spawn `backend`, `frontend`, and `devops` in a single parallel message.
+Spawn `backend`, `frontend`, and `devops` in a single parallel message. Pass context as a `<context>` XML block per the dispatch-agents protocol, with `<constraints>` containing:
 
-Pass `Constraints` to every agent:
-- Failing test cases: verbatim from QA test cases comment — all unchecked `- [ ]` items
-- Instruction: "Fix only the failing test cases. Do not re-implement already-passing work. Do not modify files unrelated to the failing cases."
+```xml
+<constraints>
+  <failing_test_cases>[verbatim unchecked - [ ] items from QA test cases comment]</failing_test_cases>
+  <instruction>Fix only the failing test cases. Do not re-implement already-passing work. Do not modify files unrelated to the failing cases.</instruction>
+</constraints>
+```
 
 ---
 

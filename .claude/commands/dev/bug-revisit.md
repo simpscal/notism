@@ -61,11 +61,18 @@ Check out bugfix branch for issue `<N>` and pull latest from remote.
 
 ## Step 6 — Dispatch Agents
 
-Spawn only agents whose domain matches the `[tag]` in Fix Approach. Pass `Constraints`:
-- Updated investigation verbatim (Root Cause, Scope, Fix Approach, Risk, Complexity)
-- Delta summary from Step 4
-- Affected file list from Step 4
-- Instruction: "Implement the delta only. Revert code for removed ACs. Add code for new/changed ACs. Do not modify files that are already correct under the new ACs."
+Spawn only agents whose domain matches the `[tag]` in Fix Approach. Pass context as a `<context>` XML block per the dispatch-agents protocol, with `<decisions type="investigation">` and `<constraints>` containing:
+
+```xml
+<constraints>
+  <investigation>[Root Cause, Scope, Fix Approach, Risk, Complexity verbatim from new investigation]</investigation>
+  <delta_summary>[delta table from Step 4]</delta_summary>
+  <affected_files>
+    <file>[filename from existing PR]</file>
+  </affected_files>
+  <instruction>Implement the delta only. Revert code for removed ACs. Add code for new/changed ACs. Do not modify files that are already correct under the new ACs.</instruction>
+</constraints>
+```
 
 ---
 

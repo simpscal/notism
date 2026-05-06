@@ -8,19 +8,33 @@ tools: Agent
 
 ## Context to Pass
 
-Pass the following to every spawned agent. All context is passed directly — do NOT instruct agents to fetch issues, read files, or re-derive context:
+Pass the following to every spawned agent as a `<context>` XML block. All context is passed directly — do NOT instruct agents to fetch issues, read files, or re-derive context:
 
-| Context | Source |
-|---------|--------|
-| Requirements | Story description + full `## Acceptance Criteria` section |
-| Decisions | **Story**: relevant TDD sections verbatim — architecture key decisions, components design, API specification, data models, alternatives considered, risks. Pass `none` if no TDD exists. **Bug**: dev investigation verbatim — Root Cause, Scope, Fix Approach, Risk. |
-| Design instructions | Full design instructions issue (frontend only) — sprint-level document |
-| Constraints | Orchestrator-provided scope restrictions and supporting data — omit if none |
+```xml
+<context>
+  <requirements>
+    <story>[user story statement]</story>
+    <acceptance_criteria>
+- [ ] [AC 1]
+- [ ] [AC 2]
+    </acceptance_criteria>
+  </requirements>
+  <decisions type="tdd|investigation|none">
+    [verbatim TDD sections or investigation fields — use "none" if no TDD exists]
+  </decisions>
+  <design_instructions>
+    [full design issue content — frontend only; omit this tag entirely for backend/devops]
+  </design_instructions>
+  <constraints>
+    [orchestrator-provided scope restrictions — omit this tag entirely if none]
+  </constraints>
+</context>
+```
 
 ## Output Handling
 
 After all spawned agents complete:
 
-- Agent returns `NO_WORK: …` → log it, take no further action for that domain.
-- Agent returns work done → verify output, mark domain complete.
-- Agent reports a blocker → post a comment on issue `#ISSUE_NUMBER` with the blocker details and halt all remaining work.
+- Agent returns `<no_work>` → log the `<reason>`, take no further action for that domain.
+- Agent returns `<result>` → verify `<files_changed>`, mark domain complete.
+- Agent returns `<blocked>` → post a comment on issue `#ISSUE_NUMBER` with the `<reason>` details and halt all remaining work.
