@@ -63,7 +63,11 @@ Produce a **delta summary**:
 | Already implemented | ACs satisfied on the current branch (from PR body `## Acceptance Criteria` section) |
 | New / changed ACs | ACs in the updated story not yet satisfied or differing from the branch |
 | Removed ACs | ACs present in the original PR body that no longer appear in the updated story |
+| TDD delta | Present if $TDD was loaded: contracts, components, or data models in the current TDD that differ from what the PR body describes or the PR diff implements |
+| Design delta | Present if $DESIGN was loaded (frontend only): layout, components, tokens, or states in the current design instructions that differ from what is already on the branch |
 | Affected files | Files already touched in the PR diff — subagents must not duplicate this work |
+
+If $TDD or $DESIGN was loaded, always compare each against the PR body and PR diff — regardless of whether ACs changed. Surface any drift: contracts that changed, components renamed, tokens or states that differ. Include findings in the TDD delta / Design delta rows. If no drift found, omit those rows.
 
 Hold this delta summary — it is passed to every subagent in Step 4.
 
