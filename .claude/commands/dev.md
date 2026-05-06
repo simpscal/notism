@@ -35,14 +35,6 @@ Implement **one ticket per invocation** — do not batch.
 
 ---
 
-## Shared Patterns (loaded by mode files as needed)
-
-| Pattern | File | Purpose |
-|---------|------|---------|
-| Notify Complete | `dev/_notify-complete.md` | Post implementation complete comment |
-
----
-
 ## Constraints
 
 - Implement strictly within the scope of the ACs — no extras, no refactors beyond what the ticket requires

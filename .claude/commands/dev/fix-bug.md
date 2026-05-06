@@ -96,4 +96,4 @@ For multi-skill bugs, open one PR per skill — each from its own codebase path,
 
 ## Step 10 — Notify
 
--> Follow `_notify-complete.md`
+-> Notify implementation complete

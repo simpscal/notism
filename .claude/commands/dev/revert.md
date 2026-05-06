@@ -39,4 +39,4 @@ Collect all opened revert PR numbers as `$REVERT_PRS`.
 
 ## Step 4 — Notify
 
--> Follow `_notify-complete.md` (Revert stories variant)
+-> Notify revert complete

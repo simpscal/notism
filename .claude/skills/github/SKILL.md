@@ -118,3 +118,56 @@ Proceed? (y/n)
 **triggers:** close issue, mark issue closed, resolve issue, shut issue
 **when:** need to close or resolve a GitHub issue
 - **Tool**: `mcp__github__update_issue` → `{ owner, repo, issue_number: issue_id, state: "closed" }`
+
+### Notify Implementation Complete
+**triggers:** notify implementation complete, post completion comment, notify revert complete
+**when:** implementation or revert is done and issue needs status update
+
+**Single-skill (implementation):** Post comment on issue `#ISSUE_NUMBER`:
+```
+## Implementation Complete
+
+- PR: <pr-url>
+
+---
+> ⏸ Human gate: Review the PR diff. When approved, merge into the staging branch.
+```
+
+**Multi-skill (implementation, two PRs):** Post comment on issue `#ISSUE_NUMBER`:
+```
+## Implementation Complete
+
+- Backend: <pr-url>
+- Frontend: <pr-url>
+
+---
+> ⏸ Human gate: Review both PR diffs. When approved, merge into the staging branch.
+```
+
+**Single-skill (revert):** Post comment on issue `#ISSUE_NUMBER`:
+```
+## Revert Ready
+
+Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed.
+
+- Revert PR: <revert-pr-url>
+
+---
+> ⏸ Human gate: Review the revert PR diff. When approved, merge into the sprint branch.
+```
+
+**Multi-skill (revert, two PRs):** Post comment on issue `#ISSUE_NUMBER`:
+```
+## Revert Ready
+
+Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed across all codebases.
+
+- Backend revert PR: <revert-pr-url>
+- Frontend revert PR: <revert-pr-url>
+
+---
+> ⏸ Human gate: Review both revert PR diffs. When approved, merge into the sprint branch.
+```
+
+**Label updates (implementation):** add `implemented`, remove `in-progress` and `story-updated`
+**Label updates (revert):** add `implemented`, remove `in-progress`, `story-updated`, and `story-removed`

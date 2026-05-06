@@ -107,6 +107,6 @@ Remove the `story-updated` label from the issue.
 
 ## Step 8 — Notify
 
-**Merged PR case only** — follow `_notify-complete.md`.
+**Merged PR case only** — notify implementation complete.
 
 **Open PR case** — skip this step.

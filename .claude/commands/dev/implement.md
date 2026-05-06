@@ -76,4 +76,4 @@ For multi-skill stories, open one PR per skill — each from its own codebase pa
 
 ## Step 7 — Notify
 
--> Follow `_notify-complete.md`
+-> Notify implementation complete
