@@ -312,5 +312,6 @@ QA never runs test commands. Test execution and verification is human-only. Test
 | `story-updated` | Story ACs changed after initial implementation |
 | `story-removed` | Story dropped from scope |
 | `sprint-completed` | Sprint closed |
+| `refactoring` | Tech-lead refactoring task |
 | `bug-production` | Reporter-created bug issue |
 | `bug-fixed` | Bug closed after successful fix |
