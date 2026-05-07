@@ -45,7 +45,7 @@ flowchart TD
     G1 -->|Approve| C(["/ba write-stories &lt;issue&gt;"])
     C --> D["User Stories + Sprint Milestone"]
     D --> G2{Gate 2\nPO Reviews Stories}
-    G2 -->|Approve| E1(["/design write-design &lt;sprint&gt;"])
+    G2 -->|Approve| E1(["/designer write-design &lt;sprint&gt;"])
     E1 --> F1["Design Instructions\n`design`"]
     F1 --> E2(["/tech-lead write-feature-tdd &lt;sprint&gt;"])
     E2 --> F2["TDD + feature branches"]
@@ -112,7 +112,7 @@ flowchart TD
     G1 -->|Approve| E1["Update existing stories"]
     G1 -->|Approve| E2["Create new stories"]
     G1 -->|Approve| E3["Label removed stories\n`story-removed`"]
-    E1 & E2 & E3 --> F1(["/design sync-design &lt;sprint&gt;"])
+    E1 & E2 & E3 --> F1(["/designer sync-design &lt;sprint&gt;"])
     F1 --> F2["Design Instructions updated\nincremental"]
     F2 --> F3(["/tech-lead sync-feature-tdd &lt;sprint&gt;"])
     F3 --> F4["TDD updated\nincremental"]
@@ -134,7 +134,7 @@ flowchart TD
     B --> G1{Gate 1\nPO Approves AC Changes}
     G1 -->|Approve| C["Story ACs updated\n`story-updated`"]
     C --> D{UI changes?}
-    D -->|Yes| E(["/design sync-design &lt;sprint&gt;"])
+    D -->|Yes| E(["/designer sync-design &lt;sprint&gt;"])
     D -->|No| F{Tech design changes?}
     E --> E2["Design Instructions updated\nincremental"]
     E2 --> F
@@ -185,8 +185,8 @@ Human judges which roles are needed after reviewing approved AC changes.
 
 | Command | Input | Output |
 |---------|-------|--------|
-| `/design write-design <sprint>` | Sprint milestone # | Sprint-level design instructions issue (`design`) |
-| `/design sync-design <sprint>` | Sprint milestone # | Updated design instructions after story changes |
+| `/designer write-design <sprint>` | Sprint milestone # | Sprint-level design instructions issue (`design`) |
+| `/designer sync-design <sprint>` | Sprint milestone # | Updated design instructions after story changes |
 
 ### Technical Lead
 
@@ -253,8 +253,8 @@ QA never runs test commands. Test execution and verification is human-only. Test
       sync-stories.md         ← BA re-classifies stories after requirement change
       amend-story.md          ← BA amends ACs on a user story
       amend-bug.md            ← BA amends ACs on a bug issue
-    design.md
-    design/
+    designer.md
+    designer/
       write-design.md         ← Designer produces UI instructions for sprint
       sync-design.md          ← Designer updates design instructions after story changes
     tech-lead.md

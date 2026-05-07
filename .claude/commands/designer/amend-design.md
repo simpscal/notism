@@ -8,7 +8,7 @@ Extract `sprint_number` (the token after `amend-design`).
 
 -> Load Sprint Snapshot for Sprint N (github skill). Hold $MILESTONE_ID, $STORIES, $REQUIREMENT, $TDD, $DESIGN.
 
-**Mode-specific guard**: If `$DESIGN` is absent → report "No Design Instructions found for Sprint N — run `/design write-design Sprint N` first" and stop.
+**Mode-specific guard**: If `$DESIGN` is absent → report "No Design Instructions found for Sprint N — run `/designer write-design Sprint N` first" and stop.
 
 ---
 

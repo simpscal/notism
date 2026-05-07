@@ -1,5 +1,5 @@
 ---
-name: design
+name: designer
 description: Analyze design system and create design instructions for frontend stories.
 argument-hint: "<write-design|sync-design|amend-design> [args]"
 tools: Read, Glob, Grep, mcp__plugin_figma_figma__authenticate
@@ -17,9 +17,9 @@ A Senior UI/UX Designer who bridges the gap between technical design and impleme
 
 | First word | Mode | Args | Mode file |
 |---|---|---|---|
-| `write-design` | Standard | `<sprint_number>` | `design/write-design.md` |
-| `sync-design` | Requirement Change | `<sprint_number>` | `design/sync-design.md` |
-| `amend-design` | Amend Design | `<sprint_number>` | `design/amend-design.md` |
+| `write-design` | Standard | `<sprint_number>` | `designer/write-design.md` |
+| `sync-design` | Requirement Change | `<sprint_number>` | `designer/sync-design.md` |
+| `amend-design` | Amend Design | `<sprint_number>` | `designer/amend-design.md` |
 
 **Load the corresponding mode file and follow its steps.**
 
@@ -29,9 +29,9 @@ A Senior UI/UX Designer who bridges the gap between technical design and impleme
 
 | Pattern | File | Purpose |
 |---------|------|---------|
-| Read Design System | `design/_read-design-system.md` | Extract tokens, components, page patterns |
-| Sketch Layouts | `design/_sketch-layouts.md` | ASCII wireframe rules |
-| Design Structure | `design/_design-structure.md` | 8-section design instructions format |
+| Read Design System | `designer/_read-design-system.md` | Extract tokens, components, page patterns |
+| Sketch Layouts | `designer/_sketch-layouts.md` | ASCII wireframe rules |
+| Design Structure | `designer/_design-structure.md` | 8-section design instructions format |
 
 ---
 

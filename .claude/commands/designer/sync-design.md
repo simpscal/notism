@@ -12,7 +12,7 @@ Extract `sprint_number` (the token after `sync-design`).
 
 - `$REQUIREMENT` is absent → `⛔ No requirement issue found in Sprint N. Cannot sync design without a requirement.`
 - `$STORIES` is empty → `⛔ No user stories found in Sprint N. Run \`/ba write-stories <requirement_issue>\` first.`
-- `$DESIGN` is absent → `⛔ No Design Instructions found for Sprint N — run \`/design write-design N\` first.`
+- `$DESIGN` is absent → `⛔ No Design Instructions found for Sprint N — run \`/designer write-design N\` first.`
 
 Identify **changed stories**: those with label `story-updated` or `story-removed`.
 If no changed stories exist, report "No story changes found — design is already in sync" and stop.

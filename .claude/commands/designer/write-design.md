@@ -7,7 +7,7 @@
 -> Load Sprint Snapshot for Sprint N (github skill). Hold $MILESTONE_ID, $STORIES, $REQUIREMENT, $TDD, $DESIGN.
 
 **Mode-specific guards** (stop immediately if any fail):
-- `$DESIGN` already exists → `Design Instructions already exist for Sprint N — run \`/design sync-design N\` to update.`
+- `$DESIGN` already exists → `Design Instructions already exist for Sprint N — run \`/designer sync-design N\` to update.`
 
 Identify stories with user-facing UI changes from `$STORIES`. If none found, report "No UI work found in this milestone — skipping design phase" and stop.
 
