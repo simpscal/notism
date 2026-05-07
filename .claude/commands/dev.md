@@ -26,7 +26,8 @@ Check the first word of `$ARGUMENTS`:
 | **4** | Has `bug-production` (without `story-updated` or `qa-blocked`) | Bug Fix | `dev/fix-bug.md` |
 | **5** | Has `story-updated` (without `bug-production`) | Revisit (Story) | `dev/revisit.md` |
 | **6** | Has `qa-blocked` (without `bug-production`) | QA Fix (Story path) | `dev/qa-fix.md` |
-| **7** (fallback) | No lifecycle labels | Standard | `dev/implement.md` |
+| **7** | Has `refactoring` | Refactor | `dev/refactor.md` |
+| **8** (fallback) | No lifecycle labels | Standard | `dev/implement.md` |
 
 
 Implement **one ticket per invocation** — do not batch.

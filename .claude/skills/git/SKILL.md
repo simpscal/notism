@@ -42,6 +42,7 @@ Proceed? (y/n)
 | Story | `feature/issue-{N}-{short-description}` |
 | Revert | `revert/issue-{N}-{short-description}` |
 | Bugfix | `fix/issue-{N}-{short-description}` |
+| Refactor | `refactor/issue-{N}-{short-description}` |
 
 `short-description` derivation:
 1. Strip leading `[Tag]` prefix
@@ -92,6 +93,15 @@ git push -u origin fix/issue-{N}-{short-description}
 git checkout main && git pull
 git checkout -b revert/issue-{N}-{short-description}
 git push -u origin revert/issue-{N}-{short-description}
+```
+
+### Create Refactor Branch
+**triggers:** create refactor branch
+**when:** need a refactor branch for a standalone refactoring issue
+```bash
+git checkout main && git pull
+git checkout -b refactor/issue-{N}-{short-description}
+git push -u origin refactor/issue-{N}-{short-description}
 ```
 
 ### Checkout Sprint Branch
