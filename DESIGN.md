@@ -1,464 +1,910 @@
-# Design System — Notism Web
+---
+version: alpha
+name: Notism
+description: Notism positions itself as a warm, appetite-forward food-ordering platform — a stark white canvas anchored by a saturated tangerine-orange primary that turns every CTA, every active state, and every brand moment into a visual cue to "order now." The system uses Noto Sans across all surfaces, leans on a 12px base radius for an approachable rounded feel, and pairs photographic food cards with quiet utility chrome (admin tables, settings panels). Coverage spans the marketing landing page, food catalog and detail surfaces, cart and checkout, order tracking, customer settings, and the admin operations console.
 
-## 1. Visual Theme & Atmosphere
+colors:
+  primary: "#ed6e30"
+  on-primary: "#ffffff"
+  primary-soft: "#fff1e8"
+  primary-ring: "#ed6e30"
+  canvas: "#ffffff"
+  surface: "#f5f5f6"
+  surface-soft: "#fafafa"
+  hairline: "#e7e7eb"
+  hairline-soft: "#eeeef1"
+  ink: "#18181b"
+  ink-strong: "#000000"
+  charcoal: "#27272a"
+  slate: "#52525b"
+  steel: "#71717a"
+  stone: "#a1a1aa"
+  muted: "#d4d4d8"
+  success-bg: "#e8f7ec"
+  success-text: "#1f7a3a"
+  warning-bg: "#fff4e0"
+  warning-text: "#a35d00"
+  info-bg: "#e6f0ff"
+  info-text: "#1d4ed8"
+  destructive: "#dc2626"
+  destructive-bg: "#fee2e2"
+  on-dark: "#ffffff"
+  dark-canvas: "#0d0d10"
+  dark-surface: "#1a1a1f"
+  chart-1: "#e76538"
+  chart-2: "#1ba48a"
+  chart-3: "#1d4ed8"
+  chart-4: "#e8b341"
+  chart-5: "#d56a2a"
+  footer-bg: "#0d0d10"
 
-Notism's interface is a clean, modern food-ordering marketplace — efficient, bright, and appetizing. The entire experience is built on pure white and near-white card surfaces that provide maximum contrast for food imagery and content. Where many platforms use flat or muted palettes, Notism's primary accent is a vivid orange-amber — energetic, warm, and appetite-stimulating — that punctuates an otherwise neutral cool-gray canvas.
+typography:
+  hero-display:
+    fontFamily: Noto Sans
+    fontSize: 64px
+    fontWeight: 700
+    lineHeight: 1.10
+    letterSpacing: -1.5px
+  display-lg:
+    fontFamily: Noto Sans
+    fontSize: 48px
+    fontWeight: 700
+    lineHeight: 1.15
+    letterSpacing: -1px
+  heading-lg:
+    fontFamily: Noto Sans
+    fontSize: 36px
+    fontWeight: 700
+    lineHeight: 1.20
+    letterSpacing: -0.5px
+  heading-md:
+    fontFamily: Noto Sans
+    fontSize: 28px
+    fontWeight: 600
+    lineHeight: 1.25
+    letterSpacing: -0.3px
+  heading-sm:
+    fontFamily: Noto Sans
+    fontSize: 22px
+    fontWeight: 600
+    lineHeight: 1.30
+  card-title:
+    fontFamily: Noto Sans
+    fontSize: 18px
+    fontWeight: 600
+    lineHeight: 1.40
+  subtitle:
+    fontFamily: Noto Sans
+    fontSize: 16px
+    fontWeight: 500
+    lineHeight: 1.50
+  body-md:
+    fontFamily: Noto Sans
+    fontSize: 15px
+    fontWeight: 400
+    lineHeight: 1.55
+  body-md-medium:
+    fontFamily: Noto Sans
+    fontSize: 15px
+    fontWeight: 500
+    lineHeight: 1.55
+  body-sm:
+    fontFamily: Noto Sans
+    fontSize: 14px
+    fontWeight: 400
+    lineHeight: 1.50
+  body-sm-medium:
+    fontFamily: Noto Sans
+    fontSize: 14px
+    fontWeight: 500
+    lineHeight: 1.50
+  caption:
+    fontFamily: Noto Sans
+    fontSize: 13px
+    fontWeight: 400
+    lineHeight: 1.45
+  caption-bold:
+    fontFamily: Noto Sans
+    fontSize: 12px
+    fontWeight: 600
+    lineHeight: 1.40
+    letterSpacing: 0.2px
+  micro:
+    fontFamily: Noto Sans
+    fontSize: 11px
+    fontWeight: 500
+    lineHeight: 1.40
+    letterSpacing: 0.3px
+  button-md:
+    fontFamily: Noto Sans
+    fontSize: 14px
+    fontWeight: 500
+    lineHeight: 1.40
+  price-display:
+    fontFamily: Noto Sans
+    fontSize: 24px
+    fontWeight: 700
+    lineHeight: 1.20
 
-The UI leans on shadcn/ui's New York style: crisp borders, tight rounded corners (not pill-shaped), and understated shadows. The type stack is Noto Sans — a workhorse geometric humanist that reads crisply at any weight. Weight carries the entire hierarchy: `font-medium` for labels, `font-semibold` for card titles, `font-bold` for section headers, `font-black` with `tracking-tight` for page-level titles. This escalating weight ladder gives every heading a clear identity without needing size jumps alone.
+rounded:
+  xs: 4px
+  sm: 6px
+  md: 8px
+  lg: 12px
+  xl: 16px
+  xxl: 20px
+  xxxl: 24px
+  hero: 32px
+  full: 9999px
 
-Pages arrive with gradient hero banners — a vertical fade from `primary/20` through `primary/5` to `background` — anchored by large decorative blurred blobs of `primary/20`. This technique adds visual depth on what would otherwise be flat white sections. Below the hero, content lives in bordered white cards on the same white page background; depth is achieved through borders and `shadow-sm` rather than layered surfaces.
+spacing:
+  xxs: 4px
+  xs: 8px
+  sm: 12px
+  md: 16px
+  lg: 20px
+  xl: 24px
+  xxl: 32px
+  xxxl: 40px
+  section-sm: 48px
+  section: 64px
+  section-lg: 80px
+  hero: 96px
 
-Dark mode is fully supported: the entire color system flips via CSS custom properties, with no component-level exceptions needed.
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+    typography: "{typography.button-md}"
+    rounded: "{rounded.md}"
+    padding: "8px 16px"
+    height: 36px
+  button-primary-pressed:
+    backgroundColor: "#d65a1f"
+    textColor: "{colors.on-primary}"
+  button-primary-disabled:
+    backgroundColor: "{colors.hairline}"
+    textColor: "{colors.stone}"
+  button-secondary:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    typography: "{typography.button-md}"
+    rounded: "{rounded.md}"
+    padding: "8px 16px"
+    height: 36px
+  button-outline:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.ink}"
+    typography: "{typography.button-md}"
+    rounded: "{rounded.md}"
+    padding: "8px 16px"
+    height: 36px
+    border: "1px solid {colors.hairline}"
+  button-ghost:
+    backgroundColor: "transparent"
+    textColor: "{colors.ink}"
+    typography: "{typography.button-md}"
+    rounded: "{rounded.md}"
+    padding: "8px 16px"
+    height: 36px
+  button-link:
+    backgroundColor: "transparent"
+    textColor: "{colors.primary}"
+    typography: "{typography.button-md}"
+    padding: "0"
+  button-destructive:
+    backgroundColor: "{colors.destructive}"
+    textColor: "{colors.on-dark}"
+    typography: "{typography.button-md}"
+    rounded: "{rounded.md}"
+    padding: "8px 16px"
+    height: 36px
+  button-icon-square:
+    backgroundColor: "transparent"
+    textColor: "{colors.charcoal}"
+    rounded: "{rounded.md}"
+    size: 36px
+    border: "1px solid {colors.hairline}"
+  button-pill-cta:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+    typography: "{typography.button-md}"
+    rounded: "{rounded.full}"
+    padding: "12px 24px"
+    height: 44px
+  food-card:
+    backgroundColor: "{colors.canvas}"
+    rounded: "{rounded.xl}"
+    padding: "{spacing.md}"
+    border: "1px solid {colors.hairline}"
+  food-card-featured:
+    backgroundColor: "{colors.canvas}"
+    rounded: "{rounded.xxl}"
+    padding: "{spacing.lg}"
+    border: "1px solid {colors.hairline}"
+  food-card-image:
+    rounded: "{rounded.lg}"
+    aspect: "4/3"
+    backgroundColor: "{colors.surface}"
+  card-base:
+    backgroundColor: "{colors.canvas}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.xl}"
+    border: "1px solid {colors.hairline}"
+  card-section:
+    backgroundColor: "{colors.surface-soft}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.xl}"
+  cart-line-item:
+    backgroundColor: "{colors.canvas}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.md}"
+    border: "0 0 1px {colors.hairline-soft} solid"
+  promo-banner:
+    backgroundColor: "{colors.primary-soft}"
+    textColor: "{colors.primary}"
+    typography: "{typography.body-sm-medium}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.sm} {spacing.md}"
+  promo-cta-card:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+    rounded: "{rounded.xxl}"
+    padding: "{spacing.section}"
+  text-input:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.xs} {spacing.sm}"
+    border: "1px solid {colors.hairline}"
+    height: 36px
+  text-input-focused:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.ink}"
+    border: "1px solid {colors.primary}"
+    ring: "3px {colors.primary} 30% opacity"
+  text-input-error:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.ink}"
+    border: "1px solid {colors.destructive}"
+  search-input:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.charcoal}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.xs} {spacing.md}"
+    height: 40px
+    border: "1px solid transparent"
+  textarea:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.sm} {spacing.md}"
+    border: "1px solid {colors.hairline}"
+    minHeight: 80px
+  select-trigger:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.xs} {spacing.sm}"
+    height: 36px
+    border: "1px solid {colors.hairline}"
+  segmented-tab:
+    backgroundColor: "transparent"
+    textColor: "{colors.steel}"
+    typography: "{typography.body-sm-medium}"
+    padding: "{spacing.sm} {spacing.md}"
+    border: "0 0 2px transparent solid"
+  segmented-tab-active:
+    backgroundColor: "transparent"
+    textColor: "{colors.primary}"
+    border: "0 0 2px {colors.primary} solid"
+  pill-tab:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.steel}"
+    typography: "{typography.body-sm-medium}"
+    rounded: "{rounded.full}"
+    padding: "{spacing.xs} {spacing.md}"
+    border: "1px solid {colors.hairline}"
+  pill-tab-active:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+    rounded: "{rounded.full}"
+    border: "1px solid {colors.primary}"
+  category-chip:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.charcoal}"
+    typography: "{typography.body-sm-medium}"
+    rounded: "{rounded.full}"
+    padding: "{spacing.xs} {spacing.md}"
+  category-chip-active:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+  badge-success:
+    backgroundColor: "{colors.success-bg}"
+    textColor: "{colors.success-text}"
+    typography: "{typography.caption-bold}"
+    rounded: "{rounded.full}"
+    padding: "2px 10px"
+  badge-warning:
+    backgroundColor: "{colors.warning-bg}"
+    textColor: "{colors.warning-text}"
+    typography: "{typography.caption-bold}"
+    rounded: "{rounded.full}"
+    padding: "2px 10px"
+  badge-info:
+    backgroundColor: "{colors.info-bg}"
+    textColor: "{colors.info-text}"
+    typography: "{typography.caption-bold}"
+    rounded: "{rounded.full}"
+    padding: "2px 10px"
+  badge-destructive:
+    backgroundColor: "{colors.destructive-bg}"
+    textColor: "{colors.destructive}"
+    typography: "{typography.caption-bold}"
+    rounded: "{rounded.full}"
+    padding: "2px 10px"
+  badge-new:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+    typography: "{typography.caption-bold}"
+    rounded: "{rounded.full}"
+    padding: "2px 10px"
+  badge-discount:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+    typography: "{typography.caption-bold}"
+    rounded: "{rounded.sm}"
+    padding: "2px 8px"
+  qty-stepper:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body-sm-medium}"
+    rounded: "{rounded.full}"
+    padding: "{spacing.xxs} {spacing.xs}"
+    border: "1px solid {colors.hairline}"
+    height: 32px
+  qty-stepper-button:
+    backgroundColor: "transparent"
+    textColor: "{colors.charcoal}"
+    rounded: "{rounded.full}"
+    size: 24px
+  data-table:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.lg}"
+    border: "1px solid {colors.hairline}"
+  data-table-header:
+    backgroundColor: "{colors.surface-soft}"
+    textColor: "{colors.steel}"
+    typography: "{typography.caption-bold}"
+    padding: "{spacing.sm} {spacing.md}"
+  data-table-row:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.ink}"
+    typography: "{typography.body-sm}"
+    padding: "{spacing.md}"
+    border: "0 0 1px {colors.hairline-soft} solid"
+  sidebar-region:
+    backgroundColor: "{colors.surface-soft}"
+    textColor: "{colors.charcoal}"
+    border: "0 1px 0 0 {colors.hairline} solid"
+    padding: "{spacing.md} {spacing.sm}"
+  sidebar-nav-item:
+    backgroundColor: "transparent"
+    textColor: "{colors.charcoal}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.xs} {spacing.sm}"
+  sidebar-nav-item-active:
+    backgroundColor: "{colors.primary-soft}"
+    textColor: "{colors.primary}"
+    typography: "{typography.body-sm-medium}"
+  top-nav-region:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.ink}"
+    border: "0 0 1px {colors.hairline-soft} solid"
+    padding: "{spacing.sm} {spacing.xl}"
+    height: 64px
+  cart-summary-card:
+    backgroundColor: "{colors.canvas}"
+    rounded: "{rounded.lg}"
+    padding: "{spacing.xl}"
+    border: "1px solid {colors.hairline}"
+  cart-summary-total:
+    typography: "{typography.price-display}"
+    textColor: "{colors.primary}"
+  order-status-pill:
+    backgroundColor: "{colors.primary-soft}"
+    textColor: "{colors.primary}"
+    typography: "{typography.caption-bold}"
+    rounded: "{rounded.full}"
+    padding: "4px 12px"
+  order-timeline-step:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.charcoal}"
+    typography: "{typography.body-sm}"
+    padding: "{spacing.sm} 0"
+  empty-state:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.steel}"
+    typography: "{typography.body-md}"
+    padding: "{spacing.section-sm} {spacing.xl}"
+  hero-band-marketing:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.ink}"
+    typography: "{typography.hero-display}"
+    rounded: "0"
+    padding: "{spacing.hero} {spacing.xl}"
+  food-grid:
+    backgroundColor: "{colors.canvas}"
+    padding: "{spacing.xxl} 0"
+  footer-region:
+    backgroundColor: "{colors.footer-bg}"
+    textColor: "{colors.on-dark}"
+    typography: "{typography.body-sm}"
+    padding: "{spacing.section} {spacing.xxl}"
+  footer-link:
+    backgroundColor: "transparent"
+    textColor: "{colors.muted}"
+    typography: "{typography.body-sm}"
+    padding: "{spacing.xxs} 0"
+  toast-default:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.on-dark}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.sm} {spacing.md}"
+  toast-success:
+    backgroundColor: "{colors.success-bg}"
+    textColor: "{colors.success-text}"
+    typography: "{typography.body-sm-medium}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.sm} {spacing.md}"
+  toast-error:
+    backgroundColor: "{colors.destructive-bg}"
+    textColor: "{colors.destructive}"
+    typography: "{typography.body-sm-medium}"
+    rounded: "{rounded.md}"
+    padding: "{spacing.sm} {spacing.md}"
+  dialog-surface:
+    backgroundColor: "{colors.canvas}"
+    rounded: "{rounded.xl}"
+    padding: "{spacing.xl}"
+    border: "1px solid {colors.hairline}"
+  dialog-overlay:
+    backgroundColor: "rgba(0, 0, 0, 0.5)"
+---
+
+## Overview
+
+Notism stages itself as a friendly, appetite-driven food-ordering platform. The brand voice is warm and pragmatic — close to a neighborhood restaurant's menu in tone but engineered for fast, repeat ordering. The visual language anchors in a stark white canvas, near-black ink, and a saturated tangerine-orange primary (`{colors.primary}`) that signals action everywhere it appears: every CTA, every active tab, every selected category chip, every order-status pill. Where premium AI brands lean on typographic spectacle, Notism leans on photographic food cards and a tight grid that lets the dishes themselves carry the visual weight.
+
+Noto Sans anchors every surface — chosen for legibility across the bilingual product (en/vi) where Vietnamese diacritics sit alongside Latin characters in catalog descriptions, address forms, and order receipts. Buttons default to a 8px-radius rectangular pill with 36px height (the shadcn baseline); a `{rounded.full}` pill variant is reserved for the marketing landing page's primary "Order Now" CTA. Food cards use `{rounded.xl}` (16px) corner softening for the everyday catalog and `{rounded.xxl}` (20px) for featured/promoted items. Admin and operations surfaces (kitchen kanban, orders table, settings) use the same chrome with denser spacing.
 
 **Key Characteristics:**
-- White/near-white surface stack (`oklch(1 0 0)` → `oklch(0.967 ...)`) with cool-toned gray neutrals
-- Orange-amber primary (`oklch(68.6% 0.236 46.2)`) — vivid, warm, used for all brand moments and interactive highlights
-- Noto Sans type family — single font, weight-based hierarchy (`medium` → `semibold` → `bold` → `black`)
-- Gradient hero banners with decorative blurred primary blobs as section openers
-- Card-heavy layouts: `rounded-xl border shadow-sm` cards on flat white backgrounds
-- Cool-toned neutral scale — every gray has a slightly blue undertone (OKLCH hue 285–286)
-- `backdrop-blur` overlays on image cards for semi-transparent badge layering
-- Full dark mode via CSS custom property inversion
+- White canvas (`{colors.canvas}`) with near-black ink (`{colors.ink}`) — broken open by a single signature accent: tangerine `{colors.primary}` (#ed6e30)
+- The orange primary owns ALL action moments: CTAs, active states, selected chips, order status, brand badges. There is no secondary accent color competing for attention.
+- Noto Sans across the entire system; supports en/vi diacritics natively
+- 8px-radius default buttons (shadcn standard); `{rounded.full}` pill reserved for hero/marketing CTAs and stepper controls
+- Food cards use 16–20px corner softening with 4:3 photographic imagery; admin tables use 12px corner softening with dense type
+- Three layout shells coexist: `client` (catalog/cart/order), `admin` (sidebar + table dashboards), and `auth` (centered single-column forms)
+- Light + dark theme parity (the system ships both); orange primary stays unchanged across modes
 
-## 2. Color Palette & Roles
+## Colors
 
-### Primary
-- **Orange Amber** (`oklch(68.6% 0.236 46.2)`): The brand color. Used for primary buttons, active states, links, focus rings, and all brand-identity moments. In light mode it's a vivid warm orange; in dark mode it stays the same — the one color that doesn't flip.
-- **Primary Foreground** (`oklch(1 0 0)`): Pure white — text on primary-colored surfaces.
+> Source: `src/app/assets/styles/index.css` (`:root` and `.dark` token blocks). All values are expressed as hex approximations of the OKLCH source values.
 
-### Surfaces & Backgrounds
-- **Background** (`oklch(1 0 0)` / dark: `oklch(0.1 0.001 0)`): Page canvas — pure white in light, near-black in dark.
-- **Card** (`oklch(1 0 0)` / dark: `oklch(0.18 0.006 285.885)`): Card surfaces — same as background in light mode; lifted dark gray in dark mode.
-- **Sidebar** (`oklch(0.985 0 0)` / dark: `oklch(0.18 0.006 285.885)`): Sidebar background — off-white in light.
-- **Popover** (`oklch(1 0 0)` / dark: `oklch(0.18 0.006 285.885)`): Dropdown and popover surfaces — same as card.
+### Brand & Accent
+- **Primary** (`{colors.primary}`): The single signature accent. Tangerine-orange. Used on every primary CTA, active tab, selected category chip, order-status pill, link emphasis, focus ring. The brand has only one accent color — orange does all the work.
+- **On-Primary** (`{colors.on-primary}`): White text/icons rendered on top of orange surfaces.
+- **Primary Soft** (`{colors.primary-soft}`): Pale-orange tint used on `sidebar-nav-item-active` background, badge backgrounds, promo banners, and order-status pills. Lets the brand color whisper instead of shout.
 
-### Neutral & Text
-- **Foreground** (`oklch(0.141 0.005 285.823)` / dark: `oklch(0.985 0 0)`): Primary text — near-black with a subtle cool undertone.
-- **Muted** (`oklch(0.967 0.001 286.375)` / dark: `oklch(0.22 0.006 286.033)`): Subtly tinted near-white — chip backgrounds, tags, secondary surfaces.
-- **Muted Foreground** (`oklch(0.552 0.016 285.938)` / dark: `oklch(0.705 0.015 286.067)`): Secondary text — medium cool gray. Used for captions, placeholders, de-emphasized metadata.
-- **Secondary** (`oklch(0.967 0.001 286.375)` / dark: `oklch(0.22 0.006 286.033)`): Same value as muted — secondary button backgrounds.
-- **Accent** (`oklch(0.967 0.001 286.375)` / dark: `oklch(0.22 0.006 286.033)`): Hover highlight backgrounds on ghost elements.
+### Surface
+- **Canvas** (`{colors.canvas}`): Primary page background and card surface (white).
+- **Surface** (`{colors.surface}`): Subtle section backgrounds, search input rest, button-secondary fill.
+- **Surface Soft** (`{colors.surface-soft}`): Quieter section divisions, table-header fill, sidebar-region background.
+- **Hairline** (`{colors.hairline}`): 1px input border and primary divider.
+- **Hairline Soft** (`{colors.hairline-soft}`): Quieter table-row divider and secondary section break.
 
-### Interactive
-- **Border / Input** (`oklch(0.92 0.004 286.32)` / dark: `oklch(1 0 0 / 10%)`): All structural borders and input borders — light cool gray.
-- **Ring** (`oklch(68.6% 0.236 46.2)` — same as primary): Focus outline ring color. Applied at `ring-[3px]` weight.
+### Text
+- **Ink** (`{colors.ink}`): Primary headline and CTA text — the brand's near-black anchor.
+- **Ink Strong** (`{colors.ink-strong}`): Pure black for hero displays where maximum contrast is required.
+- **Charcoal** (`{colors.charcoal}`): Body text on light surfaces, sidebar-nav rest.
+- **Slate** (`{colors.slate}`): Secondary text, metadata, food-card descriptions.
+- **Steel** (`{colors.steel}`): Tertiary text, table headers, segmented-tab inactive labels.
+- **Stone** (`{colors.stone}`): Muted captions, placeholder text.
+- **Muted** (`{colors.muted}`): Footer link rest, disabled label text.
 
 ### Semantic
-- **Destructive** (`oklch(0.577 0.245 27.325)` / dark: `oklch(0.704 0.191 22.216)`): Errors, deletions, irreversible actions — warm red.
-- **Success** (`oklch(0.4 0.15 145)` / dark: `oklch(0.65 0.12 145)`): Confirmations, completed states — forest green.
-- **Warning** (`oklch(0.45 0.15 70)` / dark: `oklch(0.65 0.12 70)`): Cautions and alerts — amber/ochre.
-- **Info** (`oklch(0.45 0.15 240)` / dark: `oklch(0.65 0.12 240)`): Informational states — cool blue.
+- **Success** (`{colors.success-bg}` / `{colors.success-text}`): Order-completed badges, "Available" pill, payment-confirmed toast.
+- **Warning** (`{colors.warning-bg}` / `{colors.warning-text}`): "Low stock", "Pending" intermediate states.
+- **Info** (`{colors.info-bg}` / `{colors.info-text}`): Informational toasts, side notices.
+- **Destructive** (`{colors.destructive}` / `{colors.destructive-bg}`): Delete actions, validation errors, order-cancelled badges.
 
-### Data Visualization (light / dark)
-| Token | Light | Dark | Character |
-|-------|-------|------|-----------|
-| `--chart-1` | `oklch(0.646 0.222 41.116)` | `oklch(0.488 0.243 264.376)` | Orange (light) / Blue-violet (dark) |
-| `--chart-2` | `oklch(0.6 0.118 184.704)` | `oklch(0.696 0.17 162.48)` | Teal |
-| `--chart-3` | `oklch(0.398 0.07 227.392)` | `oklch(0.769 0.188 70.08)` | Navy / Amber |
-| `--chart-4` | `oklch(0.828 0.189 84.429)` | `oklch(0.627 0.265 303.9)` | Yellow / Violet |
-| `--chart-5` | `oklch(0.769 0.188 70.08)` | `oklch(0.645 0.246 16.439)` | Warm yellow / Red |
+### Chart Palette
+- `{colors.chart-1}` through `{colors.chart-5}` cover admin dashboard chart series. The first chart color intentionally echoes the brand orange so revenue charts feel native to the brand without re-using the exact CTA tone.
 
-### Sidebar Variants
-All sidebar tokens mirror the main system; `--sidebar-primary` = orange amber; `--sidebar-primary-foreground` differs per mode.
+### Dark Mode
+- **Dark Canvas** (`{colors.dark-canvas}`): Page background in dark mode.
+- **Dark Surface** (`{colors.dark-surface}`): Card surface in dark mode.
+- The orange primary, semantic tones, and chart colors stay constant across modes — only canvas/surface/ink invert.
 
-### Opacity Modifiers (Tailwind pattern)
-Notism uses **no gradient color stops**. Visual gradients are achieved via Tailwind opacity suffixes on token names:
-- `primary/20`, `primary/5` — hero section gradient
-- `background/90` — card overlay with backdrop blur
-- `background/60` — out-of-stock dimming overlay
-- `ring/50` — focus ring at half opacity
-- `destructive/20` — error ring glow
-
-## 3. Typography Rules
+## Typography
 
 ### Font Family
-**All text**: `Noto Sans`, fallback: `ui-sans-serif, system-ui, sans-serif`, then emoji fallbacks.
+**Noto Sans** (primary): Geometric humanist sans-serif. Used across every surface, every role. Fallbacks: `ui-sans-serif`, `system-ui`, `sans-serif`, plus emoji families (`Apple Color Emoji`, `Segoe UI Emoji`, `Segoe UI Symbol`, `Noto Color Emoji`).
 
-*Single font family. No serif. No monospace except in code blocks. Noto Sans handles all weights 400–900.*
+Noto Sans was chosen for its broad script coverage — Notism is bilingual (en/vi) and Vietnamese diacritics render cleanly without falling back to a system face. The neutral, slightly humanist character is approachable on food cards (where descriptive copy must read like a human wrote it) and dense enough on admin tables (where 12–14px rows demand legibility).
 
 ### Hierarchy
 
-| Role | Tailwind Classes | Size | Weight | Line Height | Letter Spacing | Notes |
-|------|-----------------|------|--------|-------------|----------------|-------|
-| Page Title | `text-3xl font-black tracking-tight sm:text-4xl` | 30px → 36px | 900 | tight | -0.025em | Primary hero headings |
-| Section Header | `text-2xl font-bold` | 24px | 700 | tight | normal | Admin page titles, section anchors |
-| Card Title | `text-xl font-semibold` | 20px | 600 | tight | normal | Card headings, feature titles |
-| Sub-heading | `text-lg font-semibold` | 18px | 600 | snug | normal | Subsection headers |
-| Body Large | `text-base` | 16px | 400 | normal | normal | Form inputs, primary body text |
-| Body Standard | `text-sm` | 14px | 400 | normal | normal | Default UI text, button labels |
-| Caption | `text-sm text-muted-foreground` | 14px | 400 | normal | normal | Metadata, subtitles, helper text |
-| Label | `text-sm font-medium` | 14px | 500 | normal | normal | Form labels, column headers |
-| Badge | `text-xs font-semibold` | 12px | 600 | normal | normal | All Badge components |
-| Small | `text-xs text-muted-foreground` | 12px | 400 | normal | normal | Fine print, timestamps |
+| Token | Size | Weight | Line Height | Letter Spacing | Use |
+|---|---|---|---|---|---|
+| `{typography.hero-display}` | 64px | 700 | 1.10 | -1.5px | Marketing landing hero ("Order what you crave") |
+| `{typography.display-lg}` | 48px | 700 | 1.15 | -1px | Section openers, page heroes |
+| `{typography.heading-lg}` | 36px | 700 | 1.20 | -0.5px | Page-level titles ("Your Cart", "Foods") |
+| `{typography.heading-md}` | 28px | 600 | 1.25 | -0.3px | Subsection headers ("Recommended", "Recent Orders") |
+| `{typography.heading-sm}` | 22px | 600 | 1.30 | 0 | Card group titles, dialog headers |
+| `{typography.card-title}` | 18px | 600 | 1.40 | 0 | Food-card titles, settings-row labels |
+| `{typography.subtitle}` | 16px | 500 | 1.50 | 0 | Section subtitles, lead body |
+| `{typography.body-md}` | 15px | 400 | 1.55 | 0 | Primary body text, food descriptions |
+| `{typography.body-md-medium}` | 15px | 500 | 1.55 | 0 | Body emphasis |
+| `{typography.body-sm}` | 14px | 400 | 1.50 | 0 | Secondary body, table cells, navigation |
+| `{typography.body-sm-medium}` | 14px | 500 | 1.50 | 0 | Active sidebar nav, button labels |
+| `{typography.caption}` | 13px | 400 | 1.45 | 0 | Form helper text, metadata |
+| `{typography.caption-bold}` | 12px | 600 | 1.40 | 0.2px | Badge labels, table-header text |
+| `{typography.micro}` | 11px | 500 | 1.40 | 0.3px | Footer microcopy, fine print |
+| `{typography.button-md}` | 14px | 500 | 1.40 | 0 | Button labels |
+| `{typography.price-display}` | 24px | 700 | 1.20 | 0 | Cart total, food price emphasis |
 
 ### Principles
-- **Weight drives hierarchy**: Size escalation alone is insufficient. Page titles must use `font-black`; section headers `font-bold`; card titles `font-semibold`; labels `font-medium`. Never use weight below `font-medium` for anything interactive.
-- **`tracking-tight` for headings**: All `text-2xl` and above use `tracking-tight` (-0.025em). This compresses large headings to look intentional rather than loose.
-- **`text-muted-foreground` for secondary text**: Captions, subtitles, and helper text always use `text-muted-foreground`. Never use raw gray colors.
-- **`text-sm` is the default**: Most UI text (`td`, button labels, form items) is `text-sm`. Only hero subtitles and body paragraphs reach `text-base`.
-- **Responsive type**: Page titles scale with `sm:text-4xl`. Nothing else uses responsive font sizing unless in a hero section.
+- **Tight hero leading** (1.10) and -1.5px letter-spacing on display sizes give marketing headlines a poster-grade impact.
+- **Generous body leading** (1.50–1.55) keeps food descriptions and order receipts comfortable to scan.
+- **Weight discipline:** 400 (body), 500 (medium emphasis), 600 (headings/buttons), 700 (display). Heavier weights are not used.
+- **Single typeface** strategy — never mix Noto Sans with another sans-serif. Code samples (when shown in admin) use a system monospace fallback, but no second typeface enters the brand canvas.
+- **Price display** is its own token (`{typography.price-display}`) — prices are brand moments and earn weight 700 + tight leading wherever they appear.
 
-## 4. Component Stylings
+## Layout
+
+### Spacing System
+- **Base unit**: 4px (8px primary increment).
+- **Tokens**: `{spacing.xxs}` (4px) · `{spacing.xs}` (8px) · `{spacing.sm}` (12px) · `{spacing.md}` (16px) · `{spacing.lg}` (20px) · `{spacing.xl}` (24px) · `{spacing.xxl}` (32px) · `{spacing.xxxl}` (40px) · `{spacing.section-sm}` (48px) · `{spacing.section}` (64px) · `{spacing.section-lg}` (80px) · `{spacing.hero}` (96px).
+- **Section rhythm**: Marketing pages separate at `{spacing.hero}` (96px) above-fold, then `{spacing.section-lg}` (80px) below; client app surfaces tighten to `{spacing.section}` (64px); admin tables and settings panels compress to `{spacing.xxl}` (32px) between sections.
+- **Card internal padding**: Standard food cards use `{spacing.md}` (16px); featured cards use `{spacing.lg}` (20px); cart/checkout summary cards expand to `{spacing.xl}` (24px); promo CTA strips push to `{spacing.section}` (64px).
+
+### Grid & Container
+- Marketing/client pages use a 1280px max-width with 24px gutters.
+- Food catalog renders a 4-column grid on desktop with `{spacing.lg}` (20px) gaps; collapses 3 / 2 / 1 column at tablet / large mobile / mobile.
+- Cart pages use a 2-column split: 7-of-12 cart line items + 5-of-12 sticky `cart-summary-card`.
+- Admin pages use a 2-column shell: fixed 240px `sidebar-region` + fluid main area. Tables span the full main width.
+- Auth pages center a single 400px-wide form card vertically and horizontally.
+- Order detail uses a 2-column split: order-line items + order-summary card with timeline component below.
+
+### Whitespace Philosophy
+Marketing surfaces give photographic food imagery generous breathing room — `{spacing.hero}` (96px) above-the-fold creates visual oxygen for the 64px hero display. Inside the client app, whitespace tightens to product-density: catalog rows pack at `{spacing.lg}` (20px) gaps so users see more dishes per scroll. Admin surfaces tighten further — table rows pack down to `{spacing.md}` (16px), and the sidebar nav uses `{spacing.xs}` (8px) vertical rhythm.
+
+## Elevation & Depth
+
+The system runs predominantly flat. Elevation is reserved for floating overlays: dropdowns, dialogs, drawers, toasts, and the rare sticky cart summary on scroll.
+
+| Level | Treatment | Use |
+|---|---|---|
+| 0 (flat) | No shadow; `{colors.hairline}` border | Default cards, table rows, form inputs |
+| 1 (subtle) | `rgba(0, 0, 0, 0.04) 0px 1px 2px 0px` | Food cards on hover, sticky cart summary |
+| 2 (card) | `rgba(0, 0, 0, 0.08) 0px 4px 6px -1px` | Dropdowns, popovers, select menus |
+| 3 (atmospheric) | `rgba(0, 0, 0, 0.10) 0px 10px 15px -3px` | Floating action elements, sticky drawers |
+| 4 (modal) | `rgba(0, 0, 0, 0.15) 0px 20px 25px -5px` | Dialogs, sheets, command palettes |
+
+### Decorative Depth
+- Food card images carry their own depth via the photograph itself — no shadow needed; the food does the work.
+- Hover/focus brings a 3px ring in `{colors.primary}` at 30% opacity around inputs and selectable cards. This is the system's only interactive elevation cue beyond flat → subtle.
+- Toast notifications float at level 3 and slide in from the bottom-right (or top-center on mobile).
+
+## Shapes
+
+### Border Radius Scale
+
+| Token | Value | Use |
+|---|---|---|
+| `{rounded.xs}` | 4px | Inline code chips, micro indicators |
+| `{rounded.sm}` | 6px | Compact controls, small badges |
+| `{rounded.md}` | 8px | Buttons, inputs, selects, dropdowns — the system default |
+| `{rounded.lg}` | 12px | Standard cards (radius var base), data tables, dialogs |
+| `{rounded.xl}` | 16px | Food cards, food-card image insets |
+| `{rounded.xxl}` | 20px | Featured food cards, promo CTA cards |
+| `{rounded.xxxl}` | 24px | Hero promotional surfaces |
+| `{rounded.hero}` | 32px | Reserved (full-bleed hero photographic surfaces) |
+| `{rounded.full}` | 9999px | Marketing pill CTAs, badges, category chips, qty steppers, avatar circles |
+
+### Photography Geometry
+- Food card photography is treated as a 4:3 aspect-ratio image with `{rounded.lg}` (12px) inset rounding inside a `{rounded.xl}` (16px) outer card frame. The doubled-radius nested treatment is the catalog's visual signature.
+- Featured/promo cards push to `{rounded.xxl}` (20px) outer with `{rounded.lg}` (12px) inset.
+- Avatar circles (user profile, admin staff list) are `{rounded.full}` — perfect circles.
+- The default radius variable (`--radius`) resolves to `{rounded.lg}` (12px) — `xs/sm/md/xl` derive from it.
+
+## Components
+
+> Per the no-hover policy, hover states are NOT documented. Default and pressed/active/disabled states only.
 
 ### Buttons
 
-**Default (Primary)**
-- Classes: `bg-primary text-primary-foreground hover:bg-primary/90`
-- Base: `h-9 px-4 py-2 rounded-md text-sm font-medium`
-- Orange amber fill, white text. The single highest-emphasis interactive element on any page.
-- Hover: fades to 90% primary opacity.
+**`button-primary`** — Orange-fill primary CTA, the dominant action across all surfaces.
+- Background `{colors.primary}`, text `{colors.on-primary}`, typography `{typography.button-md}`, padding `8px 16px`, height 36px, rounded `{rounded.md}`.
+- Pressed state `button-primary-pressed` darkens to a deeper tangerine.
+- Disabled state `button-primary-disabled` flattens to `{colors.hairline}` background with `{colors.stone}` text.
 
-**Destructive**
-- Classes: `bg-destructive text-white hover:bg-destructive/90`
-- Red fill, white text. Reserved exclusively for irreversible actions (delete, remove).
-- Always paired with a Dialog confirmation — never placed as a primary action without a guard.
+**`button-secondary`** — Surface-fill quieter action, paired with primary in dual-CTA layouts.
+- Background `{colors.surface}`, text `{colors.ink}`, typography `{typography.button-md}`, padding `8px 16px`, height 36px, rounded `{rounded.md}`.
 
-**Outline**
-- Classes: `border bg-background text-foreground hover:bg-accent/10 hover:border-primary/40`
-- Bordered, transparent background. Secondary actions, cancel buttons, non-primary CTAs.
-- Hover introduces a whisper of accent tint and a touch of primary on the border.
+**`button-outline`** — Bordered white-fill button for tertiary actions and toolbar utilities.
+- Background `{colors.canvas}`, text `{colors.ink}`, border `1px solid {colors.hairline}`, typography `{typography.button-md}`, padding `8px 16px`, height 36px, rounded `{rounded.md}`.
 
-**Secondary**
-- Classes: `bg-secondary text-secondary-foreground hover:bg-secondary/80`
-- Uses the muted near-white background — visually quiet, used for tag-adjacent actions.
+**`button-ghost`** — Borderless transparent button for inline actions inside cards and toolbars.
+- Background transparent, text `{colors.ink}`, typography `{typography.button-md}`, padding `8px 16px`, height 36px, rounded `{rounded.md}`.
 
-**Ghost**
-- Classes: `hover:bg-accent hover:text-accent-foreground`
-- Invisible until hover. Navigation actions, icon-only toolbars, inline table actions.
+**`button-link`** — Inline orange-text link. Underlines on activation.
+- Background transparent, text `{colors.primary}`, typography `{typography.button-md}`.
 
-**Link**
-- Classes: `text-primary underline-offset-4 hover:underline`
-- Looks like a hyperlink. Used for navigation CTAs in text contexts.
+**`button-destructive`** — Delete/remove action.
+- Background `{colors.destructive}`, text `{colors.on-dark}`, typography `{typography.button-md}`, padding `8px 16px`, height 36px, rounded `{rounded.md}`.
 
-**Sizes**
-| Size | Classes | Height | Notes |
-|------|---------|--------|-------|
-| `default` | `h-9 px-4 py-2` | 36px | Standard action button |
-| `sm` | `h-8 px-3` | 32px | Toolbar buttons, compact actions |
-| `lg` | `h-10 px-6` | 40px | Primary hero CTAs |
-| `xs` | `h-6 px-2 text-xs` | 24px | Inline chip-like actions |
-| `icon` | `size-9` | 36px | Icon-only, square |
-| `icon-sm` | `size-8` | 32px | Compact icon-only |
-| `icon-lg` | `size-10` | 40px | Prominent icon-only |
-| `icon-xs` | `size-6` | 24px | Tight icon-only |
+**`button-icon-square`** — 36×36px square utility button (close, expand, more-actions).
+- Background transparent, text `{colors.charcoal}`, border `1px solid {colors.hairline}`, rounded `{rounded.md}`.
 
-**Universal button traits**: `inline-flex items-center gap-2 whitespace-nowrap rounded-md transition-all disabled:pointer-events-none disabled:opacity-50`. SVG icons inside buttons auto-size to `size-4` (16px) via `[&_svg:not([class*='size-'])]:size-4`.
+**`button-pill-cta`** — Reserved for marketing landing hero "Order Now" CTA.
+- Background `{colors.primary}`, text `{colors.on-primary}`, typography `{typography.button-md}`, padding `12px 24px`, height 44px, rounded `{rounded.full}`. Pill shape signals "this is the brand moment."
 
----
+### Food Cards & Containers
 
-### Cards
+**`food-card`** — Standard catalog tile.
+- Background `{colors.canvas}`, rounded `{rounded.xl}` (16px), padding `{spacing.md}`, border `1px solid {colors.hairline}`.
+- Layout: `food-card-image` (4:3, 12px inset rounding) → title in `{typography.card-title}` → 2-line description in `{typography.body-sm}` `{colors.slate}` → price/qty-stepper row.
+- Optional badges top-right: `badge-discount` (orange) or `badge-new` (orange).
 
-**Standard Card**
-- Classes: `bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm`
-- White surface, `rounded-xl` (16px), 1px border, gentle `shadow-sm`. Default container for all grouped content.
-- Subcomponents: `CardHeader` (px-6, grid layout for title + action), `CardTitle` (`font-semibold leading-none`), `CardDescription` (`text-sm text-muted-foreground`), `CardContent` (px-6), `CardFooter` (px-6, flex row), `CardAction` (col-2 slot in header grid).
+**`food-card-featured`** — Promoted/recommended catalog tile.
+- Background `{colors.canvas}`, rounded `{rounded.xxl}` (20px), padding `{spacing.lg}`, border `1px solid {colors.hairline}`.
+- Carries a slightly larger image (16:10 instead of 4:3) and an inline `badge-new` over the image top-left.
 
-**Sticky Summary Card** (Cart, Order Detail)
-- Same `Card` component with `className="sticky top-4"` applied by the parent.
-- Placed in the right column of a `lg:grid-cols-3` layout. Left 2 columns = main content, right 1 = sticky summary.
+**`food-card-image`** — The photographic frame inside food cards.
+- Aspect 4:3, rounded `{rounded.lg}` (12px), background `{colors.surface}` (skeleton placeholder).
 
-**Data Table Container** (Admin pages)
-- Card wrapping: `<Card><CardHeader>...</CardHeader><CardContent className="p-0"><Table>...</Table></CardContent></Card>`
-- No card padding on table content (`p-0` override); padding stays only in the header area.
+**`card-base`** — Standard utility card (settings rows, order summary, payment forms).
+- Background `{colors.canvas}`, rounded `{rounded.lg}` (12px), padding `{spacing.xl}`, border `1px solid {colors.hairline}`.
 
----
+**`card-section`** — Quieter section panel on light surface (e.g., grouped settings, order details).
+- Background `{colors.surface-soft}`, rounded `{rounded.lg}`, padding `{spacing.xl}`.
 
-### Badges
+**`cart-line-item`** — Single line in the cart list.
+- Background `{colors.canvas}`, padding `{spacing.md}`, bottom border `1px solid {colors.hairline-soft}`.
+- Layout: 64×64px square image (rounded `{rounded.md}`) → title + variant in `{typography.body-md}` → qty stepper + line total. Compact, dense.
 
-- Base classes: `inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors`
-- Variants:
+**`promo-banner`** — Pale-orange tinted strip ("Free delivery over $25") above the catalog.
+- Background `{colors.primary-soft}`, text `{colors.primary}`, typography `{typography.body-sm-medium}`, rounded `{rounded.md}`, padding `{spacing.sm} {spacing.md}`.
 
-| Variant | Classes | Use |
-|---------|---------|-----|
-| `default` | `bg-primary text-primary-foreground` | Primary label |
-| `secondary` | `bg-secondary text-secondary-foreground` | Neutral tag |
-| `destructive` | `bg-destructive text-destructive-foreground` | Error/critical status |
-| `outline` | `text-foreground border` (shows border only) | Subtle label |
-| `success` | `border-success/30 bg-success/15 text-success` | Completed/active status |
-
-**Custom inline badge pattern** (not Badge component): `rounded-full bg-primary/10 px-3 py-0.5 text-sm font-semibold text-primary` — used for count indicators and hero pill labels.
-
----
+**`promo-cta-card`** — Bright orange full-width promo strip ("Get 20% off your first order").
+- Background `{colors.primary}`, text `{colors.on-primary}`, rounded `{rounded.xxl}`, padding `{spacing.section}`. Embedded button uses a white-on-orange `button-outline` variant.
 
 ### Inputs & Forms
 
-**Input**
-- Classes: `border-input h-9 w-full rounded-md border bg-transparent px-3 py-1 text-base shadow-xs placeholder:text-muted-foreground`
-- Height 36px, `rounded-md` (10px), transparent background (inherits card/page surface).
-- Focus: `focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]` — orange ring at half opacity.
-- Error: `aria-invalid:ring-destructive/20 aria-invalid:border-destructive`.
-- Disabled: `disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50`.
+**`text-input`** — Standard text field.
+- Background `{colors.canvas}`, text `{colors.ink}`, typography `{typography.body-sm}`, border `1px solid {colors.hairline}`, rounded `{rounded.md}`, padding `{spacing.xs} {spacing.sm}`, height 36px.
 
-**InputGroup with Addon**
-- `InputGroup` wraps `Input` with an `InputGroupAddon` (icon or text prefix/suffix).
-- Search bars always use `max-w-md` constraint on the wrapping element.
+**`text-input-focused`** — Activated state.
+- Border switches to `1px solid {colors.primary}`; 3px outer focus ring at 30% primary opacity.
 
----
+**`text-input-error`** — Validation error state.
+- Border switches to `1px solid {colors.destructive}`; error label below in matching red `{typography.caption}`.
 
-### Overlays on Images (Food Cards)
+**`search-input`** — Catalog top-bar search.
+- Background `{colors.surface}`, text `{colors.charcoal}`, typography `{typography.body-sm}`, rounded `{rounded.md}`, padding `{spacing.xs} {spacing.md}`, height 40px, transparent border (focuses to `{colors.primary}`).
+- Often paired with a leading magnifying-glass icon in `{colors.steel}`.
 
-**Discount / Status Badge**
-- `absolute top-2 left-2 bg-destructive text-white rounded-full text-xs font-semibold px-2 py-0.5`
+**`textarea`** — Multi-line input.
+- Same chrome as `text-input` but min-height 80px, padding `{spacing.sm} {spacing.md}`.
 
-**Category Badge** (semi-transparent)
-- `absolute bottom-2 right-2 bg-background/90 backdrop-blur-sm rounded-full text-xs`
+**`select-trigger`** — Select-dropdown trigger.
+- Same chrome as `text-input` with trailing chevron icon in `{colors.steel}`.
 
-**Out-of-Stock Dimming**
-- Full-card overlay: `absolute inset-0 bg-background/60 backdrop-blur-[2px] rounded-xl flex items-center justify-center`
+### Tabs & Filters
 
-**Image Hover Scale**
-- On the image container: `overflow-hidden rounded-xl` with `transition-all duration-500 hover:scale-105` on the inner `<img>`.
+**`segmented-tab`** + **`segmented-tab-active`** — Underline-style tab navigation (Order Detail: Items / Timeline / Receipt; Admin: Pending / Preparing / Completed).
+- Inactive: text `{colors.steel}`, transparent background, padding `{spacing.sm} {spacing.md}`.
+- Active: text shifts to `{colors.primary}`, 2px bottom border in `{colors.primary}`.
 
----
+**`pill-tab`** + **`pill-tab-active`** — Pill-style filter (settings sections, account tabs).
+- Inactive: background `{colors.canvas}`, text `{colors.steel}`, border `1px solid {colors.hairline}`, padding `{spacing.xs} {spacing.md}`, rounded `{rounded.full}`.
+- Active: background `{colors.primary}`, text `{colors.on-primary}`, no visible border.
+
+**`category-chip`** + **`category-chip-active`** — Horizontal-scroll category filter at the top of the food catalog (Pizza, Burgers, Drinks…).
+- Inactive: background `{colors.surface}`, text `{colors.charcoal}`, typography `{typography.body-sm-medium}`, rounded `{rounded.full}`, padding `{spacing.xs} {spacing.md}`.
+- Active: background `{colors.primary}`, text `{colors.on-primary}`.
+
+### Quantity Stepper
+
+**`qty-stepper`** — Pill-shaped +/- control on food cards and cart lines.
+- Outer pill: background `{colors.canvas}`, border `1px solid {colors.hairline}`, rounded `{rounded.full}`, height 32px, padding `{spacing.xxs} {spacing.xs}`.
+- Inner buttons: 24×24px circular minus and plus, transparent background, `{colors.charcoal}` text — disabled states drop to `{colors.muted}`.
+- The numeric quantity in the middle uses `{typography.body-sm-medium}`.
+
+### Badges & Status
+
+**`badge-success`** — Pale-green confirmation badge ("Available", "Delivered").
+- Background `{colors.success-bg}`, text `{colors.success-text}`, typography `{typography.caption-bold}`, rounded `{rounded.full}`, padding `2px 10px`.
+
+**`badge-warning`** — Pale-amber "Preparing" / "Low stock" pill.
+- Background `{colors.warning-bg}`, text `{colors.warning-text}`, typography `{typography.caption-bold}`, rounded `{rounded.full}`.
+
+**`badge-info`** — Pale-blue "Info" / "Updated" pill.
+- Background `{colors.info-bg}`, text `{colors.info-text}`.
+
+**`badge-destructive`** — Pale-red "Cancelled" / error pill.
+- Background `{colors.destructive-bg}`, text `{colors.destructive}`.
+
+**`badge-new`** — Solid orange "NEW" pill on featured food cards.
+- Background `{colors.primary}`, text `{colors.on-primary}`, typography `{typography.caption-bold}`, rounded `{rounded.full}`.
+
+**`badge-discount`** — Solid orange "−20%" rectangular chip on food card image overlay.
+- Background `{colors.primary}`, text `{colors.on-primary}`, typography `{typography.caption-bold}`, rounded `{rounded.sm}`.
+
+**`order-status-pill`** — Pale-orange status indicator on order rows ("Confirmed", "Out for delivery").
+- Background `{colors.primary-soft}`, text `{colors.primary}`, typography `{typography.caption-bold}`, rounded `{rounded.full}`, padding `4px 12px`.
+
+### Data Tables (Admin)
+
+**`data-table`** — Admin orders/foods/users table.
+- Background `{colors.canvas}`, text `{colors.ink}`, typography `{typography.body-sm}`, rounded `{rounded.lg}`, border `1px solid {colors.hairline}`.
+
+**`data-table-header`** — Top header row.
+- Background `{colors.surface-soft}`, text `{colors.steel}`, typography `{typography.caption-bold}`, padding `{spacing.sm} {spacing.md}`.
+
+**`data-table-row`** — Body rows.
+- Background `{colors.canvas}`, text `{colors.ink}`, typography `{typography.body-sm}`, padding `{spacing.md}`, bottom border `1px solid {colors.hairline-soft}`.
 
 ### Navigation
 
-**Active NavLink Pattern** (Settings tabs)
-- Uses `buttonVariants` with dynamic variant: `isActive ? 'default' : 'outline'`
-- Provides button-styled links that visually show the active route with primary fill vs. bordered outline.
+**`top-nav-region` (Client)** — Sticky white bar with logo, link list, search, cart, and account.
+- Background `{colors.canvas}`, height 64px, bottom border `1px solid {colors.hairline-soft}`, padding `{spacing.sm} {spacing.xl}`.
+- Left: Notism wordmark + horizontal link list (Foods, Orders, Settings).
+- Center: `search-input`.
+- Right: language switcher + cart-icon button (with item-count badge in orange) + avatar.
 
-**Sidebar Navigation**
-- Uses `Sidebar` component with `SidebarMenu`, `SidebarMenuItem`, `SidebarMenuButton`.
-- Active item: primary-colored indicator via `isActive` prop.
+**`sidebar-region` (Admin)** — Fixed 240px left rail.
+- Background `{colors.surface-soft}`, right border `1px solid {colors.hairline}`, padding `{spacing.md} {spacing.sm}`.
+- Top: Notism wordmark.
+- Body: `sidebar-nav-item` list grouped into sections (Operations, Catalog, Settings).
 
-**Sticky Header**
-- `sticky top-0 z-50 bg-background/90 backdrop-blur border-b` — blurred translucent header.
+**`sidebar-nav-item`** + **`sidebar-nav-item-active`** — Sidebar link entries.
+- Inactive: background transparent, text `{colors.charcoal}`, typography `{typography.body-sm}`, rounded `{rounded.md}`, padding `{spacing.xs} {spacing.sm}`.
+- Active: background `{colors.primary-soft}`, text `{colors.primary}`, typography `{typography.body-sm-medium}`. Optional 2px left-edge accent in `{colors.primary}`.
 
----
+### Cart & Checkout Signature Components
 
-### Tables (Admin Pages)
+**`cart-summary-card`** — Sticky right-rail card with line totals and CTA.
+- Background `{colors.canvas}`, rounded `{rounded.lg}`, padding `{spacing.xl}`, border `1px solid {colors.hairline}`.
+- Sections: subtotal · delivery · tax · separator · total (in `cart-summary-total`) · `button-primary` "Checkout" (full-width).
 
-Standard pattern:
-1. `Table` → `TableHeader` → `TableRow` → `SortableTableHead` (column headers with sort trigger)
-2. `TableBody` → `TableRow` → `TableCell`
-3. Row actions: `DropdownMenu` containing `DropdownMenuItem` (edit) + destructive `DropdownMenuItem` (delete)
-4. Delete action always triggers a `Dialog` with confirmation before calling the mutation.
-5. `TablePagination` component placed below `Table`.
-6. Empty state: `<ErrorState>` component centered in a full-height container.
+**`cart-summary-total`** — The grand-total row inside the summary card.
+- Typography `{typography.price-display}`, color `{colors.primary}`. The orange total is the visual climax of the cart page.
 
----
+### Order Tracking Signature Components
 
-### Dialogs & Confirmations
+**`order-timeline-step`** — Single step in the order-status timeline ("Order placed → Confirmed → Preparing → Out for delivery → Delivered").
+- Layout: 12px `{colors.primary}` filled circle (or `{colors.hairline}` for upcoming) + 2px vertical line connector + step label in `{typography.body-sm-medium}` + timestamp in `{typography.caption}` `{colors.steel}`.
 
-- `Dialog` → `DialogContent` → `DialogHeader` + `DialogFooter`
-- Destructive confirm dialogs: footer has `Button variant="outline"` (cancel) + `Button variant="destructive"` (confirm).
-- Non-destructive dialogs: footer has `Button variant="outline"` (cancel) + `Button variant="default"` (confirm).
+### Toasts & Dialogs
 
----
+**`toast-default`** — Black-fill informational toast.
+- Background `{colors.ink}`, text `{colors.on-dark}`, typography `{typography.body-sm}`, rounded `{rounded.md}`, padding `{spacing.sm} {spacing.md}`.
 
-### State Components
+**`toast-success`** — Pale-green success toast ("Item added to cart").
+- Background `{colors.success-bg}`, text `{colors.success-text}`.
 
-- **Loading**: `<Skeleton>` matching the shape of the final UI; use `animate-shimmer` class for pulsing effect on custom skeleton shapes.
-- **Error / Empty**: `<ErrorState>` component centered in a flex container — includes icon, title, description.
-- **Spinner**: `<Spinner>` for inline loading indicators within buttons or small containers.
-- **Progress**: `<Progress>` for determinate loading bars.
+**`toast-error`** — Pale-red error toast.
+- Background `{colors.destructive-bg}`, text `{colors.destructive}`.
 
-## 5. Layout Principles
+**`dialog-surface`** — Modal dialog inner surface.
+- Background `{colors.canvas}`, rounded `{rounded.xl}` (16px), padding `{spacing.xl}`, border `1px solid {colors.hairline}`. Hosts the level-4 modal shadow above `dialog-overlay`.
 
-### Spacing System
+**`dialog-overlay`** — Scrim behind dialogs.
+- Background `rgba(0, 0, 0, 0.5)`. Click-outside dismisses unless dialog is locked.
 
-Base unit: 4px (Tailwind's default scale — `space-1` = 4px). Common values:
+### Empty States
 
-| Token | Size | Typical Use |
-|-------|------|-------------|
-| `gap-1` | 4px | Tight icon-text groups |
-| `gap-2` | 8px | Badge content, button icon gaps |
-| `gap-3` | 12px | Form field vertical spacing |
-| `gap-4` | 16px | Default section/card gap |
-| `gap-6` | 24px | Card internal sections |
-| `gap-8` | 32px | Page-level layout gaps |
-| `py-6` | 24px | Card vertical padding |
-| `px-6` | 24px | Card horizontal padding |
-| `py-8` | 32px | Page container vertical padding |
-| `px-4` | 16px | Page container horizontal padding (mobile-safe) |
+**`empty-state`** — "No orders yet", "Cart is empty", "No foods found" centered placeholder.
+- Background `{colors.canvas}`, padding `{spacing.section-sm} {spacing.xl}`, centered.
+- Layout: 80×80px illustration → heading in `{typography.heading-sm}` → body in `{typography.body-md}` `{colors.steel}` → optional `button-primary` to recover.
 
-### Container
+### Marketing Signature Components
 
-Every page uses: `container mx-auto max-w-7xl px-4`
+**`hero-band-marketing`** — Centered landing hero with 64px display and dual-CTA pair.
+- Layout: centered headline in `{typography.hero-display}` `{colors.ink}`, centered subtitle in `{typography.subtitle}` `{colors.steel}`, centered button row (`button-pill-cta` "Order Now" + `button-outline` "Browse Menu").
+- Background often pairs with a 4-column food-photo collage running across the bottom.
 
-Max-width: 1280px. Centered. 16px horizontal padding (safe for mobile). This is non-negotiable — all page content lives inside this wrapper.
+**`food-grid`** — The 4-column catalog body.
+- Background `{colors.canvas}`, padding `{spacing.xxl} 0`. Grid gap `{spacing.lg}`. Card variant alternates between `food-card` and `food-card-featured` for visual rhythm.
 
-### Grid Patterns
+**`footer-region`** — Dense black-canvas multi-column footer.
+- Background `{colors.footer-bg}`, padding `{spacing.section} {spacing.xxl}`.
+- Top row: Notism wordmark + tagline + social icons.
+- Body: 4-column link grid (Eat / Account / Company / Legal).
+- Section headers in `{typography.body-sm-medium}` `{colors.on-dark}`.
 
-**Food Listing Grid**
-- `grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4`
-- Mobile: 2 columns. Tablet: 3 columns. Desktop wide: 4 columns.
+**`footer-link`** — Individual footer link.
+- Background transparent, text `{colors.muted}`, typography `{typography.body-sm}`, padding `{spacing.xxs} 0`.
 
-**Content + Summary (Cart, Order)**
-- `grid grid-cols-1 lg:grid-cols-3 gap-8`
-- Mobile: stacked. Desktop: main content in left 2 cols (`lg:col-span-2`), sticky summary in right 1 col.
-
-**Admin Table Page**
-- Full-width within the container. No multi-column grid — table takes all available width.
-
-**Settings**
-- Vertical tabs nav (left or top depending on breakpoint) + content area side by side on desktop.
-
-### Hero Section Pattern
-
-Used on: Foods, Cart, Landing, Order Detail.
-
-```
-<div className="relative overflow-hidden bg-gradient-to-b from-primary/20 via-primary/5 to-background">
-  {/* Decorative blob 1 */}
-  <div className="absolute top-0 right-0 h-64 w-64 rounded-full bg-primary/20 blur-[80px]" />
-  {/* Decorative blob 2 */}
-  <div className="absolute bottom-0 left-0 h-48 w-48 rounded-full bg-primary/20 blur-[60px]" />
-  
-  <div className="container mx-auto max-w-7xl px-4 py-12">
-    <Badge variant="secondary" className="gap-2 mb-4">
-      <Icon className="h-4 w-4" /> Section Label
-    </Badge>
-    <h2 className="text-3xl font-black tracking-tight sm:text-4xl">Page Title</h2>
-    <p className="text-sm text-muted-foreground sm:text-base">Subtitle text</p>
-  </div>
-</div>
-```
-
-### Responsive Sidebar → Sheet Pattern
-
-Desktop: `<Sidebar>` component sticky on the left, content grid fills the rest.
-Mobile: sidebar collapses. Trigger button (`Button variant="outline" size="sm"`) opens a `<Sheet side="left">` containing the same sidebar content.
-
-### Whitespace Philosophy
-
-- Card internal padding is consistent: `py-6 px-6` via CardContent and CardHeader.
-- Page content padding: `py-8 px-4`.
-- Sections within a page are separated by `gap-8` in grid/flex layouts — never ad-hoc margins.
-- Sticky elements use `top-4` not `top-0` to give visual breathing room from the sticky header.
-
-## 6. Depth & Elevation
-
-| Level | Treatment | Use |
-|-------|-----------|-----|
-| Flat (0) | No shadow, no border | Page background |
-| Bordered (1) | `border` (1px `--border`) | Standard cards, inputs, table rows |
-| Elevated (2) | `border shadow-sm` | Standard `Card` components |
-| Elevated High (3) | `border shadow-lg` | Modals, dialogs, drawer panels |
-| Overlay (4) | `backdrop-blur-sm bg-background/90` | Semi-transparent image badges |
-| Deep Overlay (5) | `backdrop-blur-[2px] bg-background/60` | Out-of-stock dimming on image cards |
-
-**Shadow Philosophy**: Notism is border-first, not shadow-first. Most depth comes from the `border` token (`oklch(0.92 ...)`) creating clean separation between white surfaces. Shadows are sparse — `shadow-sm` on cards to just slightly lift them off the page; `shadow-lg` only for dialogs and sheets that float above all content.
-
-### Motion & Animation
-
-- `transition-all duration-300` — standard hover transitions for interactive elements (buttons, links).
-- `transition-all duration-500` — image card scale on hover (`hover:scale-105`).
-- `animate-shimmer` — skeleton loading state. Uses a sweeping gradient (`accent → white 20% opacity → accent`) over 2s infinite linear.
-- `backdrop-blur` — applied to overlaid elements; not animated, purely visual.
-
-### Focus System
-
-All interactive elements share: `focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]`
-
-The 3px ring at 50% opacity of the primary orange creates a highly visible but not aggressive focus indicator — WCAG AA compliant on white and dark backgrounds.
-
-### Custom Scrollbar
-
-Webkit-only. Track: `--muted`. Thumb: `--muted-foreground`. No scrollbar on Firefox (falls back to native). Applied globally via `scrollbar.css`.
-
-## 7. Do's and Don'ts
+## Do's and Don'ts
 
 ### Do
-- Use semantic token names for all colors — `text-primary`, `bg-destructive`, `text-muted-foreground`, never raw hex or oklch values.
-- Use `rounded-md` for buttons and inputs (10px effective), `rounded-xl` for all Card components (16px), `rounded-full` for badges and circular elements only.
-- Apply `tracking-tight` to all headings `text-2xl` and above.
-- Use `font-black` for page-level titles (h1/h2 in heroes), `font-bold` for section headers, `font-semibold` for card titles, `font-medium` for labels.
-- Maintain focus ring pattern: `focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]`.
-- Use `disabled:pointer-events-none disabled:opacity-50` on all disabled interactive elements.
-- Size icons at `h-4 w-4` (16px) by default. Use `h-5 w-5` in section headers. Button SVG icons auto-size via `[&_svg:not([class*='size-'])]:size-4`.
-- Wrap all user-facing text in `useTranslation()` — `t('namespace.key')` — never hardcoded strings.
-- Use `container mx-auto max-w-7xl px-4` on every page.
-- Guard all destructive actions with a Dialog confirmation before firing the mutation.
-- Always pair a hero gradient section with decorative blurred primary blobs.
-- Use `animate-shimmer` for loading skeleton effects, not a generic `animate-pulse`.
+- Use `{colors.primary}` (orange) as the dominant CTA color — it is the single brand accent and owns every action moment.
+- Pair `{colors.primary}` with `{colors.primary-soft}` for tinted backgrounds on active states (sidebar, status pills, badges) — orange whispers as well as it shouts.
+- Apply `{rounded.md}` (8px) to every standard button, every input, every dropdown — this is the system default.
+- Reserve `{rounded.full}` for marketing pill CTAs, badges, category chips, qty steppers, and avatars.
+- Pair `{rounded.xl}` (16px) standard food cards with `{rounded.xxl}` (20px) featured food cards in the same viewport — the radius contrast signals priority.
+- Use `{typography.price-display}` weight 700 wherever a price is shown — prices are brand moments.
+- Maintain dark/light theme parity for new tokens; the orange primary stays unchanged across modes.
 
 ### Don't
-- Don't use raw hex colors, oklch values, or arbitrary pixel values in className strings — always token names.
-- Don't use `rounded-full` on cards, buttons, or inputs — only badges and circular icon buttons (`icon` size).
-- Don't use `font-black` below page-title context — it becomes visually overwhelming at card-title scale.
-- Don't place `shadow-lg` on cards — that is reserved for dialogs and sheets. Cards use `shadow-sm`.
-- Don't apply `backdrop-blur` without a matching semi-transparent background token (always pair with `bg-background/90` or similar).
-- Don't invent new components — use existing shadcn/ui primitives. If something doesn't exist, flag it.
-- Don't hardcode width/height in px — use Tailwind's scale or `size-*` utilities.
-- Don't place destructive actions (delete buttons) without a Dialog confirmation step.
-- Don't bypass `max-w-7xl` container — all content lives within it.
-- Don't mix chart colors into UI chrome — chart tokens (`--chart-*`) are for data visualization only.
-- Don't use `text-foreground` override when `text-muted-foreground` is semantically correct — secondary information must be visually subordinate.
-- Don't use `success`, `warning`, or `info` semantic colors outside their intended contexts (status indicators, alerts, feedback messages).
+- Don't introduce a second brand accent color. Notism has one accent: orange. Greens, blues, purples appear ONLY as semantic tokens (success/info/destructive) — never as decorative or brand expressions.
+- Don't over-apply `{colors.primary}` to body copy or large surfaces — it loses meaning when overused.
+- Don't soften corners on standard buttons beyond `{rounded.md}`; the 8px radius is the platform's signature.
+- Don't introduce a second display typeface; Noto Sans handles every role and supports en/vi.
+- Don't apply heavy shadows on white cards; flat-with-borders is the default. Reserve elevation for floating overlays.
+- Don't put gradients on standard buttons; the system is solid-fill only.
+- Don't use a different color for active vs hover states — the active state owns `{colors.primary}`; hover stays neutral with subtle background tint.
 
-## 8. Responsive Behavior
+## Responsive Behavior
 
 ### Breakpoints
-
-| Name | Width | Key Layout Changes |
-|------|-------|-------------------|
-| Mobile (default) | 0–639px | Single column, all sidebars in `Sheet` drawer, compact hero text |
-| `sm` | 640px+ | Hero text scales up (`sm:text-4xl`, `sm:text-base` for subtitles) |
-| `md` | 768px+ | Food grid expands to 3 columns, some nav adjustments |
-| `lg` | 1024px+ | Sidebar becomes sticky inline panel; content + summary switch to side-by-side (`lg:grid-cols-3`); data table toolbars go horizontal |
-| `xl` | 1280px+ | Food grid expands to 4 columns |
+| Name | Width | Key Changes |
+|---|---|---|
+| Mobile (small) | < 480px | Single column. Hero drops to 36px. Top nav collapses to hamburger drawer. Food grid 1-column. Footer 1-column accordion. |
+| Mobile (large) | 480 – 767px | Same as small but food grid 2-column. |
+| Tablet | 768 – 1023px | 3-column food grid. Admin sidebar collapses to drawer. Cart switches from 2-column to single-column with summary at bottom. |
+| Desktop | 1024 – 1279px | Full 4-column food grid; admin sidebar fixed at 240px. |
+| Wide Desktop | ≥ 1280px | Wider hero gutters, 1280px max-width container, larger food photography. |
 
 ### Touch Targets
-
-- Minimum button height: `h-8` (32px for `sm` size) — avoid `h-6` (`xs`) as the sole interactive target on touch screens.
-- Card surfaces act as large touch targets for food items — the entire card area is tappable, not just the button.
-- Navigation items in the sidebar use full-width `SidebarMenuButton` for easy thumb navigation.
+- Standard buttons render at 36px effective height — bumps to 44px on mobile via padding override.
+- `qty-stepper` inner buttons render at 24×24px — bumps to 32×32px on mobile (outer pill grows to 40px height).
+- Form inputs render at 36px height; bumps to 44px on mobile.
+- Sidebar nav items render at ~32px tall — bumps to 44px on mobile drawers.
+- Category chips and pill tabs render at 32px — bumps to 40px on mobile.
 
 ### Collapsing Strategy
+- **Promo banner** stays full-width; collapses to single line at < 480px with truncation.
+- **Top nav** below 768px collapses to hamburger; horizontal links move into drawer; search collapses to icon-trigger.
+- **Admin sidebar**: 240px fixed at desktop → drawer at < 1024px → bottom-tab bar at < 480px.
+- **Food grid**: 4-column → 3-col tablet → 2-col large mobile → 1-col small mobile.
+- **Cart layout**: 2-column desktop → stacked 1-column at < 1024px with `cart-summary-card` pinned to bottom on mobile.
+- **Hero typography**: `{typography.hero-display}` (64px) → 48px at < 1024px → 36px at < 768px → 28px at < 480px.
+- **Order timeline**: vertical at all sizes; step labels truncate to 1 line at < 480px.
 
-- **Sidebar → Sheet**: `Sidebar` (desktop sticky) hidden on mobile; trigger button appears that opens `<Sheet side="left">` with identical content.
-- **Multi-column Grid → Single**: Food grid collapses `xl:grid-cols-4 → md:grid-cols-3 → grid-cols-2` (never single column for food cards).
-- **Side-by-side → Stacked**: Cart/Order summary `lg:grid-cols-3` → `grid-cols-1` (summary stacks below main content on mobile).
-- **Admin Toolbar**: Search + action button go `flex-col` on mobile, `flex-row` on `md+`.
-- **Hero Typography**: `text-3xl → sm:text-4xl` (page title), `text-sm → sm:text-base` (subtitle).
+### Image Behavior
+- Food card imagery uses 4:3 aspect ratio with `{colors.surface}` skeleton background; lazy-loaded below the fold.
+- Featured cards switch to 16:10 imagery for a more cinematic feel.
+- Avatar imagery uses 1:1 aspect ratio with `{rounded.full}` masking.
 
-### Dark Mode
+## Iteration Guide
 
-Full dark mode via `.dark` class on `<html>`. All color tokens flip automatically — no component needs dark mode overrides except:
-- `dark:bg-input/30` — input backgrounds become semi-transparent.
-- `dark:bg-destructive/60` — destructive buttons desaturate slightly.
-- `dark:hover:bg-input/50` — outline button hover in dark.
-- `dark:aria-invalid:ring-destructive/40` — error ring opacity increases in dark.
+1. Focus on ONE component at a time. The system has high internal consistency.
+2. Reference component names and tokens directly (`{colors.primary}`, `{component-name}-pressed`, `{rounded.full}`) — do not paraphrase.
+3. Run `npx @google/design.md lint DESIGN.md` after edits to catch broken refs and contrast issues.
+4. Add new variants as separate `components:` entries (`-pressed`, `-disabled`, `-active`, `-error`).
+5. Default to `{typography.body-md}` for body and `{typography.subtitle}` for emphasis. Headlines step down `hero-display → display-lg → heading-lg → heading-md → heading-sm`.
+6. Keep the brand orange (`{colors.primary}`) confined to actions, active states, and brand badges. If orange appears on a generic surface, ask whether it earned that surface.
+7. The 8px radius button (`{rounded.md}`) is the everyday button. Reach for `{rounded.full}` only at marketing CTAs, qty steppers, badges, and category chips.
+8. Both light and dark themes must stay in lockstep — when adding a token, define both modes in `src/app/assets/styles/index.css`.
 
-## 9. Agent Prompt Guide
+## Known Gaps
 
-### Quick Token Reference
-
-| Intent | Token | Tailwind Class |
-|--------|-------|---------------|
-| Brand action | Primary orange | `bg-primary`, `text-primary`, `border-primary` |
-| Page background | White / near-black | `bg-background` |
-| Card surface | White / dark card | `bg-card`, `text-card-foreground` |
-| Neutral fill | Light gray | `bg-muted`, `bg-secondary` |
-| Secondary text | Cool gray | `text-muted-foreground` |
-| Borders | Light gray | `border-border` (or just `border`) |
-| Focus ring | Orange at 50% | `ring-ring/50`, `border-ring` |
-| Destructive | Red | `bg-destructive`, `text-destructive` |
-| Success | Green | `text-success`, `bg-success/15` |
-| Warning | Amber | `text-warning` |
-| Info | Blue | `text-info` |
-
-### Example Component Prompts
-
-- **Hero Section**: "A gradient hero using `bg-gradient-to-b from-primary/20 via-primary/5 to-background` with two decorative `bg-primary/20 blur-[80px] rounded-full absolute` blobs. Inside: a `Badge variant='secondary'` with an icon, a `text-3xl font-black tracking-tight sm:text-4xl` heading in `text-foreground`, and a `text-sm text-muted-foreground sm:text-base` subtitle."
-
-- **Food Card**: "A `rounded-xl border shadow-sm overflow-hidden` card with an aspect-square image container using `hover:scale-105 transition-all duration-500`. Absolute badge `top-2 left-2 bg-destructive text-white rounded-full text-xs font-semibold px-2 py-0.5` for discount. Category label `bottom-2 right-2 bg-background/90 backdrop-blur-sm rounded-full`. Card body: `text-sm font-semibold` title, `text-sm text-muted-foreground` description, `text-primary font-black` price, `Button variant='default' size='sm'`."
-
-- **Admin Data Table Page**: "Page title `text-2xl font-bold` with `text-sm text-muted-foreground` subtitle. Toolbar: `InputGroup` search with `max-w-md` and `Button variant='default'` action. `Card` with `CardContent className='p-0'` wrapping a `Table` → `SortableTableHead` columns → `TableBody` rows → row `DropdownMenu` with edit + destructive delete guarded by `Dialog`. `TablePagination` below. Empty state: `<ErrorState>` centered."
-
-- **Sticky Summary Card**: "In a `grid grid-cols-1 lg:grid-cols-3 gap-8` layout: main content in `lg:col-span-2`, summary in `<Card className='sticky top-4'>` using `CardHeader` (title + `CardAction` icon button) and `CardContent`. Price rows: `flex justify-between text-sm`, total row: `flex justify-between font-black text-xl`. `Button variant='default' size='lg' className='w-full'` CTA."
-
-- **Status Badge in Table**: "`<Badge variant='success'>` for active, `<Badge variant='destructive'>` for suspended, `<Badge variant='secondary'>` for pending. Never use `<Badge variant='default'>` in table status cells — too visually heavy."
-
-- **Confirmation Dialog**: "`<Dialog>` with `<DialogHeader>` containing title + description. `<DialogFooter>`: `Button variant='outline'` (Cancel) + `Button variant='destructive'` (Confirm Delete). The destructive button fires only after Dialog confirmation — never expose it directly."
-
-### Iteration Tips
-
-1. Always name tokens explicitly — "use `text-muted-foreground`" not "use gray text."
-2. Specify component variants by exact name — "`Button variant='outline'`" not "a bordered button."
-3. For badge status patterns, always use the semantic variant (`success`, `destructive`) — never `default` for status indicators.
-4. When describing layout, specify the breakpoint where the switch happens — "single column on mobile, `lg:grid-cols-3` on desktop."
-5. All heading-level text gets `tracking-tight`; do not omit this.
-6. Shadcn/ui Card always uses `rounded-xl` — do not override to `rounded-lg` or `rounded-md` on Card components.
-7. For loading states, use `<Skeleton>` matching the shape of the final content — not generic rectangular placeholders.
+- Animation/transition timings are not extracted; recommend 150–200ms ease-out for state transitions, 300ms ease-in-out for drawers and dialogs.
+- Form validation success state (green ring, success badge after submit) is implied but not formalized — implement following standard `{colors.success-text}` border + success badge patterns.
+- Empty-state illustrations are not formalized as a system asset library; current usage relies on individual SVG files per page.
+- Code syntax highlighting palette (admin developer console, API key viewer) is not formalized; rely on a system monospace fallback with minimal coloring.
+- Print stylesheet for receipts (order detail print view) is not yet captured — recommend stripping color to `{colors.ink}` on `{colors.canvas}` and bumping body to `{typography.body-md}`.
+- Mobile bottom-tab bar (proposed for client surfaces below 480px) is sketched in this doc but not yet shipped in code.
