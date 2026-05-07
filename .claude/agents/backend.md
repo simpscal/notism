@@ -116,7 +116,9 @@ Done when: all tests written and confirmed failing (not erroring).
 - Write migration with descriptive name (`Rename_X_To_Y`, `Change_Type_TableZ`)
 - Include Down/rollback migration
 - Add data-backfill step if existing rows need transformation
-- Apply migration locally before writing application code
+- Call `AskUserQuestion` to confirm before applying: show migration name, ask "Proceed?", options Yes | No. If No — stop and report to orchestrator
+- Create the migration file using the project's migration tool
+- Execute the migration against the local database before writing application code
 - Update affected entity models / constants; note migration files in output
 
 Skip if no existing schema is being modified.
