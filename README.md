@@ -58,6 +58,9 @@ Then kick off a sprint:
 /po create-requirement "Next feature on the backlog"
 ```
 
+> [!TIP]
+> Not sure which command to run? Use `/help-flows` — it asks your intent and prints the exact command to copy-paste.
+
 > [!NOTE]
 > Non-disruptive. Only `.claude/`, `config.md`, and `DESIGN.md` are added. Existing issues, PRs, and branches stay untouched.
 
@@ -118,6 +121,14 @@ Then kick off a sprint:
 |---------|-------------|
 | `/release sprint <N>` | Closes sprint, opens release PRs to main |
 | `/release hotfix <issue>` | Closes bug issue, deletes fix branch, posts summary |
+
+### 🧭 Workflow Picker
+
+| Command | What it does |
+|---------|-------------|
+| `/help-flows` | Asks intent, prints exact next command to copy-paste |
+| `/help-flows <intent>` | Free-text intent (e.g. `i want to fix bug`); resolves to one command |
+| `/help-flows all` | Prints full cheat sheet of every stage |
 
 ---
 
