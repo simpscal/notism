@@ -72,7 +72,7 @@ Produce the following sections:
 
 ## Step 5 — Create Refactoring Issue
 
-Create a GitHub issue:
+Create a GitHub issue in the **orchestrator repo**:
 - **Title**: `refactor: <short imperative description>`
 - **Label**: `refactoring`
 - **Body**: render `issue-refactoring` template with all fields from Step 4

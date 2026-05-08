@@ -16,9 +16,9 @@ Before any other step, check the repo root for `config.md` and `DESIGN.md`. For 
 
 Apply the answers to gate later steps:
 
-- **`config.md` exists and user chose Skip** → skip Steps 1–4 entirely. Read the existing `config.md` to recover the registered codebases (needed by Step 5 to know whether a web codebase exists).
-- **`DESIGN.md` exists and user chose Skip** → skip Step 5 entirely.
-- **Neither file exists** → proceed straight through Steps 1–6 with no prompt.
+- **`config.md` exists and user chose Skip** → skip Steps 1–5 entirely (config gathering, write, and label creation). Read the existing `config.md` to recover the registered codebases (needed by Step 6 to know whether a web codebase exists).
+- **`DESIGN.md` exists and user chose Skip** → skip Step 6 entirely.
+- **Neither file exists** → proceed straight through Steps 1–7 with no prompt.
 
 If both files exist and the user chose Skip for both, exit early with a one-line note that nothing needed regenerating.
 
@@ -96,7 +96,21 @@ Write `config.md` to the repo root with the collected data. The Labels section i
 | QA test cases have failures | `qa-blocked` |
 ```
 
-## Step 5 — Generate DESIGN.md (Web Codebase Only)
+## Step 5 — Create GitHub Labels
+
+Skip this step if `config.md` was kept in Step 0 (Skip chosen) — labels are assumed to already exist from a prior init run.
+
+Otherwise, run the labels script to create the workflow's GitHub labels:
+
+```bash
+bash .claude/scripts/create-github-labels.sh
+```
+
+The script uses `gh label create --force`, so re-running is safe and will update any existing label colors or descriptions to match.
+
+If the script fails (e.g. `gh` not authenticated, or the hardcoded `REPO` does not match this repository), report the error to the user and stop. The user must resolve auth or repo setup before continuing.
+
+## Step 6 — Generate DESIGN.md (Web Codebase Only)
 
 Skip this step if no web/frontend codebase was registered in Step 1.
 
@@ -147,6 +161,6 @@ npx -y @google/design.md lint DESIGN.md
 
 If the linter reports errors (broken token refs, invalid colors, schema violations, duplicate sections), fix and re-run until clean before proceeding.
 
-## Step 6 — Confirm
+## Step 7 — Confirm
 
-Show only the files that were (re)written in this run to the user and confirm they look correct. Skipped files are not re-displayed.
+Show only the files that were (re)written in this run to the user and confirm they look correct. Skipped files are not re-displayed. Mention whether GitHub labels were (re)created.

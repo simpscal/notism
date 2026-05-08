@@ -1,42 +1,152 @@
 # AI Development Workflow
 
-An AI-powered development workflow using Claude Code slash commands.
+> Ship features with AI agents that work alongside your team — not around it.
+
+A Claude Code slash-command workflow that maps real development roles to AI agents. Each agent knows its job, its scope, and when to hand off — to other agents *or* to humans on your team.
+
+- **Orchestrator repo, not a code repo.** This repo holds user stories, sprints, and workflow state in GitHub Issues. Agents check out and operate on your *actual* code repos (API, web, infra) — registered once via `/init`
+- **Built for team collaboration.** PO, reviewers, QA, and devs all operate on the same GitHub Issues. Anyone can pick up where someone else left off — the label tells them what's next. No private AI conversations, no knowledge silos
+- **GitHub is the single source of truth.** Requirements, stories, design, TDDs, test cases — every artifact lives in a GitHub Issue. Labels drive agent routing, so the workflow advances by state change, not by conversation
+- **Humans hold every gate.** AI handles the volume; humans approve at every stage. No agent ships without sign-off
+- **Built for existing codebases.** Agents read your repos and operate within them, never around them
+
+```mermaid
+flowchart LR
+    subgraph ORCH["This Repo · Orchestrator"]
+        direction TB
+        ISSUES["GitHub Issues · Labels · Milestones<br/>requirements · stories · TDDs<br/>designs · test cases · bugs"]
+        AGENTS["Claude Code Agents<br/>/po · /ba · /designer · /tech-lead<br/>/dev · /qa · /release"]
+    end
+
+    subgraph TARGETS["Your Code Repos"]
+        direction TB
+        BE["Backend repo<br/>API"]
+        FE["Frontend repo<br/>Web"]
+        IN["Infrastructure repo<br/>Terraform · SAM · etc."]
+    end
+
+    ORCH ==>|"branch · implement · commit · open PR · merge"| TARGETS
+    TARGETS -.->|"read codebase context"| ORCH
+```
+
+The orchestrator repo doesn't hold any application code. It plans the work, tracks the state, and drives the agents — which then branch, commit, and open PRs in your *real* repos. One control plane, many code planes.
 
 ---
 
-## Contents
+## Quick Start
 
-- [Roles](#roles)
-- [How It Works](#how-it-works)
-  - [Feature Development](#feature-development)
-  - [Production Hotfix](#production-hotfix)
-  - [Requirements Change](#requirements-change)
-  - [Story Change](#story-change)
-- [Commands](#commands)
-- [Structure](#structure)
-- [Label Reference](#label-reference)
+**Prerequisites:** Claude Code CLI, GitHub CLI (`gh`), an existing GitHub repo with a codebase
+
+```bash
+# 1. Clone this workflow repo
+git clone https://github.com/simpscal/notism.git
+
+# 2. Copy the workflow into your existing project
+cp -r notism/.claude /path/to/your/project/
+```
+
+Then open Claude Code in your project and run:
+
+```
+/init
+```
+
+`/init` does three things:
+
+- **Generates `config.md`** — registers your codebases (API, web, infra), detects tech stack, and configures migration detection
+- **Generates `DESIGN.md`** — extracts your design tokens (colors, fonts, radius, spacing) and component primitives to give the Designer and frontend agents a ground truth
+- **Creates the GitHub labels** the workflow needs (`requirement`, `user-story`, `qa-passed`, etc.) — safe to re-run
+
+Run `/init` once. Re-run it if your project structure changes significantly.
+
+After init, start your first sprint:
+
+```
+/po create-requirement "Next feature on the backlog"
+```
+
+**Nothing is disrupted.** The workflow only adds `.claude/`, `config.md`, and `DESIGN.md`. Existing issues, PRs, and branches are unaffected. It manages only the issues it creates and sits cleanly alongside anything already in flight.
 
 ---
 
 ## Roles
 
-| Role | Who | Responsibilities |
-|------|-----|-----------------|
-| **Product Owner (PO)** | Human | Owns the requirement — creates, updates, prioritises. |
-| **Business Analyst (BA)** | AI (BA persona) | Turns requirements into user stories with acceptance criteria. Manages scope changes. |
-| **Designer** | AI (Designer persona) | Reads the design system, produces sprint-level UI instructions for frontend stories. |
-| **Technical Lead (TL)** | AI (TL persona) | Reads architecture, designs system-level solution, writes TDD for features. |
-| **Developer** | AI (backend/frontend/devops) | Implements one story or bug per invocation. TDD: tests first, then code. |
-| **QA Engineer** | AI (QA persona) + Human | AI generates test cases per story from ACs. Human verifies on staging and signals pass/fail. |
-| **Release Manager** | AI (release persona) | Closes sprints and hotfixes — verifies readiness, closes issues, cleans branches, opens release PRs, flags migrations. |
+| Role | Agent | Responsibilities |
+|------|-------|-----------------|
+| **Product Owner** | Human | Creates requirements, approves at every gate |
+| **Business Analyst** | AI | Turns requirements into user stories with acceptance criteria |
+| **Designer** | AI | Produces sprint-level UI instructions from the design system |
+| **Technical Lead** | AI | Designs system-level solution, writes TDD, creates feature branches |
+| **Developer** | AI | Implements one story per invocation — tests first, then code |
+| **QA Engineer** | AI + Human | AI writes test cases from ACs; human verifies on staging |
+| **Release Manager** | AI | Closes sprints and hotfixes — verifies readiness, cleans branches, opens release PRs |
 
 ---
 
-## How It Works
+## Commands
 
-### Feature Development
+### Product Owner
 
-Story branches are merged to **staging** for QA verification. Only after QA passes does the story branch merge to the **sprint branch**. The sprint branch stays clean — it contains only verified work.
+| Command | What it does |
+|---------|-------------|
+| `/po create-requirement <description>` | Creates a requirement issue |
+| `/po update-requirement <issue> <delta>` | Updates requirement mid-sprint, cascades to stories |
+| `/po create-bug [description]` | Creates a production bug issue |
+
+### Business Analyst
+
+| Command | What it does |
+|---------|-------------|
+| `/ba write-stories <issue>` | Decomposes requirement into user stories + sprint milestone |
+| `/ba add-bug-acs <issue>` | Writes acceptance criteria onto a bug issue |
+| `/ba sync-stories <issue>` | Re-classifies stories after requirement change |
+| `/ba amend-story <issue>` | Amends ACs on a user story |
+
+### Designer
+
+| Command | What it does |
+|---------|-------------|
+| `/designer write-design <sprint>` | Produces sprint-level design instructions |
+| `/designer sync-design <sprint>` | Updates design instructions after story changes |
+
+### Technical Lead
+
+| Command | What it does |
+|---------|-------------|
+| `/tech-lead write-feature-tdd <sprint>` | Writes TDD + creates feature branches for sprint |
+| `/tech-lead sync-feature-tdd <sprint>` | Updates TDD after story changes |
+| `/tech-lead create-refactor` | Designs a standalone refactoring task — explores affected codebases, drafts plan, creates `refactoring` issue |
+
+### Developer
+
+| Command | What it does |
+|---------|-------------|
+| `/dev <issue>` | Implements a story or bug — auto-routes by label (see [Labels](#labels)) |
+
+### QA Engineer
+
+| Command | What it does |
+|---------|-------------|
+| `/qa write-test-cases <issue>` | Generates test cases from story ACs |
+| `/qa sync-test-cases <issue>` | Updates test cases after AC changes |
+| `/qa pass <issue>` | Marks story passed — triggers sprint merge |
+| `/qa block <issue> <notes>` | Marks story blocked — triggers dev QA-fix cycle |
+
+### Release Manager
+
+| Command | What it does |
+|---------|-------------|
+| `/release sprint <N>` | Closes sprint, opens release PRs to main |
+| `/release hotfix <issue>` | Closes bug issue, deletes fix branch, posts summary |
+
+---
+
+## Workflows
+
+<details>
+<summary><strong>Feature Development</strong> — the standard sprint cycle</summary>
+
+Story branches merge to **staging** for QA. Only after QA passes does a story merge to the **sprint branch**. The sprint branch stays clean.
 
 ```mermaid
 flowchart TD
@@ -71,9 +181,12 @@ flowchart TD
     G6 -->|Done| L([Sprint Shipped])
 ```
 
-### Production Hotfix
+</details>
 
-Separate pipeline for bugs found in production — runs independently of the sprint cycle. Fix PRs target **staging** for QA verification before merging to `main`.
+<details>
+<summary><strong>Production Hotfix</strong> — bugs found in production</summary>
+
+Runs independently of the sprint cycle. Fix PRs target **staging** for QA before merging to `main`.
 
 ```mermaid
 flowchart TD
@@ -99,9 +212,12 @@ flowchart TD
     FIX2 --> G4
 ```
 
-### Requirements Change
+</details>
 
-Triggered when the PO changes scope mid-sprint. Cascades through stories, design, TDD, dev, and QA.
+<details>
+<summary><strong>Requirements Change</strong> — scope shifts mid-sprint</summary>
+
+Cascades through stories, design, TDD, dev, and QA incrementally.
 
 ```mermaid
 flowchart TD
@@ -113,34 +229,35 @@ flowchart TD
     G1 -->|Approve| E2["Create new stories"]
     G1 -->|Approve| E3["Label removed stories\n`story-removed`"]
     E1 & E2 & E3 --> F1(["/designer sync-design &lt;sprint&gt;"])
-    F1 --> F2["Design Instructions updated\nincremental"]
+    F1 --> F2["Design Instructions updated"]
     F2 --> F3(["/tech-lead sync-feature-tdd &lt;sprint&gt;"])
-    F3 --> F4["TDD updated\nincremental"]
+    F3 --> F4["TDD updated"]
     F4 --> H(["/dev &lt;issue&gt; per changed story"])
     H --> QA{Had existing\ntest cases?}
     QA -->|Yes| QAS(["/qa sync-test-cases &lt;issue&gt;"])
     QA -->|No| QAW(["/qa write-test-cases &lt;issue&gt;"])
-    QAS --> QARE["Test cases updated\nfor changed ACs"]
-    QAW --> QANEW["Test cases posted\nfor new story"]
 ```
 
-### Story Change
+</details>
+
+<details>
+<summary><strong>Story Change</strong> — AC-level amendments</summary>
 
 Triggered when a specific story's acceptance criteria need adjusting — not the overall requirement.
 
 ```mermaid
 flowchart TD
-    A(["/ba amend-story &lt;N&gt; or /ba amend-bug &lt;N&gt;"]) --> B["AC Change Plan\nAdded / Removed / Modified"]
+    A(["/ba amend-story &lt;N&gt;"]) --> B["AC Change Plan\nAdded / Removed / Modified"]
     B --> G1{Gate 1\nPO Approves AC Changes}
     G1 -->|Approve| C["Story ACs updated\n`story-updated`"]
     C --> D{UI changes?}
     D -->|Yes| E(["/designer sync-design &lt;sprint&gt;"])
     D -->|No| F{Tech design changes?}
-    E --> E2["Design Instructions updated\nincremental"]
+    E --> E2["Design Instructions updated"]
     E2 --> F
     F -->|Yes| G(["/tech-lead sync-feature-tdd &lt;sprint&gt;"])
     F -->|No| H(["/dev &lt;N&gt;"])
-    G --> G2["TDD updated\nincremental"]
+    G --> G2["TDD updated"]
     G2 --> H
     H --> I["Story Revisit PR → staging"]
     I --> QA(["/qa sync-test-cases &lt;N&gt; then re-verify"])
@@ -157,161 +274,82 @@ flowchart TD
 | UI + backend change together | Yes | Yes |
 | Copy/label wording only | No | No |
 
-Human judges which roles are needed after reviewing approved AC changes.
+</details>
 
----
+<details>
+<summary><strong>Refactoring</strong> — tech-debt and structural cleanup</summary>
 
-## Commands
+Standalone tasks initiated by the Tech Lead. No sprint, no QA cycle. Branch from `main`, PR to `main` directly. Definition of Done always includes "all existing tests pass" and "no user-visible behavior change" — that's the safety net in lieu of QA.
 
-### Product Owner
-
-| Command | Input | Output |
-|---------|-------|--------|
-| `/po create-requirement <description>` | Raw requirement text | Requirement issue with `requirement` label |
-| `/po update-requirement <issue> <delta>` | Issue # + change description | Updated requirement with `requirement-updated` label |
-| `/po create-bug [description]` | Bug description (optional) | Bug issue with `bug-production` label |
-
-### Business Analyst
-
-| Command | Input | Output |
-|---------|-------|--------|
-| `/ba write-stories <issue>` | Requirement issue # | User story issues + sprint milestone |
-| `/ba add-bug-acs <issue>` | Bug issue # | ACs appended to bug issue |
-| `/ba sync-stories <issue>` | Requirement issue # | Updated stories after requirement change |
-| `/ba amend-story <issue>` | Story issue # | Updated ACs + `story-updated` label |
-| `/ba amend-bug <issue>` | Bug issue # | Updated ACs on bug issue |
-
-### Designer
-
-| Command | Input | Output |
-|---------|-------|--------|
-| `/designer write-design <sprint>` | Sprint milestone # | Sprint-level design instructions issue (`design`) |
-| `/designer sync-design <sprint>` | Sprint milestone # | Updated design instructions after story changes |
-
-### Technical Lead
-
-| Command | Input | Output |
-|---------|-------|--------|
-| `/tech-lead write-feature-tdd <sprint>` | Sprint milestone # | TDD issue + feature branches |
-| `/tech-lead sync-feature-tdd <sprint>` | Sprint milestone # | Updated TDD after story changes |
-
-### Developer
-
-| Command | Input | Output |
-|---------|-------|--------|
-| `/dev <issue>` | Story or bug issue # | PR to staging — auto-routes by label: implement / story-revisit / qa-fix / revert |
-
-**Routing priority:**
-
-| Label on issue | Mode |
-|----------------|------|
-| `bug-production` + `story-updated` | Bug Revisit |
-| `bug-production` + `qa-blocked` | QA Fix (Bug) — fixes failing test cases on bug branch, re-merges to staging |
-| `bug-production` | Bug Fix |
-| `story-removed` | Revert |
-| `qa-blocked` | QA Fix — fixes failing test cases on story branch, re-merges to staging |
-| `story-updated` | Story Revisit — implements AC delta only |
-| _(none)_ | Standard — full implementation |
-
-Dev auto-selects backend/frontend/devops agent(s). Multi-skill stories run agents in parallel. One ticket per invocation.
-
-### QA Engineer
-
-| Command | Input | Output |
-|---------|-------|--------|
-| `/qa write-test-cases <issue>` | Story or bug issue # (must be `implemented`) | Test cases comment posted on issue — one table per AC |
-| `/qa sync-test-cases <issue>` | Story issue # | Test cases updated when ACs change (`story-updated`) |
-| `/qa amend-test-cases <issue>` | Story issue # | Opens dialog to discuss and revise test cases |
-| `/qa pass <issue>` | Story or bug issue # | `qa-passed` label applied — human then merges branch → sprint or main |
-| `/qa block <issue> <notes>` | Story or bug issue # + failure notes | `qa-blocked` label applied — triggers dev qa-fix cycle |
-
-QA never runs test commands. Test execution and verification is human-only. Test steps are user-action steps against a running staging environment.
-
-### Release Manager
-
-| Command | Input | Output |
-|---------|-------|--------|
-| `/release sprint <N>` | Sprint # | All sprint issues closed, story branches deleted, release PRs (sprint → main), migrations flagged |
-| `/release hotfix <issue>` | Bug issue # | Bug issue closed (`bug-fixed`), fix branch deleted, summary posted |
-
----
-
-## Structure
-
-```
-.claude/
-  commands/             ← slash commands (orchestration + methodology)
-    po.md
-    po/
-      create-requirement.md   ← PO creates new requirement
-      update-requirement.md   ← PO changes requirement mid-sprint
-      create-bug.md           ← PO creates bug report
-    ba.md
-    ba/
-      write-stories.md        ← BA decomposes requirement into stories
-      add-bug-acs.md          ← BA writes ACs for a bug issue
-      sync-stories.md         ← BA re-classifies stories after requirement change
-      amend-story.md          ← BA amends ACs on a user story
-      amend-bug.md            ← BA amends ACs on a bug issue
-    designer.md
-    designer/
-      write-design.md         ← Designer produces UI instructions for sprint
-      sync-design.md          ← Designer updates design instructions after story changes
-    tech-lead.md
-    tech-lead/
-      write-feature-tdd.md    ← TL writes TDD for sprint
-      sync-feature-tdd.md     ← TL updates TDD after story changes
-    dev.md
-    dev/
-      implement.md            ← Dev implements a story (standard)
-      fix-bug.md              ← Dev investigates and fixes a bug
-      story-revisit.md        ← Dev implements AC delta changes
-      qa-fix.md               ← Dev fixes failing QA test cases on story branch (user-story)
-      qa-fix-bug.md          ← Dev fixes failing QA test cases on bugfix branch (bug-production)
-      revert.md               ← Dev reverts when story removed from scope
-    qa.md
-    qa/
-      write-test-cases.md     ← QA generates test cases from story ACs
-      sync-test-cases.md      ← QA updates test cases after AC changes
-      amend-test-cases.md     ← QA discusses and revises test cases
-      pass.md                 ← QA marks story passed — triggers sprint merge
-      block.md                ← QA marks story blocked — triggers dev qa-fix
-    release.md
-    release/
-      sprint.md               ← Release Manager closes sprint, opens release PRs
-      hotfix.md               ← Release Manager closes bug, cleans branches
-  agents/               ← developer role agents (invoked by /dev)
-    backend.md
-    frontend.md
-    devops.md
-  skills/               ← shared utilities
-    artifacts/
-      references/             ← issue, PR, and comment templates
-    git/
-    github/
-    common-rules/
-  scripts/              ← setup scripts
-    create-github-labels.sh
+```mermaid
+flowchart TD
+    A(["/tech-lead create-refactor"]) --> B["Discovery Dialog\nproblem · scope · codebases · DoD"]
+    B --> C["Codebase Exploration\nparallel per affected codebase"]
+    C --> D["Refactoring Issue\n`refactoring`"]
+    D --> G1{Gate 1\nHuman Reviews Plan}
+    G1 -->|Approve| H(["/dev &lt;issue&gt;"])
+    H --> I["Branch from main\n`in-progress`"]
+    I --> J["PR: refactor branch → main"]
+    J --> G2{Gate 2\nCode Review}
+    G2 -->|Approved| K["Merge to main"]
+    K --> L([Refactor Shipped])
 ```
 
+</details>
+
 ---
 
-## Label Reference
+## GitHub is the Source of Truth
 
-| Label | Meaning |
+There is no external task tracker. No Jira. No Notion. No spreadsheet.
+
+Every work artifact lives in GitHub:
+
+| Artifact | Lives in |
+|----------|---------|
+| Requirement | GitHub Issue (`requirement`) |
+| User stories | GitHub Issues (`user-story`) grouped by Milestone |
+| Sprint | GitHub Milestone |
+| Design instructions | GitHub Issue (`design`) |
+| Technical design (TDD) | GitHub Issue (`technical-design`) |
+| Implementation | Pull Request linked to story issue |
+| Test cases | Comment on the story issue |
+| QA result | Label on the story issue |
+| Release | Pull Request (sprint branch → main) |
+
+**GitHub Labels are the workflow engine.** Agents read labels to determine what to do. Humans apply labels (via commands) to advance the workflow. The label on an issue is its current state — and the instruction to every agent that reads it.
+
+---
+
+## Labels
+
+Labels serve two purposes: **artifact type** and **lifecycle state**.
+
+### Artifact Types
+
+These identify what an issue represents. Set once on creation.
+
+| Label | Artifact |
 |-------|---------|
 | `requirement` | PO-created requirement |
-| `requirement-updated` | Requirement changed mid-sprint |
-| `user-story` | BA-created story |
-| `technical-design` | TDD issue |
-| `design` | Sprint-level design instructions issue |
-| `in-progress` | Dev is implementing |
-| `implemented` | Dev complete — PR merged to staging, awaiting QA |
-| `qa-passed` | Human verified all test cases on staging — ready to merge to sprint |
-| `qa-blocked` | One or more test cases failed — dev qa-fix required |
-| `story-updated` | Story ACs changed after initial implementation |
-| `story-removed` | Story dropped from scope |
-| `sprint-completed` | Sprint closed |
-| `refactoring` | Tech-lead refactoring task |
-| `bug-production` | Reporter-created bug issue |
-| `bug-fixed` | Bug closed after successful fix |
+| `user-story` | BA-created user story |
+| `technical-design` | Technical design document (TDD) |
+| `design` | Sprint-level UI/UX instructions |
+| `bug-production` | Production bug reported by PO |
+| `refactoring` | Tech-lead initiated refactor task |
+
+### Lifecycle States
+
+These track where a story or bug is in the pipeline. They change as work progresses — and they tell agents what to do next.
+
+| Label | Meaning | What happens next |
+|-------|---------|------------------|
+| `in-progress` | Dev is currently implementing | — |
+| `implemented` | PR merged to staging, awaiting QA | `/qa write-test-cases` |
+| `qa-passed` | Human verified all test cases on staging | Human merges branch → sprint |
+| `qa-blocked` | One or more test cases failed | `/dev <issue>` → QA Fix mode |
+| `story-updated` | ACs changed after implementation | `/dev <issue>` → Story Revisit mode |
+| `story-removed` | Story dropped from scope | `/dev <issue>` → Revert mode |
+| `requirement-updated` | Requirement changed mid-sprint | `/ba sync-stories` |
+| `sprint-completed` | Sprint closed by Release Manager | — |
+| `bug-fixed` | Bug closed after hotfix release | — |
