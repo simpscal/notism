@@ -1,6 +1,6 @@
 ---
 name: github
-description: GitHub issue tracker — create, read, update issues; post comments; create/list milestones; manage labels; close issues. Never hardcode repo slugs, label names, or branch patterns.
+description: GitHub issue tracker — create, read, update issues; post comments; create/list milestones; manage labels; close issues; notify completion (implementation, refactor, revert). Never hardcode repo slugs, label names, or branch patterns.
 tools: mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write,
   mcp__github__add_issue_comment, mcp__github__update_issue, Bash
 ---
@@ -140,10 +140,21 @@ Proceed? (y/n)
 - **Tool**: `mcp__github__update_issue` → `{ owner, repo, issue_number: issue_id, state: "closed" }`
 
 ### Notify Implementation Complete
-**triggers:** notify implementation complete, post completion comment, notify revert complete, notify refactor complete
-**when:** implementation, refactor, or revert is done and issue needs status update
+**triggers:** notify implementation complete, notify refactor complete, notify revert complete, post completion comment
+**when:** implementation, refactor, or revert is done and the issue needs a status update
 
-**Single-skill (refactor):** Post comment on issue `#ISSUE_NUMBER`:
+This operation is **two mandatory mutations** on issue `#ISSUE_NUMBER`. Run **both** — never stop after the comment.
+
+#### Step 1 — Post completion comment
+
+Pick the **mode** (refactor / revert / implementation) and the **variant** (single-PR or multi-PR):
+
+- **Single-PR** — exactly one PR was opened.
+- **Multi-PR** — two or more PRs were opened. Emit one bullet per PR, labelled by the codebase name from `config.md` Codebases table (e.g. `api`, `web`, `infrastructure`). Do not hardcode `Backend` / `Frontend`.
+
+Substitute every `<pr-url>` placeholder with the actual URL.
+
+**Refactor — single-PR:**
 ```
 ## Refactor Complete
 
@@ -153,18 +164,18 @@ Proceed? (y/n)
 > ⏸ Human gate: Review the PR diff. When approved, merge into `main`.
 ```
 
-**Multi-skill (refactor, two PRs):** Post comment on issue `#ISSUE_NUMBER`:
+**Refactor — multi-PR** (one bullet per codebase):
 ```
 ## Refactor Complete
 
-- Backend: <pr-url>
-- Frontend: <pr-url>
+- <codebase-name>: <pr-url>
+- <codebase-name>: <pr-url>
 
 ---
-> ⏸ Human gate: Review both PR diffs. When approved, merge into `main`.
+> ⏸ Human gate: Review all PR diffs. When approved, merge into `main`.
 ```
 
-**Single-skill (revert):** Post comment on issue `#ISSUE_NUMBER`:
+**Revert — single-PR:**
 ```
 ## Revert Ready
 
@@ -176,20 +187,20 @@ Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed.
 > ⏸ Human gate: Review the revert PR diff. When approved, merge into the sprint branch.
 ```
 
-**Multi-skill (revert, two PRs):** Post comment on issue `#ISSUE_NUMBER`:
+**Revert — multi-PR:**
 ```
 ## Revert Ready
 
 Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed across all codebases.
 
-- Backend revert PR: <revert-pr-url>
-- Frontend revert PR: <revert-pr-url>
+- <codebase-name> revert PR: <revert-pr-url>
+- <codebase-name> revert PR: <revert-pr-url>
 
 ---
-> ⏸ Human gate: Review both revert PR diffs. When approved, merge into the sprint branch.
+> ⏸ Human gate: Review all revert PR diffs. When approved, merge into the sprint branch.
 ```
 
-**Single-skill (implementation):** Post comment on issue `#ISSUE_NUMBER`:
+**Implementation — single-PR:**
 ```
 ## Implementation Complete
 
@@ -199,17 +210,29 @@ Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed a
 > ⏸ Human gate: Review the PR diff. When approved, merge into the staging branch.
 ```
 
-**Multi-skill (implementation, two PRs):** Post comment on issue `#ISSUE_NUMBER`:
+**Implementation — multi-PR:**
 ```
 ## Implementation Complete
 
-- Backend: <pr-url>
-- Frontend: <pr-url>
+- <codebase-name>: <pr-url>
+- <codebase-name>: <pr-url>
 
 ---
-> ⏸ Human gate: Review both PR diffs. When approved, merge into the staging branch.
+> ⏸ Human gate: Review all PR diffs. When approved, merge into the staging branch.
 ```
 
-**Label updates (implementation):** add `implemented`, remove `in-progress` and `story-updated`
-**Label updates (refactor):** add `implemented`, remove `in-progress`
-**Label updates (revert):** add `implemented`, remove `in-progress`, `story-updated`, and `story-removed`
+Use the **Post Comment** operation above to deliver the body.
+
+#### Step 2 — Update labels
+
+Apply via the **Update Labels** operation above.
+
+| Mode | Add | Remove |
+|------|-----|--------|
+| implementation | `implemented` | `in-progress`, `story-updated` |
+| refactor | `implemented` | `in-progress` |
+| revert | `implemented` | `in-progress`, `story-updated`, `story-removed` |
+
+#### Step 3 — Confirm to the user
+
+Output a single line listing the PR URL(s) so the orchestrator's user-facing summary is consistent.
