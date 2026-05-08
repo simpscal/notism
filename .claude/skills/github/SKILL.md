@@ -143,27 +143,6 @@ Proceed? (y/n)
 **triggers:** notify implementation complete, post completion comment, notify revert complete, notify refactor complete
 **when:** implementation, refactor, or revert is done and issue needs status update
 
-**Single-skill (implementation):** Post comment on issue `#ISSUE_NUMBER`:
-```
-## Implementation Complete
-
-- PR: <pr-url>
-
----
-> ⏸ Human gate: Review the PR diff. When approved, merge into the staging branch.
-```
-
-**Multi-skill (implementation, two PRs):** Post comment on issue `#ISSUE_NUMBER`:
-```
-## Implementation Complete
-
-- Backend: <pr-url>
-- Frontend: <pr-url>
-
----
-> ⏸ Human gate: Review both PR diffs. When approved, merge into the staging branch.
-```
-
 **Single-skill (refactor):** Post comment on issue `#ISSUE_NUMBER`:
 ```
 ## Refactor Complete
@@ -208,6 +187,27 @@ Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed a
 
 ---
 > ⏸ Human gate: Review both revert PR diffs. When approved, merge into the sprint branch.
+```
+
+**Single-skill (implementation):** Post comment on issue `#ISSUE_NUMBER`:
+```
+## Implementation Complete
+
+- PR: <pr-url>
+
+---
+> ⏸ Human gate: Review the PR diff. When approved, merge into the staging branch.
+```
+
+**Multi-skill (implementation, two PRs):** Post comment on issue `#ISSUE_NUMBER`:
+```
+## Implementation Complete
+
+- Backend: <pr-url>
+- Frontend: <pr-url>
+
+---
+> ⏸ Human gate: Review both PR diffs. When approved, merge into the staging branch.
 ```
 
 **Label updates (implementation):** add `implemented`, remove `in-progress` and `story-updated`
