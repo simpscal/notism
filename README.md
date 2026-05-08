@@ -1,14 +1,14 @@
-# AI Development Workflow
+# GitHub-Native Human-Gated AI Workflow
 
-> Ship features with AI agents that work alongside your team — not around it.
+> One control plane, many code planes.
 
-A Claude Code slash-command workflow that maps real development roles to AI agents. Each agent knows its job, its scope, and when to hand off — to other agents *or* to humans on your team.
+Claude Code slash-commands that map development roles to AI agents. Each agent has a job, a scope, and a handoff — to another agent or a human.
 
-- **Orchestrator repo, not a code repo.** This repo holds user stories, sprints, and workflow state in GitHub Issues. Agents check out and operate on your *actual* code repos (API, web, infra) — registered once via `/init`
-- **Built for team collaboration.** PO, reviewers, QA, and devs all operate on the same GitHub Issues. Anyone can pick up where someone else left off — the label tells them what's next. No private AI conversations, no knowledge silos
-- **GitHub is the single source of truth.** Requirements, stories, design, TDDs, test cases — every artifact lives in a GitHub Issue. Labels drive agent routing, so the workflow advances by state change, not by conversation
-- **Humans hold every gate.** AI handles the volume; humans approve at every stage. No agent ships without sign-off
-- **Built for existing codebases.** Agents read your repos and operate within them, never around them
+- **Orchestrator, not a codebase.** This repo holds stories, sprints, and workflow state in GitHub Issues. Agents check out your real code repos (API, web, infra), registered once via `/init`.
+- **Team-first.** PO, reviewers, QA, and devs operate on the same issues. Labels say what's next — no private AI threads, no silos.
+- **GitHub is the source of truth.** Requirements, stories, designs, TDDs, test cases — every artifact is an issue. State changes by label, not by chat.
+- **Humans gate every stage.** AI handles volume; humans approve. Nothing ships without sign-off.
+- **Drop-in for existing codebases.** Agents read your repos and operate inside them, never around them.
 
 ```mermaid
 flowchart LR
@@ -29,7 +29,7 @@ flowchart LR
     TARGETS -.->|"read codebase context"| ORCH
 ```
 
-The orchestrator repo doesn't hold any application code. It plans the work, tracks the state, and drives the agents — which then branch, commit, and open PRs in your *real* repos. One control plane, many code planes.
+No application code lives here. The orchestrator plans, tracks state, and drives agents — which branch, commit, and open PRs in your real repos.
 
 ---
 
