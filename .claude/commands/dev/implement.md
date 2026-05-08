@@ -68,7 +68,7 @@ Commit message: `feat(#<ISSUE_NUMBER>): <imperative-tense description>`.
 
 Create PR for issue `<ISSUE_NUMBER>` — one call per codebase path.
 - **PR title:** `feat(#<ISSUE_NUMBER>): <short description>`
-- **PR body:** Render the `pr-story` template with `{summary, manual_verification, acceptance_criteria}`
+- **PR body:** Render the `pr-story` template with `{summary, manual_verification, acceptance_criteria, parent_issue: <ISSUE_NUMBER>}`
 
 For multi-skill stories, open one PR per skill — each from its own codebase path, each targeting the sprint branch.
 

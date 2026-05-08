@@ -14,6 +14,8 @@
 
 ## Risk
 <Low / Medium / High — rationale from Dev Investigation>
+
+Refs #<parent_issue>
 ```
 
 ---
@@ -26,3 +28,4 @@
 | `fix` | yes | 1–2 sentences describing what changed and why it fixes the root cause |
 | `acceptance_criteria` | yes | Copied verbatim from issue, all checked `[x]` |
 | `risk` | yes | Low / Medium / High + rationale from Dev Investigation comment |
+| `parent_issue` | yes | Parent bug issue number (no `#`) — rendered as `Refs #N`, no auto-close |

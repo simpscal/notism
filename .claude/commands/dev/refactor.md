@@ -87,7 +87,7 @@ Commit message: `refactor(#<ISSUE_NUMBER>): <imperative-tense description>`.
 For each codebase path:
 - **If $PR_URL was `none`**: create PR for issue `<ISSUE_NUMBER>` (git skill — base branch resolved by the skill).
   - **PR title:** `refactor(#<ISSUE_NUMBER>): <short description>`
-  - **PR body:** Render the `pr-refactor` template with `{problem}`
+  - **PR body:** Render the `pr-refactor` template with `{problem, parent_issue: <ISSUE_NUMBER>}`
 - **If $PR_URL was set**: no PR action — the push in Step 6 updates the existing PR.
 
 ---
