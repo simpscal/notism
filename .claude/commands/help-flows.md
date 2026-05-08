@@ -36,6 +36,7 @@ Options (label → stage id):
 - **Add a story to current sprint** → `add-story`
 - **Merge stories** → `merge-stories`
 - **Refactor** → `refactor`
+- **Amend a refactor plan** → `refactor-amend`
 - **QA failed — fix it** → `qa-fix`
 - **Release** → `release`
 - **Show full cheat sheet** → `all`
@@ -59,6 +60,7 @@ Look up the chosen stage in the **Stage Map**. For each placeholder (`<requireme
 | `add-story` | `<requirement_issue>` | `/ba add-story <requirement_issue>` |
 | `merge-stories` | `<target>`, `<source>` | `/ba merge-stories <target> <source>` |
 | `refactor` | _(none)_ | `/tech-lead create-refactor` |
+| `refactor-amend` | `<refactor_issue>` | `/tech-lead amend-refactor <refactor_issue>` |
 | `qa-fix` | `<issue>` | `/dev <issue>` _(auto-routes via `qa-blocked` label)_ |
 | `release` | sprint or hotfix? + `<n>` | `/release sprint <sprint>` _or_ `/release hotfix <bug#>` |
 
@@ -125,6 +127,7 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 
 1. `/tech-lead create-refactor`
 2. `/dev <refactor_issue>`
+3. `/tech-lead amend-refactor <refactor_issue>` _(if plan needs revision)_
 
 ### 🚫 QA Fail Loop
 

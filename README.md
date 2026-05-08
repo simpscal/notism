@@ -99,6 +99,7 @@ Then kick off a sprint:
 | `/tech-lead write-feature-tdd <sprint>` | Writes TDD + creates feature branches for sprint |
 | `/tech-lead sync-feature-tdd <sprint>` | Updates TDD after story changes |
 | `/tech-lead create-refactor` | Designs a standalone refactoring task — explores affected codebases, drafts plan, creates `refactoring` issue |
+| `/tech-lead amend-refactor <issue>` | Revises an existing refactoring issue — re-scopes plan, flags impact on in-progress dev work |
 
 ### 💻 Developer
 

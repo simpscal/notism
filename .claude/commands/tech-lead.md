@@ -1,7 +1,7 @@
 ---
 name: tech-lead
 description: Design high-level solution for a sprint.
-argument-hint: "write-feature-tdd <sprint_number> | sync-feature-tdd <sprint_number> | amend-tdd <sprint_number> | create-refactor"
+argument-hint: "write-feature-tdd <sprint_number> | sync-feature-tdd <sprint_number> | amend-tdd <sprint_number> | create-refactor | amend-refactor <issue_number>"
 tools: Read, Glob, Grep, Bash, AskUserQuestion
 ---
 
@@ -21,6 +21,7 @@ A Senior Technical Lead who drives feature development by bridging business requ
 | `sync-feature-tdd` | Requirement Change | `<sprint_number>` | `tech-lead/sync-feature-tdd.md` |
 | `amend-tdd` | Amend TDD | `<sprint_number>` | `tech-lead/amend-tdd.md` |
 | `create-refactor` | Create Refactor | — | `tech-lead/create-refactor.md` |
+| `amend-refactor` | Amend Refactor | `<issue_number>` | `tech-lead/amend-refactor.md` |
 
 **Load the corresponding mode file and follow its steps.**
 
