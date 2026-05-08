@@ -58,11 +58,11 @@ Commit message: `refactor(#<ISSUE_NUMBER>): <imperative-tense description>`.
 
 Create PR for issue `<ISSUE_NUMBER>` — one call per codebase path.
 - **PR title:** `refactor(#<ISSUE_NUMBER>): <short description>`
-- **PR body:** Render the `pr-refactor` template with `{problem, changes, definition_of_done}`
+- **PR body:** Render the `pr-refactor` template with `{problem}`
 - **Target branch:** `main`
 
 ---
 
 ## Step 7 — Notify
 
--> Notify implementation complete
+-> Notify refactor complete

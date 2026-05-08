@@ -140,8 +140,8 @@ Proceed? (y/n)
 - **Tool**: `mcp__github__update_issue` → `{ owner, repo, issue_number: issue_id, state: "closed" }`
 
 ### Notify Implementation Complete
-**triggers:** notify implementation complete, post completion comment, notify revert complete
-**when:** implementation or revert is done and issue needs status update
+**triggers:** notify implementation complete, post completion comment, notify revert complete, notify refactor complete
+**when:** implementation, refactor, or revert is done and issue needs status update
 
 **Single-skill (implementation):** Post comment on issue `#ISSUE_NUMBER`:
 ```
@@ -162,6 +162,27 @@ Proceed? (y/n)
 
 ---
 > ⏸ Human gate: Review both PR diffs. When approved, merge into the staging branch.
+```
+
+**Single-skill (refactor):** Post comment on issue `#ISSUE_NUMBER`:
+```
+## Refactor Complete
+
+- PR: <pr-url>
+
+---
+> ⏸ Human gate: Review the PR diff. When approved, merge into `main`.
+```
+
+**Multi-skill (refactor, two PRs):** Post comment on issue `#ISSUE_NUMBER`:
+```
+## Refactor Complete
+
+- Backend: <pr-url>
+- Frontend: <pr-url>
+
+---
+> ⏸ Human gate: Review both PR diffs. When approved, merge into `main`.
 ```
 
 **Single-skill (revert):** Post comment on issue `#ISSUE_NUMBER`:
@@ -190,4 +211,5 @@ Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed a
 ```
 
 **Label updates (implementation):** add `implemented`, remove `in-progress` and `story-updated`
+**Label updates (refactor):** add `implemented`, remove `in-progress`
 **Label updates (revert):** add `implemented`, remove `in-progress`, `story-updated`, and `story-removed`
