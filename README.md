@@ -4,6 +4,16 @@
 
 Claude Code slash-commands that map development roles to AI agents. Each agent has a job, a scope, and a handoff — to another agent or a human.
 
+## 🤔 Why This Exists
+
+Teams adopt agentic AI fast, but usage diverges. Experienced AI users move quickly; less-experienced ones unintentionally slow the team with ad-hoc prompts and inconsistent outputs that need re-prompting. No shared playbook means every dev reinvents the workflow.
+
+| Pain | How this repo solves it |
+|------|------------------------|
+| AI usage varies across team — every dev prompts differently | Slash-commands per role (`/po`, `/ba`, `/dev`, `/qa`) — one canonical prompt per workflow stage |
+| Less-experienced AI users slow the team | Workflow runs on labels and gates, not prompt skill — anyone can advance work by running the next command |
+| No standard approach → inconsistent outputs, re-prompting | Every artifact lands as a GitHub issue with a fixed shape; agents read prior artifacts so context never resets |
+
 - **Orchestrator, not a codebase.** This repo holds stories, sprints, and workflow state in GitHub Issues. Agents check out your real code repos (API, web, infra), registered once via `/init`.
 - **Team-first.** PO, reviewers, QA, and devs operate on the same issues. Labels say what's next — no private AI threads, no silos.
 - **GitHub is the source of truth.** Requirements, stories, designs, TDDs, test cases — every artifact is an issue. State changes by label, not by chat.
