@@ -88,7 +88,7 @@ Commit and push in each codebase path using the files each subagent reported. Co
 Open a pull request from the bug branch into `main` from inside the codebase path:
 
 **PR title:** `fix(#<ISSUE_NUMBER>): <short description>`
-**PR body:** Render the `pr-bug` template with `{root_cause, fix, acceptance_criteria, risk, parent_issue: <ISSUE_NUMBER>}`
+**PR body:** Render the `pr-bug` template with `{root_cause, fix, acceptance_criteria, risk, parent_issue: <ISSUE_NUMBER>, parent_issue_url: $(gh issue view <ISSUE_NUMBER> --json url -q .url)}`
 
 For multi-skill bugs, open one PR per skill — each from its own codebase path, each targeting `main`.
 

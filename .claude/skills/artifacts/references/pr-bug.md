@@ -15,7 +15,7 @@
 ## Risk
 <Low / Medium / High — rationale from Dev Investigation>
 
-Refs #<parent_issue>
+Refs [#<parent_issue>](<parent_issue_url>)
 ```
 
 ---
@@ -28,4 +28,5 @@ Refs #<parent_issue>
 | `fix` | yes | 1–2 sentences describing what changed and why it fixes the root cause |
 | `acceptance_criteria` | yes | Copied verbatim from issue, all checked `[x]` |
 | `risk` | yes | Low / Medium / High + rationale from Dev Investigation comment |
-| `parent_issue` | yes | Parent bug issue number (no `#`) — rendered as `Refs #N`, no auto-close |
+| `parent_issue` | yes | Parent bug issue number (no `#`) — rendered inside link text |
+| `parent_issue_url` | yes | Full GitHub URL of parent issue — fetch via `gh issue view <N> --json url -q .url`. No auto-close |
