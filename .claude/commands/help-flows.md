@@ -55,7 +55,7 @@ Look up the chosen stage in the **Stage Map**. For each placeholder (`<requireme
 | `feature-continue` | _(see sub-stages)_ | Ask: which sub-stage — write-stories / design / tdd / dev / test / pass-or-block. Map to `/ba write-stories <req#>`, `/designer write-design <sprint>`, `/tech-lead write-feature-tdd <sprint>`, `/dev <story#>`, `/qa write-test-cases <story#>`, `/qa pass <story#>` or `/qa block <story#> <notes>`. |
 | `bug-start` | `[description]` | `/po create-bug <description>` |
 | `bug-continue` | _(see sub-stages)_ | Ask: which sub-stage — acs / dev / test / pass-or-block / release. Map to `/ba add-bug-acs <bug#>`, `/dev <bug#>`, `/qa write-test-cases <bug#>`, `/qa pass <bug#>` or `/qa block <bug#> <notes>`, `/release hotfix <bug#>`. |
-| `req-change` | `<requirement_issue>`, `<delta>` | `/po update-requirement <requirement_issue> <delta>` _then suggest follow-up:_ `/ba sync-stories <requirement_issue>` |
+| `req-change` | `<requirement_issue>`, `<delta>` | `/po amend-requirement <requirement_issue> <delta>` _then suggest follow-up:_ `/ba sync-stories <requirement_issue>` |
 | `ac-amend` | `<issue>` | `/ba amend <issue>` |
 | `add-story` | `<requirement_issue>` | `/ba add-story <requirement_issue>` |
 | `merge-stories` | `<target>`, `<source>` | `/ba merge-stories <target> <source>` |
@@ -108,7 +108,7 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 
 ### 🔁 Requirement Change
 
-1. `/po update-requirement <requirement_issue> <delta>`
+1. `/po amend-requirement <requirement_issue> <delta>`
 2. `/ba sync-stories <requirement_issue>`
 3. `/designer sync-design <sprint>` _(if web stories changed)_
 4. `/tech-lead sync-feature-tdd <sprint>`

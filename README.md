@@ -54,6 +54,7 @@ cp -r notism/.claude /path/to/your/project/
 In your project, run `/init` to:
 
 - Generate `config.md` — registers codebases, detects tech stack, configures migration detection.
+- Generate `PRODUCT.md` — captures vision, value proposition, business model, goals, and strategic direction.
 - Generate `DESIGN.md` — extracts design tokens and component primitives for Designer and frontend agents.
 - Create GitHub labels (`requirement`, `user-story`, `qa-passed`, etc.). Safe to re-run.
 
@@ -78,7 +79,7 @@ Then kick off a sprint:
 | Command | What it does |
 |---------|-------------|
 | `/po create-requirement <description>` | Creates a requirement issue |
-| `/po update-requirement <issue> <delta>` | Updates requirement mid-sprint, cascades to stories |
+| `/po amend-requirement <issue> <delta>` | Updates requirement mid-sprint, cascades to stories |
 | `/po create-bug [description]` | Creates a production bug issue |
 
 ### 📝 Business Analyst
@@ -218,7 +219,7 @@ Cascades through stories, design, TDD, dev, and QA incrementally.
 
 ```mermaid
 flowchart TD
-    A(["/po update-requirement &lt;N&gt; &lt;delta&gt;"]) --> B["Requirement updated\n`requirement-updated`"]
+    A(["/po amend-requirement &lt;N&gt; &lt;delta&gt;"]) --> B["Requirement updated\n`requirement-updated`"]
     B --> C(["/ba sync-stories &lt;N&gt;"])
     C --> D["Change Plan\nCovered / Updatable / New / Removed"]
     D --> G1{Gate 1\nPO Approves Change Plan}

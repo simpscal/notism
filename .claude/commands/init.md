@@ -1,26 +1,27 @@
 ---
 name: init
-description: Initialize Project Config — generate config.md and DESIGN.md interactively.
+description: Initialize Project Config — generate config.md, PRODUCT.md, and DESIGN.md interactively.
 tools: Read, Write, Glob, Grep, Bash, AskUserQuestion
 ---
 
 # /init — Initialize Project Config
 
-Generate `config.md` and `DESIGN.md` for this project. Run once when adopting this workflow in a new project, or to regenerate after project structure changes.
+Generate `config.md`, `PRODUCT.md`, and `DESIGN.md` for this project. Run once when adopting this workflow in a new project, or to regenerate after project structure changes.
 
 ---
 
 ## Step 0 — Check Existing Files
 
-Before any other step, check the repo root for `config.md` and `DESIGN.md`. For each file that exists, ask the user via `AskUserQuestion` whether to **Skip** (keep current file untouched) or **Regenerate** (overwrite). Default option: Skip.
+Before any other step, check the repo root for `config.md`, `DESIGN.md`, and `PRODUCT.md`. For each file that exists, ask the user via `AskUserQuestion` whether to **Skip** (keep current file untouched) or **Regenerate** (overwrite). Default option: Skip.
 
 Apply the answers to gate later steps:
 
 - **`config.md` exists and user chose Skip** → skip Steps 1–5 entirely (config gathering, write, and label creation). Read the existing `config.md` to recover the registered codebases (needed by Step 6 to know whether a web codebase exists).
-- **`DESIGN.md` exists and user chose Skip** → skip Step 6 entirely.
-- **Neither file exists** → proceed straight through Steps 1–7 with no prompt.
+- **`PRODUCT.md` exists and user chose Skip** → skip Step 6 entirely.
+- **`DESIGN.md` exists and user chose Skip** → skip Step 7 entirely.
+- **No files exist** → proceed straight through Steps 1–8 with no prompt.
 
-If both files exist and the user chose Skip for both, exit early with a one-line note that nothing needed regenerating.
+If all three files exist and the user chose Skip for all three, exit early with a one-line note that nothing needed regenerating.
 
 ## Step 1 — Gather Codebase Names and Paths
 
@@ -110,57 +111,16 @@ The script uses `gh label create --force`, so re-running is safe and will update
 
 If the script fails (e.g. `gh` not authenticated, or the hardcoded `REPO` does not match this repository), report the error to the user and stop. The user must resolve auth or repo setup before continuing.
 
-## Step 6 — Generate DESIGN.md (Web Codebase Only)
+## Step 6 — Generate PRODUCT.md
+
+Load `pcd/create.md` and follow its steps.
+
+## Step 7 — Generate DESIGN.md (Web Codebase Only)
 
 Skip this step if no web/frontend codebase was registered in Step 1.
 
-Generate `DESIGN.md` at the repo root following the **DESIGN.md format spec** at https://github.com/google-labs-code/design.md/blob/main/docs/spec.md. The goal is a single, agent-readable source of truth that downstream agents (designer, frontend) reference for consistent UI output.
+Load `design-system/create.md` and follow its steps.
 
-### 5.1 Detect theme tokens from the web codebase
-
-Search the web codebase for existing design tokens. Use `Glob`, `Grep`, and `Read` to locate them. Common locations (framework-agnostic — adapt to whatever the codebase uses):
-
-- **CSS variables**: any `*.css`, `*.scss`, `*.less` file containing `@theme`, `:root`, `.dark`, `--color-*`, `--radius`, `--font-*` declarations
-- **Utility-first config**: `tailwind.config.*`, `unocss.config.*`, `windicss.config.*` — extract color, font, radius, spacing scales
-- **Theme objects in code**: any file matching `theme.*`, `tokens.*`, `design-tokens.*`, `palette.*` exporting a token map (CSS-in-JS, styled-system, Chakra, MUI, etc.)
-- **Design-system registries**: `components.json`, `theme.json`, or similar config files
-- **Font loading**: HTML entry points and framework font imports (Google Fonts links, `next/font`, `expo-font`, `@font-face` rules)
-- **Component primitives**: locate the project's primitives directory by reading its config (e.g. `components.json` `aliases`, framework conventions, or by globbing for `button.*`, `input.*`, `card.*`, `badge.*`). Observe default radius, height, padding to confirm detected tokens.
-
-Convert OKLCH/HSL/RGB values to hex (SRGB) — the spec requires hex. Record: primary + accent palettes, surface/neutral, semantic (error and any others), font family + fallbacks, radius scale, spacing scale, default control height + radius, component variants and their state suffixes.
-
-If NO tokens are found, fall back to `AskUserQuestion` for: brand name, primary hex color, font family, default radius, light/dark mode support.
-
-### 5.2 Detect surface coverage
-
-Inspect the project's route/page/feature directory structure (whichever the framework uses) to identify the major surface families and layout shells present in the project. Use this only to inform the **Overview** prose and to decide which domain-specific components to include — never invent surfaces or components that the codebase does not have.
-
-### 5.3 Compose brand description
-
-Use `AskUserQuestion` to ask **one** question:
-
-> "Give a one-sentence brand voice description (tone, audience, what the product does). Skip to use a generic description."
-
-### 5.4 Write DESIGN.md per the format spec
-
-Author the file following the spec linked above (frontmatter schema, section order, token references, naming, variants — all defined there). The linter in 5.5 enforces compliance.
-
-Workflow guardrails (not in the spec):
-
-- **Preserve detected token names.** If the project already uses `primary` / `primary-foreground` (shadcn) or any other convention, keep those names — do not rename to spec's recommended convention.
-- **Do not invent.** Components, palettes, surfaces, and signature features must come from the codebase scan (5.1) and surface scan (5.2). If something isn't in the project, it doesn't go in DESIGN.md.
-- **Brand voice.** The Overview prose should be specific to this product (from 5.3) — not generic UX language.
-
-### 5.5 Validate
-
-Run the official linter against the written file:
-
-```bash
-npx -y @google/design.md lint DESIGN.md
-```
-
-If the linter reports errors (broken token refs, invalid colors, schema violations, duplicate sections), fix and re-run until clean before proceeding.
-
-## Step 7 — Confirm
+## Step 8 — Confirm
 
 Show only the files that were (re)written in this run to the user and confirm they look correct. Skipped files are not re-displayed. Mention whether GitHub labels were (re)created.
