@@ -1,0 +1,42 @@
+
+Read issue `#bug_issue_number` in full.
+
+---
+
+## Step 1 — Analyse the Bug in Context
+
+Determine from the bug report:
+- What is the system's intended behaviour in this scenario?
+- What user need does the broken behaviour fail to satisfy?
+- What does "fixed" look like from the user's observable perspective?
+- What edge cases or related scenarios should the ACs cover?
+
+**AC testability checklist** — every AC must pass:
+- Observable without reading code?
+- Describes a specific condition and a specific outcome?
+- Could a non-engineer verify it in a running system?
+
+Rewrite any AC that fails until it passes. Avoid vague language: "should work", "handles errors", "is fast".
+
+If critical information is missing, use `AskUserQuestion` once to ask all blocking questions in a single message.
+
+---
+
+## Step 2 — Write Acceptance Criteria
+
+Render the `acceptance-criteria` template with `{criteria, notes}`.
+
+**AC format**: *"When X, then Y"* or *"Given X, when Y, then Z"*
+
+Include a **Notes** section for: edge cases, related scenarios, dependencies, open questions.
+
+---
+
+## Step 3 — Update the Bug Issue
+
+Update the body of issue `#N` using the `acceptance-criteria` template with `{criteria, notes}` — append to the **end** of the existing body.
+
+Do NOT modify the original `## Bug Report` section.
+
+---
+
