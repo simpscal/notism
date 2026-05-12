@@ -1,7 +1,6 @@
 ---
 name: setup
 description: One-off project setup — init, PCD, design system.
-argument-hint: "<init|pcd|design-system> [create|amend [section]]"
 tools: Read, Write, Glob, Grep, Bash, AskUserQuestion
 ---
 
@@ -23,7 +22,13 @@ tools: Read, Write, Glob, Grep, Bash, AskUserQuestion
 
 **Load the corresponding mode file and follow its steps.**
 
-If the arguments do not match any stage, ask the user via `AskUserQuestion`.
+### Stage Picker (when `$ARGUMENTS` is empty or unmatched)
+
+1. Use `AskUserQuestion` hierarchically:
+   - **Pass 1 — document**: `init` / `pcd` / `design-system` (3 options).
+   - **Pass 2 — action** (skip for `init`): `create` / `amend` (2 options).
+2. For `pcd amend`, ask one more `AskUserQuestion` for the optional `[section]` (free text).
+3. Treat the result as `$ARGUMENTS = "<stage> <args>"` and continue with the matched row.
 
 ---
 

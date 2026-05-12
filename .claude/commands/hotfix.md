@@ -1,7 +1,6 @@
 ---
 name: hotfix
 description: Production bug fix lifecycle — report, ACs, fix, release. Testing handled by /test.
-argument-hint: "<stage> [args]"
 tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(backend, frontend, devops)
 ---
 
@@ -26,7 +25,11 @@ For bugs found in production. Faster lane than feature — no design, no TDD; th
 
 **Load the corresponding mode file and follow its steps.**
 
-If `$ARGUMENTS` does not match any row, ask via `AskUserQuestion` which stage the user wants.
+### Stage Picker (when `$ARGUMENTS` is empty or unmatched)
+
+1. Use `AskUserQuestion` with one question listing 4 most-common stages (`report`, `acs`, `implement`, `release`); the 5th (`fix-bug`) is offered via the auto-injected "Other".
+2. After a stage is chosen, ask one `AskUserQuestion` per required arg (bug issue number, optional description).
+3. Treat the result as `$ARGUMENTS = "<stage> <args>"` and continue with the matched row.
 
 For test cases and QA verdict, use the separate `/test` workflow (`/test write|sync|amend|pass|block <bug_issue>`).
 

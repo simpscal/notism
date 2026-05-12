@@ -1,7 +1,6 @@
 ---
 name: refactor
 description: Refactor lifecycle — create plan, amend plan, implement.
-argument-hint: "<create|amend|implement> [args]"
 tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(backend, frontend, devops)
 ---
 
@@ -21,7 +20,11 @@ tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(backend, frontend, 
 
 **Load the corresponding mode file and follow its steps.**
 
-If the first word does not match any stage, ask the user which stage they want via `AskUserQuestion`.
+### Stage Picker (when `$ARGUMENTS` is empty or unmatched)
+
+1. Use `AskUserQuestion` with one question listing the 3 stages (`create`, `amend`, `implement`).
+2. If `amend` or `implement` is chosen, ask one more `AskUserQuestion` for `<refactor_issue>`.
+3. Treat the result as `$ARGUMENTS = "<stage> <args>"` and continue with the matched row.
 
 ---
 

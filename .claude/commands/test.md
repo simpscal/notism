@@ -1,7 +1,6 @@
 ---
 name: test
 description: QA test case lifecycle — write, sync, amend, pass, block. Applies to feature stories and hotfix bugs.
-argument-hint: "<write|sync|amend|pass|block> <issue> [notes]"
 tools: Read, AskUserQuestion
 ---
 
@@ -26,7 +25,11 @@ Generate and manage human-verified test cases. Same workflow whether the target 
 
 **Load the corresponding mode file and follow its steps.**
 
-If the first word does not match any stage, ask via `AskUserQuestion`.
+### Stage Picker (when `$ARGUMENTS` is empty or unmatched)
+
+1. Use `AskUserQuestion` with one question listing 4 most-common stages (`write`, `sync`, `pass`, `block`); the 5th (`amend`) is offered via the auto-injected "Other".
+2. After a stage is chosen, ask one `AskUserQuestion` for `<issue>` and (if `block`) `<notes>`.
+3. Treat the result as `$ARGUMENTS = "<stage> <args>"` and continue with the matched row.
 
 ---
 

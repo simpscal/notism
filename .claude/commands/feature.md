@@ -1,7 +1,6 @@
 ---
 name: feature
 description: Sprint feature lifecycle — requirement, stories, design, TDD, dev, release. Absorbs mid-sprint changes and AC amendments. Testing handled by /test.
-argument-hint: "<stage> [args]"
 tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(backend, frontend, devops)
 ---
 
@@ -49,7 +48,13 @@ For test cases and QA verdict, use the separate `/test` workflow (`/test write|s
 
 **Load the corresponding mode file and follow its steps.**
 
-If `$ARGUMENTS` does not match any row, ask via `AskUserQuestion` which stage the user wants.
+### Stage Picker (when `$ARGUMENTS` is empty or unmatched)
+
+1. Use `AskUserQuestion` to let the user pick a stage from the table above. Since there are 18 stages and `AskUserQuestion` allows max 4 options per question, ask hierarchically:
+   - **Pass 1 — verb**: present `create` / `sync` / `amend` / `other` (where `other` covers `implement`, `fix-story`, `revert`, `add-story`, `merge-stories`, `release`).
+   - **Pass 2 — stage**: present the stages under the chosen verb. For the `other` bucket, present up to 4 most common (`implement`, `fix-story`, `release`, `add-story`); the user can pick "Other" and type the rest.
+2. After a stage is chosen, ask one `AskUserQuestion` per required arg from the table (issue number, sprint number, etc.).
+3. Treat the result as `$ARGUMENTS = "<stage> <args>"` and continue with the matched row.
 
 ### Stage usage by lifecycle phase
 
