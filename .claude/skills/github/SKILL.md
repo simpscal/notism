@@ -145,7 +145,12 @@ Proceed? (y/n)
 
 This operation is **two mandatory mutations** on issue `#ISSUE_NUMBER`. Run **both** — never stop after the comment.
 
-#### Step 1 — Post completion comment
+#### Step 1 — Post or update completion comment
+
+Before writing anything, fetch existing comments on the issue (`mcp__github__issue_read` with `method: get_comments`). Check if any comment body starts with `## Refactor Complete`, `## Implementation Complete`, or `## Revert Ready`.
+
+- **Existing completion comment found** → update it using the **Update Comment** operation (PATCH by comment ID). Do NOT post a new comment.
+- **No existing completion comment** → post a new comment using the **Post Comment** operation.
 
 Pick the **mode** (refactor / revert / implementation) and the **variant** (single-PR or multi-PR):
 
@@ -221,7 +226,7 @@ Story #<ISSUE_NUMBER> was removed from scope. Implementation has been reversed a
 > ⏸ Human gate: Review all PR diffs. When approved, merge into the staging branch.
 ```
 
-Use the **Post Comment** operation above to deliver the body.
+Use **Post Comment** if no existing completion comment was found, or **Update Comment** if one was found (see Step 1 check above).
 
 #### Step 2 — Update labels
 
