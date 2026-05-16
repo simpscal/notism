@@ -1,13 +1,6 @@
 ---
 name: product-authoring
-description: >
-  Canonical authoring path for the project's `PRODUCT.md` product-context file.
-  Owns the contract (file structure, sections, apply rules) and the two
-  end-to-end workflows that produce it (Create and Amend).
-  Apply when the user wants to create, set up, write, generate, regenerate,
-  rewrite, overhaul, amend, update, edit, or change `PRODUCT.md` — including
-  its Vision, Core Value Proposition, Business Model, Business Goals, Target
-  Users, Product Boundaries, or Strategic Direction sections.
+description: Use when creating, amending, or editing `PRODUCT.md` or any of its sections (Vision, Core Value Proposition, Business Model, Business Goals, Target Users, Product Boundaries, Strategic Direction). Owns the contract and Create/Amend workflows.
 tools: Read, Write, Edit, AskUserQuestion
 ---
 

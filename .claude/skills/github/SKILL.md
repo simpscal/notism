@@ -1,6 +1,6 @@
 ---
 name: github
-description: GitHub issue tracker — create, read, update issues; post comments; create/list milestones; manage labels; close issues; notify completion (implementation, refactor, revert). Never hardcode repo slugs, label names, or branch patterns.
+description: GitHub issue ops — create/read/update issues, comments, milestones, labels, close, completion notifications (implementation, refactor, revert). Derive repo via `gh repo view`; never hardcode slugs, labels, or branch patterns.
 tools: mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_write,
   mcp__github__add_issue_comment, mcp__github__update_issue, Bash
 ---

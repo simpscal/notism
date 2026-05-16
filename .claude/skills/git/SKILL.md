@@ -1,6 +1,6 @@
 ---
 name: git
-description: Git operations, branching strategy, and PR management. Branch naming, creation, checkout, commit, push, PR creation/review/deletion. Derive owner/repo via `gh repo view` from codebase directory — never hardcode.
+description: Use for git + PR ops — branch naming, checkout, commit, push, PR create/review/delete. Derive owner/repo via `gh repo view` from codebase dir; never hardcode.
 tools: Bash, mcp__github__pull_request_read, mcp__github__create_pull_request, mcp__github__list_pull_requests, mcp__github__list_branches
 ---
 

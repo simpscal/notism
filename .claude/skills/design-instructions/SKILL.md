@@ -1,13 +1,6 @@
 ---
 name: design-instructions
-description: >
-  Canonical contract for a per-surface design-instructions markdown file
-  (typically `sprint-<N>/<surface-slug>.md` on the orchestrator's sprint
-  branch). Apply when a flow generates, emits, produces, regenerates, or
-  amends design instructions for a UI surface — covering Layout (YAML tree
-  per state), Responsive, Accessibility, Components used, Spacing between
-  elements, Tokens used, Iconography, Imagery and Media, Elevation and
-  Borders, Interactive States, Dark Mode Notes.
+description: Use when generating or amending per-surface design-instructions markdown (`sprint-<N>/<surface-slug>.md`) — layout YAML tree per state, responsive, a11y, components, spacing, tokens, icons, media, elevation, interactive states, dark mode.
 tools: Read, Write, Edit
 ---
 

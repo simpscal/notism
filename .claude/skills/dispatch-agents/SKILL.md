@@ -1,6 +1,6 @@
 ---
 name: dispatch-agents
-description: Agent dispatch protocol — context passing and output handling. Auto-invoked whenever backend, frontend, or devops agents are spawned.
+description: Use when spawning backend, frontend, or devops agents. Defines context-passing and output-handling protocol; auto-invokes on every such spawn.
 tools: Agent
 ---
 

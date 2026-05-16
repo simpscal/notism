@@ -1,11 +1,6 @@
 ---
 name: design-catalog
-description: >
-  Canonical contract for a standalone HTML catalog of a design system —
-  renders every token group (colors / typography / spacing / rounded /
-  shadows) and the full component variant × size matrix in one file.
-  Apply when a flow generates, emits, produces, regenerates, or amends
-  a design system catalog HTML.
+description: Use when generating or amending a design-system HTML catalog — token groups (colors, typography, spacing, rounded, shadows) plus full component variant × size matrix in one file.
 tools: Read, Write, Edit
 ---
 

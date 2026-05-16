@@ -1,13 +1,6 @@
 ---
 name: design-authoring
-description: >
-  Canonical authoring path for the project's `DESIGN.md` design-system file.
-  Owns the contract (file structure, frontmatter, sections, tokens, apply rules,
-  linter) and the two end-to-end workflows that produce it (Create and Amend).
-  Apply when the user wants to create, set up, write, generate, regenerate,
-  redesign, overhaul, rewrite, amend, update, edit, or change `DESIGN.md` —
-  including its tokens (colors, typography, rounded, spacing, components) or
-  any of its markdown sections.
+description: Use when creating, amending, redesigning, or editing `DESIGN.md` — tokens (colors, typography, rounded, spacing, components) or any markdown section. Owns the contract, linter, and Create/Amend workflows.
 tools: Read, Edit, Write, Glob, Grep, Bash, AskUserQuestion, WebSearch, WebFetch
 ---
 

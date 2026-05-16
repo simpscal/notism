@@ -1,10 +1,6 @@
 ---
 name: design-mockup
-description: >
-  Canonical contract for a per-surface HTML mockup file (typically
-  `sprint-<N>/<surface-slug>.html` on the orchestrator's sprint branch). Apply
-  when a flow generates, emits, produces, regenerates, or amends an HTML
-  mockup for a UI surface.
+description: Use when generating or amending a per-surface HTML mockup (`sprint-<N>/<surface-slug>.html`) — a viewable wireframe for human review.
 tools: Read, Write, Edit
 ---
 

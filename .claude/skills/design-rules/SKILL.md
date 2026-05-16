@@ -1,8 +1,6 @@
 ---
 name: design-rules
-description: >
-  Apply when designing or modifying any solution — code, architecture, or
-  system design. Governs quality, safety, and simplicity across all design decisions.
+description: Use when designing or modifying code, architecture, or systems. Enforces quality, safety, and simplicity.
 tools: Read, Grep, Glob, Bash
 ---
 
