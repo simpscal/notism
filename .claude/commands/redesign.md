@@ -16,9 +16,9 @@ The first arg names a **stage**. Match `$ARGUMENTS` against the table below and 
 
 | Stage | Args | Description | Mode file |
 |---|---|---|---|
-| `design` | _(none)_ | **Phase 1.** Capture scope in one sentence, build the design system, present an `index.html` design catalog, get user approval, revise `DESIGN.md`, file the retrospective `[Redesign Brief]` issue, generate per-surface design instructions + HTML mockups, decompose into stories with a priority implementation table. Produces the brief issue + `Sprint N` milestone + story issues. | `redesign/design.md` |
-| `amend-design` | `<story_issue>` | Amend the design for one story after Phase 1. Classifies the change scope from user input — **`system`** revises `DESIGN.md` + regenerates the design catalog (`sprint-<N>/index.html`) via the same pipeline as `design`; **`page`** regenerates the target surface `.md` + `.html`; **`both`** runs both pipelines. Hub comment is not re-rendered — its blob URLs are branch-ref and stay valid as new commits land on the sprint branch. Labels affected implemented stories `story-updated` — primitives stories only when primitives actually shifted in the diff, page stories whose surface intersects the change. | `redesign/amend-design.md` |
-| `implement` | `<story_issue>` | **Phase 2.** Implement one story per invocation. Frontend only. Checks the `story-updated` label — Fresh branch for first-time implementation, Revisit branch for delta-only after an amendment. Reads only the design instructions for the story's surface. | `redesign/implement.md` |
+| `design` | _(none)_ | Build the design system, file the brief issue, generate per-surface mockups + instructions, and decompose priority-ordered stories. | `redesign/design.md` |
+| `amend-design` | `<story_issue>` | Amend the design for one story by scope — `system` (DESIGN.md + catalog), `page` (surface files), or `both`. | `redesign/amend-design.md` |
+| `implement` | `<story_issue>` | Implement one redesign story (frontend only) — fresh, or delta-only when `story-updated`. | `redesign/implement.md` |
 
 **Argument reference:**
 
