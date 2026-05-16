@@ -23,7 +23,7 @@ The invoker passes context as a `<context>` XML block:
     [Absent: "none"]
   </decisions>
   <design_instructions>
-    [full sprint-level design instructions — layout sketches, component table, design tokens, UI states, responsive behavior, accessibility; absent for bug fixes]
+    [per-surface design-instructions markdown verbatim — Layout YAML trees per state (Default / Loading / Empty / Error / Success) with anchor-keyed nodes, Responsive, Accessibility, Components used, Spacing between elements, Tokens used, Iconography, Imagery and Media, Elevation and Borders, Interactive States, Dark Mode Notes; absent for bug fixes]
   </design_instructions>
   <constraints>
     [orchestrator-provided scope restrictions — takes precedence over default stage behavior; absent if no constraints]
@@ -39,7 +39,7 @@ The invoker passes context as a `<context>` XML block:
 
 Read every requirement and acceptance criterion — these are your done criteria.
 
-**Read design instructions.** Note: layout structure, component names and variants, design tokens used, all UI states shown, responsive behavior, accessibility requirements.
+**Read design instructions.** The Layout YAML tree is anchor-keyed — every `anchor:` in the tree maps to the same anchor in the Components used, Spacing between elements, Tokens used, Iconography, Imagery and Media, Elevation and Borders, and Interactive States tables. Walk anchor by anchor: structure from Layout, component + variant + size from Components used, gaps from Spacing, colors / typography / radius / shadow from Tokens used, icons from Iconography, images from Imagery and Media, depth / borders from Elevation and Borders, hover / focus-visible / active / disabled from Interactive States, breakpoint behaviour from Responsive, a11y from Accessibility, and any per-anchor dark-mode override from Dark Mode Notes. Emit every `## Layout — <state>` H2 as a distinct UI state — no merging.
 
 **If design instructions are absent** (bug fix flow): read `DESIGN.md` at the codebase root. Use it as the sole source of truth for styling decisions — color tokens, typography hierarchy, component variants, spacing scale, layout patterns, and do/don't rules. Do not invent styles; derive everything from DESIGN.md. Bug UI changes must be indistinguishable in style from the existing application.
 

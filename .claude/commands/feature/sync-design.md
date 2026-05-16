@@ -5,54 +5,74 @@ Extract `sprint_number` (the token after `sync-design`).
 
 ## Step 1 — Load Sprint Context
 
--> Load Sprint Snapshot for Sprint N (github skill). Hold $MILESTONE_ID, $STORIES, $REQUIREMENT, $TDD, $DESIGN.
+Load Sprint Snapshot for Sprint $SPRINT_N (github skill). Hold `$MILESTONE_ID`, `$STORIES`, `$REQUIREMENT`, `$TDD`.
 
 **Precondition checks** (stop immediately if any fail):
 
-- `$REQUIREMENT` is absent → `⛔ No requirement issue found in Sprint N. Cannot sync design without a requirement.`
-- `$STORIES` is empty → `⛔ No user stories found in Sprint N. Run \`/ba write-stories <requirement_issue>\` first.`
-- `$DESIGN` is absent → `⛔ No Design Instructions found for Sprint N — run \`/designer write-design N\` first.`
+- `$REQUIREMENT` absent → `⛔ No requirement issue found in Sprint $SPRINT_N. Cannot sync design without a requirement.`
+- `$STORIES` empty → `⛔ No user stories found in Sprint $SPRINT_N. Run /feature create-stories <requirement_issue> first.`
+- No design hub comment on the requirement issue (no comment body starting with `## Design Navigation`) → `⛔ No design hub found on the requirement issue — run /feature create-design $SPRINT_N first.`
 
-Identify **changed stories**: those with label `story-updated` or `story-removed`.
-If no changed stories exist, report "No story changes found — design is already in sync" and stop.
+Identify **changed stories** in `$STORIES`: those with label `story-updated` or `story-removed`, plus any newly-added UI stories with no per-surface artifacts yet on the sprint branch.
 
----
-
-## Step 3 — Read the Design System
-
-Read `DESIGN.md` at the repo root in full. Capture exact token names and component names.
+If no changed stories exist, report `No story changes found — design is already in sync.` and stop.
 
 ---
 
-## Step 4 — Classify Scope Changes
+## Step 2 — Identify Affected Surfaces
 
-For each changed story, determine which UI surfaces are affected and classify the impact:
+Read `DESIGN.md` at the orchestrator root in full. Hold `$NEW_DS`.
 
-| Classification | Condition | Planned Action |
-|----------------|-----------|----------------|
-| **New surface** | Story introduces a UI interface not covered in current Design Instructions | Add new sections and layouts |
-| **Modified surface** | `story-updated` story changes behaviour or content on an existing surface | Update affected sections only |
-| **Removed surface** | `story-removed` story covered a UI surface that no longer exists | Remove or mark obsolete in design |
+For each changed story, determine which UI surfaces are affected. Build a Change Plan Table:
 
-Output a **Change Plan Table** listing every affected surface, its changed story, and its classification.
+| Affected Surface | Story | Classification | Planned Action |
+|------------------|-------|----------------|----------------|
+| `<slug>` | `#N` | New / Modified / Removed | Generate / Regenerate / Delete |
+
+- **New surface** — story introduces a UI not yet on the sprint branch.
+- **Modified surface** — `story-updated` changes an existing surface.
+- **Removed surface** — `story-removed` dropped a surface that has files on the sprint branch.
 
 If any classification is ambiguous, ask for clarification before proceeding.
 
----
+Hold the deduped affected surfaces as `$AFFECTED_SURFACES`.
 
-## Step 5 — Sketch Layouts for Affected Surfaces
-
--> Follow `../_design-layouts.md`
-
-Only sketch layouts for UI surfaces affected by changed stories. Preserve existing layouts for unchanged surfaces.
+Ensure the orchestrator's sprint branch for Sprint $SPRINT_N is checked out.
 
 ---
 
-## Step 6 — Update Design Instructions
+## Step 3 — Re-spawn Per-Surface Subagents for Affected Surfaces Only (parallel, max 5)
 
-Use the current Design Instructions as the base document. For each section, evaluate whether the changed stories affect it:
+For each surface in `$AFFECTED_SURFACES`, spawn one subagent — max 5 in parallel, batched if needed. Each subagent emits the surface's two files to `<orchestrator-root>/sprint-<$SPRINT_N>/`:
 
-- **No impact**: Keep existing content unchanged
-- **Impact**: Modify only the affected parts
+- **New** / **Modified** — regenerate `<surface-slug>.md` + `<surface-slug>.html`.
+- **Removed** — delete `<surface-slug>.md` and `<surface-slug>.html` from the sprint branch.
 
-Apply changes following `../_design-structure.md` for structure and token/component conventions. Then update the body of the design issue with the revised content.
+Pass context per the dispatch-agents protocol with the same per-surface `<inputs>` shape used by `create-design.md` (surface, story_acs, new_ds).
+
+Unaffected surfaces from prior `create-design` runs are not touched.
+
+---
+
+## Step 4 — Approval Gate
+
+Present a per-surface bullet list of every regenerated / deleted path to the user.
+
+Use `AskUserQuestion`:
+
+- **Approve** — proceed to Step 5.
+- **Iterate** — collect per-surface feedback. Re-spawn Step 3 subagents for the affected surfaces only. Cap at 5 iterations.
+
+---
+
+## Step 5 — Commit + Push
+
+On the orchestrator's sprint branch, commit the regenerated / deleted files (commit message: `chore(design): sync sprint-{$SPRINT_N} after story changes`). Push. Resolve blob URLs.
+
+---
+
+## Step 6 — Upsert Design Hub Comment on Requirement Issue
+
+Re-render `comment-design-hub` with the **full** updated per-surface table — load existing rows from the prior hub comment for every surface that is unaffected; replace rows for `$AFFECTED_SURFACES`; drop rows for `Removed` surfaces.
+
+Find the existing design hub comment on the requirement issue (matched by body prefix `## Design Navigation`). Edit it in place. If for any reason it is absent, create a new one with the same body.

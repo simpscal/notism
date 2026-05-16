@@ -34,7 +34,6 @@ Before calling `render_template()`, Read the corresponding reference file to get
 | Issue: Requirement | `issue-requirement` | `references/issue-requirement.md` |
 | Issue: Bug Report | `issue-bug-report` | `references/issue-bug-report.md` |
 | Issue: TDD | `issue-tdd` | `references/issue-tdd.md` |
-| Issue: Design Instructions | `issue-design-instructions` | `references/issue-design-instructions.md` |
 | Acceptance Criteria | `acceptance-criteria` | `references/acceptance-criteria.md` |
 | PR: Story | `pr-story` | `references/pr-story.md` |
 | PR: Bug Fix | `pr-bug` | `references/pr-bug.md` |
@@ -44,3 +43,5 @@ Before calling `render_template()`, Read the corresponding reference file to get
 | Comment: Dev Investigation | `comment-dev-investigation` | `references/comment-dev-investigation.md` |
 | Comment: Bug Summary | `comment-bug-summary` | `references/comment-bug-summary.md` |
 | Comment: QA Test Cases | `comment-qa-test-cases` | `references/comment-qa-test-cases.md` |
+| Comment: Design Hub | `comment-design-hub` | `references/comment-design-hub.md` |
+| Comment: Redesign Hub | `comment-redesign-hub` | `references/comment-redesign-hub.md` |

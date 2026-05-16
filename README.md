@@ -12,7 +12,7 @@ Without a shared playbook, every team member prompts AI differently. Outputs div
 
 - **Orchestrator, not a codebase.** Stories, sprints, designs, TDDs, and bugs live here as issues. Agents check out your real code repos (API, web, infra), registered once via `/setup init`.
 - **GitHub is the source of truth.** No Jira, no Notion — every artifact is an issue; state changes by label, not chat.
-- **Workflows organize lifecycle stages, roles run them.** Four workflows (`/feature`, `/hotfix`, `/test`, `/refactor`) cover complete lifecycles. PO triggers requirement/report stages, BA writes stories, Designer authors design instructions, Tech Lead writes TDDs and refactor plans, Dev implements, QA runs `/test`, Release Manager ships. Every stage is one command — the role that owns it runs it.
+- **Workflows organize lifecycle stages, roles run them.** Five workflows (`/feature`, `/hotfix`, `/redesign`, `/test`, `/refactor`) cover complete lifecycles. PO triggers requirement/report stages, BA writes stories, Designer authors design instructions and runs redesign, Tech Lead writes TDDs and refactor plans, Dev implements, QA runs `/test`, Release Manager ships. Every stage is one command — the role that owns it runs it.
 - **Humans gate every stage.** AI handles volume. Nothing ships without sign-off.
 - **Drop-in.** Only `.claude/`, `config.md`, `PRODUCT.md`, and `DESIGN.md` are added. Existing issues, PRs, and branches stay untouched.
 
@@ -20,8 +20,8 @@ Without a shared playbook, every team member prompts AI differently. Outputs div
 flowchart LR
     subgraph ORCH["This Repo · Orchestrator"]
         direction TB
-        ISSUES["GitHub Issues · Labels · Milestones<br/>requirements · stories · TDDs<br/>designs · test cases · bugs"]
-        FLOWS["Workflow Commands<br/>/feature · /hotfix<br/>/test · /refactor"]
+        ISSUES["GitHub Issues · Labels · Milestones<br/>requirements · stories · TDDs<br/>designs · redesign briefs · test cases · bugs"]
+        FLOWS["Workflow Commands<br/>/feature · /hotfix · /redesign<br/>/test · /refactor"]
     end
 
     subgraph TARGETS["Your Code Repos"]
@@ -75,11 +75,7 @@ Then kick off a sprint:
 
 ## ⚡ Commands
 
-Five top-level commands. Each workflow command takes a **stage** that names the action; the **Run by** column below shows which role typically owns it.
-
 ### 🆕 `/feature` — Sprint feature lifecycle
-
-Requirement → stories → design → TDD → dev → release. Absorbs mid-sprint requirement changes and single-story AC amendments. Testing handled by `/test`.
 
 | Command | Run by | What it does |
 |---------|--------|-------------|
@@ -102,9 +98,15 @@ Requirement → stories → design → TDD → dev → release. Absorbs mid-spri
 | `/feature amend-implementation <story_issue>` | Dev | Re-implement after an AC amendment. |
 | `/feature release <sprint_number>` | Release Manager | Close sprint and open release PRs to main. |
 
-### 🐛 `/hotfix` — Production bug lifecycle
+### 🎨 `/redesign` — UI redesign lifecycle
 
-Faster lane — no design, no TDD; the bug ticket carries ACs and goes straight to fix → release. Testing handled by `/test`.
+| Command | Run by | What it does |
+|---------|--------|-------------|
+| `/redesign design` | Designer | Build the design system, file the brief issue, generate per-surface mockups + instructions, and decompose priority-ordered stories. |
+| `/redesign amend-design <story_issue>` | Designer | Amend the design for one story — `system` (DESIGN.md + catalog), `page` (surface files), or `both`. |
+| `/redesign implement <story_issue>` | Dev | Implement one redesign story (frontend only) — fresh, or delta-only when `story-updated`. |
+
+### 🐛 `/hotfix` — Production bug lifecycle
 
 | Command | Run by | What it does |
 |---------|--------|-------------|
@@ -128,8 +130,6 @@ Same workflow whether the target is a feature story or a production bug — adap
 
 ### 🧹 `/refactor` — Tech-debt and structural cleanup
 
-No sprint, no QA. Branch from `main`, PR to `main`. DoD: existing tests pass, no behaviour change.
-
 | Command | Run by | What it does |
 |---------|--------|-------------|
 | `/refactor create` | Tech Lead | Survey the codebase, draft a refactor plan, open a `refactoring` issue. |
@@ -140,11 +140,7 @@ No sprint, no QA. Branch from `main`, PR to `main`. DoD: existing tests pass, no
 
 | Command | Run by | What it does |
 |---------|--------|-------------|
-| `/setup init` | Project lead | Bootstrap project config — generate `config.md`, `PRODUCT.md`, `DESIGN.md` interactively. |
-| `/setup pcd create` | PO | Generate `PRODUCT.md` from scratch. |
-| `/setup pcd amend [section]` | PO | Revise one section of `PRODUCT.md` (or all if omitted). |
-| `/setup design-system create` | Designer | Generate `DESIGN.md` from the web codebase. |
-| `/setup design-system amend` | Designer | Update `DESIGN.md` after design system changes. |
+| `/setup init` | Project lead | Bootstrap project config — generate `config.md`, `PRODUCT.md`, `DESIGN.md` interactively.  |
 
 ### 🧭 `/help-flows` — Workflow picker (utility)
 
@@ -171,7 +167,7 @@ flowchart TD
     C --> D["User Stories + Sprint Milestone"]
     D --> G2{Gate 2\nPO Reviews Stories}
     G2 -->|Approve| E1(["/feature create-design &lt;sprint&gt;"])
-    E1 --> F1["Design Instructions\n`design`"]
+    E1 --> F1["Design Instructions"]
     F1 --> E2(["/feature create-tdd &lt;sprint&gt;"])
     E2 --> F2["TDD + feature branches"]
     F2 --> G3{Gate 3\nPO Reviews TDD + Design}
@@ -292,6 +288,40 @@ flowchart TD
 </details>
 
 <details>
+<summary><strong>UI Redesign</strong> — overhaul existing surfaces</summary>
+
+Two-phase visual lifecycle. Phase 1 produces a `[Redesign Brief]` issue, sprint milestone, design catalog, per-surface artifacts, and priority-ordered stories. Phase 2 implements per story.
+
+```mermaid
+flowchart TD
+    A(["/redesign design"]) --> B["Sprint milestone + branches\nDESIGN.md revised\nDesign catalog (sprint-N/index.html)"]
+    B --> G1{Gate 1\nApprove design system\n+ catalog}
+    G1 -->|Iterate| B
+    G1 -->|Approve| C["Per-surface .md + .html\nBrief issue + Priority Table"]
+    C --> G2{Gate 2\nApprove design instructions\n+ mockups}
+    G2 -->|Iterate| C
+    G2 -->|Approve| D["Stories created"]
+    D --> H(["/redesign implement &lt;story&gt;"])
+    H --> I["PR: story → staging\n`implemented`"]
+    I --> QA(["/test write &lt;story&gt;"])
+    QA --> G3{Gate 3\nHuman verifies}
+    G3 -->|Pass| QP(["/test pass &lt;story&gt;"])
+    QP --> MORE{More stories?}
+    MORE -->|Yes| H
+    MORE -->|No| REL(["/feature release &lt;N&gt;"])
+    G3 -->|Fail| QB(["/test block · /redesign implement (fix)"])
+    QB --> G3
+    D -.->|Mid-sprint design tweak| AM(["/redesign amend-design &lt;story&gt;"])
+    AM --> AMC{Scope?}
+    AMC -->|system| AMS["Revise DESIGN.md + catalog\nLabel primitives stories `story-updated`"]
+    AMC -->|page| AMP["Regen surface .md + .html\nLabel page stories `story-updated`"]
+    AMC -->|both| AMB["Both pipelines"]
+    AMS & AMP & AMB --> H
+```
+
+</details>
+
+<details>
 <summary><strong>Refactoring</strong> — tech-debt and structural cleanup</summary>
 
 No sprint, no QA. Branch from `main`, PR to `main`. DoD requires existing tests pass and no user-visible behavior change — the QA substitute.
@@ -323,7 +353,6 @@ No external tracker. No Jira, no Notion, no spreadsheet. Every artifact lives in
 | Requirement | GitHub Issue (`requirement`) |
 | User stories | GitHub Issues (`user-story`) grouped by Milestone |
 | Sprint | GitHub Milestone |
-| Design instructions | GitHub Issue (`design`) |
 | Technical design (TDD) | GitHub Issue (`technical-design`) |
 | Implementation | Pull Request linked to story issue |
 | Test cases | Comment on the story issue |
@@ -347,7 +376,6 @@ What the issue is. Set once on creation.
 | ![](https://placehold.co/15x15/e4e669/e4e669.png) | `requirement` | PO requirement created via `/feature create-requirement` |
 | ![](https://placehold.co/15x15/c2e0c6/c2e0c6.png) | `user-story` | Story created via `/feature create-stories` or `add` |
 | ![](https://placehold.co/15x15/6f42c1/6f42c1.png) | `technical-design` | TDD created via `/feature create-tdd` |
-| ![](https://placehold.co/15x15/ededed/ededed.png) | `design` | Sprint-level UI/UX instructions via `/feature create-design` |
 | ![](https://placehold.co/15x15/d73a4a/d73a4a.png) | `bug-production` | Production bug reported via `/hotfix report` |
 | ![](https://placehold.co/15x15/0075ca/0075ca.png) | `refactoring` | Refactor plan created via `/refactor create` |
 

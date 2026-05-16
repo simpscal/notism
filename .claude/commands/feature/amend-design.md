@@ -1,110 +1,89 @@
 
-Extract `sprint_number` (the token after `amend-design`).
+Extract `story_issue` (the token after `amend-design`).
 
 ---
 
 ## Step 1 — Load Sprint Context
 
--> Load Sprint Snapshot for Sprint N (github skill). Hold $MILESTONE_ID, $STORIES, $REQUIREMENT, $TDD, $DESIGN.
+Fetch issue `#$STORY_ISSUE`. From its milestone title, derive Sprint $SPRINT_N. Load Sprint Snapshot for Sprint $SPRINT_N — hold `$MILESTONE_ID`, `$STORIES`, `$REQUIREMENT`, `$TDD`.
 
-**Mode-specific guard**: If `$DESIGN` is absent → report "No Design Instructions found for Sprint N — run `/designer write-design Sprint N` first" and stop.
+**Mode-specific guard**: if the requirement issue has no design hub comment (no comment body starting with `## Design Navigation`) → `⛔ No design hub found on the requirement issue — run /feature create-design $SPRINT_N first.` and stop.
 
----
-
-## Step 2 — Read the Design System
-
-Read `DESIGN.md` at the repo root in full. Capture exact token names, component names, and variant names — these are the authoritative vocabulary for all design instructions.
+Read `DESIGN.md` at the orchestrator root in full. Hold `$NEW_DS`.
 
 ---
 
-## Step 3 — Reconstruct the Mental Model
+## Step 2 — Load Design Hub and Identify Target Surfaces
 
-Work through all loaded material silently. Produce no output in this step. Build the following understanding before proceeding:
+Fetch the design hub comment on the requirement issue (the comment whose body starts with `## Design Navigation`). Parse the `### Per-surface Artifacts` table — each row gives a surface name + slug + mock UI blob URL + design instructions blob URL. Hold this as `$HUB_SURFACES` (the authoritative inventory of surfaces in scope for Sprint $SPRINT_N).
 
-**From $REQUIREMENT:**
-- What is the UX intent? What does the user want to feel or accomplish?
-- What does "done" look like from the PO's perspective?
-- What is explicitly out of scope?
-
-**From $STORIES:**
-- Which stories introduce new surfaces? Which modify existing ones?
-- What interactions and states does each UI story imply?
-- Which stories are flagged `story-updated` or `story-removed`?
-- What information hierarchy or data does each surface need to show?
-
-**From $DESIGN:**
-- What layout is currently specified?
-- What components are prescribed?
-- Are there open design questions in the issue?
-
-**From DESIGN.md:**
-- Which components cover sprint needs out of the box?
-- Are there any gaps — sprint needs something not in the inventory?
-- Which tokens apply to the affected surfaces?
-
-Complete when: you can name every affected surface, map each to the stories driving it, identify applicable components and tokens, and flag any design system gaps — without re-reading any issue.
-
-When complete, activate using this format:
-
-> Design Specialist active — Sprint N Design Instructions. Full knowledgebase loaded: [list what was loaded]. Ready to discuss changes or alternatives.
-
-Do not proceed to Step 4 until activation is complete.
+From `$HUB_SURFACES`, identify which surface (or surfaces) the story `#$STORY_ISSUE` owns by mapping the story body + ACs against the hub rows. If the mapping is ambiguous (story touches multiple hub rows, or doesn't match any), ask via `AskUserQuestion` to pick from `$HUB_SURFACES`. Hold the result as `$TARGET_SURFACES`.
 
 ---
 
-## Step 4 — Open Amendment Dialog
+## Step 3 — Open Amendment Dialog
 
 Ask a single `AskUserQuestion`:
 
-> What changed, and why? Describe the problem with the current Design Instructions and the direction you want to go — or share options you'd like to evaluate.
+> What changed in `#$STORY_ISSUE`'s design, and why? Describe the problem with the current per-surface design and the direction you want to go.
 
-Hold the response as **$CHANGE_INPUT**. Do not proceed until answered.
-
-Use $CHANGE_INPUT to engage in discussion — answer trade-off questions, surface constraints from the mental model, flag risks from loaded material. Continue iterating until the final direction is confirmed.
+Hold the response as `$CHANGE_INPUT`. Use it to engage in discussion — answer trade-off questions, flag risks from `$NEW_DS` / story context. Continue iterating until the final direction is confirmed.
 
 ---
 
-## Step 5 — Revise Design Instructions
+## Step 4 — Regenerate Affected Surface Files
 
-Use the current Design Instructions as the baseline. The output must be the full revised artifact, not a summary or diff.
+Ensure the orchestrator's sprint branch for Sprint $SPRINT_N is checked out.
 
-Evaluate each section against the confirmed change. Follow `../_design-structure.md` for structure and token/component conventions.
+For each surface in `$TARGET_SURFACES`, spawn one subagent (parallel, max 5; usually a single surface) to regenerate `<surface-slug>.md` + `<surface-slug>.html` at `<orchestrator-root>/sprint-<$SPRINT_N>/`.
 
-| Section | Update trigger |
-|---------|----------------|
-| Overview | Sprint UI goal or affected surfaces changed |
-| Layout | Any surface layout added, modified, or removed — sketch affected surfaces only via `../_design-layouts.md` |
-| Components | Any component added, changed, or removed |
-| Design Tokens | Any token usage added or changed |
-| UI States | Any state added, changed, or removed for affected surfaces |
-| Responsive Behavior | Any breakpoint behaviour added or changed |
-| Accessibility | Any ARIA, keyboard, or focus requirement added or changed |
+Pass context as a `<context>` XML block per the dispatch-agents protocol with per-surface `<inputs>`:
 
-Update the body of the $DESIGN issue with the revised content.
+```xml
+<inputs>
+  <surface>
+    <name>...</name>
+    <slug>...</slug>
+  </surface>
+  <story_acs>...</story_acs>
+  <new_ds>$NEW_DS</new_ds>
+  <change>$CHANGE_INPUT</change>
+</inputs>
+```
 
 ---
 
-## Step 6 — Classify Scope Changes and Label Affected Stories
+## Step 5 — Commit + Push
 
-From $STORIES, filter to only stories carrying the `implemented` label. Compare the revised Design Instructions against each implemented story and classify the impact:
+On the orchestrator's sprint branch, commit the regenerated files (commit message: `chore(design): amend sprint-{$SPRINT_N} for story #$STORY_ISSUE`). Push. Resolve blob URLs.
+
+---
+
+## Step 6 — Upsert Design Hub Comment on Requirement Issue
+
+Re-render `comment-design-hub` with the full updated per-surface table — load existing rows from the prior hub comment for every unchanged surface; replace rows for `$TARGET_SURFACES`.
+
+Find the existing design hub comment on the requirement issue (matched by body prefix `## Design Navigation`). Edit it in place.
+
+---
+
+## Step 7 — Classify Scope Impact and Label Implemented Stories
+
+From `$STORIES`, filter to stories with label `implemented`. Compare the revised per-surface design against each implemented story and classify the impact:
 
 | Classification | Condition |
 |----------------|-----------|
-| `additive` | Change adds new behaviour; existing implementation remains valid |
-| `breaking` | Change conflicts with or invalidates the existing implementation |
-| `structural` | Change requires full revisit; affected files treated as blank slate |
-| `unaffected` | Story is not touched by this change |
+| `additive` | Change adds new behaviour; existing implementation remains valid. |
+| `breaking` | Change conflicts with or invalidates the existing implementation. |
+| `structural` | Change requires full revisit; affected files treated as blank slate. |
+| `unaffected` | Story is not touched by this change. |
 
 Produce a **Scope Classification Table**:
 
 | Story | Title | Classification | Reason |
 |-------|-------|----------------|--------|
-| #N | title | additive / breaking / structural / unaffected | one sentence |
+| `#N` | title | additive / breaking / structural / unaffected | one sentence |
 
 If any classification is ambiguous, ask before proceeding.
 
-**Label updates**: For each story classified `additive`, `breaking`, or `structural`:
-- If the story has label `implemented` → add label `story-updated`.
-- If no `implemented` label → skip.
-
-Run all label additions in parallel.
+**Label updates**: for each story classified `additive`, `breaking`, or `structural` that carries the `implemented` label, add label `story-updated`. Run label additions in parallel.

@@ -23,7 +23,6 @@ EF Core migrations live in the `api` codebase at `src/Notism.Infrastructure/Migr
 | PO requirement | `requirement` |
 | BA-created story | `user-story` |
 | TDD issue | `technical-design` |
-| Design instructions issue | `design` |
 | Dev in progress | `in-progress` |
 | Story amended after creation | `story-updated` |
 | Story removed during requirement change | `story-removed` |

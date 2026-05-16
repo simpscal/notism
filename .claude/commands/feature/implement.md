@@ -33,7 +33,7 @@ Run in parallel:
 
    If no TDD issue exists, note it — subagents will derive scope from the story ACs and the existing codebase.
 
-3. **Design Instructions** (frontend only) — list issues labeled `design` in the milestone. Read it in full — the document covers the entire sprint's UI design.
+3. **Design Instructions** (frontend only) — derive the requirement issue from the story's milestone (sprint snapshot). Find the design hub comment on the requirement issue (matched by body prefix `## Design Navigation`) and locate the row(s) for the story's surface(s). For each affected surface, read `<orchestrator-root>/sprint-<N>/<surface-slug>.md` from the orchestrator's sprint branch — the source of truth for layout, components, tokens, accessibility, interactive states, and dark-mode notes.
 
 Add label `in-progress` to the story issue.
 

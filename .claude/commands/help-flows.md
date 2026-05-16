@@ -7,7 +7,7 @@ tools: AskUserQuestion
 
 # /help-flows — Workflow Picker
 
-Goal: ask user what they want to do, then print **one exact command** they can copy-paste. Four workflows: `/feature`, `/hotfix`, `/test`, `/refactor`.
+Goal: ask user what they want to do, then print **one exact command** they can copy-paste. Five workflows: `/feature`, `/redesign`, `/hotfix`, `/test`, `/refactor`.
 
 ---
 
@@ -33,6 +33,9 @@ Options (label → stage id):
 - **Amend ACs on one story** → `feature-amend-ac`
 - **Add a story to current sprint** → `feature-add-story`
 - **Merge stories** → `feature-merge`
+- **Run a UI redesign** → `redesign-design`
+- **Amend a redesign story's design** → `redesign-amend-design`
+- **Implement a redesign story** → `redesign-implement`
 - **Production bug — fix it** → `hotfix-start`
 - **Continue a production bug** → `hotfix-continue`
 - **Write test cases** → `test-write`
@@ -60,6 +63,9 @@ Look up the chosen stage in the **Stage Map**. For each placeholder, ask via `As
 | `feature-add-story` | `<req#>` | `/feature add-story <req#>` |
 | `feature-merge` | `<target> <source>` | `/feature merge-stories <target> <source>` |
 | `feature-release` | `<sprint>` | `/feature release <sprint>` |
+| `redesign-design` | _(none)_ | `/redesign design` _(scope captured in one question; brief issue created mid-flow)_ |
+| `redesign-amend-design` | `<story#>` | `/redesign amend-design <story#>` _then follow-ups:_ `/redesign implement <story#>`, `/test amend <story#>`. |
+| `redesign-implement` | `<story#>` | `/redesign implement <story#>` |
 | `hotfix-start` | `[description]` | `/hotfix report <description>` |
 | `hotfix-continue` | _(see sub-stages)_ | Ask: which sub-stage — acs / implement / release. Map to `/hotfix acs <bug#>`, `/hotfix implement <bug#>`, `/hotfix release <bug#>`. |
 | `test-write` | `<issue>` | `/test write <issue>` |
@@ -130,6 +136,15 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 
 1. `/feature merge-stories <target_issue> <source_issue> [...]`
 
+### 🎨 Redesign
+
+1. `/redesign design`                              _← Phase 1: capture scope, build design system, file [Redesign Brief] issue, generate previews + stories + priority table_
+2. `/redesign amend-design <story_issue>`         _← amend one story's per-surface design; upserts hub comment; labels affected implemented stories `story-updated`_
+3. `/redesign implement <story_issue>`            _← Phase 2: follow the Priority Implementation Table on the brief issue; foundations first. Handles `story-updated` (Revisit branch)_
+3. `/test write <story_issue>`
+4. `/test pass <story_issue>` _or_ `/test block <story_issue> <notes>`
+5. `/feature release <sprint>`                     _← reuse /feature release; same milestone shape_
+
 ### 🚫 QA Fail Loop
 
 1. `/feature fix-story <story_issue>` _(or `/hotfix fix-bug <bug_issue>`)_
@@ -161,8 +176,7 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 ### 🛠 Setup (one-off utility)
 
 - `/setup init`
-- `/setup pcd create` / `/setup pcd amend [section]`
-- `/setup design-system create` / `/setup design-system amend`
+- For `PRODUCT.md` or `DESIGN.md`: describe the change in natural language (e.g. "create the product context", "amend the vision section", "regenerate DESIGN.md").
 
 ---
 
