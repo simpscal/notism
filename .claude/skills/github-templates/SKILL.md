@@ -1,10 +1,10 @@
 ---
-name: artifacts
+name: github-templates
 description: Format GitHub issues, PRs, and comments via `render_template()`. Auto-invoke on any `render_template()` call; never read template files directly.
 tools: Read, Glob
 ---
 
-# Artifacts
+# GitHub Templates
 
 ## render_template(name, fields)
 
