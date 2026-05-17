@@ -120,9 +120,7 @@ Run a short brainstorm to surface the desired visual outcome before collecting a
 
 After all three rounds are complete and all answers are concrete, proceed to Phase 2.
 
-**Phase 2 — Synthesise and propose.** Based on the brainstorm and the Design Direction from Step 3, derive a candidate token set and present it back to the user in plain language before committing to it. Example:
-
-> "Based on what you've described, I'm thinking: a deep navy primary (`#1B2A4A`), warm white surface (`#FAF9F7`), Inter typeface at medium weight, rounded corners (sm: 4px, md: 8px, lg: 16px), and light mode only. Does this match your vision, or would you like to adjust anything?"
+**Phase 2 — Synthesise and propose.** Based on the brainstorm and the Design Direction from Step 3, derive a complete candidate token set and present it back to the user in plain language before committing to it. The proposal must cover every dimension from the brainstorm — palette (primary, accent, surfaces, foreground, semantic, borders), mode, typography (family, weights, scale, usage), layout (spacing unit, shell, container, breakpoints), shape (full radius scale + assignment), elevation (shadow tiers + overlay), borders, component style — so the user sees the full direction, not a sketch. Use concrete values (hex, px, rem), not vibes.
 
 Iterate on the proposal until the user confirms. Only then move to Phase 3.
 
