@@ -77,11 +77,9 @@ On the orchestrator's sprint branch, commit `DESIGN.md` and `sprint-<N>/index.ht
 
 ## Step 4 — Create Redesign Brief Issue
 
-Compose a paragraph summarising the **desired design outcome** — what the new design system delivers and how it feels. Anchor it in `$DESIGN_DIRECTION` (atmosphere, layout pattern, references) and the concrete token / component decisions that landed in the revised `DESIGN.md`. The summary should let a reader who has not seen `DESIGN.md` understand what the redesign is trying to achieve.
+Render the body from the `issue-redesign-brief` template with `{atmosphere}`, `{layout_pattern}`, `{references}` — from `$DESIGN_DIRECTION`.
 
-Render the body from the `issue-redesign-brief` template with `{design_summary}`.
-
-Create the issue with title `[Redesign Brief] <concise outcome title>` (derived from the design summary), labels `redesign-brief` + `redesign`, milestone `Sprint $SPRINT_N`. Hold the resulting issue number as `$BRIEF_ISSUE_NUMBER`.
+Create the issue with title `[Redesign Brief] <concise outcome title>` (derived from the atmosphere + layout pattern), labels `redesign`, milestone `Sprint $SPRINT_N`. Hold the resulting issue number as `$BRIEF_ISSUE_NUMBER`.
 
 The brief is the scope-of-record for this sprint and the parent of every redesign story created in Step 6.
 
