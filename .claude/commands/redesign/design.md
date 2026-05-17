@@ -87,14 +87,14 @@ The brief is the scope-of-record for this sprint and the parent of every redesig
 
 ## Step 5 — Generate Design Instructions + Mockups
 
-Place every emitted file in `<orchestrator-root>/sprint-<$SPRINT_N>/` on the orchestrator's sprint branch (flat, no subdirs).
+Place design-instructions markdown in `<orchestrator-root>/sprint-<$SPRINT_N>/instructions/` and HTML mockups in `<orchestrator-root>/sprint-<$SPRINT_N>/mockups/` on the orchestrator's sprint branch.
 
 ### 5a — Spawn per-surface subagents (parallel, max 5 concurrent)
 
-For each surface in `$SURFACES`, spawn one subagent — **maximum 5 in parallel**. If `$SURFACES` has more than 5 entries, run in batches of up to 5 (send one message with up to 5 Agent tool calls; wait for the batch to complete; send the next batch). Each subagent owns one surface and emits two files to `<orchestrator-root>/sprint-<$SPRINT_N>/`:
+For each surface in `$SURFACES`, spawn one subagent — **maximum 5 in parallel**. If `$SURFACES` has more than 5 entries, run in batches of up to 5 (send one message with up to 5 Agent tool calls; wait for the batch to complete; send the next batch). Each subagent owns one surface and emits two files:
 
-- `<surface-slug>.md` — per-surface design instructions for the surface.
-- `<surface-slug>.html` — per-surface HTML mockup for the surface.
+- `<orchestrator-root>/sprint-<$SPRINT_N>/instructions/<surface-slug>.md` — per-surface design instructions for the surface.
+- `<orchestrator-root>/sprint-<$SPRINT_N>/mockups/<surface-slug>.html` — per-surface HTML mockup for the surface.
 
 Pass context as a `<context>` XML block per the dispatch-agents protocol with the following per-surface `<inputs>`:
 
@@ -112,7 +112,7 @@ After all subagents finish, gather their returned paths into `$INSTRUCTIONS_LINK
 
 ### 5b — Surface for review
 
-Present a per-surface bullet list of every `sprint-<N>/<surface>.md` and `sprint-<N>/<surface>.html` local path to the user.
+Present a per-surface bullet list of every `sprint-<N>/instructions/<surface>.md` and `sprint-<N>/mockups/<surface>.html` local path to the user.
 
 ### 5c — Approval gate
 
@@ -123,7 +123,7 @@ Use `AskUserQuestion`:
 
 ### 5d — Commit + Push (on approve)
 
-On the orchestrator's sprint branch, commit every `sprint-<N>/<surface>.md` and `sprint-<N>/<surface>.html` (e.g. `chore(redesign): sprint-{N} design instructions and mockups`). Push. Resolve blob URLs into `$INSTRUCTIONS_LINKS` and `$MOCK_LINKS`.
+On the orchestrator's sprint branch, commit every `sprint-<N>/instructions/<surface>.md` and `sprint-<N>/mockups/<surface>.html` (e.g. `chore(redesign): sprint-{N} design instructions and mockups`). Push. Resolve blob URLs into `$INSTRUCTIONS_LINKS` and `$MOCK_LINKS`.
 
 ---
 

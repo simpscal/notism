@@ -43,10 +43,10 @@ Ensure the orchestrator's sprint branch for Sprint $SPRINT_N is checked out.
 
 ## Step 3 — Re-spawn Per-Surface Subagents for Affected Surfaces Only (parallel, max 5)
 
-For each surface in `$AFFECTED_SURFACES`, spawn one subagent — max 5 in parallel, batched if needed. Each subagent emits the surface's two files to `<orchestrator-root>/sprint-<$SPRINT_N>/`:
+For each surface in `$AFFECTED_SURFACES`, spawn one subagent — max 5 in parallel, batched if needed. Each subagent emits the surface's two files:
 
-- **New** / **Modified** — regenerate `<surface-slug>.md` + `<surface-slug>.html`.
-- **Removed** — delete `<surface-slug>.md` and `<surface-slug>.html` from the sprint branch.
+- **New** / **Modified** — regenerate `<orchestrator-root>/sprint-<$SPRINT_N>/instructions/<surface-slug>.md` + `<orchestrator-root>/sprint-<$SPRINT_N>/mockups/<surface-slug>.html`.
+- **Removed** — delete `<orchestrator-root>/sprint-<$SPRINT_N>/instructions/<surface-slug>.md` and `<orchestrator-root>/sprint-<$SPRINT_N>/mockups/<surface-slug>.html` from the sprint branch.
 
 Pass context per the dispatch-agents protocol with the same per-surface `<inputs>` shape used by `create-design.md` (surface, story_acs, new_ds).
 

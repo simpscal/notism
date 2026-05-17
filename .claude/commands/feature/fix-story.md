@@ -15,7 +15,7 @@ Gather in parallel:
 2. **QA test cases comment** — search for comment with heading `## QA Test Cases`. Read in full. Identify all failing test cases: any `- [ ]` item that is unchecked. These are the primary scope driver — fix only what failed here.
 3. **[Bug path only] Investigation comment** — search for comment with heading `## Dev Investigation`. Extract Root Cause, Scope, Fix Approach, Risk verbatim.
 4. **TDD** *(optional)* — list issues labeled `technical-design` in the milestone. If found, read in full and extract: components design, API specification, data models, failure modes.
-5. **Design Instructions** (frontend only) — derive the requirement issue from the story's milestone. Find the design hub comment on the requirement issue (matched by body prefix `## Design Navigation`) and locate the row(s) for the story's surface(s). For each affected surface, read `<orchestrator-root>/sprint-<N>/<surface-slug>.md` from the orchestrator's sprint branch.
+5. **Design Instructions** (frontend only) — derive the requirement issue from the story's milestone. Find the design hub comment on the requirement issue (matched by body prefix `## Design Navigation`) and locate the row(s) for the story's surface(s). For each affected surface, read `<orchestrator-root>/sprint-<N>/instructions/<surface-slug>.md` from the orchestrator's sprint branch.
 
 ---
 

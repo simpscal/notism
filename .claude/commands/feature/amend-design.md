@@ -35,7 +35,7 @@ Hold the response as `$CHANGE_INPUT`. Use it to engage in discussion — answer 
 
 Ensure the orchestrator's sprint branch for Sprint $SPRINT_N is checked out.
 
-For each surface in `$TARGET_SURFACES`, spawn one subagent (parallel, max 5; usually a single surface) to regenerate `<surface-slug>.md` + `<surface-slug>.html` at `<orchestrator-root>/sprint-<$SPRINT_N>/`.
+For each surface in `$TARGET_SURFACES`, spawn one subagent (parallel, max 5; usually a single surface) to regenerate `<orchestrator-root>/sprint-<$SPRINT_N>/instructions/<surface-slug>.md` + `<orchestrator-root>/sprint-<$SPRINT_N>/mockups/<surface-slug>.html`.
 
 Pass context as a `<context>` XML block per the dispatch-agents protocol with per-surface `<inputs>`:
 

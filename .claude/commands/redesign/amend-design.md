@@ -115,7 +115,7 @@ If the user bailed at 4d without approving (5x iterate + abandon), `$NEW_DS` is 
 
 **Skip this step if `$CHANGE_TYPE == system`.**
 
-For each surface in `$TARGET_SURFACES` spawn one subagent (parallel, max 5; usually a single surface) to regenerate `<surface-slug>.md` + `<surface-slug>.html` at `<orchestrator-root>/sprint-<$SPRINT_N>/`.
+For each surface in `$TARGET_SURFACES` spawn one subagent (parallel, max 5; usually a single surface) to regenerate `<orchestrator-root>/sprint-<$SPRINT_N>/instructions/<surface-slug>.md` + `<orchestrator-root>/sprint-<$SPRINT_N>/mockups/<surface-slug>.html`.
 
 Pass context as a `<context>` XML block per the dispatch-agents protocol with per-surface `<inputs>`:
 
@@ -131,7 +131,7 @@ Pass context as a `<context>` XML block per the dispatch-agents protocol with pe
 </inputs>
 ```
 
-On the orchestrator's sprint branch, commit every regenerated `<slug>.md` + `<slug>.html` with message:
+On the orchestrator's sprint branch, commit every regenerated `instructions/<slug>.md` + `mockups/<slug>.html` with message:
 
 ```
 chore(redesign): amend sprint-{$SPRINT_N} for story #$STORY_ISSUE

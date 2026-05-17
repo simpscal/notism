@@ -1,6 +1,6 @@
 ---
 name: design-mockup
-description: Use when generating or amending a per-surface HTML mockup (`sprint-<N>/<surface-slug>.html`) — a viewable wireframe for human review.
+description: Use when generating or amending a per-surface HTML mockup (`sprint-<N>/mockups/<surface-slug>.html`) — a viewable wireframe for human review.
 tools: Read, Write, Edit
 ---
 
@@ -62,4 +62,4 @@ Wrap each per-state region in a `<main>` container and stack states with `<hr>` 
 - **No token-to-class mapping.** No `bg-{token}`, `text-{token}`, `component-{name}-{variant}-{size}`. Use the sketch primitives (`.sketch-component`, `.sketch-label`, `.sketch-placeholder`) and minimal layout helpers.
 - **No external CSS, fonts, images, or JavaScript.** Inline `<style>`; CSS-only placeholders for images.
 - **Stack states in one file.** Default first, then Loading, Empty, Error, Success, Mobile/Tablet/Desktop variants. Use `<hr>` dividers + `<h3>` labels.
-- **File naming**: kebab-case `<surface-slug>.html`. Slug matches the paired `<surface-slug>.md`.
+- **File naming**: kebab-case `<surface-slug>.html`. Slug matches the paired `<surface-slug>.md`. File location: `sprint-<N>/mockups/<surface-slug>.html` (paired instructions live at `sprint-<N>/instructions/<surface-slug>.md`).

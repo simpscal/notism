@@ -1,6 +1,6 @@
 ---
 name: design-instructions
-description: Use when generating or amending per-surface design-instructions markdown (`sprint-<N>/<surface-slug>.md`) — layout YAML tree per state, responsive, a11y, components, spacing, tokens, icons, media, elevation, interactive states, dark mode.
+description: Use when generating or amending per-surface design-instructions markdown (`sprint-<N>/instructions/<surface-slug>.md`) — layout YAML tree per state, responsive, a11y, components, spacing, tokens, icons, media, elevation, interactive states, dark mode.
 tools: Read, Write, Edit
 ---
 
@@ -166,4 +166,4 @@ One bullet per anchor whose dark-mode treatment is not fully captured by swappin
 - **Interactive States** table specifies hover / focus-visible / active / disabled visuals per interactive anchor. Inherit the design system's component state defaults; only fill rows when this surface overrides them.
 - **Dark Mode Notes** captures per-anchor adjustments that token swapping alone does not handle (shadow opacity reduction, illustration variant, surface elevation step). Omit the section when every anchor inherits cleanly.
 - Short inline diagrams allowed for trivial changes (badge added to existing region) — full box-drawing only when structure changes.
-- File naming: kebab-case of surface name (e.g. `comment-panel.md`, `menu-detail.md`).
+- File naming: kebab-case of surface name (e.g. `comment-panel.md`, `menu-detail.md`). File location: `sprint-<N>/instructions/<surface-slug>.md`.

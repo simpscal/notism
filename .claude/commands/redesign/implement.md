@@ -17,7 +17,7 @@ Run in parallel:
    - Design-primitives dependency list from the Notes section.
    - The `requirement_issue` slot in the story body points at the **brief issue** — that is also the navigation hub.
 
-2. **Design instructions file** — check out the orchestrator repo's sprint branch (`sprint-<$SPRINT_N>`, where `$SPRINT_N` comes from the story's milestone title) and `Read` `sprint-<N>/<surface-slug>.md` from the orchestrator's working tree. The file is the source-of-truth for the coding agent: Layout per state (YAML tree with anchors), Responsive, Accessibility, Components used.
+2. **Design instructions file** — check out the orchestrator repo's sprint branch (`sprint-<$SPRINT_N>`, where `$SPRINT_N` comes from the story's milestone title) and `Read` `sprint-<N>/instructions/<surface-slug>.md` from the orchestrator's working tree. The file is the source-of-truth for the coding agent: Layout per state (YAML tree with anchors), Responsive, Accessibility, Components used.
 
 Add label `in-progress` to the story issue.
 
@@ -50,7 +50,7 @@ Fetch the PR from Step 2. Produce a **delta summary**:
 | Already implemented / correct | ACs still satisfied — do not change |
 | New / changed ACs | ACs in the updated issue not yet satisfied |
 | Removed ACs | ACs from the original PR no longer in the updated issue |
-| Design delta | Design drift from current PR vs the regenerated `<surface-slug>.md` |
+| Design delta | Design drift from current PR vs the regenerated `instructions/<surface-slug>.md` |
 | Affected files | Files already in the PR — do not duplicate work |
 
 ---
@@ -67,7 +67,7 @@ Spawn `frontend` only. Pass context as a `<context>` XML block per the dispatch-
   </acceptance_criteria>
 
   <design_instructions>
-    <!-- verbatim contents of orchestrator sprint-<N>/<surface-slug>.md — sole source-of-truth for the agent -->
+    <!-- verbatim contents of orchestrator sprint-<N>/instructions/<surface-slug>.md — sole source-of-truth for the agent -->
   </design_instructions>
 
   <constraints>Use PRODUCTION components from the web codebase. Resolve component imports from the codebase, not from any mock.</constraints>
