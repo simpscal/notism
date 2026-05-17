@@ -1,96 +1,99 @@
 ---
-version: alpha
+version: beta
 name: Notism
 
 colors:
-  background: "#ffffff"
-  foreground: "#09090b"
-  card: "#ffffff"
-  card-foreground: "#09090b"
-  popover: "#ffffff"
-  popover-foreground: "#09090b"
-  primary: "#f07316"
+  primary: "#1a7a50"
   primary-foreground: "#ffffff"
-  secondary: "#f4f4f5"
-  secondary-foreground: "#27272a"
-  muted: "#f4f4f5"
-  muted-foreground: "#71717a"
-  accent: "#f4f4f5"
-  accent-foreground: "#27272a"
-  destructive: "#dc2626"
-  border: "#e4e4e7"
-  input: "#e4e4e7"
-  ring: "#f07316"
-  success: "#166534"
-  warning: "#92400e"
-  info: "#1d4ed8"
-  sidebar: "#fafafa"
-  sidebar-foreground: "#09090b"
-  sidebar-primary: "#f07316"
+  background: "#ffffff"
+  foreground: "#0f172a"
+  card: "#ffffff"
+  card-foreground: "#0f172a"
+  popover: "#ffffff"
+  popover-foreground: "#0f172a"
+  sidebar: "#f8fafc"
+  sidebar-foreground: "#0f172a"
+  sidebar-primary: "#1a7a50"
   sidebar-primary-foreground: "#ffffff"
-  sidebar-accent: "#f4f4f5"
-  sidebar-accent-foreground: "#27272a"
-  sidebar-border: "#e4e4e7"
-  sidebar-ring: "#f07316"
-  chart-1: "#ea580c"
-  chart-2: "#0d9488"
-  chart-3: "#1e40af"
-  chart-4: "#84cc16"
-  chart-5: "#eab308"
+  sidebar-accent: "#f0fdf4"
+  sidebar-accent-foreground: "#134e37"
+  sidebar-border: "#e2e8f0"
+  sidebar-ring: "#1a7a50"
+  secondary: "#f1f5f9"
+  secondary-foreground: "#1e293b"
+  muted: "#f8fafc"
+  muted-foreground: "#64748b"
+  accent: "#f0fdf4"
+  accent-foreground: "#134e37"
+  border: "#e2e8f0"
+  input: "#e2e8f0"
+  ring: "#1a7a50"
+  destructive: "#dc2626"
+  success: "#16a34a"
+  warning: "#d97706"
+  info: "#2563eb"
+  chart-1: "#1a7a50"
+  chart-2: "#16a34a"
+  chart-3: "#2563eb"
+  chart-4: "#d97706"
+  chart-5: "#dc2626"
 
 typography:
   xs:
-    fontFamily: "Noto Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: 0.75rem
+    fontFamily: "DM Sans, system-ui, sans-serif"
+    fontSize: 12px
     fontWeight: 400
-    lineHeight: 1rem
+    lineHeight: 1.4
+    letterSpacing: 0.01em
   sm:
-    fontFamily: "Noto Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: 0.875rem
+    fontFamily: "DM Sans, system-ui, sans-serif"
+    fontSize: 14px
     fontWeight: 400
-    lineHeight: 1.25rem
+    lineHeight: 1.5
   base:
-    fontFamily: "Noto Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: 1rem
+    fontFamily: "DM Sans, system-ui, sans-serif"
+    fontSize: 16px
     fontWeight: 400
-    lineHeight: 1.5rem
+    lineHeight: 1.6
   lg:
-    fontFamily: "Noto Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: 1.125rem
-    fontWeight: 600
-    lineHeight: 1.75rem
+    fontFamily: "DM Sans, system-ui, sans-serif"
+    fontSize: 18px
+    fontWeight: 500
+    lineHeight: 1.5
   xl:
-    fontFamily: "Noto Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: 1.25rem
-    fontWeight: 600
-    lineHeight: 1.75rem
+    fontFamily: "DM Sans, system-ui, sans-serif"
+    fontSize: 20px
+    fontWeight: 500
+    lineHeight: 1.4
   2xl:
-    fontFamily: "Noto Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: 1.5rem
-    fontWeight: 700
-    lineHeight: 2rem
+    fontFamily: "DM Sans, system-ui, sans-serif"
+    fontSize: 24px
+    fontWeight: 600
+    lineHeight: 1.3
+    letterSpacing: -0.02em
   3xl:
-    fontFamily: "Noto Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: 1.875rem
-    fontWeight: 700
-    lineHeight: 2.25rem
+    fontFamily: "DM Sans, system-ui, sans-serif"
+    fontSize: 30px
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: -0.03em
 
 rounded:
-  sm: 0.5rem
-  md: 0.625rem
-  lg: 0.75rem
-  xl: 1rem
+  sm: 4px
+  md: 6px
+  lg: 8px
+  xl: 12px
   full: 9999px
 
 spacing:
-  1: 0.25rem
-  2: 0.5rem
-  3: 0.75rem
-  4: 1rem
-  6: 1.5rem
-  8: 2rem
-  12: 3rem
-  16: 4rem
+  1: 4px
+  2: 8px
+  3: 12px
+  4: 16px
+  6: 24px
+  8: 32px
+  12: 48px
+  16: 64px
 
 components:
   button:
@@ -98,19 +101,18 @@ components:
     textColor: "{colors.primary-foreground}"
     typography: "{typography.sm}"
     rounded: "{rounded.md}"
-    height: 2.25rem
-    padding: 0.5rem 1rem
+    height: 2.5rem
+    padding: 0 1.25rem
   input:
     backgroundColor: "{colors.background}"
     textColor: "{colors.foreground}"
     typography: "{typography.sm}"
     rounded: "{rounded.md}"
     height: 2.25rem
-    padding: 0.25rem 0.75rem
+    padding: 0 0.75rem
   card:
     backgroundColor: "{colors.card}"
     textColor: "{colors.card-foreground}"
-    typography: "{typography.base}"
     rounded: "{rounded.xl}"
     padding: 1.5rem
   badge:
@@ -121,85 +123,87 @@ components:
     padding: 0.125rem 0.625rem
 ---
 
-# Notism Design System
-
 ## Overview
 
-Notism's visual identity is built around appetite, speed, and warmth. The interface should make users feel hungry and excited — instantly communicating that food is just a few taps away. Every design decision reinforces this: a deep, vivid orange primary energises the UI and signals action; clean white surfaces keep food and content in focus; generous but purposeful corner radii soften the experience without sacrificing efficiency.
+Notism is a food ordering platform built for speed and simplicity — serving hungry locals who want to browse, order, and pay without friction. The design is warm, approachable, and food-forward: it gets out of the way so the menu takes centre stage, then nudges customers confidently toward checkout.
 
-**Visual identity:** High-contrast warm orange against clean neutral backgrounds. Flat, food-forward surfaces with minimal ornamentation. Noto Sans across all weights keeps the UI legible and friendly without feeling stiff.
+**Visual identity:** Crisp white backgrounds anchor the layout, while deep emerald green (`#1a7a50`) serves as the single dominant accent — used for primary CTAs, active states, and key data highlights. Components are slightly rounded with hairline borders, creating a structured yet friendly aesthetic that scales from the customer-facing ordering flow to the admin order dashboard without visual disconnect.
 
-**Color rationale:** Orange is the appetite colour — used broadly in food contexts globally. The primary (`#f07316`) is vivid enough to command attention on CTAs while remaining readable on white. Secondary and muted surfaces use near-neutral zinc tones so the orange always leads.
+**Color rationale:** Primary `#1a7a50` is a deep, natural emerald that signals freshness and quality at 5.3:1 contrast on white — choosing green over the warm orange common to food apps to differentiate the brand and evoke a sense of care and wholeness. Surfaces stay pure white so food photography and card content breathe freely. The pale green accent tint (`#f0fdf4`) marks active sidebar items and hover regions without competing with primary CTAs.
 
-**Typographic approach:** Noto Sans (loaded at weights 300–700) provides warmth and legibility across all content densities. Body and control text sits at `sm` (14px); card titles at `lg` (18px, semibold); page headings at `2xl`–`3xl`.
+**Typographic approach:** DM Sans at regular weight (400/500/600) carries the friendly-and-fast brand voice. Its geometric-humanist construction reads cleanly at the smallest label sizes (12px badge text, timestamps) and stays approachable at display sizes (30px hero headings, food card names). Weight steps provide hierarchy; decorative or display typefaces are not used.
 
-**Spatial atmosphere:** Comfortable spacing (base unit 4px) with generous card padding (24px). Radius scale runs from `md` (10px) on controls to `xl` (16px) on cards to `full` on pills, giving the UI a rounded, approachable feel reminiscent of Grab/Foodpanda.
+**Spatial atmosphere:** A 4px base unit scaled to generous section gutters (24–32px) and card padding (24px) gives each food card and action element room to breathe on both mobile and desktop. The max-width container (1120px) keeps content centred and line lengths readable on wide screens. The overall rhythm is relaxed — never cramped.
 
-**Mode behaviour:** Light mode is the default (white backgrounds, near-black foreground). Full dark mode is supported — dark surfaces shift to near-black (`#0a0a0a` background, `#18181b` cards) with the same orange primary and updated semantic colours. Token names are identical across both modes; values are overridden via the `.dark` class.
+**Mode behaviour:** Full light and dark support. Light mode is the primary experience, built on pure white. Dark mode flips surfaces to `#0f172a`/`#1e293b`, preserves the primary emerald green for all CTAs and interactive states, and reverses foreground/background tokens. The spatial rhythm and component sizing are identical across both modes.
 
 ---
 
 ## Colors
 
-All hex values below represent light mode. Dark mode overrides are listed in the table.
-
-### Primary palette
+### Primary Palette
 
 | Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| `primary` | `#f07316` | `#f07316` | CTAs, active states, focus rings, key interactive elements |
-| `primary-foreground` | `#ffffff` | `#ffffff` | Text/icons on primary backgrounds |
+|---|---|---|---|
+| primary | #1a7a50 | #1a7a50 | Primary CTA buttons, active focus rings, key price highlights |
+| primary-foreground | #ffffff | #ffffff | Text and icons on primary-coloured surfaces |
 
 ### Surfaces
 
 | Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| `background` | `#ffffff` | `#0a0a0a` | Page/app background |
-| `foreground` | `#09090b` | `#fafafa` | Default text |
-| `card` | `#ffffff` | `#18181b` | Card and popover surfaces |
-| `card-foreground` | `#09090b` | `#fafafa` | Text on cards |
-| `popover` | `#ffffff` | `#18181b` | Floating UI surfaces (dropdowns, tooltips) |
-| `popover-foreground` | `#09090b` | `#fafafa` | Text in popovers |
-| `sidebar` | `#fafafa` | `#18181b` | Sidebar surface |
-| `sidebar-foreground` | `#09090b` | `#fafafa` | Sidebar text |
+|---|---|---|---|
+| background | #ffffff | #0f172a | Page and app background |
+| foreground | #0f172a | #f8fafc | Default body text and icons |
+| card | #ffffff | #1e293b | Card container background |
+| card-foreground | #0f172a | #f8fafc | Text inside card containers |
+| popover | #ffffff | #1e293b | Dropdowns, tooltips, floating panels |
+| popover-foreground | #0f172a | #f8fafc | Text inside popovers |
+| sidebar | #f8fafc | #0f172a | Sidebar navigation background |
+| sidebar-foreground | #0f172a | #f8fafc | Default sidebar text |
+| sidebar-primary | #1a7a50 | #1a7a50 | Active sidebar item text and icon |
+| sidebar-primary-foreground | #ffffff | #ffffff | Text on sidebar primary backgrounds |
+| sidebar-accent | #f0fdf4 | #1e293b | Active sidebar item background |
+| sidebar-accent-foreground | #134e37 | #a7f3d0 | Text on sidebar accent background |
+| sidebar-border | #e2e8f0 | #334155 | Sidebar divider and section borders |
+| sidebar-ring | #1a7a50 | #1a7a50 | Focus ring inside sidebar |
 
-### Neutral / secondary
-
-| Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| `secondary` | `#f4f4f5` | `#27272a` | Secondary button background, alternate fills |
-| `secondary-foreground` | `#27272a` | `#fafafa` | Text on secondary |
-| `muted` | `#f4f4f5` | `#27272a` | Muted/inactive fills |
-| `muted-foreground` | `#71717a` | `#a1a1aa` | Placeholder text, de-emphasised labels |
-| `accent` | `#f4f4f5` | `#27272a` | Hover fills for ghost/outline interactions |
-| `accent-foreground` | `#27272a` | `#fafafa` | Text on accent |
-
-### Borders and inputs
+### Neutral / Secondary
 
 | Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| `border` | `#e4e4e7` | `rgba(255,255,255,0.1)` | Default borders |
-| `input` | `#e4e4e7` | `rgba(255,255,255,0.15)` | Input field borders |
-| `ring` | `#f07316` | `#f07316` | Focus ring colour (3px ring at 50% opacity) |
+|---|---|---|---|
+| secondary | #f1f5f9 | #1e293b | Secondary button backgrounds, chip backgrounds |
+| secondary-foreground | #1e293b | #f1f5f9 | Text on secondary backgrounds |
+| muted | #f8fafc | #1e293b | Subtle section backgrounds, table alternating rows |
+| muted-foreground | #64748b | #94a3b8 | Supporting text: descriptions, timestamps, metadata |
+| accent | #f0fdf4 | #1e293b | Hover and active tint on non-CTA interactive elements |
+| accent-foreground | #134e37 | #a7f3d0 | Text on accent backgrounds |
+
+### Borders and Inputs
+
+| Token | Light | Dark | Usage |
+|---|---|---|---|
+| border | #e2e8f0 | #334155 | Hairline borders on cards, inputs, dividers |
+| input | #e2e8f0 | #334155 | Input field border colour |
+| ring | #1a7a50 | #1a7a50 | Focus ring on all interactive elements |
 
 ### Semantic
 
 | Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| `destructive` | `#dc2626` | `#f87171` | Errors, delete actions |
-| `success` | `#166534` | `#4ade80` | Confirmed orders, payment success |
-| `warning` | `#92400e` | `#d97706` | Caution states, slow delivery warning |
-| `info` | `#1d4ed8` | `#60a5fa` | Informational callouts |
+|---|---|---|---|
+| destructive | #dc2626 | #ef4444 | Error states, delete actions, cancelled order status |
+| success | #16a34a | #22c55e | Confirmed, delivered, and completed states |
+| warning | #d97706 | #f59e0b | Preparing, pending, and caution states |
+| info | #2563eb | #3b82f6 | Informational callouts, tracking updates |
 
 ### Charts
 
 | Token | Value | Usage |
-|-------|-------|-------|
-| `chart-1` | `#ea580c` | Primary data series (orange) |
-| `chart-2` | `#0d9488` | Secondary data series (teal) |
-| `chart-3` | `#1e40af` | Tertiary data series (blue) |
-| `chart-4` | `#84cc16` | Quaternary data series (lime) |
-| `chart-5` | `#eab308` | Quinary data series (yellow) |
+|---|---|---|
+| chart-1 | #1a7a50 | Primary data series (revenue, orders) |
+| chart-2 | #16a34a | Secondary data series (completed, growth) |
+| chart-3 | #2563eb | Tertiary data series (users, sessions) |
+| chart-4 | #d97706 | Quaternary data series (pending, warnings) |
+| chart-5 | #dc2626 | Quinary data series (cancellations, errors) |
 
 ---
 
@@ -207,19 +211,19 @@ All hex values below represent light mode. Dark mode overrides are listed in the
 
 ### Font Family
 
-**Noto Sans** — loaded from Google Fonts at weights 300, 400, 500, 600, 700. Fallback stack: `ui-sans-serif, system-ui, sans-serif`.
+DM Sans — a geometric humanist sans-serif with friendly curves that communicate approachability without sacrificing readability. Loaded weights: 300, 400, 500, 600. Fallback stack: `DM Sans, system-ui, -apple-system, sans-serif`.
 
 ### Scale
 
 | Token | Size | Weight | Line Height | Usage |
-|-------|------|--------|-------------|-------|
-| `xs` | 12px / 0.75rem | 400 | 1rem | Badge labels, fine print, timestamps |
-| `sm` | 14px / 0.875rem | 400 | 1.25rem | Body text, button labels, input text, card descriptions |
-| `base` | 16px / 1rem | 400 | 1.5rem | Primary content areas, menu item descriptions |
-| `lg` | 18px / 1.125rem | 600 | 1.75rem | Card titles, section headings |
-| `xl` | 20px / 1.25rem | 600 | 1.75rem | Page sub-headings, modal titles |
-| `2xl` | 24px / 1.5rem | 700 | 2rem | Page headings |
-| `3xl` | 30px / 1.875rem | 700 | 2.25rem | Hero / display headings |
+|---|---|---|---|---|
+| xs | 12px | 400 | 1.4 | Badge labels, category chips, fine print, timestamps |
+| sm | 14px | 400 | 1.5 | Button labels, input text, table cells, card metadata |
+| base | 16px | 400 | 1.6 | Body copy, food descriptions, form field content |
+| lg | 18px | 500 | 1.5 | Card titles, section headings, food item names |
+| xl | 20px | 500 | 1.4 | Page sub-headings, modal titles |
+| 2xl | 24px | 600 | 1.3 | Page headings, dashboard section titles |
+| 3xl | 30px | 600 | 1.2 | Hero headings, landing page headline |
 
 ---
 
@@ -227,24 +231,24 @@ All hex values below represent light mode. Dark mode overrides are listed in the
 
 ### Grid Model
 
-Single-column on mobile, two-column on tablet (md: 768px), up to four-column on desktop (lg: 1024px) for menu grids.
+Single-column on mobile (< 640px). Two-column on tablet (640–1023px) for food card grids and settings forms. Three- to four-column on desktop (≥ 1024px) for the foods listing grid and admin data tables. Admin views use a fixed 220px sidebar plus a fluid main content area.
 
 ### Spacing Strategy
 
-4px base unit. Prefer spacing tokens `4` (1rem), `6` (1.5rem), `8` (2rem) for component internal padding; `12` (3rem) and `16` (4rem) for section separation.
+Base unit is 4px (0.25rem). All spacing values are multiples of this unit. Spacing token `4` (16px) is the default inner padding for tight components (badge horizontal padding, button horizontal padding); token `6` (24px) is the standard card and section padding; token `8` (32px) separates major page sections. Generous whitespace is the default — prefer `spacing.6` or `spacing.8` between distinct regions.
 
 ### Responsive Breakpoints
 
 | Breakpoint | Min-width | Typical use |
-|------------|-----------|-------------|
-| `sm` | 640px | Wider cards, 2-col layouts |
-| `md` | 768px | Tablet — 2-col food grid |
-| `lg` | 1024px | Desktop — sidebar + main content |
-| `xl` | 1280px | Wide desktop |
+|---|---|---|
+| sm | 640px | 2-column food card grid, wider form layouts |
+| md | 768px | Tablet layout, horizontal nav visibility |
+| lg | 1024px | 3-column food grid, full sidebar-plus-content layout |
+| xl | 1280px | 4-column admin tables, max container width |
 
 ### Overflow
 
-`html, body` use `overflow: hidden` — scrolling is handled within child containers.
+`html` and `body` have `overflow: hidden` on the x-axis and `overflow: auto` on y. Individual scroll containers (food listing, orders table, cart) scroll on `overflow-y: auto` with visible scrollbars on desktop and momentum scrolling (`-webkit-overflow-scrolling: touch`) on mobile.
 
 ---
 
@@ -252,15 +256,18 @@ Single-column on mobile, two-column on tablet (md: 768px), up to four-column on 
 
 ### Shadows
 
-`shadow-sm` (0 1px 2px rgba(0,0,0,0.05)) on cards — subtle lift to distinguish content from background. Popovers and dropdowns use the standard Radix UI shadow utility — heavier shadow to indicate higher elevation. Omit shadow entirely from non-elevated surfaces.
+| Level | Value | Used on |
+|---|---|---|
+| sm | 0 1px 2px rgba(0,0,0,0.05) | Food cards, form panels, sidebar sections |
+| md | 0 4px 12px rgba(0,0,0,0.08) | Popovers, dropdowns, floating menus |
 
 ### Borders
 
-Used on cards (`border`), inputs (`border-input`), and dividers. Border is the primary depth signal — use it to define containers, shadow to lift them.
+Hairline borders (`1px solid border`) define structural separation between list items, form regions, table rows, and card edges. Shadow is the elevation signal — cards sit above the page via `shadow-sm`; popovers float via `shadow-md`. Do not combine shadow and border on the same element unless both are structurally necessary.
 
 ### Overlays
 
-Semi-transparent dark overlay (`rgba(0,0,0,0.5)`) behind dialogs and modals.
+Modal and dialog backdrops: `rgba(0, 0, 0, 0.5)`. Applied as a full-viewport overlay behind the modal container. Dark mode uses the same value.
 
 ---
 
@@ -269,16 +276,16 @@ Semi-transparent dark overlay (`rgba(0,0,0,0.5)`) behind dialogs and modals.
 ### Radius Scale
 
 | Token | Value | Used on |
-|-------|-------|---------|
-| `rounded.sm` | 8px | Small utility elements |
-| `rounded.md` | 10px | Buttons (`rounded-md`), inputs, small chips |
-| `rounded.lg` | 12px | Default container radius |
-| `rounded.xl` | 16px | Cards (`rounded-xl`), large panels |
-| `rounded.full` | 9999px | Badges (pill shape), avatar circles |
+|---|---|---|
+| sm | 4px | Small chips, tags, inner radius of compound controls |
+| md | 6px | Buttons, inputs, select fields, small action menus |
+| lg | 8px | Popovers, dropdowns, notification toasts |
+| xl | 12px | Food cards, panel containers, page-level containers |
+| full | 9999px | Pill badges, avatar circles, loading indicators |
 
 ### Shape Language
 
-The rounded-heavy scale mirrors Grab/Foodpanda's approachable aesthetic. Controls use `md` (10px) to feel tappable and friendly. Cards use `xl` (16px) to create clear visual grouping. Badges use `full` to communicate a tag/label state clearly.
+The slightly-rounded aesthetic (4–12px) anchors the design between the sharp grids of enterprise dashboards and the pill-heavy softness of consumer apps. Controls (buttons, inputs) use `rounded-md` (6px) — visible but understated. Cards use `rounded-xl` (12px) for a softer, modern food-app feel. Badges and status indicators use `rounded-full` for instant visual distinction from rectangular content blocks.
 
 ---
 
@@ -288,67 +295,85 @@ The rounded-heavy scale mirrors Grab/Foodpanda's approachable aesthetic. Control
 
 #### Variants
 
-Six variants. Default variant shown first.
-
-| Property | Default | Destructive | Outline | Secondary | Ghost | Link |
-|----------|---------|-------------|---------|-----------|-------|------|
-| Background | `primary` | `destructive` | `background` | `secondary` | transparent | transparent |
-| Text | `primary-foreground` | white | `foreground` | `secondary-foreground` | `accent-foreground` | `primary` |
-| Hover | `primary` at 90% | `destructive` at 90% | `accent` at 10% + `primary/40` border | `secondary` at 80% | `accent` | underline |
+| Variant | Background | Text | Hover | Border |
+|---|---|---|---|---|
+| default | #1a7a50 (primary) | #ffffff | opacity 90% | none |
+| destructive | #dc2626 | #ffffff | opacity 90% | none |
+| outline | transparent | #0f172a (foreground) | #f8fafc (muted) | 1px #e2e8f0 (border) |
+| secondary | #f1f5f9 (secondary) | #1e293b | secondary/80 | none |
+| ghost | transparent | #0f172a (foreground) | #f8fafc (muted) | none |
+| link | transparent | #1a7a50 (primary) | underline decoration | none |
 
 #### Sizes
 
-| Size token | Height | Padding | Text |
-|------------|--------|---------|------|
-| `xs` | 24px (h-6) | 0.5rem horizontal | 12px |
-| `sm` | 32px (h-8) | 0.75rem horizontal | 14px |
-| `default` | 36px (h-9) | 1rem horizontal | 14px |
-| `lg` | 40px (h-10) | 1.5rem horizontal | 14px |
-| `icon` | 36px square | — | — |
+| Size | Height | Padding | Text size |
+|---|---|---|---|
+| xs | 28px | 0 10px | xs (12px) |
+| sm | 32px | 0 14px | sm (14px) |
+| default | 40px | 0 20px | sm (14px) |
+| lg | 48px | 0 28px | base (16px) |
+| icon | 40px × 40px | 0 | — |
 
 #### States
 
-`disabled` → `opacity-50`, `pointer-events-none`. Focus visible → `border-ring` + `ring-[3px] ring-ring/50`. Invalid → `border-destructive`, `ring-destructive/20`. Radius: `rounded-md` (10px) across all sizes.
+- **Disabled:** `opacity-50`, `pointer-events-none`. Applied to all variants.
+- **Focus visible:** `outline-none`, `border-ring`, `ring-[3px] ring-ring/50`. Ring uses primary green at 50% opacity.
+- **Invalid:** Not applicable to Button — the destructive variant serves as the visual signal for dangerous actions.
+
+---
 
 ### Input
 
-Single variant. Full-width by default.
+#### Sizing
 
-- Height: 36px (h-9)
-- Radius: `rounded.md` (10px)
-- Border: `border-input` with `bg-transparent` in light mode; `bg-input/30` in dark mode
-- Placeholder: `muted-foreground`
-- Focus: `border-ring` + `ring-[3px] ring-ring/50`
-- Error state: `border-destructive` + `ring-destructive/20`
-- Disabled: `opacity-50`, `cursor-not-allowed`
+Height 36px, horizontal padding 12px (0.75rem), border-radius `rounded-md` (6px).
+
+#### Border
+
+1px solid `input` token (`#e2e8f0` light / `#334155` dark). Background is transparent in light mode; `bg-input/30` in dark mode.
+
+#### Placeholder
+
+`muted-foreground` (#64748b light / #94a3b8 dark).
+
+#### States
+
+- **Focus:** `border-ring` (#1a7a50), `ring-[3px] ring-ring/15` — primary green ring at 15% opacity.
+- **Error:** `border-destructive` (#dc2626), `ring-[3px] ring-destructive/20`.
+- **Disabled:** `opacity-50`, `cursor-not-allowed`, `pointer-events-none`.
+
+---
 
 ### Card
 
-Structural container component with header, content, footer, and action slots.
+#### Sizing
 
-- Background: `card` / `card-foreground`
-- Radius: `rounded.xl` (16px)
-- Shadow: `shadow-sm`
-- Internal gap: 24px (gap-6) between sections
-- Padding: 24px vertical (py-6), 24px horizontal per slot (px-6)
-- `CardTitle`: `font-semibold`, `leading-none`
-- `CardDescription`: `text-sm`, `muted-foreground`
+Padding 24px (1.5rem) on all sides. Border-radius `rounded-xl` (12px). Shadow `shadow-sm`. Internal gap between slots: 16px (spacing.4).
+
+#### Slots
+
+- **CardHeader:** Contains `CardTitle` (typography `lg`, weight 600) and `CardDescription` (typography `sm`, `muted-foreground`). Bottom padding 16px.
+- **CardContent:** Body area. Typography `base`. No additional padding beyond card default.
+- **CardFooter:** Action area. Flex row, gap 8px. Optional top hairline border.
+- **CardAction:** Optional element in header for secondary controls (icon buttons, status badges). Positioned with `ml-auto`.
+
+---
 
 ### Badge
 
-Pill-shaped label. Variants: `default`, `secondary`, `destructive`, `outline`, `success`.
+#### Variants
 
 | Variant | Background | Text | Border |
-|---------|-----------|------|--------|
-| `default` | `primary` | `primary-foreground` | none |
-| `secondary` | `secondary` | `secondary-foreground` | none |
-| `destructive` | `destructive` | `destructive-foreground` | none |
-| `outline` | transparent | `foreground` | current colour |
-| `success` | `success/15` | `success` | `success/30` |
+|---|---|---|---|
+| default | #1a7a50 (primary) | #ffffff | none |
+| secondary | #f1f5f9 (secondary) | #1e293b | 1px #e2e8f0 (border) |
+| destructive | #fee2e2 | #991b1b | none |
+| outline | transparent | #0f172a (foreground) | 1px #e2e8f0 (border) |
+| success | #dcfce7 | #166534 | none |
 
-- Radius: `rounded.full` (pill)
-- Padding: 0.125rem 0.625rem (py-0.5 px-2.5)
-- Font: 12px, `font-semibold`
+#### Sizing
+
+Padding 2px 10px. Border-radius `rounded-full` (9999px) — always pill-shaped. Font: `typography.xs` (12px, weight 500). Text is never truncated; badges shrink to content width.
 
 ---
 
@@ -356,18 +381,20 @@ Pill-shaped label. Variants: `default`, `secondary`, `destructive`, `outline`, `
 
 ### Do
 
-- Use `primary` (`#f07316`) exclusively for the single primary CTA per view — one dominant orange action per screen keeps the eye moving toward checkout.
-- Use `rounded.xl` for all card-level containers; use `rounded.md` for all control-level elements (buttons, inputs, chips).
-- Use `muted-foreground` for secondary text and placeholders; never use raw grey values outside the token system.
-- Use the `success` badge variant to confirm order statuses; use `destructive` for cancellation or error states.
-- Maintain `shadow-sm` on cards and omit shadow from non-elevated surfaces to preserve visual hierarchy.
-- Apply `font-semibold` (weight 600) at `lg` size and above for headings; `font-medium` (500) for interactive labels; `font-normal` (400) for body copy.
+- Use `primary` (#1a7a50) exclusively for the dominant CTA on each screen — one primary button per view at most.
+- Apply generous padding (≥ 24px via `spacing.6`) between distinct page sections and inside card containers.
+- Use `border-border` (1px hairline) to separate list items, table rows, and form regions — provides structure without visual weight.
+- Use `muted-foreground` for supporting text: descriptions, timestamps, prices, and category labels against white or light surfaces.
+- Rely on `shadow-sm` to elevate food cards above the page — shadow is the primary depth signal for cards.
+- Apply semantic badge variants (`success`, `warning`, `destructive`) consistently for order status throughout the admin and customer order views.
+- Use `rounded-xl` (12px) on all card-like containers: food cards, order panels, settings sections.
 
 ### Don't
 
-- Don't use `primary` as a background colour for surfaces — it is reserved for interactive elements only.
-- Don't mix radius values arbitrarily — stick to `rounded.md` for controls, `rounded.xl` for containers, `rounded.full` for pills.
-- Don't use `success`, `warning`, or `info` colours for decorative purposes; they are semantic and carry status meaning.
-- Don't omit the focus ring (`ring-ring/50` at 3px) on any interactive element — accessibility is non-negotiable.
-- Don't render heading text below `lg` (18px semibold) — anything smaller is body copy, not a heading.
-- Don't place white or `primary-foreground` text on `secondary` or `muted` backgrounds — insufficient contrast.
+- Don't use the primary green as a background for decorative or non-interactive elements — it signals action and must remain meaningful.
+- Don't apply `shadow-md` or `shadow-sm` to buttons, inputs, or nav elements — shadow is reserved for cards and floating surfaces.
+- Don't introduce raw hex values in component styles — always reference a design token.
+- Don't use font weights above 600 — no extra-bold (700+) or black weights in the DM Sans scale.
+- Don't constrain input width below 100% of its parent column — inputs are always full-width within their layout column.
+- Don't place two `default` (primary) buttons adjacent to each other — pair primary with `outline` or `ghost` when two actions appear side-by-side.
+- Don't use the `accent` tint (#f0fdf4) as a page background — reserved for hover and active highlights on interactive elements only.

@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notism Design System — Beta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─────────────────────────────────────────
+       CSS CUSTOM PROPERTIES — DESIGN TOKENS
+    ───────────────────────────────────────── */
+    :root {
+      /* Colors */
+      --color-primary:                  #1a7a50;
+      --color-primary-foreground:       #ffffff;
+      --color-background:               #ffffff;
+      --color-foreground:               #0f172a;
+      --color-card:                     #ffffff;
+      --color-card-foreground:          #0f172a;
+      --color-popover:                  #ffffff;
+      --color-popover-foreground:       #0f172a;
+      --color-sidebar:                  #f8fafc;
+      --color-sidebar-foreground:       #0f172a;
+      --color-sidebar-primary:          #1a7a50;
+      --color-sidebar-primary-fg:       #ffffff;
+      --color-sidebar-accent:           #f0fdf4;
+      --color-sidebar-accent-fg:        #134e37;
+      --color-sidebar-border:           #e2e8f0;
+      --color-sidebar-ring:             #1a7a50;
+      --color-secondary:                #f1f5f9;
+      --color-secondary-foreground:     #1e293b;
+      --color-muted:                    #f8fafc;
+      --color-muted-foreground:         #64748b;
+      --color-accent:                   #f0fdf4;
+      --color-accent-foreground:        #134e37;
+      --color-border:                   #e2e8f0;
+      --color-input:                    #e2e8f0;
+      --color-ring:                     #1a7a50;
+      --color-destructive:              #dc2626;
+      --color-success:                  #16a34a;
+      --color-warning:                  #d97706;
+      --color-info:                     #2563eb;
+      --color-chart-1:                  #1a7a50;
+      --color-chart-2:                  #16a34a;
+      --color-chart-3:                  #2563eb;
+      --color-chart-4:                  #d97706;
+      --color-chart-5:                  #dc2626;
+
+      /* Rounded */
+      --rounded-sm:   4px;
+      --rounded-md:   6px;
+      --rounded-lg:   8px;
+      --rounded-xl:   12px;
+      --rounded-full: 9999px;
+
+      /* Spacing */
+      --space-1:  4px;
+      --space-2:  8px;
+      --space-3:  12px;
+      --space-4:  16px;
+      --space-6:  24px;
+      --space-8:  32px;
+      --space-12: 48px;
+      --space-16: 64px;
+    }
+
+    /* ─────────────────────────────────────────
+       DARK MODE TOKENS (html.dark overrides)
+    ───────────────────────────────────────── */
+    html.dark {
+      --color-primary:                  #1a7a50;
+      --color-primary-foreground:       #ffffff;
+      --color-background:               #0f172a;
+      --color-foreground:               #f8fafc;
+      --color-card:                     #1e293b;
+      --color-card-foreground:          #f8fafc;
+      --color-popover:                  #1e293b;
+      --color-popover-foreground:       #f8fafc;
+      --color-sidebar:                  #0f172a;
+      --color-sidebar-foreground:       #f8fafc;
+      --color-sidebar-primary:          #1a7a50;
+      --color-sidebar-primary-fg:       #ffffff;
+      --color-sidebar-accent:           #1e293b;
+      --color-sidebar-accent-fg:        #a7f3d0;
+      --color-sidebar-border:           #334155;
+      --color-sidebar-ring:             #1a7a50;
+      --color-secondary:                #1e293b;
+      --color-secondary-foreground:     #f1f5f9;
+      --color-muted:                    #1e293b;
+      --color-muted-foreground:         #94a3b8;
+      --color-accent:                   #1e293b;
+      --color-accent-foreground:        #a7f3d0;
+      --color-border:                   #334155;
+      --color-input:                    #334155;
+      --color-ring:                     #1a7a50;
+      --color-destructive:              #ef4444;
+      --color-success:                  #22c55e;
+      --color-warning:                  #f59e0b;
+      --color-info:                     #3b82f6;
+    }
+
+    /* ─────────────────────────────────────────
+       DARK TOGGLE BUTTON
+    ───────────────────────────────────────── */
+    .ds-mode-toggle {
+      position: fixed;
+      top: 16px;
+      right: 24px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--rounded-full);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+      cursor: pointer;
+      font-family: "DM Sans", system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-foreground);
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+    .ds-mode-toggle:hover {
+      border-color: var(--color-primary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .ds-mode-toggle__icon { font-size: 15px; }
+
+    /* ─────────────────────────────────────────
+       RESET + BASE
+    ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      background: var(--color-background);
+      color: var(--color-foreground);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ─────────────────────────────────────────
+       LAYOUT — SIDEBAR + MAIN
+    ───────────────────────────────────────── */
+    .ds-sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      background: var(--color-sidebar);
+      border-right: 1px solid var(--color-sidebar-border);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 24px 0;
+    }
+
+    .ds-sidebar__logo {
+      padding: 0 20px 20px;
+      border-bottom: 1px solid var(--color-sidebar-border);
+      margin-bottom: 16px;
+    }
+
+    .ds-sidebar__logo-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .ds-sidebar__logo-badge {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--color-accent);
+      color: var(--color-accent-foreground);
+      border-radius: var(--rounded-full);
+      padding: 2px 8px;
+    }
+
+    .ds-sidebar__nav {
+      list-style: none;
+      padding: 0 8px;
+    }
+
+    .ds-sidebar__nav-group {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-muted-foreground);
+      padding: 10px 12px 4px;
+      margin-top: 8px;
+    }
+
+    .ds-sidebar__nav li a {
+      display: block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-sidebar-foreground);
+      text-decoration: none;
+      border-radius: var(--rounded-md);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .ds-sidebar__nav li a:hover {
+      background: var(--color-sidebar-accent);
+      color: var(--color-sidebar-accent-fg);
+    }
+
+    .ds-main {
+      flex: 1;
+      min-width: 0;
+      padding: 48px 56px;
+      max-width: 1100px;
+    }
+
+    /* ─────────────────────────────────────────
+       PAGE HEADER
+    ───────────────────────────────────────── */
+    .ds-page-header {
+      margin-bottom: 56px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .ds-page-header h1 {
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--color-foreground);
+      letter-spacing: -0.02em;
+    }
+
+    .ds-page-header p {
+      margin-top: 8px;
+      font-size: 16px;
+      color: var(--color-muted-foreground);
+    }
+
+    /* ─────────────────────────────────────────
+       SECTION STRUCTURE
+    ───────────────────────────────────────── */
+    .ds-section {
+      margin-bottom: 72px;
+      scroll-margin-top: 32px;
+    }
+
+    .ds-section__header {
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .ds-section__title {
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--color-foreground);
+    }
+
+    .ds-section__desc {
+      margin-top: 4px;
+      font-size: 14px;
+      color: var(--color-muted-foreground);
+    }
+
+    .ds-subsection {
+      margin-bottom: 36px;
+    }
+
+    .ds-subsection__title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-muted-foreground);
+      margin-bottom: 16px;
+    }
+
+    /* ─────────────────────────────────────────
+       COLOR SWATCHES
+    ───────────────────────────────────────── */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .swatch {
+      border: 1px solid var(--color-border);
+      border-radius: var(--rounded-lg);
+      overflow: hidden;
+      background: var(--color-card);
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    }
+
+    .swatch__block {
+      height: 64px;
+      width: 100%;
+    }
+
+    .swatch__info {
+      padding: 10px 12px;
+    }
+
+    .swatch__token {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-foreground);
+      font-family: "DM Mono", "Fira Mono", "Consolas", monospace;
+      margin-bottom: 2px;
+    }
+
+    .swatch__hex {
+      font-size: 11px;
+      color: var(--color-muted-foreground);
+      font-family: "DM Mono", "Fira Mono", "Consolas", monospace;
+      margin-bottom: 4px;
+    }
+
+    .swatch__usage {
+      font-size: 10px;
+      color: var(--color-muted-foreground);
+      line-height: 1.4;
+    }
+
+    /* ─────────────────────────────────────────
+       TYPOGRAPHY SCALE
+    ───────────────────────────────────────── */
+    .type-scale {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .type-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      align-items: center;
+      gap: 24px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .type-row:last-child { border-bottom: none; }
+
+    .type-meta {
+      flex-shrink: 0;
+    }
+
+    .type-meta__token {
+      font-size: 11px;
+      font-weight: 600;
+      font-family: "DM Mono", "Fira Mono", "Consolas", monospace;
+      color: var(--color-primary);
+      margin-bottom: 2px;
+    }
+
+    .type-meta__detail {
+      font-size: 10px;
+      color: var(--color-muted-foreground);
+      line-height: 1.6;
+    }
+
+    .type-sample { color: var(--color-foreground); }
+
+    .type-xs   { font-size: 12px; font-weight: 400; line-height: 1.4; }
+    .type-sm   { font-size: 14px; font-weight: 400; line-height: 1.5; }
+    .type-base { font-size: 16px; font-weight: 400; line-height: 1.6; }
+    .type-lg   { font-size: 18px; font-weight: 500; line-height: 1.5; }
+    .type-xl   { font-size: 20px; font-weight: 500; line-height: 1.4; }
+    .type-2xl  { font-size: 24px; font-weight: 600; line-height: 1.3; }
+    .type-3xl  { font-size: 30px; font-weight: 600; line-height: 1.2; }
+
+    /* ─────────────────────────────────────────
+       SPACING BARS
+    ───────────────────────────────────────── */
+    .spacing-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .spacing-row {
+      display: grid;
+      grid-template-columns: 60px 80px 1fr;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .spacing-token {
+      font-size: 12px;
+      font-weight: 600;
+      font-family: "DM Mono", "Fira Mono", "Consolas", monospace;
+      color: var(--color-foreground);
+    }
+
+    .spacing-value {
+      font-size: 12px;
+      color: var(--color-muted-foreground);
+      font-family: "DM Mono", "Fira Mono", "Consolas", monospace;
+    }
+
+    .spacing-bar {
+      height: 16px;
+      background: var(--color-primary);
+      border-radius: var(--rounded-sm);
+      opacity: 0.8;
+    }
+
+    /* ─────────────────────────────────────────
+       ROUNDED TOKENS
+    ───────────────────────────────────────── */
+    .rounded-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: flex-end;
+    }
+
+    .rounded-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rounded-box {
+      width: 64px;
+      height: 64px;
+      background: var(--color-accent);
+      border: 2px solid var(--color-primary);
+    }
+
+    .rounded-meta {
+      text-align: center;
+    }
+
+    .rounded-meta__token {
+      font-size: 11px;
+      font-weight: 600;
+      font-family: "DM Mono", "Fira Mono", "Consolas", monospace;
+      color: var(--color-foreground);
+    }
+
+    .rounded-meta__value {
+      font-size: 10px;
+      color: var(--color-muted-foreground);
+    }
+
+    /* ─────────────────────────────────────────
+       COMPONENTS — BUTTONS
+    ───────────────────────────────────────── */
+    .component-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .component-table th {
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-muted-foreground);
+      background: var(--color-muted);
+      border: 1px solid var(--color-border);
+    }
+
+    .component-table td {
+      padding: 12px 16px;
+      border: 1px solid var(--color-border);
+      vertical-align: middle;
+    }
+
+    .component-table td:first-child {
+      font-size: 12px;
+      font-weight: 500;
+      font-family: "DM Mono", "Fira Mono", "Consolas", monospace;
+      color: var(--color-muted-foreground);
+      background: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    .btn-cell {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Base button reset */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "DM Sans", system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.15s, box-shadow 0.15s, background 0.15s, color 0.15s, border-color 0.15s;
+      border-radius: var(--rounded-md);
+    }
+
+    /* Default size */
+    .btn--default-size {
+      height: 2.5rem;
+      padding: 0 1.25rem;
+      font-size: 14px;
+    }
+
+    /* xs */
+    .btn--xs {
+      height: 1.75rem;
+      padding: 0 0.75rem;
+      font-size: 12px;
+    }
+
+    /* sm */
+    .btn--sm {
+      height: 2.125rem;
+      padding: 0 1rem;
+      font-size: 13px;
+    }
+
+    /* lg */
+    .btn--lg {
+      height: 2.75rem;
+      padding: 0 1.5rem;
+      font-size: 15px;
+    }
+
+    /* icon */
+    .btn--icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      font-size: 16px;
+    }
+
+    /* Variants */
+    .btn--variant-default {
+      background: var(--color-primary);
+      color: var(--color-primary-foreground);
+    }
+    .btn--variant-default:hover { opacity: 0.88; }
+
+    .btn--variant-destructive {
+      background: var(--color-destructive);
+      color: #ffffff;
+    }
+    .btn--variant-destructive:hover { opacity: 0.88; }
+
+    .btn--variant-outline {
+      background: transparent;
+      color: var(--color-foreground);
+      border: 1px solid var(--color-border);
+    }
+    .btn--variant-outline:hover {
+      background: var(--color-muted);
+    }
+
+    .btn--variant-secondary {
+      background: var(--color-secondary);
+      color: var(--color-secondary-foreground);
+    }
+    .btn--variant-secondary:hover { opacity: 0.85; }
+
+    .btn--variant-ghost {
+      background: transparent;
+      color: var(--color-foreground);
+    }
+    .btn--variant-ghost:hover {
+      background: var(--color-muted);
+    }
+
+    .btn--variant-link {
+      background: transparent;
+      color: var(--color-primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 0;
+      height: auto;
+    }
+    .btn--variant-link:hover { opacity: 0.75; }
+
+    /* ─────────────────────────────────────────
+       COMPONENTS — INPUTS
+    ───────────────────────────────────────── */
+    .input-states-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .input-state-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-state-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-muted-foreground);
+    }
+
+    .ds-input {
+      width: 100%;
+      height: 2.25rem;
+      padding: 0 0.75rem;
+      font-family: "DM Sans", system-ui, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--color-foreground);
+      background: var(--color-background);
+      border: 1px solid var(--color-input);
+      border-radius: var(--rounded-md);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none;
+    }
+
+    .ds-input--focus {
+      border-color: var(--color-ring);
+      box-shadow: 0 0 0 3px rgba(26,122,80,.18);
+    }
+
+    .ds-input--error {
+      border-color: var(--color-destructive);
+      box-shadow: 0 0 0 3px rgba(220,38,38,.15);
+    }
+
+    .ds-input--disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: var(--color-muted);
+    }
+
+    .input-error-msg {
+      font-size: 12px;
+      color: var(--color-destructive);
+      margin-top: 2px;
+    }
+
+    /* ─────────────────────────────────────────
+       COMPONENTS — CARD
+    ───────────────────────────────────────── */
+    .ds-card {
+      background: var(--color-card);
+      color: var(--color-card-foreground);
+      border-radius: var(--rounded-xl);
+      padding: 0;
+      border: 1px solid var(--color-border);
+      box-shadow: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.04);
+      max-width: 400px;
+    }
+
+    .ds-card__header {
+      padding: 24px 24px 0;
+    }
+
+    .ds-card__title {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .ds-card__desc {
+      font-size: 14px;
+      color: var(--color-muted-foreground);
+      margin-top: 4px;
+    }
+
+    .ds-card__content {
+      padding: 16px 24px;
+      font-size: 14px;
+      color: var(--color-foreground);
+      line-height: 1.6;
+    }
+
+    .ds-card__footer {
+      padding: 0 24px 24px;
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ─────────────────────────────────────────
+       COMPONENTS — BADGES
+    ───────────────────────────────────────── */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "DM Sans", system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      padding: 0.125rem 0.625rem;
+      border-radius: var(--rounded-full);
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .badge--default {
+      background: var(--color-primary);
+      color: var(--color-primary-foreground);
+      border-color: var(--color-primary);
+    }
+
+    .badge--secondary {
+      background: var(--color-secondary);
+      color: var(--color-secondary-foreground);
+      border-color: var(--color-secondary);
+    }
+
+    .badge--destructive {
+      background: var(--color-destructive);
+      color: #ffffff;
+      border-color: var(--color-destructive);
+    }
+
+    .badge--outline {
+      background: transparent;
+      color: var(--color-foreground);
+      border-color: var(--color-border);
+    }
+
+    .badge--success {
+      background: #dcfce7;
+      color: #15803d;
+      border-color: #bbf7d0;
+    }
+
+    /* ─────────────────────────────────────────
+       DARK MODE SECTION
+    ───────────────────────────────────────── */
+    .dark-surface {
+      background: #0f172a;
+      border-radius: var(--rounded-xl);
+      padding: 40px;
+    }
+
+    .dark-surface .ds-section__header {
+      border-bottom-color: #1e293b;
+    }
+
+    .dark-surface .ds-section__title {
+      color: #f8fafc;
+    }
+
+    .dark-surface .ds-section__desc {
+      color: #94a3b8;
+    }
+
+    .dark-surface .ds-subsection__title {
+      color: #94a3b8;
+    }
+
+    .dark-surface .component-table th {
+      background: #1e293b;
+      border-color: #334155;
+      color: #94a3b8;
+    }
+
+    .dark-surface .component-table td {
+      border-color: #334155;
+    }
+
+    .dark-surface .component-table td:first-child {
+      background: #1e293b;
+      color: #94a3b8;
+    }
+
+    /* Dark mode button variants */
+    .dark .btn--variant-outline {
+      color: #f8fafc;
+      border-color: #475569;
+    }
+    .dark .btn--variant-outline:hover {
+      background: #1e293b;
+    }
+
+    .dark .btn--variant-ghost {
+      color: #f8fafc;
+    }
+    .dark .btn--variant-ghost:hover {
+      background: #1e293b;
+    }
+
+    .dark .btn--variant-secondary {
+      background: #1e293b;
+      color: #f8fafc;
+    }
+
+    .dark .btn--variant-link {
+      color: #4ade80;
+    }
+
+    /* Dark mode inputs */
+    .dark-surface .ds-input {
+      background: #1e293b;
+      border-color: #334155;
+      color: #f8fafc;
+    }
+
+    .dark-surface .ds-input--focus {
+      border-color: #4ade80;
+      box-shadow: 0 0 0 3px rgba(74,222,128,.18);
+    }
+
+    .dark-surface .ds-input--error {
+      border-color: #f87171;
+      box-shadow: 0 0 0 3px rgba(248,113,113,.15);
+    }
+
+    .dark-surface .input-error-msg {
+      color: #f87171;
+    }
+
+    /* Dark mode card */
+    .dark-surface .ds-card {
+      background: #1e293b;
+      border-color: #334155;
+      color: #f8fafc;
+    }
+
+    .dark-surface .ds-card__desc {
+      color: #94a3b8;
+    }
+
+    .dark-surface .ds-card__content {
+      color: #cbd5e1;
+    }
+
+    /* Dark mode badges */
+    .dark-surface .badge--secondary {
+      background: #1e293b;
+      color: #cbd5e1;
+      border-color: #334155;
+    }
+
+    .dark-surface .badge--outline {
+      color: #f8fafc;
+      border-color: #475569;
+    }
+
+    .dark-surface .badge--success {
+      background: #14532d;
+      color: #86efac;
+      border-color: #15803d;
+    }
+
+    /* Dark swatch grid */
+    .dark-swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .dark-swatch {
+      border: 1px solid #334155;
+      border-radius: var(--rounded-lg);
+      overflow: hidden;
+    }
+
+    .dark-swatch__block {
+      height: 56px;
+    }
+
+    .dark-swatch__info {
+      padding: 8px 12px;
+      background: #1e293b;
+    }
+
+    .dark-swatch__token {
+      font-size: 11px;
+      font-weight: 600;
+      color: #f8fafc;
+      font-family: "DM Mono", "Fira Mono", "Consolas", monospace;
+    }
+
+    .dark-swatch__hex {
+      font-size: 10px;
+      color: #94a3b8;
+      font-family: "DM Mono", "Fira Mono", "Consolas", monospace;
+    }
+
+    /* Utility */
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 6px;
+      border-radius: var(--rounded-sm);
+      background: var(--color-accent);
+      color: var(--color-accent-foreground);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .section-anchor { display: block; }
+
+    /* Icon placeholder for icon button */
+    .icon-placeholder {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: currentColor;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
+      -webkit-mask-size: cover;
+      mask-size: cover;
+    }
+
+    @media (max-width: 768px) {
+      .ds-sidebar { display: none; }
+      .ds-main { padding: 24px 20px; }
+      .type-row { grid-template-columns: 1fr; }
+      .spacing-row { grid-template-columns: 60px 70px 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ───────── SIDEBAR NAV ───────── -->
+  <aside class="ds-sidebar">
+    <div class="ds-sidebar__logo">
+      <div class="ds-sidebar__logo-name">Notism</div>
+      <span class="ds-sidebar__logo-badge">Design System Beta</span>
+    </div>
+    <ul class="ds-sidebar__nav">
+      <li class="ds-sidebar__nav-group">Foundations</li>
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#typography">Typography</a></li>
+      <li><a href="#spacing">Spacing</a></li>
+      <li><a href="#rounded">Border Radius</a></li>
+      <li class="ds-sidebar__nav-group">Components</li>
+      <li><a href="#buttons">Buttons</a></li>
+      <li><a href="#inputs">Inputs</a></li>
+      <li><a href="#cards">Cards</a></li>
+      <li><a href="#badges">Badges</a></li>
+
+    </ul>
+
+  </aside>
+
+  <!-- ───────── MAIN CONTENT ───────── -->
+  <main class="ds-main">
+
+    <!-- PAGE HEADER -->
+    <header class="ds-page-header">
+      <h1>Design System <span class="tag">Beta</span></h1>
+      <p>Complete token catalog and component library for the Notism product — all variants, states, and scale levels.</p>
+    </header>
+
+    <!-- ═══════════════════════════════
+         SECTION 1 — COLORS
+    ═══════════════════════════════ -->
+    <section id="colors" class="ds-section">
+      <div class="ds-section__header">
+        <h2 class="ds-section__title">Color Tokens</h2>
+        <p class="ds-section__desc">Semantic color tokens derived from the emerald-green primary palette. Use token names — never raw hex values — in production code.</p>
+      </div>
+
+      <!-- Primary -->
+      <div class="ds-subsection">
+        <p class="ds-subsection__title">Primary Palette</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch__block" style="background:#1a7a50;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">primary</div>
+              <div class="swatch__hex">#1a7a50</div>
+              <div class="swatch__usage">Brand action color. CTA buttons, active states, links.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#ffffff; border-bottom:1px solid #e2e8f0;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">primary-foreground</div>
+              <div class="swatch__hex">#ffffff</div>
+              <div class="swatch__usage">Text/icons on primary backgrounds.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#134e37;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">accent-foreground</div>
+              <div class="swatch__hex">#134e37</div>
+              <div class="swatch__usage">Text on light green accent surfaces.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#f0fdf4;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">accent</div>
+              <div class="swatch__hex">#f0fdf4</div>
+              <div class="swatch__usage">Tinted green surface. Hover backgrounds, tag fills.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Surfaces -->
+      <div class="ds-subsection">
+        <p class="ds-subsection__title">Surfaces</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch__block" style="background:#ffffff; border-bottom:1px solid #e2e8f0;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">background</div>
+              <div class="swatch__hex">#ffffff</div>
+              <div class="swatch__usage">App-wide page background.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#0f172a;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">foreground</div>
+              <div class="swatch__hex">#0f172a</div>
+              <div class="swatch__usage">Primary body text and icons.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#ffffff; border-bottom:1px solid #e2e8f0;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">card</div>
+              <div class="swatch__hex">#ffffff</div>
+              <div class="swatch__usage">Card component background.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#0f172a;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">card-foreground</div>
+              <div class="swatch__hex">#0f172a</div>
+              <div class="swatch__usage">Text inside cards.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#f8fafc;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">muted</div>
+              <div class="swatch__hex">#f8fafc</div>
+              <div class="swatch__usage">Subtle background. Table rows, code blocks.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#64748b;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">muted-foreground</div>
+              <div class="swatch__hex">#64748b</div>
+              <div class="swatch__usage">Secondary text, placeholders, metadata.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="ds-subsection">
+        <p class="ds-subsection__title">Sidebar</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch__block" style="background:#f8fafc;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">sidebar</div>
+              <div class="swatch__hex">#f8fafc</div>
+              <div class="swatch__usage">Sidebar panel background.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#0f172a;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">sidebar-foreground</div>
+              <div class="swatch__hex">#0f172a</div>
+              <div class="swatch__usage">Default sidebar text.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#1a7a50;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">sidebar-primary</div>
+              <div class="swatch__hex">#1a7a50</div>
+              <div class="swatch__usage">Active nav item background.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#f0fdf4;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">sidebar-accent</div>
+              <div class="swatch__hex">#f0fdf4</div>
+              <div class="swatch__usage">Hover state for nav items.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#e2e8f0;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">sidebar-border</div>
+              <div class="swatch__hex">#e2e8f0</div>
+              <div class="swatch__usage">Dividers within sidebar.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Neutral / Secondary -->
+      <div class="ds-subsection">
+        <p class="ds-subsection__title">Neutral / Secondary</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch__block" style="background:#f1f5f9;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">secondary</div>
+              <div class="swatch__hex">#f1f5f9</div>
+              <div class="swatch__usage">Secondary button fill, inactive tabs.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#1e293b;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">secondary-foreground</div>
+              <div class="swatch__hex">#1e293b</div>
+              <div class="swatch__usage">Text on secondary surfaces.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Borders / Inputs -->
+      <div class="ds-subsection">
+        <p class="ds-subsection__title">Borders / Inputs</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch__block" style="background:#e2e8f0;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">border</div>
+              <div class="swatch__hex">#e2e8f0</div>
+              <div class="swatch__usage">Default component borders, dividers.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#e2e8f0;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">input</div>
+              <div class="swatch__hex">#e2e8f0</div>
+              <div class="swatch__usage">Input field border color.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#1a7a50;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">ring</div>
+              <div class="swatch__hex">#1a7a50</div>
+              <div class="swatch__usage">Focus ring color for interactive elements.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Semantic -->
+      <div class="ds-subsection">
+        <p class="ds-subsection__title">Semantic</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch__block" style="background:#dc2626;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">destructive</div>
+              <div class="swatch__hex">#dc2626</div>
+              <div class="swatch__usage">Errors, delete actions, critical alerts.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#16a34a;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">success</div>
+              <div class="swatch__hex">#16a34a</div>
+              <div class="swatch__usage">Success states, confirmations.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#d97706;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">warning</div>
+              <div class="swatch__hex">#d97706</div>
+              <div class="swatch__usage">Warnings, caution banners.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#2563eb;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">info</div>
+              <div class="swatch__hex">#2563eb</div>
+              <div class="swatch__usage">Informational messages, help text.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="ds-subsection">
+        <p class="ds-subsection__title">Charts</p>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch__block" style="background:#1a7a50;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">chart-1</div>
+              <div class="swatch__hex">#1a7a50</div>
+              <div class="swatch__usage">Primary data series.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#16a34a;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">chart-2</div>
+              <div class="swatch__hex">#16a34a</div>
+              <div class="swatch__usage">Secondary data series.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#2563eb;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">chart-3</div>
+              <div class="swatch__hex">#2563eb</div>
+              <div class="swatch__usage">Tertiary / comparison data.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#d97706;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">chart-4</div>
+              <div class="swatch__hex">#d97706</div>
+              <div class="swatch__usage">Warning / at-risk data.</div>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__block" style="background:#dc2626;"></div>
+            <div class="swatch__info">
+              <div class="swatch__token">chart-5</div>
+              <div class="swatch__hex">#dc2626</div>
+              <div class="swatch__usage">Critical / error data.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════
+         SECTION 2 — TYPOGRAPHY
+    ═══════════════════════════════ -->
+    <section id="typography" class="ds-section">
+      <div class="ds-section__header">
+        <h2 class="ds-section__title">Typography Scale</h2>
+        <p class="ds-section__desc">All text uses DM Sans. Seven scale steps from xs (12px/400) through 3xl (30px/600).</p>
+      </div>
+
+      <div class="type-scale">
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="type-meta__token">xs</div>
+            <div class="type-meta__detail">12px / 400<br>lh 1.4<br>Labels, captions</div>
+          </div>
+          <div class="type-sample type-xs">The quick brown fox jumps over the lazy dog.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="type-meta__token">sm</div>
+            <div class="type-meta__detail">14px / 400<br>lh 1.5<br>Body small, helper text</div>
+          </div>
+          <div class="type-sample type-sm">The quick brown fox jumps over the lazy dog.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="type-meta__token">base</div>
+            <div class="type-meta__detail">16px / 400<br>lh 1.6<br>Default body text</div>
+          </div>
+          <div class="type-sample type-base">The quick brown fox jumps over the lazy dog.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="type-meta__token">lg</div>
+            <div class="type-meta__detail">18px / 500<br>lh 1.5<br>Sub-headings, card titles</div>
+          </div>
+          <div class="type-sample type-lg">The quick brown fox jumps over the lazy dog.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="type-meta__token">xl</div>
+            <div class="type-meta__detail">20px / 500<br>lh 1.4<br>Section headings</div>
+          </div>
+          <div class="type-sample type-xl">The quick brown fox jumps over the lazy dog.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="type-meta__token">2xl</div>
+            <div class="type-meta__detail">24px / 600<br>lh 1.3<br>Page sub-titles</div>
+          </div>
+          <div class="type-sample type-2xl">The quick brown fox jumps.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">
+            <div class="type-meta__token">3xl</div>
+            <div class="type-meta__detail">30px / 600<br>lh 1.2<br>Page titles, hero headings</div>
+          </div>
+          <div class="type-sample type-3xl">The quick brown fox.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════
+         SECTION 3 — SPACING
+    ═══════════════════════════════ -->
+    <section id="spacing" class="ds-section">
+      <div class="ds-section__header">
+        <h2 class="ds-section__title">Spacing Tokens</h2>
+        <p class="ds-section__desc">8-point grid with a 4px base. Use spacing tokens for margin, padding, and gap values.</p>
+      </div>
+
+      <div class="spacing-list">
+        <div class="spacing-row">
+          <div class="spacing-token">space-1</div>
+          <div class="spacing-value">4px</div>
+          <div><div class="spacing-bar" style="width:4px;"></div></div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-token">space-2</div>
+          <div class="spacing-value">8px</div>
+          <div><div class="spacing-bar" style="width:8px;"></div></div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-token">space-3</div>
+          <div class="spacing-value">12px</div>
+          <div><div class="spacing-bar" style="width:12px;"></div></div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-token">space-4</div>
+          <div class="spacing-value">16px</div>
+          <div><div class="spacing-bar" style="width:16px;"></div></div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-token">space-6</div>
+          <div class="spacing-value">24px</div>
+          <div><div class="spacing-bar" style="width:24px;"></div></div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-token">space-8</div>
+          <div class="spacing-value">32px</div>
+          <div><div class="spacing-bar" style="width:32px;"></div></div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-token">space-12</div>
+          <div class="spacing-value">48px</div>
+          <div><div class="spacing-bar" style="width:48px;"></div></div>
+        </div>
+        <div class="spacing-row">
+          <div class="spacing-token">space-16</div>
+          <div class="spacing-value">64px</div>
+          <div><div class="spacing-bar" style="width:64px;"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════
+         SECTION 4 — BORDER RADIUS
+    ═══════════════════════════════ -->
+    <section id="rounded" class="ds-section">
+      <div class="ds-section__header">
+        <h2 class="ds-section__title">Border Radius</h2>
+        <p class="ds-section__desc">Five radius steps from sm (4px, inputs/badges) to full (pill shapes).</p>
+      </div>
+
+      <div class="rounded-grid">
+        <div class="rounded-item">
+          <div class="rounded-box" style="border-radius:4px;"></div>
+          <div class="rounded-meta">
+            <div class="rounded-meta__token">rounded-sm</div>
+            <div class="rounded-meta__value">4px</div>
+          </div>
+        </div>
+        <div class="rounded-item">
+          <div class="rounded-box" style="border-radius:6px;"></div>
+          <div class="rounded-meta">
+            <div class="rounded-meta__token">rounded-md</div>
+            <div class="rounded-meta__value">6px — buttons, inputs</div>
+          </div>
+        </div>
+        <div class="rounded-item">
+          <div class="rounded-box" style="border-radius:8px;"></div>
+          <div class="rounded-meta">
+            <div class="rounded-meta__token">rounded-lg</div>
+            <div class="rounded-meta__value">8px — panels</div>
+          </div>
+        </div>
+        <div class="rounded-item">
+          <div class="rounded-box" style="border-radius:12px;"></div>
+          <div class="rounded-meta">
+            <div class="rounded-meta__token">rounded-xl</div>
+            <div class="rounded-meta__value">12px — cards, modals</div>
+          </div>
+        </div>
+        <div class="rounded-item">
+          <div class="rounded-box" style="border-radius:9999px;"></div>
+          <div class="rounded-meta">
+            <div class="rounded-meta__token">rounded-full</div>
+            <div class="rounded-meta__value">9999px — badges, avatars</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════
+         SECTION 5 — BUTTONS
+    ═══════════════════════════════ -->
+    <section id="buttons" class="ds-section">
+      <div class="ds-section__header">
+        <h2 class="ds-section__title">Buttons</h2>
+        <p class="ds-section__desc">6 variants × 5 sizes. Every combination shown. height: 2.5rem (default), border-radius: rounded-md (6px).</p>
+      </div>
+
+      <div style="overflow-x:auto;">
+        <table class="component-table">
+          <thead>
+            <tr>
+              <th>Variant</th>
+              <th>xs</th>
+              <th>sm</th>
+              <th>default</th>
+              <th>lg</th>
+              <th>icon</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- default -->
+            <tr>
+              <td>default</td>
+              <td><button class="btn btn--variant-default btn--xs">Button</button></td>
+              <td><button class="btn btn--variant-default btn--sm">Button</button></td>
+              <td><button class="btn btn--variant-default btn--default-size">Button</button></td>
+              <td><button class="btn btn--variant-default btn--lg">Button</button></td>
+              <td><button class="btn btn--variant-default btn--icon" aria-label="Add"><span class="icon-placeholder"></span></button></td>
+            </tr>
+            <!-- destructive -->
+            <tr>
+              <td>destructive</td>
+              <td><button class="btn btn--variant-destructive btn--xs">Delete</button></td>
+              <td><button class="btn btn--variant-destructive btn--sm">Delete</button></td>
+              <td><button class="btn btn--variant-destructive btn--default-size">Delete</button></td>
+              <td><button class="btn btn--variant-destructive btn--lg">Delete</button></td>
+              <td><button class="btn btn--variant-destructive btn--icon" aria-label="Delete"><span class="icon-placeholder"></span></button></td>
+            </tr>
+            <!-- outline -->
+            <tr>
+              <td>outline</td>
+              <td><button class="btn btn--variant-outline btn--xs">Button</button></td>
+              <td><button class="btn btn--variant-outline btn--sm">Button</button></td>
+              <td><button class="btn btn--variant-outline btn--default-size">Button</button></td>
+              <td><button class="btn btn--variant-outline btn--lg">Button</button></td>
+              <td><button class="btn btn--variant-outline btn--icon" aria-label="Add"><span class="icon-placeholder"></span></button></td>
+            </tr>
+            <!-- secondary -->
+            <tr>
+              <td>secondary</td>
+              <td><button class="btn btn--variant-secondary btn--xs">Button</button></td>
+              <td><button class="btn btn--variant-secondary btn--sm">Button</button></td>
+              <td><button class="btn btn--variant-secondary btn--default-size">Button</button></td>
+              <td><button class="btn btn--variant-secondary btn--lg">Button</button></td>
+              <td><button class="btn btn--variant-secondary btn--icon" aria-label="Add"><span class="icon-placeholder"></span></button></td>
+            </tr>
+            <!-- ghost -->
+            <tr>
+              <td>ghost</td>
+              <td><button class="btn btn--variant-ghost btn--xs">Button</button></td>
+              <td><button class="btn btn--variant-ghost btn--sm">Button</button></td>
+              <td><button class="btn btn--variant-ghost btn--default-size">Button</button></td>
+              <td><button class="btn btn--variant-ghost btn--lg">Button</button></td>
+              <td><button class="btn btn--variant-ghost btn--icon" aria-label="Add"><span class="icon-placeholder"></span></button></td>
+            </tr>
+            <!-- link -->
+            <tr>
+              <td>link</td>
+              <td><button class="btn btn--variant-link btn--xs">Link text</button></td>
+              <td><button class="btn btn--variant-link btn--sm">Link text</button></td>
+              <td><button class="btn btn--variant-link btn--default-size">Link text</button></td>
+              <td><button class="btn btn--variant-link btn--lg">Link text</button></td>
+              <td style="color:var(--color-muted-foreground); font-size:11px;">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════
+         SECTION 6 — INPUTS
+    ═══════════════════════════════ -->
+    <section id="inputs" class="ds-section">
+      <div class="ds-section__header">
+        <h2 class="ds-section__title">Inputs</h2>
+        <p class="ds-section__desc">height: 2.25rem, border-radius: rounded-md (6px), border: 1px solid border token.</p>
+      </div>
+
+      <div class="input-states-grid">
+        <div class="input-state-item">
+          <div class="input-state-label">Default</div>
+          <input class="ds-input" type="text" placeholder="Enter workspace name…" />
+        </div>
+        <div class="input-state-item">
+          <div class="input-state-label">Focus</div>
+          <input class="ds-input ds-input--focus" type="text" value="notism-workspace" />
+        </div>
+        <div class="input-state-item">
+          <div class="input-state-label">Error</div>
+          <input class="ds-input ds-input--error" type="text" value="bad-input!" />
+          <div class="input-error-msg">Name may not contain special characters.</div>
+        </div>
+        <div class="input-state-item">
+          <div class="input-state-label">Disabled</div>
+          <input class="ds-input ds-input--disabled" type="text" value="Read-only value" disabled />
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════
+         SECTION 7 — CARDS
+    ═══════════════════════════════ -->
+    <section id="cards" class="ds-section">
+      <div class="ds-section__header">
+        <h2 class="ds-section__title">Cards</h2>
+        <p class="ds-section__desc">border-radius: rounded-xl (12px), padding: 24px, shadow-sm. Composed of CardHeader, CardContent, and CardFooter slots.</p>
+      </div>
+
+      <div class="ds-card">
+        <div class="ds-card__header">
+          <div class="ds-card__title">Project Overview</div>
+          <div class="ds-card__desc">A summary of your current sprint progress and open tasks.</div>
+        </div>
+        <div class="ds-card__content">
+          Your team has completed <strong>14 of 20</strong> tasks this sprint. Three items are in review and two are blocked pending design sign-off.
+        </div>
+        <div class="ds-card__footer">
+          <button class="btn btn--variant-default btn--sm">View Board</button>
+          <button class="btn btn--variant-outline btn--sm">Export</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════
+         SECTION 8 — BADGES
+    ═══════════════════════════════ -->
+    <section id="badges" class="ds-section">
+      <div class="ds-section__header">
+        <h2 class="ds-section__title">Badges</h2>
+        <p class="ds-section__desc">5 variants. border-radius: rounded-full (9999px), font-size: xs (12px/500), padding: 2px 10px.</p>
+      </div>
+
+      <div class="badge-row">
+        <span class="badge badge--default">Default</span>
+        <span class="badge badge--secondary">Secondary</span>
+        <span class="badge badge--destructive">Destructive</span>
+        <span class="badge badge--outline">Outline</span>
+        <span class="badge badge--success">Success</span>
+      </div>
+
+      <div style="margin-top:24px;">
+        <p class="ds-subsection__title" style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--color-muted-foreground); margin-bottom:12px;">In-context usage</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; font-size:14px; color:var(--color-foreground);">
+          <span>Status:</span>
+          <span class="badge badge--success">Active</span>
+          <span class="badge badge--destructive">Blocked</span>
+          <span class="badge badge--secondary">Draft</span>
+          <span class="badge badge--outline">Archived</span>
+          <span class="badge badge--default">Beta</span>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+  <button class="ds-mode-toggle" id="modeToggle" onclick="toggleDark()">
+    <span class="ds-mode-toggle__icon" id="modeIcon">🌙</span>
+    <span id="modeLabel">Dark mode</span>
+  </button>
+  <script>
+    function toggleDark() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      document.getElementById('modeIcon').textContent = isDark ? '☀️' : '🌙';
+      document.getElementById('modeLabel').textContent = isDark ? 'Light mode' : 'Dark mode';
+    }
+  </script>
+</body>
+</html>
