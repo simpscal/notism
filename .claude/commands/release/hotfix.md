@@ -26,11 +26,6 @@ Read issue `#issue_number` from the tracker adapter to get its title, labels, an
 
 Before doing anything destructive, verify the bug is ready to close:
 
-Check that issue `#issue_number` has the `qa-passed` label. If not, stop:
-```
-⛔ Bug #N has not passed QA. Run /qa write-test-cases <N>, verify on staging, then /qa pass <N> before releasing.
-```
-
 For each codebase repo, list open bugfix PRs for issue N to detect any unmerged PRs.
 
 Collect results from all codebases. If any open PRs are found across any repo, stop:
@@ -60,7 +55,7 @@ Output:
 
 ## Step 5 — Check for EF Core Migrations (Backend Only)
 
-For the backend codebase, find the merged bugfix PR for issue N and apply migration detection from `config.md` to its changed files.
+For the backend codebase, find the merged bugfix PR for issue N and apply the migration detection rule to its changed files.
 
 - If no merged backend PR found: note "No backend PR found for #N — skipping migration check."
 - If migration files found: capture the list. This output is used in Step 7.

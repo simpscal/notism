@@ -35,27 +35,13 @@ Hold the response as `$CHANGE_INPUT`. Use it to engage in discussion — answer 
 
 Ensure the orchestrator's sprint branch for Sprint $SPRINT_N is checked out.
 
-For each surface in `$TARGET_SURFACES`, spawn one subagent (parallel, max 5; usually a single surface) to regenerate `<surface-slug>.md` + `<surface-slug>.html` at `<orchestrator-root>/sprint-<$SPRINT_N>/`.
-
-Pass context as a `<context>` XML block per the dispatch-agents protocol with per-surface `<inputs>`:
-
-```xml
-<inputs>
-  <surface>
-    <name>...</name>
-    <slug>...</slug>
-  </surface>
-  <story_acs>...</story_acs>
-  <new_ds>$NEW_DS</new_ds>
-  <change>$CHANGE_INPUT</change>
-</inputs>
-```
+Regenerate per-surface design artifacts for `$TARGET_SURFACES`, passing each surface's `story_acs` and `$CHANGE_INPUT`.
 
 ---
 
 ## Step 5 — Commit + Push
 
-On the orchestrator's sprint branch, commit the regenerated files (commit message: `chore(design): amend sprint-{$SPRINT_N} for story #$STORY_ISSUE`). Push. Resolve blob URLs.
+On the orchestrator's sprint branch, commit the regenerated files (plus `sprint-<$SPRINT_N>/mockups/style.css` if changed). Commit message: `chore(design): amend sprint-{$SPRINT_N} for story #$STORY_ISSUE`. Push. Resolve blob URLs.
 
 ---
 

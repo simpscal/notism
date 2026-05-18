@@ -27,7 +27,5 @@ create_label "requirement-updated"  "Requirement updated after change"          
 create_label "refactoring"          "Tech-lead refactoring task"                 "1d76db"
 create_label "bug-production"       "Reporter-created bug issue"                 "d73a4a"
 create_label "bug-fixed"            "Bug resolved and closed"                    "0e8a16"
-create_label "qa-passed"            "QA test cases verified by human"            "0e8a16"
-create_label "qa-blocked"           "QA test cases have failures"                "d73a4a"
 
 echo "Done. All labels created."

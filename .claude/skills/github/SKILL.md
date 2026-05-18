@@ -10,7 +10,7 @@ tools: mcp__github__issue_read, mcp__github__list_issues, mcp__github__issue_wri
 Derive at runtime — never hardcode:
 
 - **Orchestration repo** (issues, milestones, stories, TDD, design): run `gh repo view --json owner,name --jq '[.owner.login,.name]|join("/")'` from the orchestration repo root.
-- **Codebase repos** (PRs, branches): run the same from inside the codebase directory (path from `config.md` Codebases table).
+- **Codebase repos** (PRs, branches): run the same from inside the codebase directory (path from the Codebases table).
 
 Hold results for the session.
 
@@ -155,7 +155,7 @@ Before writing anything, fetch existing comments on the issue (`mcp__github__iss
 Pick the **mode** (refactor / revert / implementation) and the **variant** (single-PR or multi-PR):
 
 - **Single-PR** — exactly one PR was opened.
-- **Multi-PR** — two or more PRs were opened. Emit one bullet per PR, labelled by the codebase name from `config.md` Codebases table (e.g. `api`, `web`, `infrastructure`). Do not hardcode `Backend` / `Frontend`.
+- **Multi-PR** — two or more PRs were opened. Emit one bullet per PR, labelled by the codebase name from the Codebases table (e.g. `api`, `web`, `infrastructure`). Do not hardcode `Backend` / `Frontend`.
 
 Substitute every `<pr-url>` placeholder with the actual URL.
 

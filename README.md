@@ -12,7 +12,7 @@ Without a shared playbook, every team member prompts AI differently. Outputs div
 
 - **Orchestrator, not a codebase.** Stories, sprints, designs, TDDs, and bugs live here as issues. Agents check out your real code repos (API, web, infra), registered once via `/setup init`.
 - **GitHub is the source of truth.** No Jira, no Notion — every artifact is an issue; state changes by label, not chat.
-- **Workflows organize lifecycle stages, roles run them.** Five workflows (`/feature`, `/hotfix`, `/redesign`, `/test`, `/refactor`) cover complete lifecycles. PO triggers requirement/report stages, BA writes stories, Designer authors design instructions and runs redesign, Tech Lead writes TDDs and refactor plans, Dev implements, QA runs `/test`, Release Manager ships. Every stage is one command — the role that owns it runs it.
+- **Workflows organize lifecycle stages, roles run them.** Five workflows (`/feature`, `/hotfix`, `/redesign`, `/release`, `/refactor`) cover complete lifecycles. PO triggers requirement/report stages, BA writes stories, Designer authors design instructions and runs redesign, Tech Lead writes TDDs and refactor plans, Dev implements, Release Manager runs `/release`. Every stage is one command — the role that owns it runs it.
 - **Humans gate every stage.** AI handles volume. Nothing ships without sign-off.
 - **Drop-in.** Only `.claude/`, `config.md`, `PRODUCT.md`, and `DESIGN.md` are added. Existing issues, PRs, and branches stay untouched.
 
@@ -20,8 +20,8 @@ Without a shared playbook, every team member prompts AI differently. Outputs div
 flowchart LR
     subgraph ORCH["This Repo · Orchestrator"]
         direction TB
-        ISSUES["GitHub Issues · Labels · Milestones<br/>requirements · stories · TDDs<br/>designs · redesign briefs · test cases · bugs"]
-        FLOWS["Workflow Commands<br/>/feature · /hotfix · /redesign<br/>/test · /refactor"]
+        ISSUES["GitHub Issues · Labels · Milestones<br/>requirements · stories · TDDs<br/>designs · redesign briefs · bugs"]
+        FLOWS["Workflow Commands<br/>/feature · /hotfix · /redesign<br/>/release · /refactor"]
     end
 
     subgraph TARGETS["Your Code Repos"]
@@ -57,7 +57,7 @@ In your project, run `/setup init` to:
 - Generate `config.md` — registers codebases, detects tech stack, configures migration detection.
 - Generate `PRODUCT.md` — captures vision, value proposition, business model, goals, and strategic direction.
 - Generate `DESIGN.md` — extracts design tokens and component primitives for frontend work.
-- Create GitHub labels (`requirement`, `user-story`, `qa-passed`, etc.). Safe to re-run.
+- Create GitHub labels (`requirement`, `user-story`, `bug-production`, etc.). Safe to re-run.
 
 Then kick off a sprint:
 
@@ -94,9 +94,8 @@ Then kick off a sprint:
 | `/feature amend-tdd <story_issue>` | Tech Lead | Revise TDD for one amended story. |
 | `/feature implement <story_issue>` | Dev | Implement a story — fresh, or delta-only when `story-updated`. |
 | `/feature revert <story_issue>` | Dev | Undo work for a removed story (`story-removed`). |
-| `/feature fix-story <story_issue>` | Dev | Re-implement after QA blocked (`qa-blocked`). |
+| `/feature fix-story <story_issue> <bug_spec>` | Dev | Re-implement a story to address a regression. |
 | `/feature amend-implementation <story_issue>` | Dev | Re-implement after an AC amendment. |
-| `/feature release <sprint_number>` | Release Manager | Close sprint and open release PRs to main. |
 
 ### 🎨 `/redesign` — UI redesign lifecycle
 
@@ -113,20 +112,15 @@ Then kick off a sprint:
 | `/hotfix report [description]` | PO | Clarify the bug interactively and open a tracker issue with `bug-production`. |
 | `/hotfix acs <bug_issue>` | BA | Analyse the bug and add Acceptance Criteria to the same ticket. |
 | `/hotfix implement <bug_issue>` | Dev | Investigate root cause and apply the fix — fresh or delta-only on `story-updated`. |
-| `/hotfix fix-bug <bug_issue>` | Dev | Re-fix after QA blocked (`qa-blocked`). |
-| `/hotfix release <bug_issue>` | Release Manager | Merge the bugfix PR to main and close the bug. |
+| `/hotfix fix-bug <bug_issue> <bug_spec>` | Dev | Re-fix a bug to address a follow-up spec. |
 
-### 🧪 `/test` — QA test case lifecycle
-
-Same workflow whether the target is a feature story or a production bug — adapts to the issue's labels.
+### 🚀 `/release` — Release lifecycle
 
 | Command | Run by | What it does |
 |---------|--------|-------------|
-| `/test write <issue>` | QA | First-time test cases from the issue's ACs. |
-| `/test sync <issue>` | QA | Reconcile test cases after a requirement change. |
-| `/test amend <issue>` | QA | Revise cases after a single-story AC amendment. |
-| `/test pass <issue>` | QA | Mark `qa-passed` after human verification. |
-| `/test block <issue> <notes>` | QA | Mark `qa-blocked` and capture failure notes. |
+| `/release sprint <sprint_number>` | Release Manager | Close a feature sprint — merge sprint branch to main, label all milestone issues `sprint-completed`. |
+| `/release redesign <sprint_number>` | Release Manager | Close a redesign sprint — same shape as `sprint`. |
+| `/release hotfix <bug_issue>` | Release Manager | Merge the bugfix PR to main and close the bug. |
 
 ### 🧹 `/refactor` — Tech-debt and structural cleanup
 
@@ -157,7 +151,7 @@ Same workflow whether the target is a feature story or a production bug — adap
 <details>
 <summary><strong>Feature Development</strong> — the standard sprint cycle</summary>
 
-Story branches merge to **staging** for QA, then to the **sprint branch** on pass. Sprint branch stays clean.
+Story branches merge to **staging** for verification, then to the **sprint branch** on pass. Sprint branch stays clean.
 
 ```mermaid
 flowchart TD
@@ -175,16 +169,12 @@ flowchart TD
     H --> I["PR: story → staging\n`implemented`"]
     I --> G4{Gate 4\nCode Review}
     G4 -->|Approved| I2["Merge to staging"]
-    I2 --> QA(["/test write &lt;issue&gt;"])
-    QA --> QAH["Test cases posted on issue"]
-    QAH --> G5{Gate 5\nHuman verifies on staging}
-    G5 -->|Pass| QP(["/test pass &lt;issue&gt;"])
-    QP --> QP2["Merge story branch → sprint\n`qa-passed`"]
+    I2 --> G5{Gate 5\nHuman verifies on staging}
+    G5 -->|Pass| QP2["Merge story branch → sprint"]
     QP2 --> MORE{More stories?}
     MORE -->|Yes| H
-    MORE -->|No| REL(["/feature release &lt;N&gt;"])
-    G5 -->|Fail| QB(["/test block &lt;issue&gt; &lt;notes&gt;"])
-    QB --> FIX(["/feature fix-story &lt;issue&gt;"])
+    MORE -->|No| REL(["/release sprint &lt;N&gt;"])
+    G5 -->|Regression| FIX(["/feature fix-story &lt;story&gt; &lt;bug_spec&gt;"])
     FIX --> FIX2["Fix pushed to story branch\nMerged to staging"]
     FIX2 --> G5
     REL --> K["Release PRs: sprint → main"]
@@ -197,7 +187,7 @@ flowchart TD
 <details>
 <summary><strong>Production Hotfix</strong> — bugs found in production</summary>
 
-Independent of sprint cycle. Fix PRs hit **staging** for QA, then `main`.
+Independent of sprint cycle. Fix PRs hit **staging** for verification, then `main`.
 
 ```mermaid
 flowchart TD
@@ -210,15 +200,11 @@ flowchart TD
     H --> I["Investigation comment posted\nFix PR → staging\n`implemented`"]
     I --> G3{Gate 3\nCode Review}
     G3 -->|Merged| I2["Merged to staging"]
-    I2 --> QA(["/test write &lt;issue&gt;"])
-    QA --> QAH["Test cases posted on issue"]
-    QAH --> G4{Gate 4\nHuman verifies on staging}
-    G4 -->|Pass| QP(["/test pass &lt;issue&gt;"])
-    QP --> QP2["Merge fix branch → main\n`qa-passed`"]
-    QP2 --> J(["/hotfix release &lt;issue&gt;"])
+    I2 --> G4{Gate 4\nHuman verifies on staging}
+    G4 -->|Pass| QP2["Merge fix branch → main"]
+    QP2 --> J(["/release hotfix &lt;issue&gt;"])
     J --> K([Bug Fixed])
-    G4 -->|Fail| QB(["/test block &lt;issue&gt; &lt;notes&gt;"])
-    QB --> FIX(["/hotfix fix-bug &lt;issue&gt;"])
+    G4 -->|Still broken| FIX(["/hotfix fix-bug &lt;bug&gt; &lt;bug_spec&gt;"])
     FIX --> FIX2["Fix pushed to bug branch\nMerged to staging"]
     FIX2 --> G4
 ```
@@ -244,9 +230,6 @@ flowchart TD
     F2 --> F3(["/feature sync-tdd &lt;sprint&gt;"])
     F3 --> F4["TDD updated"]
     F4 --> H(["/feature implement &lt;issue&gt; (changed)\n/feature revert &lt;issue&gt; (removed)"])
-    H --> QA{Had existing\ntest cases?}
-    QA -->|Yes| QAS(["/test sync &lt;issue&gt;"])
-    QA -->|No| QAW(["/test write &lt;issue&gt;"])
 ```
 
 </details>
@@ -270,8 +253,7 @@ flowchart TD
     F -->|No| H(["/feature amend-implementation &lt;N&gt;"])
     G --> G2["TDD updated"]
     G2 --> H
-    H --> I["Story Revisit PR → staging"]
-    I --> QA(["/test amend &lt;N&gt; then re-verify"])
+    H --> I["Story Revisit PR → staging\nHuman re-verifies"]
 ```
 
 **When to amend design and TDD:**
@@ -303,14 +285,13 @@ flowchart TD
     G2 -->|Approve| D["Stories created"]
     D --> H(["/redesign implement &lt;story&gt;"])
     H --> I["PR: story → staging\n`implemented`"]
-    I --> QA(["/test write &lt;story&gt;"])
-    QA --> G3{Gate 3\nHuman verifies}
-    G3 -->|Pass| QP(["/test pass &lt;story&gt;"])
-    QP --> MORE{More stories?}
+    I --> G3{Gate 3\nHuman verifies on staging}
+    G3 -->|Pass| QP2["Merge story branch → sprint"]
+    QP2 --> MORE{More stories?}
     MORE -->|Yes| H
-    MORE -->|No| REL(["/feature release &lt;N&gt;"])
-    G3 -->|Fail| QB(["/test block · /redesign implement (fix)"])
-    QB --> G3
+    MORE -->|No| REL(["/release redesign &lt;N&gt;"])
+    G3 -->|Regression| FIX(["/feature fix-story &lt;story&gt; &lt;bug_spec&gt;"])
+    FIX --> G3
     D -.->|Mid-sprint design tweak| AM(["/redesign amend-design &lt;story&gt;"])
     AM --> AMC{Scope?}
     AMC -->|system| AMS["Revise DESIGN.md + catalog\nLabel primitives stories `story-updated`"]
@@ -324,7 +305,7 @@ flowchart TD
 <details>
 <summary><strong>Refactoring</strong> — tech-debt and structural cleanup</summary>
 
-No sprint, no QA. Branch from `main`, PR to `main`. DoD requires existing tests pass and no user-visible behavior change — the QA substitute.
+No sprint, no separate verification stage. Branch from `main`, PR to `main`. DoD requires existing tests pass and no user-visible behavior change.
 
 ```mermaid
 flowchart TD
@@ -355,8 +336,6 @@ No external tracker. No Jira, no Notion, no spreadsheet. Every artifact lives in
 | Sprint | GitHub Milestone |
 | Technical design (TDD) | GitHub Issue (`technical-design`) |
 | Implementation | Pull Request linked to story issue |
-| Test cases | Comment on the story issue |
-| QA result | Label on the story issue |
 | Release | Pull Request (sprint branch → main) |
 
 **Labels are the workflow engine.** Workflow commands read them; humans apply them by running the next stage. A label is the current state and the instruction.
@@ -386,11 +365,9 @@ Where a story or bug sits in the pipeline. Change as work progresses; tell agent
 | | Label | Meaning | What happens next |
 |---|-------|---------|------------------|
 | ![](https://placehold.co/15x15/d93f0b/d93f0b.png) | `in-progress` | Dev is currently implementing | — |
-| ![](https://placehold.co/15x15/0e8a16/0e8a16.png) | `implemented` | PR merged to staging, awaiting QA | `/test write` |
-| ![](https://placehold.co/15x15/0e8a16/0e8a16.png) | `qa-passed` | Human verified all test cases on staging | Human merges branch → sprint |
-| ![](https://placehold.co/15x15/d73a4a/d73a4a.png) | `qa-blocked` | One or more test cases failed | `/feature fix-story` or `/hotfix fix-bug` |
+| ![](https://placehold.co/15x15/0e8a16/0e8a16.png) | `implemented` | PR merged to staging, awaiting verification | Human merges branch → sprint, or `/feature fix-story` / `/hotfix fix-bug` on regression |
 | ![](https://placehold.co/15x15/bfd4f2/bfd4f2.png) | `story-updated` | ACs changed after implementation | `/feature implement` (revisit branch) |
 | ![](https://placehold.co/15x15/e4e669/e4e669.png) | `story-removed` | Story dropped from scope | `/feature revert` |
 | ![](https://placehold.co/15x15/fef2c0/fef2c0.png) | `requirement-updated` | Requirement changed mid-sprint | `/feature sync-stories` |
-| ![](https://placehold.co/15x15/006b75/006b75.png) | `sprint-completed` | Sprint closed by `/feature release` | — |
-| ![](https://placehold.co/15x15/0e8a16/0e8a16.png) | `bug-fixed` | Bug closed after `/hotfix release` | — |
+| ![](https://placehold.co/15x15/006b75/006b75.png) | `sprint-completed` | Sprint closed by `/release sprint` or `/release redesign` | — |
+| ![](https://placehold.co/15x15/0e8a16/0e8a16.png) | `bug-fixed` | Bug closed after `/release hotfix` | — |

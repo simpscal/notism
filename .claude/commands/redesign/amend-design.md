@@ -83,23 +83,28 @@ Spawn a subagent to regenerate the design catalog. Pass context as a `<context>`
 
 Subagent overwrites `<orchestrator-root>/sprint-<$SPRINT_N>/index.html`.
 
-### 4c — Surface for review
+### 4c — Refresh shared stylesheet
 
-Present both local paths:
+Tokens just changed; the shared mockup stylesheet must follow. Refresh the shared stylesheet for Sprint $SPRINT_N (no surfaces — style-only). Existing per-surface mockup files inherit the new tokens automatically.
+
+### 4d — Surface for review
+
+Present the local paths:
 
 - `<orchestrator-root>/DESIGN.md` — the revised tokens + components.
 - `<orchestrator-root>/sprint-<$SPRINT_N>/index.html` — open locally in a browser.
+- The refreshed shared mockup stylesheet — drives every per-surface mockup's rendering.
 
-### 4d — Approval gate
+### 4e — Approval gate
 
 Use `AskUserQuestion`:
 
-- **Approve design system + design catalog** — proceed to 4e.
-- **Iterate** — collect free-text feedback into `$FEEDBACK`. **Append `$FEEDBACK` to `$CHANGE_INPUT`** so the original amendment intent survives the loop. Revert local changes to `DESIGN.md` (back to the pre-amend baseline) and delete the local design catalog file. Loop back to 4a; the re-spawned subagent picks up the extended `$CHANGE_INPUT` and reshapes the direction, then 4b regenerates the catalog. Cap at 5 iterations; if not converged, halt and ask the user whether to proceed anyway.
+- **Approve design system + design catalog + shared style** — proceed to 4f.
+- **Iterate** — collect free-text feedback into `$FEEDBACK`. **Append `$FEEDBACK` to `$CHANGE_INPUT`** so the original amendment intent survives the loop. Revert local changes to `DESIGN.md` (back to the pre-amend baseline) and delete the local design catalog file and the local shared stylesheet. Loop back to 4a; the re-spawned subagent picks up the extended `$CHANGE_INPUT` and reshapes the direction, then 4b + 4c regenerate the catalog and shared style. Cap at 5 iterations; if not converged, halt and ask the user whether to proceed anyway.
 
-### 4e — Commit + push (on approve)
+### 4f — Commit + push (on approve)
 
-On the orchestrator's sprint branch, commit `DESIGN.md` and `sprint-<N>/index.html` together with message:
+On the orchestrator's sprint branch, commit `DESIGN.md`, the regenerated design catalog, and the refreshed shared stylesheet together with message:
 
 ```
 chore(redesign): amend sprint-{$SPRINT_N} design system and design catalog
@@ -107,7 +112,7 @@ chore(redesign): amend sprint-{$SPRINT_N} design system and design catalog
 
 Push.
 
-If the user bailed at 4d without approving (5x iterate + abandon), `$NEW_DS` is undefined; downstream steps treat this as a no-op system pipeline and use `$BASELINE_DS` instead.
+If the user bailed at 4e without approving (5x iterate + abandon), `$NEW_DS` is undefined; downstream steps treat this as a no-op system pipeline and use `$BASELINE_DS` instead.
 
 ---
 
@@ -115,23 +120,11 @@ If the user bailed at 4d without approving (5x iterate + abandon), `$NEW_DS` is 
 
 **Skip this step if `$CHANGE_TYPE == system`.**
 
-For each surface in `$TARGET_SURFACES` spawn one subagent (parallel, max 5; usually a single surface) to regenerate `<surface-slug>.md` + `<surface-slug>.html` at `<orchestrator-root>/sprint-<$SPRINT_N>/`.
+Regenerate per-surface design artifacts for `$TARGET_SURFACES`, passing each surface's `story_acs` and `$CHANGE_INPUT`. Apply the redesign-specific constraint:
 
-Pass context as a `<context>` XML block per the dispatch-agents protocol with per-surface `<inputs>`:
+> Drive layout, atmosphere, and emotional feel from the new tokens + change description only. Do NOT read, scan, or reverse-engineer from the existing surface implementation in the web codebase.
 
-```xml
-<inputs>
-  <surface>
-    <name>...</name>
-    <slug>...</slug>
-  </surface>
-  <story_acs>...</story_acs>
-  <new_ds>$NEW_DS or $BASELINE_DS</new_ds>   <!-- $NEW_DS if Step 4 ran and approved; $BASELINE_DS otherwise -->
-  <change>$CHANGE_INPUT</change>
-</inputs>
-```
-
-On the orchestrator's sprint branch, commit every regenerated `<slug>.md` + `<slug>.html` with message:
+On the orchestrator's sprint branch, commit every regenerated per-surface file (plus the shared stylesheet if Step 4 did not already commit it) with message:
 
 ```
 chore(redesign): amend sprint-{$SPRINT_N} for story #$STORY_ISSUE

@@ -5,13 +5,13 @@ List milestones in the orchestrator repo. Take the next sprint number → `$SPRI
 Create the sprint branch for sprint `$SPRINT_N` in both:
 
 - **Orchestrator repo** (holds DESIGN.md revision + `sprint-<N>/` previews).
-- **Web codebase** (holds per-story implementations; path from `config.md` Codebases table).
+- **Web codebase** (holds per-story implementations; path from the Codebases table).
 
 ---
 
 ## Step 2 — Discover Surfaces
 
-Read `config.md` to find the web codebase path. Scan that codebase's routes / pages tree to enumerate every user-facing surface. Compile a list — for each surface: human-readable name, kebab-case slug, current route path.
+Resolve the web codebase path from the Codebases table. Scan that codebase's routes / pages tree to enumerate every user-facing surface. Compile a list — for each surface: human-readable name, kebab-case slug, current route path.
 
 Present the list to the user via `AskUserQuestion`:
 
@@ -77,11 +77,9 @@ On the orchestrator's sprint branch, commit `DESIGN.md` and `sprint-<N>/index.ht
 
 ## Step 4 — Create Redesign Brief Issue
 
-Compose a paragraph summarising the **desired design outcome** — what the new design system delivers and how it feels. Anchor it in `$DESIGN_DIRECTION` (atmosphere, layout pattern, references) and the concrete token / component decisions that landed in the revised `DESIGN.md`. The summary should let a reader who has not seen `DESIGN.md` understand what the redesign is trying to achieve.
+Render the body from the `issue-redesign-brief` template with `{atmosphere}`, `{layout_pattern}`, `{references}` — from `$DESIGN_DIRECTION`.
 
-Render the body from the `issue-redesign-brief` template with `{design_summary}`.
-
-Create the issue with title `[Redesign Brief] <concise outcome title>` (derived from the design summary), labels `redesign-brief` + `redesign`, milestone `Sprint $SPRINT_N`. Hold the resulting issue number as `$BRIEF_ISSUE_NUMBER`.
+Create the issue with title `[Redesign Brief] <concise outcome title>` (derived from the atmosphere + layout pattern), labels `redesign`, milestone `Sprint $SPRINT_N`. Hold the resulting issue number as `$BRIEF_ISSUE_NUMBER`.
 
 The brief is the scope-of-record for this sprint and the parent of every redesign story created in Step 6.
 
@@ -89,43 +87,28 @@ The brief is the scope-of-record for this sprint and the parent of every redesig
 
 ## Step 5 — Generate Design Instructions + Mockups
 
-Place every emitted file in `<orchestrator-root>/sprint-<$SPRINT_N>/` on the orchestrator's sprint branch (flat, no subdirs).
+### 5a — Generate per-surface design artifacts
 
-### 5a — Spawn per-surface subagents (parallel, max 5 concurrent)
+Generate per-surface design instructions, HTML mockups, and the shared stylesheet for `$SURFACES`. Apply the redesign-specific constraint:
 
-For each surface in `$SURFACES`, spawn one subagent — **maximum 5 in parallel**. If `$SURFACES` has more than 5 entries, run in batches of up to 5 (send one message with up to 5 Agent tool calls; wait for the batch to complete; send the next batch). Each subagent owns one surface and emits two files to `<orchestrator-root>/sprint-<$SPRINT_N>/`:
+> Drive layout, atmosphere, and emotional feel from the new tokens only. Do NOT read, scan, or reverse-engineer from the existing surface implementation in the web codebase. Use only the surface's purpose plus the new direction + tokens.
 
-- `<surface-slug>.md` — per-surface design instructions for the surface.
-- `<surface-slug>.html` — per-surface HTML mockup for the surface.
-
-Pass context as a `<context>` XML block per the dispatch-agents protocol with the following per-surface `<inputs>`:
-
-```xml
-<inputs>
-  <surface>
-    <name>...</name>
-    <slug>...</slug>
-  </surface>
-  <new_ds>$NEW_DS</new_ds>
-</inputs>
-```
-
-After all subagents finish, gather their returned paths into `$INSTRUCTIONS_LINKS` (`.md` paths) and `$MOCK_LINKS` (`.html` paths).
+Gather returned paths into `$INSTRUCTIONS_LINKS` and `$MOCK_LINKS`.
 
 ### 5b — Surface for review
 
-Present a per-surface bullet list of every `sprint-<N>/<surface>.md` and `sprint-<N>/<surface>.html` local path to the user.
+Present a per-surface bullet list of every emitted local path to the user (instructions, mockup, plus the shared stylesheet).
 
 ### 5c — Approval gate
 
 Use `AskUserQuestion`:
 
 - **Approve design instructions + mockups** — proceed to 5d.
-- **Iterate** — collect per-surface feedback (which surface needs what changed). Re-spawn 5a subagents in parallel for the affected surfaces only. Cap at 5 iterations.
+- **Iterate** — collect per-surface feedback (which surface needs what changed). Re-run 5a with the affected surfaces only. Cap at 5 iterations.
 
 ### 5d — Commit + Push (on approve)
 
-On the orchestrator's sprint branch, commit every `sprint-<N>/<surface>.md` and `sprint-<N>/<surface>.html` (e.g. `chore(redesign): sprint-{N} design instructions and mockups`). Push. Resolve blob URLs into `$INSTRUCTIONS_LINKS` and `$MOCK_LINKS`.
+On the orchestrator's sprint branch, commit the shared stylesheet and every per-surface instructions and mockup file (commit message: `chore(redesign): sprint-{N} design instructions and mockups`). Push. Resolve blob URLs into `$INSTRUCTIONS_LINKS` and `$MOCK_LINKS`.
 
 ---
 

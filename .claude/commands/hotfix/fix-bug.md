@@ -1,69 +1,69 @@
 
-The issue has `qa-blocked` — one or more test cases failed. Fix only the failing cases. Do not re-implement already-passing work.
+## Step 1 — Parse Arguments
+
+Parse `$ARGUMENTS` as `<bug_issue> <bug_spec>`.
+
+- `bug_issue` — issue number of the original bug being re-fixed.
+- `bug_spec` — free-text describing what's still broken after the prior fix attempt.
+
+If `bug_issue` is missing, halt and ask for it.
+
+If `bug_spec` is empty, ask once via `AskUserQuestion` for a free-text description of the remaining defect. Hold the verbatim text as `$BUG_SPEC`.
 
 ---
 
-## Step 1 — Determine Type and Gather Context in Parallel
+## Step 2 — Fetch Bug and Gather Context in Parallel
 
-Check issue labels:
-- Has `bug-production` AND `qa-blocked` → **Type = Bug**
-- Has `qa-blocked` (without `bug-production`) → **Type = Story**
+Run in parallel:
 
-Gather in parallel:
-
-1. **Issue body** (already fetched). Extract ACs.
-2. **QA test cases comment** — search for comment with heading `## QA Test Cases`. Read in full. Identify all failing test cases: any `- [ ]` item that is unchecked. These are the primary scope driver — fix only what failed here.
-3. **[Bug path only] Investigation comment** — search for comment with heading `## Dev Investigation`. Extract Root Cause, Scope, Fix Approach, Risk verbatim.
-4. **TDD** *(optional)* — list issues labeled `technical-design` in the milestone. If found, read in full and extract: components design, API specification, data models, failure modes.
+1. **Bug issue body** — fetch issue `#<bug_issue>` in full. Verify the issue has the `bug-production` label. Otherwise halt:
+   ```
+   ⛔ Issue #<N> is not a bug (labels: <labels>). Use /feature fix-story for story issues.
+   ```
+   Extract Bug Report and Acceptance Criteria.
+2. **Investigation comment** — search for the comment with heading `## Dev Investigation`. If missing, halt:
+   ```
+   ⛔ Run /hotfix implement <N> first; no prior investigation to revisit.
+   ```
+   Extract Root Cause, Scope, Fix Approach, Risk verbatim.
+3. **TDD** *(optional)* — list issues labeled `technical-design` in the milestone. If found, read in full and extract: components design, API specification, data models, failure modes.
 
 ---
 
-## Step 2 — Git Setup
+## Step 3 — Git Setup
 
-**Story path:** Checkout the existing story branch for issue `<ISSUE_NUMBER>`.
-**Bug path:** Checkout the existing bugfix branch for issue `<ISSUE_NUMBER>`.
+Checkout the existing bugfix branch for issue `<bug_issue>`.
 
 For multi-skill: run independently per codebase path.
 
 ---
 
-## Step 3 — Dispatch Agents
+## Step 4 — Dispatch Agents
 
-**Story path:** Spawn `backend`, `frontend`, and `devops` in a single parallel message. Pass context per dispatch-agents protocol with `<constraints>` containing:
-
-```xml
-<constraints>
-  <failing_test_cases>[verbatim unchecked - [ ] items from QA test cases comment]</failing_test_cases>
-  <instruction>Fix only the failing test cases. Do not re-implement already-passing work. Do not modify files unrelated to the failing cases.</instruction>
-</constraints>
-```
-
-**Bug path:** Spawn only agents matching the `[tag]` in Fix Approach. Pass `<decisions type="investigation">` with Root Cause, Scope, Fix Approach, Risk verbatim, and `<constraints>` containing:
+Spawn only agents matching the `[tag]` in Fix Approach. Pass `<decisions type="investigation">` with Root Cause, Scope, Fix Approach, Risk verbatim, plus `<constraints>` containing:
 
 ```xml
 <constraints>
-  <failing_test_cases>[verbatim unchecked - [ ] items from QA test cases comment]</failing_test_cases>
-  <instruction>Fix only the failing test cases. Do not re-implement already-passing work. Do not modify files unrelated to the failing cases.</instruction>
+  <bug_spec>[verbatim $BUG_SPEC]</bug_spec>
+  <instruction>Fix only what is required by the new bug spec. Do not re-implement already-correct work. Do not modify files unrelated to the bug.</instruction>
 </constraints>
 ```
 
 ---
 
-## Step 4 — Commit and Push
+## Step 5 — Commit and Push
 
 Commit and push all changed files to the existing branch.
-Commit message: `fix(#<ISSUE_NUMBER>): address qa-blocked items`
+Commit message: `fix(#<BUG_ISSUE>): revise bug fix per follow-up spec`
 
 ---
 
-## Step 5 — Update Implementation Comment
+## Step 6 — Update Implementation Comment
 
-Find the existing `## Implementation Complete` comment on issue `#ISSUE_NUMBER`.
+Find the existing `## Implementation Complete` comment on issue `#<bug_issue>`.
 
-Update only the human gate line:
+Update only the human gate line to:
 
 ```
-> ⏸ Human gate: Fix deployed to staging — re-verify and run `/qa pass <ISSUE_NUMBER>` or `/qa block <ISSUE_NUMBER> <notes>`.
+> ⏸ Fix pushed to staging — please re-verify.
 ```
-
-Do NOT remove `qa-blocked` label — QA re-verifies and calls `/qa pass` or `/qa block`.

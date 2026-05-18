@@ -4,7 +4,7 @@ description: Refactor lifecycle — create plan, amend plan, implement.
 tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(backend, frontend, devops)
 ---
 
-# /refactor — Refactor Lifecycle Orchestrator
+# Refactor Lifecycle Orchestrator
 
 ## Step 1 — Parse Arguments and Load Mode
 
@@ -19,6 +19,16 @@ tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(backend, frontend, 
 - `<refactor_issue>` — issue number of the refactor plan (carries `refactoring` label).
 
 **Load the corresponding mode file and follow its steps.**
+
+### Resume Detection
+
+Before handing control to the mode file, look up any existing resume state for this run keyed by `workflow = refactor`, `run_key = <stage>-<primary_arg>`. For `create` (no arg), the run-key is set after the refactor issue is created in Step 1.
+
+If state is found, ask the user via `AskUserQuestion`:
+
+- **Resume** → jump past completed steps; replay stored decisions and artifacts.
+- **Restart** → clear the state, start at Step 1.
+- **Cancel** → abort; leave the state untouched.
 
 ### Stage Picker (when `$ARGUMENTS` is empty or unmatched)
 

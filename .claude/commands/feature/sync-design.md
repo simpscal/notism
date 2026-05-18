@@ -41,14 +41,16 @@ Ensure the orchestrator's sprint branch for Sprint $SPRINT_N is checked out.
 
 ---
 
-## Step 3 — Re-spawn Per-Surface Subagents for Affected Surfaces Only (parallel, max 5)
+## Step 3 — Regenerate Affected Surfaces
 
-For each surface in `$AFFECTED_SURFACES`, spawn one subagent — max 5 in parallel, batched if needed. Each subagent emits the surface's two files to `<orchestrator-root>/sprint-<$SPRINT_N>/`:
+Partition `$AFFECTED_SURFACES` into:
 
-- **New** / **Modified** — regenerate `<surface-slug>.md` + `<surface-slug>.html`.
-- **Removed** — delete `<surface-slug>.md` and `<surface-slug>.html` from the sprint branch.
+- **`$REGEN_SURFACES`** — rows classified `New` or `Modified`.
+- **`$REMOVED_SURFACES`** — rows classified `Removed`.
 
-Pass context per the dispatch-agents protocol with the same per-surface `<inputs>` shape used by `create-design.md` (surface, story_acs, new_ds).
+For `$REGEN_SURFACES`: regenerate per-surface design artifacts for the list, passing each surface's `story_acs`.
+
+For `$REMOVED_SURFACES`: delete the per-surface design artifacts for each removed surface (instructions + mockup).
 
 Unaffected surfaces from prior `create-design` runs are not touched.
 

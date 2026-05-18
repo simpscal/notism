@@ -66,8 +66,18 @@ section { padding: var(--space-8) var(--space-6); border-top: 1px solid var(--bo
 section h2 { font-size: 1.5rem; font-weight: 700; margin: 0 0 var(--space-4); }
 ```
 
+## Dark Mode Toggle
+
+The catalog uses a **full-page dark mode toggle**, not a separate Dark Mode section.
+
+- Place a `<button>` with `position: fixed; top: 16px; right: 24px; z-index: 999; border-radius: 9999px` in the viewport.
+- Toggle adds/removes the `dark` class on `<html>` via a single JS function. The icon flips between 🌙 and ☀️; the label flips between "Dark mode" and "Light mode".
+- Dark token overrides live under `html.dark { ... }` in `<style>`, overriding every `:root` custom property with dark-mode values.
+- **No separate Dark Mode section in the body.** The toggle applies the dark theme globally to all existing sections.
+
 ## Rules
 
-- **Single file.** No external CSS, fonts, scripts, or images. Use CSS-only swatches.
+- **Single file** with one Google Fonts `<link>` allowed for the design system typeface. No other external assets.
 - **Resolve tokens to values.** Inline actual hex / rem values into `:root` — do not reference tokens by name in property values.
 - **Every component variant × size rendered.** No abbreviated demos.
+- **No dedicated Dark Mode section.** Dark mode is demonstrated via the fixed toggle button, not a separate body section.

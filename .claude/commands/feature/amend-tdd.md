@@ -13,7 +13,7 @@ Extract `sprint_number` (the token after `amend-tdd`).
 
 ## Step 2 — Load Architecture Constraints
 
-Read each codebase's `CLAUDE.md` (paths are defined in `config.md` under **Codebases**).
+Read each codebase's `CLAUDE.md` (paths from the Codebases table).
 
 Hold the architecture facts in memory — layer structure, naming conventions, build/test commands, patterns in use.
 

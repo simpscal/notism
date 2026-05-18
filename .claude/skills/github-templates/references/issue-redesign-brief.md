@@ -5,8 +5,10 @@
 ```
 ## Redesign Brief
 
-### Design Summary
-<one-paragraph summary of the desired design outcome — what the new design system delivers and how it feels. Anchored in atmosphere, layout pattern, references, and the concrete token / component decisions that landed in the revised DESIGN.md. A reader who has not seen DESIGN.md should understand what the redesign is trying to achieve.>
+### Design Direction
+- **Atmosphere:** {atmosphere}
+- **Layout pattern:** {layout_pattern}
+- **References:** {references}
 ```
 
 ---
@@ -15,6 +17,8 @@
 
 | Field | Req | Notes |
 |-------|-----|-------|
-| `design_summary` | yes | One paragraph summarising the desired design outcome — atmosphere + layout pattern + references + headline token/component decisions |
+| `atmosphere` | yes | The mood / feel locked in Step 3a (e.g. "calm, editorial, high-contrast") |
+| `layout_pattern` | yes | The layout pattern locked in Step 3a (e.g. "sidebar + content canvas") |
+| `references` | yes | Visual references locked in Step 3a (e.g. "Linear, Vercel dashboard") |
 
 The brief is the scope-of-record for the sprint and the parent of every redesign story. It is filed retrospectively, after the design system is built and committed.

@@ -6,7 +6,7 @@ tools: Bash, mcp__github__pull_request_read, mcp__github__create_pull_request, m
 
 ## Repo Derivation
 
-`owner`/`repo` derived via `gh repo view --json owner,name --jq '[.owner.login,.name]|join("/")'` from inside the codebase directory. Codebase paths come from `config.md` Codebases table — never hardcode.
+`owner`/`repo` derived via `gh repo view --json owner,name --jq '[.owner.login,.name]|join("/")'` from inside the codebase directory. Codebase paths come from the Codebases table — never hardcode.
 
 ---
 
