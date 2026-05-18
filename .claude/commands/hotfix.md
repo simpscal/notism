@@ -4,9 +4,7 @@ description: Production bug fix lifecycle — report, ACs, fix, release.
 tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(backend, frontend, devops)
 ---
 
-# /hotfix — Production Bug Fix Orchestrator
-
-For bugs found in production. Faster lane than feature — no design, no TDD; the bug ticket carries ACs directly and goes straight to fix → release.
+# Production Bug Fix Orchestrator
 
 ## Step 1 — Parse Arguments and Load Mode
 
@@ -25,6 +23,16 @@ For bugs found in production. Faster lane than feature — no design, no TDD; th
 - `<bug_spec>` — free-text describing a follow-up defect (used by `fix-bug`).
 
 **Load the corresponding mode file and follow its steps.**
+
+### Resume Detection
+
+Before handing control to the mode file, look up any existing resume state for this run keyed by `workflow = hotfix`, `run_key = <stage>-<primary_arg>` (e.g. `implement-87`, `acs-87`). For `report` with no `<bug_issue>` yet, the run-key is set after the issue is created.
+
+If state is found, ask the user via `AskUserQuestion`:
+
+- **Resume** → jump past completed steps; replay stored decisions and artifacts.
+- **Restart** → clear the state, start at Step 1.
+- **Cancel** → abort; leave the state untouched.
 
 ### Stage Picker (when `$ARGUMENTS` is empty or unmatched)
 

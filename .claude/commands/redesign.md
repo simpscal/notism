@@ -4,11 +4,7 @@ description: UI redesign lifecycle — design → implement. Sprint setup, desig
 tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(frontend)
 ---
 
-# /redesign — UI Redesign Orchestrator
-
-A visually-driven lifecycle for redesigning **existing** UI surfaces. Two phases plus a single-story amendment stage. No requirement issue.
-
-Release reuses `/feature release <sprint>`.
+# UI Redesign Orchestrator
 
 ## Step 1 — Parse Arguments and Load Mode
 
@@ -27,6 +23,16 @@ The first arg names a **stage**. Match `$ARGUMENTS` against the table below and 
 For sprint release, use `/feature release <sprint_number>`.
 
 **Load the corresponding mode file and follow its steps.**
+
+### Resume Detection
+
+Before handing control to the mode file, look up any existing resume state for this run keyed by `workflow = redesign`, `run_key = <stage>-<primary_arg>`. For `design` (no arg), the run-key is `design-sprint-<N>` once the sprint number is assigned in Step 1.
+
+If state is found, ask the user via `AskUserQuestion`:
+
+- **Resume** → jump past completed steps; replay stored decisions and artifacts.
+- **Restart** → clear the state, start at Step 1.
+- **Cancel** → abort; leave the state untouched.
 
 ### Stage Picker (when `$ARGUMENTS` is empty or unmatched)
 

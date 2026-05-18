@@ -4,11 +4,7 @@ description: Sprint feature lifecycle — requirement, stories, design, TDD, dev
 tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(backend, frontend, devops)
 ---
 
-# /feature — Feature Lifecycle Orchestrator
-
-A sprint feature lifecycle. Each stage hands off via a tracker artifact (requirement issue → stories → design issue → TDD issue → PRs → release).
-
-This workflow also covers mid-sprint requirement changes and AC amendments — they are stages of the same lifecycle, not separate workflows.
+# Feature Lifecycle Orchestrator
 
 ## Step 1 — Parse Arguments and Load Mode
 
@@ -46,6 +42,16 @@ The first arg names a **stage**. Match `$ARGUMENTS` against the table below and 
 - `<bug_spec>` — free-text describing a regression (used by `fix-story`).
 
 **Load the corresponding mode file and follow its steps.**
+
+### Resume Detection
+
+Before handing control to the mode file, look up any existing resume state for this run keyed by `workflow = feature`, `run_key = <stage>-<primary_arg>` (e.g. `implement-145`, `create-stories-42`). For stages with no primary arg yet (e.g. `create-requirement <description>`), the run-key is set after the first artifact is created.
+
+If state is found, ask the user via `AskUserQuestion`:
+
+- **Resume** → load the mode file but jump past every completed step; replay stored decisions and artifacts instead of re-asking or recreating.
+- **Restart** → clear the state, start the mode file from Step 1.
+- **Cancel** → abort the invocation; leave the state untouched.
 
 ### Stage Picker (when `$ARGUMENTS` is empty or unmatched)
 
