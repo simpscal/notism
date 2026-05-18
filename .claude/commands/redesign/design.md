@@ -5,13 +5,13 @@ List milestones in the orchestrator repo. Take the next sprint number → `$SPRI
 Create the sprint branch for sprint `$SPRINT_N` in both:
 
 - **Orchestrator repo** (holds DESIGN.md revision + `sprint-<N>/` previews).
-- **Web codebase** (holds per-story implementations; path from `config.md` Codebases table).
+- **Web codebase** (holds per-story implementations; path from the Codebases table).
 
 ---
 
 ## Step 2 — Discover Surfaces
 
-Read `config.md` to find the web codebase path. Scan that codebase's routes / pages tree to enumerate every user-facing surface. Compile a list — for each surface: human-readable name, kebab-case slug, current route path.
+Resolve the web codebase path from the Codebases table. Scan that codebase's routes / pages tree to enumerate every user-facing surface. Compile a list — for each surface: human-readable name, kebab-case slug, current route path.
 
 Present the list to the user via `AskUserQuestion`:
 

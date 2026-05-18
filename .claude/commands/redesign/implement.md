@@ -29,7 +29,7 @@ Add label `in-progress` to the story issue.
 
 Sprint number `$SPRINT_N`: read from the story issue's milestone title (format: `Sprint N`).
 
-Checkout the sprint branch for sprint `$SPRINT_N` in the web codebase path (from `config.md` Codebases table; never hardcode).
+Checkout the sprint branch for sprint `$SPRINT_N` in the web codebase path (from the Codebases table; never hardcode).
 
 **Revisit branch:**
 

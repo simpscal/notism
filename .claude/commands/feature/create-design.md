@@ -25,7 +25,7 @@ Check whether the orchestrator's sprint branch for Sprint $SPRINT_N already exis
 
 Read `DESIGN.md` at the orchestrator root in full. Hold `$NEW_DS` (current tokens + components).
 
-From `$UI_STORIES` plus the web codebase's routes / pages tree (path from `config.md` Codebases table), enumerate every UI surface in scope. For each surface, capture: human-readable name + kebab-case slug.
+From `$UI_STORIES` plus the web codebase's routes / pages tree (path from the Codebases table), enumerate every UI surface in scope. For each surface, capture: human-readable name + kebab-case slug.
 
 Present the list to the user via `AskUserQuestion`:
 

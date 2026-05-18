@@ -22,7 +22,7 @@ Hold as **$REFACTOR**. Extract from body:
 
 ## Step 2 — Load Architecture Constraints
 
-Read each in-scope codebase's `CLAUDE.md` (paths defined in `config.md` under **Codebases**).
+Read each in-scope codebase's `CLAUDE.md` (paths from the Codebases table).
 
 Hold the architecture facts in memory — layer structure, naming conventions, build/test commands, patterns in use.
 

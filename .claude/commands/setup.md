@@ -1,27 +1,27 @@
 ---
 name: setup
-description: One-off project setup — generate config.md, PRODUCT.md, and DESIGN.md interactively.
+description: One-off project setup — generate the project-config skill, PRODUCT.md, and DESIGN.md interactively.
 tools: Read, Write, Glob, Grep, Bash, AskUserQuestion
 ---
 
-# /setup — Initialize Project Config
+# Initialize Project Config
 
-Generate `config.md`, `PRODUCT.md`, and `DESIGN.md` for this project. Run once when adopting this workflow in a new project, or to regenerate after project structure changes.
+Generate `.claude/skills/project-config/SKILL.md`, `PRODUCT.md`, and `DESIGN.md` for this project. Run once when adopting this workflow in a new project, or to regenerate after project structure changes.
 
 ---
 
 ## Step 1 — Check Existing Files
 
-Before any other step, check the repo root for `config.md`, `DESIGN.md`, and `PRODUCT.md`. For each file that exists, ask the user via `AskUserQuestion` whether to **Skip** (keep current file untouched) or **Regenerate** (overwrite). Default option: Skip.
+Before any other step, check for the project-config skill at `.claude/skills/project-config/SKILL.md` and for `DESIGN.md` / `PRODUCT.md` at the repo root. For each artifact that exists, ask the user via `AskUserQuestion` whether to **Skip** (keep current artifact untouched) or **Regenerate** (overwrite). Default option: Skip.
 
 Apply the answers to gate later steps:
 
-- **`config.md` exists and user chose Skip** → skip Steps 2–6 entirely (config gathering, write, and label creation). Read the existing `config.md` to recover the registered codebases (needed by Step 7 to know whether a web codebase exists).
+- **project-config skill exists and user chose Skip** → skip Steps 2–6 entirely (config gathering, write, and label creation). Read the existing skill body to recover the registered codebases (needed by Step 7 to know whether a web codebase exists).
 - **`PRODUCT.md` exists and user chose Skip** → skip Step 7 entirely.
 - **`DESIGN.md` exists and user chose Skip** → skip Step 8 entirely.
-- **No files exist** → proceed straight through Steps 2–9 with no prompt.
+- **No artifacts exist** → proceed straight through Steps 2–9 with no prompt.
 
-If all three files exist and the user chose Skip for all three, exit early with a one-line note that nothing needed regenerating.
+If all three artifacts exist and the user chose Skip for all three, exit early with a one-line note that nothing needed regenerating.
 
 ## Step 2 — Gather Codebase Names and Paths
 
@@ -56,12 +56,16 @@ Use `AskUserQuestion` to ask the user:
 
 > "Does any codebase run database migrations that should be detected in PRs? If yes, describe how (e.g. 'EF Core migrations live in the backend codebase at paths containing `/Migrations/`. Filter changed files for `/Migrations/` case-insensitively.'). If no, reply 'none'."
 
-## Step 5 — Write config.md
+## Step 5 — Write the project-config Skill
 
-Write `config.md` to the repo root with the collected data. The Labels section is static and identical across all projects — always include it verbatim.
+Write `.claude/skills/project-config/SKILL.md` with the collected data. The frontmatter is static — copy it verbatim. The Labels section is also static and identical across all projects — always include it verbatim.
 
 ```markdown
-# Project Config
+---
+name: project-config
+description: Use to look up project-specific codebase paths, canonical label names, and migration-detection rules. Auto-invoke whenever a workflow needs a codebase path (api, web, infrastructure), a label name, or PR migration detection. Single source of truth — never hardcode any of these.
+tools: Read
+---
 
 ## Codebases
 
@@ -69,13 +73,9 @@ Write `config.md` to the repo root with the collected data. The Labels section i
 |------|------|---------|
 {one row per codebase: | {name} | `{path}` | {summary} |}
 
----
-
 ## Migration Detection
 
 {user's migration detection description, or "No migration detection configured." if none}
-
----
 
 ## Labels
 
@@ -89,6 +89,7 @@ Write `config.md` to the repo root with the collected data. The Labels section i
 | Story removed during requirement change | `story-removed` |
 | Requirement updated after change | `requirement-updated` |
 | Sprint closed | `sprint-completed` |
+| Tech-lead refactoring task | `refactoring` |
 | Bug issue | `bug-production` |
 | Bug resolved and closed | `bug-fixed` |
 | Dev implementation complete | `implemented` |
@@ -96,7 +97,7 @@ Write `config.md` to the repo root with the collected data. The Labels section i
 
 ## Step 6 — Create GitHub Labels
 
-Skip this step if `config.md` was kept in Step 1 (Skip chosen) — labels are assumed to already exist from a prior setup run.
+Skip this step if the project-config skill was kept in Step 1 (Skip chosen) — labels are assumed to already exist from a prior setup run.
 
 Otherwise, run the labels script to create the workflow's GitHub labels:
 
@@ -120,13 +121,13 @@ Generate `DESIGN.md` at the repo root for the registered web codebase, sourcing 
 
 ## Step 9 — Confirm
 
-Show only the files that were (re)written in this run to the user and confirm they look correct. Skipped files are not re-displayed. Mention whether GitHub labels were (re)created.
+Show only the artifacts that were (re)written in this run to the user and confirm they look correct. Skipped artifacts are not re-displayed. Mention whether GitHub labels were (re)created.
 
 ---
 
 ## Constraints
 
-- This command writes project-level docs (`config.md`, `PRODUCT.md`, `DESIGN.md`). Never overwrite without explicit user confirmation if a file already exists.
+- This command writes the project-config skill plus project-level docs (`PRODUCT.md`, `DESIGN.md`). Never overwrite without explicit user confirmation if an artifact already exists.
 
 ### Step Tracking
 

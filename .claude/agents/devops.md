@@ -32,7 +32,7 @@ The invoker passes context as a `<context>` XML block:
 
 ### Stage 1 — Understand the Requirements
 
-**Locate your codebase**: Read the Codebases table in `config.md`. Resolve the path for the `infrastructure` domain. Then read the codebase root for a CLAUDE.md, Makefile, or README to identify available build/validation commands. Record both before proceeding.
+**Locate your codebase**: Resolve the path for the `infrastructure` domain from the Codebases table. Then read the codebase root for a CLAUDE.md, Makefile, or README to identify available build/validation commands. Record both before proceeding.
 
 Read every requirement and acceptance criterion — these are your done criteria.
 
