@@ -1,12 +1,12 @@
 ---
 name: hotfix
-description: Production bug fix lifecycle — report, ACs, fix, release. Testing handled by /test.
+description: Production bug fix lifecycle — report, ACs, fix, release.
 tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(backend, frontend, devops)
 ---
 
 # /hotfix — Production Bug Fix Orchestrator
 
-For bugs found in production. Faster lane than feature — no design, no TDD; the bug ticket carries ACs directly and goes straight to fix → release. Test cases and QA verdict are handled by the separate `/test` workflow.
+For bugs found in production. Faster lane than feature — no design, no TDD; the bug ticket carries ACs directly and goes straight to fix → release.
 
 ## Step 1 — Parse Arguments and Load Mode
 
@@ -15,13 +15,14 @@ For bugs found in production. Faster lane than feature — no design, no TDD; th
 | `report` | `[description]` | Clarify the bug interactively and open a tracker issue with `bug-production` label. | `hotfix/report.md` |
 | `acs` | `<bug_issue>` | Analyse the bug and add Acceptance Criteria to the same ticket. | `hotfix/acs.md` |
 | `implement` | `<bug_issue>` | Investigate root cause and apply the fix — fresh, or delta-only if `story-updated` label is set. | `hotfix/implement.md` |
-| `fix-bug` | `<bug_issue>` | Re-fix after QA blocked the bug (`qa-blocked` label). | `hotfix/fix-bug.md` |
+| `fix-bug` | `<bug_issue> <bug_spec>` | Re-fix a bug to address a follow-up spec; bug spec passed inline. | `hotfix/fix-bug.md` |
 | `release` | `<bug_issue>` | Merge the bugfix PR to main and close the bug. | `hotfix/release.md` |
 
 **Argument reference:**
 
 - `[description]` — free-text bug report (symptoms, repro steps); optional, will be gathered interactively if omitted.
 - `<bug_issue>` — issue number of the bug ticket (carries `bug-production` label).
+- `<bug_spec>` — free-text describing a follow-up defect (used by `fix-bug`).
 
 **Load the corresponding mode file and follow its steps.**
 
@@ -31,13 +32,11 @@ For bugs found in production. Faster lane than feature — no design, no TDD; th
 2. After a stage is chosen, ask one `AskUserQuestion` per required arg (bug issue number, optional description).
 3. Treat the result as `$ARGUMENTS = "<stage> <args>"` and continue with the matched row.
 
-For test cases and QA verdict, use the separate `/test` workflow (`/test write|sync|amend|pass|block <bug_issue>`).
-
 ### Standard sequence
 
-`report` → `acs` → `implement` → `/test write` → `/test pass` (or `/test block`) → `release`.
+`report` → `acs` → `implement` → `release`.
 
-QA fail loop: `fix-bug` → `/test pass`/`/test block`.
+Re-fix loop: `fix-bug <bug_issue> <bug_spec>`.
 
 ---
 

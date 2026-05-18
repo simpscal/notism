@@ -7,7 +7,7 @@ tools: AskUserQuestion
 
 # /help-flows — Workflow Picker
 
-Goal: ask user what they want to do, then print **one exact command** they can copy-paste. Five workflows: `/feature`, `/redesign`, `/hotfix`, `/test`, `/refactor`.
+Goal: ask user what they want to do, then print **one exact command** they can copy-paste. Four workflows: `/feature`, `/redesign`, `/hotfix`, `/refactor`.
 
 ---
 
@@ -38,9 +38,8 @@ Options (label → stage id):
 - **Implement a redesign story** → `redesign-implement`
 - **Production bug — fix it** → `hotfix-start`
 - **Continue a production bug** → `hotfix-continue`
-- **Write test cases** → `test-write`
-- **Mark QA pass/block** → `test-verdict`
-- **QA failed — fix it** → `qa-fix`
+- **Fix a story regression** → `bug-fix-story`
+- **Re-fix an incomplete bug fix** → `bug-fix-bug`
 - **Refactor** → `refactor-start`
 - **Amend a refactor plan** → `refactor-amend`
 - **Sprint release** → `feature-release`
@@ -58,19 +57,18 @@ Look up the chosen stage in the **Stage Map**. For each placeholder, ask via `As
 |---|---|---|
 | `feature-start` | `<description>` | `/feature create-requirement <description>` |
 | `feature-continue` | _(see sub-stages)_ | Ask: which sub-stage — stories / design / tdd / implement. Map to `/feature create-stories <req#>`, `/feature create-design <sprint>`, `/feature create-tdd <sprint>`, `/feature implement <story#>`. |
-| `feature-change` | `<req#>`, `<delta>` | `/feature amend-requirement <req#> <delta>` _then suggest follow-ups:_ `/feature sync-stories <req#>`, `/feature sync-design <sprint>`, `/feature sync-tdd <sprint>`, `/feature implement <story#>`, `/test sync <story#>`. |
-| `feature-amend-ac` | `<story#>` | `/feature amend-stories <story#>` _then follow-ups:_ `/feature amend-design <story#>`, `/feature amend-tdd <story#>`, `/feature amend-implementation <story#>`, `/test amend <story#>`. |
+| `feature-change` | `<req#>`, `<delta>` | `/feature amend-requirement <req#> <delta>` _then suggest follow-ups:_ `/feature sync-stories <req#>`, `/feature sync-design <sprint>`, `/feature sync-tdd <sprint>`, `/feature implement <story#>`. |
+| `feature-amend-ac` | `<story#>` | `/feature amend-stories <story#>` _then follow-ups:_ `/feature amend-design <story#>`, `/feature amend-tdd <story#>`, `/feature amend-implementation <story#>`. |
 | `feature-add-story` | `<req#>` | `/feature add-story <req#>` |
 | `feature-merge` | `<target> <source>` | `/feature merge-stories <target> <source>` |
 | `feature-release` | `<sprint>` | `/feature release <sprint>` |
 | `redesign-design` | _(none)_ | `/redesign design` _(scope captured in one question; brief issue created mid-flow)_ |
-| `redesign-amend-design` | `<story#>` | `/redesign amend-design <story#>` _then follow-ups:_ `/redesign implement <story#>`, `/test amend <story#>`. |
+| `redesign-amend-design` | `<story#>` | `/redesign amend-design <story#>` _then follow-up:_ `/redesign implement <story#>`. |
 | `redesign-implement` | `<story#>` | `/redesign implement <story#>` |
 | `hotfix-start` | `[description]` | `/hotfix report <description>` |
 | `hotfix-continue` | _(see sub-stages)_ | Ask: which sub-stage — acs / implement / release. Map to `/hotfix acs <bug#>`, `/hotfix implement <bug#>`, `/hotfix release <bug#>`. |
-| `test-write` | `<issue>` | `/test write <issue>` |
-| `test-verdict` | pass or block? + `<issue>` | `/test pass <issue>` _or_ `/test block <issue> <notes>` |
-| `qa-fix` | `<issue>` | `/feature fix-story <issue>` _(or `/hotfix fix-bug <bug#>` if it's a bug)_ _then:_ `/test pass <issue>` |
+| `bug-fix-story` | `<story#>`, `<bug_spec>` | `/feature fix-story <story#> <bug_spec>` |
+| `bug-fix-bug` | `<bug#>`, `<bug_spec>` | `/hotfix fix-bug <bug#> <bug_spec>` |
 | `refactor-start` | _(none)_ | `/refactor create` _then:_ `/refactor implement <refactor#>` |
 | `refactor-amend` | `<refactor#>` | `/refactor amend <refactor#>` |
 
@@ -103,9 +101,7 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 3. `/feature create-design <sprint>` _(web codebase only)_
 4. `/feature create-tdd <sprint>`
 5. `/feature implement <story_issue>` _(repeat per story)_
-6. `/test write <story_issue>`
-7. `/test pass <story_issue>` _or_ `/test block <story_issue> <notes>`
-8. `/feature release <sprint>`
+6. `/feature release <sprint>`
 
 ### 🔁 Requirement Change (within Feature)
 
@@ -114,7 +110,6 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 3. `/feature sync-design <sprint>` _(if web stories changed)_
 4. `/feature sync-tdd <sprint>`
 5. `/feature implement <story_issue>` _(handles `story-updated` internally; `/feature revert <story_issue>` for removed)_
-6. `/test sync <story_issue>`
 
 ### ✏️ AC Amend (within Feature)
 
@@ -122,7 +117,6 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 2. `/feature amend-design <story_issue>` _(if design impact)_
 3. `/feature amend-tdd <story_issue>` _(if technical impact)_
 4. `/feature amend-implementation <story_issue>`
-5. `/test amend <story_issue>`
 
 ### ➕ Add Story Mid-Sprint (within Feature)
 
@@ -130,7 +124,6 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 2. `/feature sync-design <sprint>` _(if web)_
 3. `/feature sync-tdd <sprint>`
 4. `/feature implement <new_story_issue>`
-5. `/test write <new_story_issue>`
 
 ### 🔀 Merge Stories (within Feature)
 
@@ -141,31 +134,19 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 1. `/redesign design`                              _← Phase 1: capture scope, build design system, file [Redesign Brief] issue, generate previews + stories + priority table_
 2. `/redesign amend-design <story_issue>`         _← amend one story's per-surface design; upserts hub comment; labels affected implemented stories `story-updated`_
 3. `/redesign implement <story_issue>`            _← Phase 2: follow the Priority Implementation Table on the brief issue; foundations first. Handles `story-updated` (Revisit branch)_
-3. `/test write <story_issue>`
-4. `/test pass <story_issue>` _or_ `/test block <story_issue> <notes>`
-5. `/feature release <sprint>`                     _← reuse /feature release; same milestone shape_
+4. `/feature release <sprint>`                     _← reuse /feature release; same milestone shape_
 
-### 🚫 QA Fail Loop
+### 🐞 Bug Fix Loop
 
-1. `/feature fix-story <story_issue>` _(or `/hotfix fix-bug <bug_issue>`)_
-2. `/test pass <issue>` _or_ `/test block <issue> <notes>`
+- `/feature fix-story <story_issue> <bug_spec>` _(story regression)_
+- `/hotfix fix-bug <bug_issue> <bug_spec>` _(incomplete bug fix)_
 
 ### 🐛 Hotfix (Production Bug)
 
 1. `/hotfix report [description]`
 2. `/hotfix acs <bug_issue>`
 3. `/hotfix implement <bug_issue>`
-4. `/test write <bug_issue>`
-5. `/test pass <bug_issue>` _or_ `/test block <bug_issue> <notes>`
-6. `/hotfix release <bug_issue>`
-
-### 🧪 Test (standalone)
-
-- `/test write <issue>` — first test cases for the issue
-- `/test sync <issue>` — reconcile after requirement change
-- `/test amend <issue>` — revise after single-issue AC change
-- `/test pass <issue>` — mark `qa-passed`
-- `/test block <issue> <notes>` — mark `qa-blocked` with failure notes
+4. `/hotfix release <bug_issue>`
 
 ### 🧹 Refactor
 

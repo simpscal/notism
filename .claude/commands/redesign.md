@@ -8,7 +8,7 @@ tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(frontend)
 
 A visually-driven lifecycle for redesigning **existing** UI surfaces. Two phases plus a single-story amendment stage. No requirement issue.
 
-Testing handled by `/test`; release reuses `/feature release <sprint>`.
+Release reuses `/feature release <sprint>`.
 
 ## Step 1 — Parse Arguments and Load Mode
 
@@ -24,7 +24,7 @@ The first arg names a **stage**. Match `$ARGUMENTS` against the table below and 
 
 - `<story_issue>` — issue number of a single redesign user story.
 
-For test cases and QA verdict, use `/test write|sync|amend|pass|block <story_issue>`. For sprint release, use `/feature release <sprint_number>`.
+For sprint release, use `/feature release <sprint_number>`.
 
 **Load the corresponding mode file and follow its steps.**
 
@@ -37,8 +37,8 @@ For test cases and QA verdict, use `/test write|sync|amend|pass|block <story_iss
 
 ### Lifecycle sequence
 
-- **Standard redesign**: `design` → `implement` (per story, in priority order) → `/test write` → `/test pass`/`/test block` → `/feature release <sprint>`.
-- **Single-story design amendment**: `amend-design <story_issue>` → `implement <story_issue>` (Revisit branch handles `story-updated`) → `/test amend <story_issue>` → `/test pass`/`/test block`.
+- **Standard redesign**: `design` → `implement` (per story, in priority order) → `/feature release <sprint>`.
+- **Single-story design amendment**: `amend-design <story_issue>` → `implement <story_issue>` (Revisit branch handles `story-updated`).
 
 ---
 

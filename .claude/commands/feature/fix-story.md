@@ -1,70 +1,64 @@
+## Step 1 — Parse Arguments
 
-The issue has `qa-blocked` — one or more test cases failed. Fix only the failing cases. Do not re-implement already-passing work.
+Parse `$ARGUMENTS` as `<story_issue> <bug_spec>`.
 
----
+- `story_issue` — issue number of the story being patched.
+- `bug_spec` — free-text describing the regression (what's broken, repro steps, expected vs actual).
 
-## Step 1 — Determine Type and Gather Context in Parallel
+If `story_issue` is missing, halt and ask for it.
 
-Check issue labels:
-- Has `bug-production` AND `qa-blocked` → **Type = Bug**
-- Has `qa-blocked` (without `bug-production`) → **Type = Story**
-
-Gather in parallel:
-
-1. **Issue body** (already fetched). Extract ACs.
-2. **QA test cases comment** — search for comment with heading `## QA Test Cases`. Read in full. Identify all failing test cases: any `- [ ]` item that is unchecked. These are the primary scope driver — fix only what failed here.
-3. **[Bug path only] Investigation comment** — search for comment with heading `## Dev Investigation`. Extract Root Cause, Scope, Fix Approach, Risk verbatim.
-4. **TDD** *(optional)* — list issues labeled `technical-design` in the milestone. If found, read in full and extract: components design, API specification, data models, failure modes.
-5. **Design Instructions** (frontend only) — derive the requirement issue from the story's milestone. Find the design hub comment on the requirement issue (matched by body prefix `## Design Navigation`) and locate the row(s) for the story's surface(s). For each affected surface, read `<orchestrator-root>/sprint-<N>/instructions/<surface-slug>.md` from the orchestrator's sprint branch.
+If `bug_spec` is empty, ask once via `AskUserQuestion` for a free-text description of the regression. Hold the verbatim text as `$BUG_SPEC`.
 
 ---
 
-## Step 2 — Git Setup
+## Step 2 — Fetch Story and Gather Context in Parallel
 
-**Story path:** Checkout the existing story branch for issue `<ISSUE_NUMBER>`.
-**Bug path:** Checkout the existing bugfix branch for issue `<ISSUE_NUMBER>`.
+Run in parallel:
+
+1. **Story issue body** — fetch issue `#<story_issue>` in full. Verify the issue has the `user-story` label. Otherwise halt:
+   ```
+   ⛔ Issue #<N> is not a story (labels: <labels>). Use /hotfix fix-bug for bug issues.
+   ```
+   Extract current ACs.
+2. **TDD** *(optional)* — list issues labeled `technical-design` in the story's milestone. If found, read in full and extract: components design, API specification, data models, failure modes.
+3. **Design Instructions** (frontend only) — derive the requirement issue from the story's milestone. Find the design hub comment on the requirement issue (matched by body prefix `## Design Navigation`) and locate the row(s) for the story's surface(s). For each affected surface, read `<orchestrator-root>/sprint-<N>/instructions/<surface-slug>.md` from the orchestrator's sprint branch.
+
+---
+
+## Step 3 — Git Setup
+
+Checkout the existing story branch for issue `<story_issue>`.
 
 For multi-skill: run independently per codebase path.
 
 ---
 
-## Step 3 — Dispatch Agents
+## Step 4 — Dispatch Agents
 
-**Story path:** Spawn `backend`, `frontend`, and `devops` in a single parallel message. Pass context per dispatch-agents protocol with `<constraints>` containing:
-
-```xml
-<constraints>
-  <failing_test_cases>[verbatim unchecked - [ ] items from QA test cases comment]</failing_test_cases>
-  <instruction>Fix only the failing test cases. Do not re-implement already-passing work. Do not modify files unrelated to the failing cases.</instruction>
-</constraints>
-```
-
-**Bug path:** Spawn only agents matching the `[tag]` in Fix Approach. Pass `<decisions type="investigation">` with Root Cause, Scope, Fix Approach, Risk verbatim, and `<constraints>` containing:
+Spawn `backend`, `frontend`, and `devops` in a single parallel message. Pass context per dispatch-agents protocol with `<constraints>` containing:
 
 ```xml
 <constraints>
-  <failing_test_cases>[verbatim unchecked - [ ] items from QA test cases comment]</failing_test_cases>
-  <instruction>Fix only the failing test cases. Do not re-implement already-passing work. Do not modify files unrelated to the failing cases.</instruction>
+  <bug_spec>[verbatim $BUG_SPEC]</bug_spec>
+  <instruction>Fix only what is required by the bug spec. Do not re-implement already-correct work. Do not modify files unrelated to the bug.</instruction>
 </constraints>
 ```
 
 ---
 
-## Step 4 — Commit and Push
+## Step 5 — Commit and Push
 
 Commit and push all changed files to the existing branch.
-Commit message: `fix(#<ISSUE_NUMBER>): address qa-blocked items`
+Commit message: `fix(#<STORY_ISSUE>): <imperative-tense description derived from bug_spec>`
 
 ---
 
-## Step 5 — Update Implementation Comment
+## Step 6 — Update Implementation Comment
 
-Find the existing `## Implementation Complete` comment on issue `#ISSUE_NUMBER`.
+Find the existing `## Implementation Complete` comment on issue `#<story_issue>`.
 
-Update only the human gate line:
+Update only the human gate line to:
 
 ```
-> ⏸ Human gate: Fix deployed to staging — re-verify and run `/qa pass <ISSUE_NUMBER>` or `/qa block <ISSUE_NUMBER> <notes>`.
+> ⏸ Fix pushed to staging — please re-verify.
 ```
-
-Do NOT remove `qa-blocked` label — QA re-verifies and calls `/qa pass` or `/qa block`.
