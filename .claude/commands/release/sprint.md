@@ -13,11 +13,16 @@ If `$ARGUMENTS` is empty: list all milestones with details from the tracker adap
 
 List **all** issues in the milestone (open and closed). For each issue, note its number, title, labels, and state.
 
-Partition issues into four groups:
+Partition issues into five groups:
 - **Stories**: issues with the `user-story` label
 - **TDD**: issue with the `technical-design` label
 - **Design**: issue with the `design` label
 - **Requirement**: issue with the `requirement` label
+- **Redesign Brief**: issue with the `redesign` label
+
+Determine sprint type:
+- If a **Requirement** issue is present → **Feature sprint**
+- If a **Redesign Brief** issue is present (and no Requirement) → **Redesign sprint**
 
 Derive sprint branch name for sprint N (from milestone title).
 
@@ -47,7 +52,7 @@ If all stories are merged or already closed, proceed.
 
 ## Step 4 — Label and Close All Sprint Issues
 
-For every issue in the milestone (stories, TDD issue, requirement issue, design issue):
+For every issue in the milestone (stories, TDD issue, requirement issue, design issue, redesign brief):
 
 1. Add label `sprint-completed` and remove labels `in-progress` and `story-updated` from the issue.
 2. Close the issue.
@@ -96,4 +101,7 @@ For each codebase, create sprint release PR for sprint N with title `feat(sprint
 
 ## Step 8 — Post Sprint Summary
 
-Render the `comment-sprint-summary` template with `{sprint, closed_date, stories, release_prs, migrations}`, then post it as a comment on the requirement issue.
+Render the `comment-sprint-summary` template with `{sprint, closed_date, stories, release_prs, migrations}`, then post it as a comment on the **parent issue**:
+
+- **Feature sprint** → post on the requirement issue.
+- **Redesign sprint** → post on the redesign brief issue.
