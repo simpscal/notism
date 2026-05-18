@@ -87,43 +87,28 @@ The brief is the scope-of-record for this sprint and the parent of every redesig
 
 ## Step 5 — Generate Design Instructions + Mockups
 
-Place design-instructions markdown in `<orchestrator-root>/sprint-<$SPRINT_N>/instructions/` and HTML mockups in `<orchestrator-root>/sprint-<$SPRINT_N>/mockups/` on the orchestrator's sprint branch.
+### 5a — Generate per-surface design artifacts
 
-### 5a — Spawn per-surface subagents (parallel, max 5 concurrent)
+Generate per-surface design instructions, HTML mockups, and the shared stylesheet for `$SURFACES`. Apply the redesign-specific constraint:
 
-For each surface in `$SURFACES`, spawn one subagent — **maximum 5 in parallel**. If `$SURFACES` has more than 5 entries, run in batches of up to 5 (send one message with up to 5 Agent tool calls; wait for the batch to complete; send the next batch). Each subagent owns one surface and emits two files:
+> Drive layout, atmosphere, and emotional feel from the new tokens only. Do NOT read, scan, or reverse-engineer from the existing surface implementation in the web codebase. Use only the surface's purpose plus the new direction + tokens.
 
-- `<orchestrator-root>/sprint-<$SPRINT_N>/instructions/<surface-slug>.md` — per-surface design instructions for the surface.
-- `<orchestrator-root>/sprint-<$SPRINT_N>/mockups/<surface-slug>.html` — per-surface HTML mockup for the surface.
-
-Pass context as a `<context>` XML block per the dispatch-agents protocol with the following per-surface `<inputs>`:
-
-```xml
-<inputs>
-  <surface>
-    <name>...</name>
-    <slug>...</slug>
-  </surface>
-  <new_ds>$NEW_DS</new_ds>
-</inputs>
-```
-
-After all subagents finish, gather their returned paths into `$INSTRUCTIONS_LINKS` (`.md` paths) and `$MOCK_LINKS` (`.html` paths).
+Gather returned paths into `$INSTRUCTIONS_LINKS` and `$MOCK_LINKS`.
 
 ### 5b — Surface for review
 
-Present a per-surface bullet list of every `sprint-<N>/instructions/<surface>.md` and `sprint-<N>/mockups/<surface>.html` local path to the user.
+Present a per-surface bullet list of every emitted local path to the user (instructions, mockup, plus the shared stylesheet).
 
 ### 5c — Approval gate
 
 Use `AskUserQuestion`:
 
 - **Approve design instructions + mockups** — proceed to 5d.
-- **Iterate** — collect per-surface feedback (which surface needs what changed). Re-spawn 5a subagents in parallel for the affected surfaces only. Cap at 5 iterations.
+- **Iterate** — collect per-surface feedback (which surface needs what changed). Re-run 5a with the affected surfaces only. Cap at 5 iterations.
 
 ### 5d — Commit + Push (on approve)
 
-On the orchestrator's sprint branch, commit every `sprint-<N>/instructions/<surface>.md` and `sprint-<N>/mockups/<surface>.html` (e.g. `chore(redesign): sprint-{N} design instructions and mockups`). Push. Resolve blob URLs into `$INSTRUCTIONS_LINKS` and `$MOCK_LINKS`.
+On the orchestrator's sprint branch, commit the shared stylesheet and every per-surface instructions and mockup file (commit message: `chore(redesign): sprint-{N} design instructions and mockups`). Push. Resolve blob URLs into `$INSTRUCTIONS_LINKS` and `$MOCK_LINKS`.
 
 ---
 
