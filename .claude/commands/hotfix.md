@@ -14,7 +14,6 @@ tools: Read, Write, Glob, Grep, Bash, AskUserQuestion, Agent(backend, frontend, 
 | `acs` | `<bug_issue>` | Analyse the bug and add Acceptance Criteria to the same ticket. | `hotfix/acs.md` |
 | `implement` | `<bug_issue>` | Investigate root cause and apply the fix — fresh, or delta-only if `story-updated` label is set. | `hotfix/implement.md` |
 | `fix-bug` | `<bug_issue> <bug_spec>` | Re-fix a bug to address a follow-up spec; bug spec passed inline. | `hotfix/fix-bug.md` |
-| `release` | `<bug_issue>` | Merge the bugfix PR to main and close the bug. | `hotfix/release.md` |
 
 **Argument reference:**
 
@@ -36,13 +35,13 @@ If state is found, ask the user via `AskUserQuestion`:
 
 ### Stage Picker (when `$ARGUMENTS` is empty or unmatched)
 
-1. Use `AskUserQuestion` with one question listing 4 most-common stages (`report`, `acs`, `implement`, `release`); the 5th (`fix-bug`) is offered via the auto-injected "Other".
+1. Use `AskUserQuestion` with one question listing the 4 stages (`report`, `acs`, `implement`, `fix-bug`).
 2. After a stage is chosen, ask one `AskUserQuestion` per required arg (bug issue number, optional description).
 3. Treat the result as `$ARGUMENTS = "<stage> <args>"` and continue with the matched row.
 
 ### Standard sequence
 
-`report` → `acs` → `implement` → `release`.
+`report` → `acs` → `implement` → `/release hotfix <bug_issue>`.
 
 Re-fix loop: `fix-bug <bug_issue> <bug_spec>`.
 

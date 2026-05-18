@@ -7,7 +7,7 @@ tools: AskUserQuestion
 
 # /help-flows — Workflow Picker
 
-Goal: ask user what they want to do, then print **one exact command** they can copy-paste. Four workflows: `/feature`, `/redesign`, `/hotfix`, `/refactor`.
+Goal: ask user what they want to do, then print **one exact command** they can copy-paste. Five workflows: `/feature`, `/redesign`, `/hotfix`, `/release`, `/refactor`.
 
 ---
 
@@ -42,7 +42,9 @@ Options (label → stage id):
 - **Re-fix an incomplete bug fix** → `bug-fix-bug`
 - **Refactor** → `refactor-start`
 - **Amend a refactor plan** → `refactor-amend`
-- **Sprint release** → `feature-release`
+- **Release a sprint** → `release-sprint`
+- **Release a redesign sprint** → `release-redesign`
+- **Release a hotfix** → `release-hotfix`
 - **Show full cheat sheet** → `all`
 
 If user picks `all`, jump to **Cheat Sheet** below.
@@ -61,12 +63,14 @@ Look up the chosen stage in the **Stage Map**. For each placeholder, ask via `As
 | `feature-amend-ac` | `<story#>` | `/feature amend-stories <story#>` _then follow-ups:_ `/feature amend-design <story#>`, `/feature amend-tdd <story#>`, `/feature amend-implementation <story#>`. |
 | `feature-add-story` | `<req#>` | `/feature add-story <req#>` |
 | `feature-merge` | `<target> <source>` | `/feature merge-stories <target> <source>` |
-| `feature-release` | `<sprint>` | `/feature release <sprint>` |
+| `release-sprint` | `<sprint>` | `/release sprint <sprint>` |
+| `release-redesign` | `<sprint>` | `/release redesign <sprint>` |
+| `release-hotfix` | `<bug#>` | `/release hotfix <bug#>` |
 | `redesign-design` | _(none)_ | `/redesign design` _(scope captured in one question; brief issue created mid-flow)_ |
 | `redesign-amend-design` | `<story#>` | `/redesign amend-design <story#>` _then follow-up:_ `/redesign implement <story#>`. |
 | `redesign-implement` | `<story#>` | `/redesign implement <story#>` |
 | `hotfix-start` | `[description]` | `/hotfix report <description>` |
-| `hotfix-continue` | _(see sub-stages)_ | Ask: which sub-stage — acs / implement / release. Map to `/hotfix acs <bug#>`, `/hotfix implement <bug#>`, `/hotfix release <bug#>`. |
+| `hotfix-continue` | _(see sub-stages)_ | Ask: which sub-stage — acs / implement. Map to `/hotfix acs <bug#>`, `/hotfix implement <bug#>`. |
 | `bug-fix-story` | `<story#>`, `<bug_spec>` | `/feature fix-story <story#> <bug_spec>` |
 | `bug-fix-bug` | `<bug#>`, `<bug_spec>` | `/hotfix fix-bug <bug#> <bug_spec>` |
 | `refactor-start` | _(none)_ | `/refactor create` _then:_ `/refactor implement <refactor#>` |
@@ -101,7 +105,7 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 3. `/feature create-design <sprint>` _(web codebase only)_
 4. `/feature create-tdd <sprint>`
 5. `/feature implement <story_issue>` _(repeat per story)_
-6. `/feature release <sprint>`
+6. `/release sprint <sprint>`
 
 ### 🔁 Requirement Change (within Feature)
 
@@ -134,7 +138,7 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 1. `/redesign design`                              _← Phase 1: capture scope, build design system, file [Redesign Brief] issue, generate previews + stories + priority table_
 2. `/redesign amend-design <story_issue>`         _← amend one story's per-surface design; upserts hub comment; labels affected implemented stories `story-updated`_
 3. `/redesign implement <story_issue>`            _← Phase 2: follow the Priority Implementation Table on the brief issue; foundations first. Handles `story-updated` (Revisit branch)_
-4. `/feature release <sprint>`                     _← reuse /feature release; same milestone shape_
+4. `/release redesign <sprint>`                    _← reuses sprint release shape_
 
 ### 🐞 Bug Fix Loop
 
@@ -146,7 +150,13 @@ _Printed only when `$ARGUMENTS` is `all`/`cheatsheet` or user picks "Show full c
 1. `/hotfix report [description]`
 2. `/hotfix acs <bug_issue>`
 3. `/hotfix implement <bug_issue>`
-4. `/hotfix release <bug_issue>`
+4. `/release hotfix <bug_issue>`
+
+### 🚀 Release
+
+- `/release sprint <sprint_number>` — close a feature sprint
+- `/release redesign <sprint_number>` — close a redesign sprint
+- `/release hotfix <bug_issue>` — close a production bug
 
 ### 🧹 Refactor
 

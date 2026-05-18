@@ -29,7 +29,6 @@ The first arg names a **stage**. Match `$ARGUMENTS` against the table below and 
 | `revert` | `<story_issue>` | Undo work for a story removed during a requirement change. | `feature/revert.md` |
 | `fix-story` | `<story_issue> <bug_spec>` | Re-implement a story to address a regression; bug spec passed inline. | `feature/fix-story.md` |
 | `amend-implementation` | `<story_issue>` | Re-implement after an AC amendment on one story. | `feature/amend-implementation.md` |
-| `release` | `<sprint_number>` | Merge sprint branch to main and close the milestone. | `feature/release.md` |
 
 **Argument reference:**
 
@@ -55,15 +54,15 @@ If state is found, ask the user via `AskUserQuestion`:
 
 ### Stage Picker (when `$ARGUMENTS` is empty or unmatched)
 
-1. Use `AskUserQuestion` to let the user pick a stage from the table above. Since there are 18 stages and `AskUserQuestion` allows max 4 options per question, ask hierarchically:
-   - **Pass 1 — verb**: present `create` / `sync` / `amend` / `other` (where `other` covers `implement`, `fix-story`, `revert`, `add-story`, `merge-stories`, `release`).
-   - **Pass 2 — stage**: present the stages under the chosen verb. For the `other` bucket, present up to 4 most common (`implement`, `fix-story`, `release`, `add-story`); the user can pick "Other" and type the rest.
+1. Use `AskUserQuestion` to let the user pick a stage from the table above. Since there are 17 stages and `AskUserQuestion` allows max 4 options per question, ask hierarchically:
+   - **Pass 1 — verb**: present `create` / `sync` / `amend` / `other` (where `other` covers `implement`, `fix-story`, `revert`, `add-story`, `merge-stories`).
+   - **Pass 2 — stage**: present the stages under the chosen verb. For the `other` bucket, present up to 4 most common (`implement`, `fix-story`, `add-story`, `merge-stories`); the user can pick "Other" and type the rest.
 2. After a stage is chosen, ask one `AskUserQuestion` per required arg from the table (issue number, sprint number, etc.).
 3. Treat the result as `$ARGUMENTS = "<stage> <args>"` and continue with the matched row.
 
 ### Stage usage by lifecycle phase
 
-- **Standard sprint**: `create-requirement` → `create-stories` → `create-design` → `create-tdd` → `implement` → `release`.
+- **Standard sprint**: `create-requirement` → `create-stories` → `create-design` → `create-tdd` → `implement` → `/release sprint <N>`.
 - **Mid-sprint requirement change**: `amend-requirement` → `sync-stories` → `sync-design` → `sync-tdd` → `implement` (handles the `story-updated` label internally; use `revert` for removed stories).
 - **AC amendment on one story**: `amend-stories` → `amend-design` → `amend-tdd` → `amend-implementation`.
 - **Add story mid-sprint**: `add-story` → `sync-design` → `sync-tdd` → `implement`.

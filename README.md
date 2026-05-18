@@ -12,7 +12,7 @@ Without a shared playbook, every team member prompts AI differently. Outputs div
 
 - **Orchestrator, not a codebase.** Stories, sprints, designs, TDDs, and bugs live here as issues. Agents check out your real code repos (API, web, infra), registered once via `/setup init`.
 - **GitHub is the source of truth.** No Jira, no Notion — every artifact is an issue; state changes by label, not chat.
-- **Workflows organize lifecycle stages, roles run them.** Four workflows (`/feature`, `/hotfix`, `/redesign`, `/refactor`) cover complete lifecycles. PO triggers requirement/report stages, BA writes stories, Designer authors design instructions and runs redesign, Tech Lead writes TDDs and refactor plans, Dev implements, Release Manager ships. Every stage is one command — the role that owns it runs it.
+- **Workflows organize lifecycle stages, roles run them.** Five workflows (`/feature`, `/hotfix`, `/redesign`, `/release`, `/refactor`) cover complete lifecycles. PO triggers requirement/report stages, BA writes stories, Designer authors design instructions and runs redesign, Tech Lead writes TDDs and refactor plans, Dev implements, Release Manager runs `/release`. Every stage is one command — the role that owns it runs it.
 - **Humans gate every stage.** AI handles volume. Nothing ships without sign-off.
 - **Drop-in.** Only `.claude/`, `config.md`, `PRODUCT.md`, and `DESIGN.md` are added. Existing issues, PRs, and branches stay untouched.
 
@@ -21,7 +21,7 @@ flowchart LR
     subgraph ORCH["This Repo · Orchestrator"]
         direction TB
         ISSUES["GitHub Issues · Labels · Milestones<br/>requirements · stories · TDDs<br/>designs · redesign briefs · bugs"]
-        FLOWS["Workflow Commands<br/>/feature · /hotfix · /redesign · /refactor"]
+        FLOWS["Workflow Commands<br/>/feature · /hotfix · /redesign<br/>/release · /refactor"]
     end
 
     subgraph TARGETS["Your Code Repos"]
@@ -96,7 +96,6 @@ Then kick off a sprint:
 | `/feature revert <story_issue>` | Dev | Undo work for a removed story (`story-removed`). |
 | `/feature fix-story <story_issue> <bug_spec>` | Dev | Re-implement a story to address a regression. |
 | `/feature amend-implementation <story_issue>` | Dev | Re-implement after an AC amendment. |
-| `/feature release <sprint_number>` | Release Manager | Close sprint and open release PRs to main. |
 
 ### 🎨 `/redesign` — UI redesign lifecycle
 
@@ -114,7 +113,14 @@ Then kick off a sprint:
 | `/hotfix acs <bug_issue>` | BA | Analyse the bug and add Acceptance Criteria to the same ticket. |
 | `/hotfix implement <bug_issue>` | Dev | Investigate root cause and apply the fix — fresh or delta-only on `story-updated`. |
 | `/hotfix fix-bug <bug_issue> <bug_spec>` | Dev | Re-fix a bug to address a follow-up spec. |
-| `/hotfix release <bug_issue>` | Release Manager | Merge the bugfix PR to main and close the bug. |
+
+### 🚀 `/release` — Release lifecycle
+
+| Command | Run by | What it does |
+|---------|--------|-------------|
+| `/release sprint <sprint_number>` | Release Manager | Close a feature sprint — merge sprint branch to main, label all milestone issues `sprint-completed`. |
+| `/release redesign <sprint_number>` | Release Manager | Close a redesign sprint — same shape as `sprint`. |
+| `/release hotfix <bug_issue>` | Release Manager | Merge the bugfix PR to main and close the bug. |
 
 ### 🧹 `/refactor` — Tech-debt and structural cleanup
 
@@ -167,7 +173,7 @@ flowchart TD
     G5 -->|Pass| QP2["Merge story branch → sprint"]
     QP2 --> MORE{More stories?}
     MORE -->|Yes| H
-    MORE -->|No| REL(["/feature release &lt;N&gt;"])
+    MORE -->|No| REL(["/release sprint &lt;N&gt;"])
     G5 -->|Regression| FIX(["/feature fix-story &lt;story&gt; &lt;bug_spec&gt;"])
     FIX --> FIX2["Fix pushed to story branch\nMerged to staging"]
     FIX2 --> G5
@@ -196,7 +202,7 @@ flowchart TD
     G3 -->|Merged| I2["Merged to staging"]
     I2 --> G4{Gate 4\nHuman verifies on staging}
     G4 -->|Pass| QP2["Merge fix branch → main"]
-    QP2 --> J(["/hotfix release &lt;issue&gt;"])
+    QP2 --> J(["/release hotfix &lt;issue&gt;"])
     J --> K([Bug Fixed])
     G4 -->|Still broken| FIX(["/hotfix fix-bug &lt;bug&gt; &lt;bug_spec&gt;"])
     FIX --> FIX2["Fix pushed to bug branch\nMerged to staging"]
@@ -283,7 +289,7 @@ flowchart TD
     G3 -->|Pass| QP2["Merge story branch → sprint"]
     QP2 --> MORE{More stories?}
     MORE -->|Yes| H
-    MORE -->|No| REL(["/feature release &lt;N&gt;"])
+    MORE -->|No| REL(["/release redesign &lt;N&gt;"])
     G3 -->|Regression| FIX(["/feature fix-story &lt;story&gt; &lt;bug_spec&gt;"])
     FIX --> G3
     D -.->|Mid-sprint design tweak| AM(["/redesign amend-design &lt;story&gt;"])
@@ -363,5 +369,5 @@ Where a story or bug sits in the pipeline. Change as work progresses; tell agent
 | ![](https://placehold.co/15x15/bfd4f2/bfd4f2.png) | `story-updated` | ACs changed after implementation | `/feature implement` (revisit branch) |
 | ![](https://placehold.co/15x15/e4e669/e4e669.png) | `story-removed` | Story dropped from scope | `/feature revert` |
 | ![](https://placehold.co/15x15/fef2c0/fef2c0.png) | `requirement-updated` | Requirement changed mid-sprint | `/feature sync-stories` |
-| ![](https://placehold.co/15x15/006b75/006b75.png) | `sprint-completed` | Sprint closed by `/feature release` | — |
-| ![](https://placehold.co/15x15/0e8a16/0e8a16.png) | `bug-fixed` | Bug closed after `/hotfix release` | — |
+| ![](https://placehold.co/15x15/006b75/006b75.png) | `sprint-completed` | Sprint closed by `/release sprint` or `/release redesign` | — |
+| ![](https://placehold.co/15x15/0e8a16/0e8a16.png) | `bug-fixed` | Bug closed after `/release hotfix` | — |

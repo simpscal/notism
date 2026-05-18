@@ -20,7 +20,7 @@ The first arg names a **stage**. Match `$ARGUMENTS` against the table below and 
 
 - `<story_issue>` — issue number of a single redesign user story.
 
-For sprint release, use `/feature release <sprint_number>`.
+For sprint release, use `/release redesign <sprint_number>`.
 
 **Load the corresponding mode file and follow its steps.**
 
@@ -43,7 +43,7 @@ If state is found, ask the user via `AskUserQuestion`:
 
 ### Lifecycle sequence
 
-- **Standard redesign**: `design` → `implement` (per story, in priority order) → `/feature release <sprint>`.
+- **Standard redesign**: `design` → `implement` (per story, in priority order) → `/release redesign <sprint>`.
 - **Single-story design amendment**: `amend-design <story_issue>` → `implement <story_issue>` (Revisit branch handles `story-updated`).
 
 ---
